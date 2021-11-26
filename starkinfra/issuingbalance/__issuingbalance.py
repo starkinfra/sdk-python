@@ -1,5 +1,5 @@
-from starkbank.utils.resource import Resource
-from starkbank.utils import rest
+from ..utils import rest
+from ..utils.resource import Resource
 
 
 class IssuingBalance(Resource):

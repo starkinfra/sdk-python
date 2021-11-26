@@ -1,7 +1,7 @@
-from starkbank.utils.resource import Resource
-from starkbank.utils.checks import check_datetime
+from ..utils import rest
+from ..utils.resource import Resource
+from ..utils.checks import check_datetime
 
-from starkbank.utils import rest
 
 
 class IssuingCard(Resource):

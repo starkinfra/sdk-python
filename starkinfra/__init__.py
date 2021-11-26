@@ -1,5 +1,3 @@
-import starkinfra
-
 version = "0.0.0"
 
 user = None

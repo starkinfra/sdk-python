@@ -18,9 +18,9 @@ setup(
     url="https://github.com/starkinfra/sdk-python",
     author="Stark Bank",
     author_email="developers@starkinfra.com",
-    keywords=["stark bank", "starkbank", "sdk", "open banking", "openbanking", "banking", "open", "stark"],
+    keywords=["stark infra", "starkinfra", "sdk", "open banking", "openbanking", "banking", "open", "stark"],
     version=version,
     install_requires=[
-        "starkinfra>=2.14.1",
+        "starkbank>=2.14.1",
     ],
 )

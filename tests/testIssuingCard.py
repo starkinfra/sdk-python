@@ -1,16 +1,15 @@
 import starkinfra
-import starkbank
 from unittest import TestCase, main
 from tests.utils.user import exampleProject
 from tests.utils.card import generateExampleCardsJson
 
-starkbank.user = exampleProject
+starkinfra.user = exampleProject
 
 
 class TestIssuingCardQuery(TestCase):
 
     def test_success(self):
-        cards = starkinfra.issuingcard.query(user=exampleProject)
+        cards = starkinfra.issuingcard.query()
         for card in cards:
             self.assertIsInstance(card.id, str)
 
@@ -32,8 +31,8 @@ class TestIssuingCardPage(TestCase):
 class TestIssuingCardGet(TestCase):
 
     def test_success(self):
-        cards = starkinfra.issuingcard.query(user=exampleProject, limit=1)
-        card = starkinfra.issuingcard.get(user=exampleProject, id=next(cards).id)
+        cards = starkinfra.issuingcard.query(limit=1)
+        card = starkinfra.issuingcard.get(id=next(cards).id)
         self.assertIsInstance(card.id, str)
 
 

@@ -1,10 +1,4 @@
 # coding: utf-8
-from copy import deepcopy
-from random import randint
-from starkinfra import IssuingCard
-from .names.names import get_full_name
-from .taxIdGenerator import TaxIdGenerator
-
 
 example_card = {
     "holderName": "",

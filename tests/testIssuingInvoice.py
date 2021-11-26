@@ -1,10 +1,9 @@
 import starkinfra
-import starkbank
 from unittest import TestCase, main
 from tests.utils.user import exampleProject
 from tests.utils.issuingInvoice import generateExampleInvoicesJson
 
-starkbank.user = exampleProject
+starkinfra.user = exampleProject
 
 
 class TestIssuingInvoiceQuery(TestCase):

@@ -1,10 +1,9 @@
 import starkinfra
-import starkbank
 from unittest import TestCase, main
 from tests.utils.user import exampleProject
 from tests.utils.holder import generateExampleHoldersJson
 
-starkbank.user = exampleProject
+starkinfra.user = exampleProject
 
 
 class TestIssuingHolderQuery(TestCase):

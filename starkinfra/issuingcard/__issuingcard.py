@@ -13,10 +13,10 @@ class IssuingCard(Resource):
     - holder_name [string, default None]: card holder name.
     - type [string, default None]: card type. ex: "virtual"
     - display_name [string, default None]: card displayed name
-    - status [string, default None]: card status
+    - status [string, default None]: current Current status. ex: "canceled" or "active"
     - rules [list of dictionaries, default None]: list of dictionaries with "amount": int, "currencyCode": string, "id": string, "interval": string, "name": string pairs
-    - street_line_1 [string, default None]:
-    - street_line_2 [string, default None]:
+    - street_line_1 [string, default None]: card main address. ex: Av. Paulista, 200
+    - street_line_2 [string, default None]: card address complement. ex: Apto. 123
     - city [string, default None]:
     - state_code [string, default None]:
     - zip_code [string, default None]:

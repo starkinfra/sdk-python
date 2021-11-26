@@ -1,10 +1,9 @@
 import starkinfra
-import starkbank
 from unittest import TestCase, main
 from tests.utils.user import exampleProject
 from tests.utils.withdrawal import generateExampleWithdrawalJson
 
-starkbank.user = exampleProject
+starkinfra.user = exampleProject
 
 
 class TestIssuingWithdrawalQuery(TestCase):

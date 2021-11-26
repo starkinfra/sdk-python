@@ -9,7 +9,7 @@ starkinfra.user = exampleProject
 class TestIssuingTransactionQuery(TestCase):
 
     def test_success(self):
-        transactions = starkinfra.issuingtransaction.query(user=exampleProject)
+        transactions = starkinfra.issuingtransaction.query()
         for transaction in transactions:
             self.assertIsInstance(transaction.amount, int)
 
@@ -32,8 +32,8 @@ class TestIssuingTransactionPage(TestCase):
 class TestIssuingTransactionGet(TestCase):
 
     def test_success(self):
-        transactions = starkinfra.issuingtransaction.query(user=exampleProject, limit=1)
-        transaction = starkinfra.issuingtransaction.get(user=exampleProject, id=next(transactions).id)
+        transactions = starkinfra.issuingtransaction.query(limit=1)
+        transaction = starkinfra.issuingtransaction.get(id=next(transactions).id)
         print(transaction)
         self.assertIsInstance(transaction.amount, int)
 

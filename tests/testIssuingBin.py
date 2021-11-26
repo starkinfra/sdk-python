@@ -9,7 +9,7 @@ starkinfra.user = exampleProject
 class TestIssuingBinQuery(TestCase):
 
     def test_success(self):
-        bins = starkinfra.issuingbin.query(user=exampleProject)
+        bins = starkinfra.issuingbin.query()
         for bin in bins:
             self.assertIsInstance(bin.id, str)
 

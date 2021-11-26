@@ -9,7 +9,7 @@ starkinfra.user = exampleProject
 class TestIssuingInvoiceQuery(TestCase):
 
     def test_success(self):
-        invoices = starkinfra.issuinginvoice.query(user=exampleProject)
+        invoices = starkinfra.issuinginvoice.query()
         for invoice in invoices:
             self.assertIsInstance(invoice.id, str)
 
@@ -17,8 +17,8 @@ class TestIssuingInvoiceQuery(TestCase):
 class TestIssuingInvoiceGet(TestCase):
 
     def test_success(self):
-        invoices = starkinfra.issuinginvoice.query(user=exampleProject, limit=1)
-        invoice = starkinfra.issuinginvoice.get(user=exampleProject, id=next(invoices).id)
+        invoices = starkinfra.issuinginvoice.query(limit=1)
+        invoice = starkinfra.issuinginvoice.get(id=next(invoices).id)
         self.assertIsInstance(invoice.id, str)
 
 

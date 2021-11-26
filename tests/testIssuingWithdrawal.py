@@ -9,7 +9,7 @@ starkinfra.user = exampleProject
 class TestIssuingWithdrawalQuery(TestCase):
 
     def test_success(self):
-        withdrawals = starkinfra.issuingwithdrawal.query(user=exampleProject)
+        withdrawals = starkinfra.issuingwithdrawal.query()
         for withdrawal in withdrawals:
             print(withdrawal)
             self.assertIsInstance(withdrawal.id, str)
@@ -18,8 +18,8 @@ class TestIssuingWithdrawalQuery(TestCase):
 class TestIssuingWithdrawalGet(TestCase):
 
     def test_success(self):
-        withdrawals = starkinfra.issuingwithdrawal.query(user=exampleProject, limit=1)
-        withdrawal = starkinfra.issuingwithdrawal.get(user=exampleProject, id=next(withdrawals).id)
+        withdrawals = starkinfra.issuingwithdrawal.query(limit=1)
+        withdrawal = starkinfra.issuingwithdrawal.get(id=next(withdrawals).id)
         self.assertIsInstance(withdrawal.id, str)
 
 

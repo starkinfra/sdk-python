@@ -8,7 +8,7 @@ starkinfra.user = exampleProject
 class TestIssuingHolderLogQuery(TestCase):
 
     def test_success(self):
-        logs = starkinfra.issuingholder.log.query(user=exampleProject)
+        logs = starkinfra.issuingholder.log.query()
         for log in logs:
             self.assertIsInstance(log.id, str)
 
@@ -16,8 +16,8 @@ class TestIssuingHolderLogQuery(TestCase):
 class TestIssuingHolderLogGet(TestCase):
 
     def test_success(self):
-        logs = starkinfra.issuingholder.log.query(user=exampleProject, limit=1)
-        log = starkinfra.issuingholder.log.get(user=exampleProject, id=next(logs).id)
+        logs = starkinfra.issuingholder.log.query(limit=1)
+        log = starkinfra.issuingholder.log.get(id=next(logs).id)
         self.assertIsInstance(log.id, str)
 
 

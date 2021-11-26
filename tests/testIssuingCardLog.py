@@ -8,7 +8,7 @@ starkinfra.user = exampleProject
 class TestIssuingCardLogQuery(TestCase):
 
     def test_success(self):
-        logs = starkinfra.issuingcard.log.query(user=exampleProject)
+        logs = starkinfra.issuingcard.log.query()
         for log in logs:
             self.assertIsInstance(log.id, str)
 
@@ -16,8 +16,8 @@ class TestIssuingCardLogQuery(TestCase):
 class TestIssuingCardLogGet(TestCase):
 
     def test_success(self):
-        logs = starkinfra.issuingcard.log.query(user=exampleProject, limit=1)
-        log = starkinfra.issuingcard.log.get(user=exampleProject, id=next(logs).id)
+        logs = starkinfra.issuingcard.log.query(limit=1)
+        log = starkinfra.issuingcard.log.get(id=next(logs).id)
         self.assertIsInstance(log.id, str)
 
 

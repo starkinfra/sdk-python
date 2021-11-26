@@ -9,7 +9,7 @@ starkinfra.user = exampleProject
 class TestIssuingHolderQuery(TestCase):
 
     def test_success(self):
-        holders = starkinfra.issuingholder.query(user=exampleProject)
+        holders = starkinfra.issuingholder.query()
         for holder in holders:
             self.assertIsInstance(holder.id, str)
 
@@ -31,8 +31,8 @@ class TestIssuingHolderPage(TestCase):
 class TestIssuingHolderGet(TestCase):
 
     def test_success(self):
-        holders = starkinfra.issuingholder.query(user=exampleProject, limit=1)
-        holder = starkinfra.issuingholder.get(user=exampleProject, id=next(holders).id)
+        holders = starkinfra.issuingholder.query(limit=1)
+        holder = starkinfra.issuingholder.get(id=next(holders).id)
         self.assertIsInstance(holder.id, str)
 
 

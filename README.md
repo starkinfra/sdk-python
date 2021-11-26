@@ -22,32 +22,33 @@ is as easy as sending a text message to your client!
     - [Register your user credentials](#3-register-your-user-credentials)
     - [Setting up the user](#4-setting-up-the-user)
     - [Setting up the error language](#5-setting-up-the-error-language)
-    - [Resource listing and manual pagination](#6-resource-listing-and-manual-pagination)
+- [Resource listing and manual pagination](#resource-listing-and-manual-pagination)
 - [Testing in Sandbox](#testing-in-sandbox) 
 - [Usage](#usage)
-    - [Transactions](#query-transactions): Account statement entries
-    - [Balance](#get-card-issuer-balance): Account balance
-    - [Holders](#create-holders): Wallet Card holders
-    - [BINs](#query-sub-issuer-bins): Account sub-issue BINs
-    - [Issuing Invoices](#create-card-issuing-invoices): Instutitions recognized by the Central Bank
-    - [Withdrawals](#create-card-issuing-withdrawals): send money back to your Stark Bank account
-    - [Cards](#create-cards): Create virtual Cards
-    - [Purchases](#query-purchases): View your past purchases
+    - [Issuing](#issuing)
+        - [Transactions](#query-issuing-transactions): Account statement entries
+        - [Balance](#get-issuing-balance): Account balance
+        - [Holders](#create-issuing-holders): Wallet Card holders
+        - [BINs](#query-issuing-bins): Account sub-issue BINs
+        - [Issuing Invoices](#create-issuing-invoices): Instutitions recognized by the Central Bank
+        - [Withdrawals](#create-issuing-withdrawals): send money back to your Stark Bank account
+        - [Cards](#create-issuing-cards): Create virtual Cards
+        - [Purchases](#query-issuing-purchases): View your past purchases
 - [Handling errors](#handling-errors)
 - [Help and Feedback](#help-and-feedback)
 
-## Supported Python Versions
+### Supported Python Versions
 
 This library supports the following Python versions:
 
 * Python 2.7
 * Python 3.4+
 
-## Stark Bank API documentation
+### Stark Infra API documentation
 
-Feel free to take a look at our [API docs](https://www.starkbank.com/docs/api).
+Feel free to take a look at our [API docs](https://www.starkinfra.com/docs/api).
 
-## Versioning
+### Versioning
 
 This project adheres to the following versioning pattern:
 
@@ -72,6 +73,9 @@ pip install starkinfra
 ```sh
 python setup.py install
 ```
+
+**Note**: This SDKs uses the starkbank SDK as its core dependency, so watch out for version and user conflicts if you are using both SDKs.
+Also, the rest of this setup is pretty much the same as the starkbank SDK,so if you already use it, feel free to skip the rest of the section.
 
 ## 2. Create your Private and Public Keys
 
@@ -124,7 +128,7 @@ Since this user is unique in your entire organization, only one credential can b
 3.1.6. Use the Project ID and private key to create the object below:
 
 ```python
-import starkbank
+import starkinfra
 
 # Get your private key from an environment variable or an encrypted database.
 # This is only an example of a private key content. You should use your own key.
@@ -139,7 +143,7 @@ IF16ZoTVt1FzZ8WkYQ3XomRD4HS13A==
 -----END EC PRIVATE KEY-----
 """
 
-project = starkbank.Project(
+project = starkinfra.Project(
     environment="sandbox",
     id="5656565656565656",
     private_key=private_key_content
@@ -161,7 +165,6 @@ project = starkbank.Project(
 3.2.6. Use the Organization ID and private key to create the object below:
 
 ```python
-import starkbank
 import starkinfra
 
 # Get your private key from an environment variable or an encrypted database.
@@ -177,7 +180,7 @@ IF16ZoTVt1FzZ8WkYQ3XomRD4HS13A==
 -----END EC PRIVATE KEY-----
 """
 
-organization = starkbank.Organization(
+organization = starkinfra.Organization(
     environment="sandbox",
     id="5656565656565656",
     private_key=private_key_content,
@@ -186,7 +189,7 @@ organization = starkbank.Organization(
 
 # To dynamically use your organization credentials in a specific workspace_id,
 # you can use the Organization.replace() function:
-balance = starkinfra.issuingbalance.get(user=starkbank.Organization.replace(organization, "4848484848484848")
+balance = starkinfra.issuingbalance.get(user=starkinfra.Organization.replace(organization, "4848484848484848")
 ```
 
 NOTE 1: Never hard-code your private key. Get it from an environment variable or an encrypted database.
@@ -208,7 +211,7 @@ There are two ways to inform the user to the SDK:
 4.1 Passing the user as argument in all functions:
 
 ```python
-import starkbank
+import starkinfra
 
 balance = starkinfra.issuingbalance.get(user=project)  # or organization
 ```
@@ -216,9 +219,9 @@ balance = starkinfra.issuingbalance.get(user=project)  # or organization
 4.2 Set it as a default user in the SDK:
 
 ```python
-import starkbank
+import starkinfra
 
-starkbank.user = project  # or organization
+starkinfra.user = project  # or organization
 
 balance = starkinfra.issuingbalance.get()
 ```
@@ -238,7 +241,7 @@ starkbank.language = "en-US"
 
 Language options are "en-US" for english and "pt-BR" for brazilian portuguese. English is default.
 
-## 6. Resource listing and manual pagination
+## Resource listing and manual pagination
 
 Almost all SDK resources provide a `query` and a `page` function.
 
@@ -247,7 +250,7 @@ seamlessly retrieving the next batch of elements from the API only when you reac
 If you are not worried about data volume or processing time, this is the way to go.
 
 ```python
-import starkbank
+import starkinfra
 
 for transaction in starkinfra.issuingtransaction.query(limit=200):
     print(transaction)
@@ -258,7 +261,7 @@ for transaction in starkinfra.issuingtransaction.query(limit=200):
 pick up from where you left off whenever it is convenient. When there are no more elements to be retrieved, the returned cursor will be `None`.
 
 ```python
-import starkbank
+import starkinfra
 
 cursor = None
 while True:
@@ -273,7 +276,7 @@ To simplify the following SDK examples, we will only use the `query` function, b
 
 # Testing in Sandbox
 
-Your initial balance is zero. For many operations in Stark Bank, you'll need funds
+Your initial balance is zero. For many operations in Stark Infra, you'll need funds
 in your account, which can be added to your balance by creating an Invoice or a Boleto. 
 
 In the Sandbox environment, most of the created Invoices and Boletos will be automatically paid,
@@ -288,11 +291,13 @@ for the value to be credited to your account.
 
 Here are a few examples on how to use the SDK. If you have any doubts, use the built-in
 `help()` function to get more info on the desired functionality
-(for example: `help(starkbank.boleto.create)`)
+(for example: `help(starkinfra.issuingtransaction.create)`)
 
-## Query transactions
+## Issuing
 
-To understand your balance changes (bank statement), you can query
+### Query issuing transactions
+
+To understand your balance changes (issuing statement), you can query
 transactions. Note that our system creates transactions for you when
 you receive boleto payments, pay a bill or make transfers, for example.
 
@@ -307,19 +312,19 @@ for transaction in transactions:
     print(transaction)
 ```
 
-## Get a transaction
+### Get an issuing transaction
 
 You can get a specific transaction by its id:
 
 ```python
-import starkbank
+import starkinfra
 
 transaction = starkinfra.issuingtransaction.get("5155165527080960")
 
 print(transaction)
 ```
 
-## Get card issuer balance
+### Get issuing balance
 
 To know how much money you have in your workspace, run:
 
@@ -331,7 +336,7 @@ balance = starkinfra.issuingbalance.get()
 print(balance)
 ```
 
-## Create holders
+### Create issuing holders
 
 You can create card holders to your Workspace.
 
@@ -364,7 +369,7 @@ for holder in holders:
 
 **Note**: Instead of using IssuingHolder objects, you can also pass each transfer element in dictionary format
 
-## Query card issuer holders
+### Query issuing holders
 
 You can query multiple transfers according to filters.
 
@@ -377,7 +382,7 @@ for holder in holders:
     print(holder)
 ```
 
-## Delete a card issuer holder
+### Delete an issuing holder
 
 To cancel a single issuing holder by its id, run:
 
@@ -389,7 +394,7 @@ holder = starkinfra.issuingholder.delete("5155165527080960")
 print(holder)
 ```
 
-## Get a card issuer holder
+### Get an issuing holder
 
 To get a single issuing holder by its id, run:
 
@@ -401,7 +406,7 @@ holder = starkinfra.issuingholder.get("5155165527080960")
 print(holder)
 ```
 
-## Query card issuer holder logs
+### Query issuing holder logs
 
 You can query transfer logs to better understand transfer life cycles.
 
@@ -414,7 +419,7 @@ for log in logs:
     print(log.id)
 ```
 
-## Get a card issuer holder log
+### Get an issuing holder log
 
 You can also get a specific log by its id.
 
@@ -426,7 +431,7 @@ log = starkinfra.issuingholder.log.get("5155165527080960")
 print(log)
 ```
 
-## Query sub-issuer BINs
+### Query issuing BINs
 
 To take a look at the sub-issuer BINs linked to your workspace, just run the following:
 
@@ -438,7 +443,7 @@ for bin in bins:
     print(bin)
 ```
 
-## Create card issuing invoices
+### Create issuing invoices
 
 You can create dynamic QR Code invoices to receive money from accounts you have in other banks to your Issuing account.
 
@@ -464,7 +469,7 @@ for invoice in invoices:
 
 **Note**: Instead of using Invoice objects, you can also pass each invoice element in dictionary format
 
-## Get a card issuing invoices
+### Get an issuing invoice
 
 After its creation, information on an invoice may be retrieved by its id. 
 Its status indicates whether it's been paid.
@@ -477,7 +482,7 @@ invoice = starkinfra.issuinginvoice.get("5155165527080960")
 print(invoice)
 ```
 
-## Query card issuing invoices
+### Query issuing invoices
 
 You can get a list of created invoices given some filters.
 
@@ -494,7 +499,7 @@ for invoice in invoices:
     print(invoice)
 ```
 
-## Query card issuing invoice logs
+### Query issuing invoice logs
 
 Logs are pretty important to understand the life cycle of an invoice.
 
@@ -507,7 +512,7 @@ for log in logs:
     print(log)
 ```
 
-## Get a card issuing invoice log
+### Get an issuing invoice log
 
 You can get a single log by its id.
 
@@ -519,7 +524,7 @@ log = starkinfra.issuinginvoice.log.get("5155165527080960")
 print(log)
 ```
 
-## Create card issuing withdrawals
+### Create issuing withdrawals
 
 You can create withdrawals to send back cash to your Banking account by using the Withdrawal resource
 
@@ -541,7 +546,7 @@ for withdrawal in withdrawals:
 
 **Note**: Instead of using Withdrawal objects, you can also pass each withdrawal element in dictionary format
 
-## Get a card issuing withdrawal
+### Get an issuing withdrawal
 
 After its creation, information on an withdrawal may be retrieved by its id.
 
@@ -553,7 +558,7 @@ invoice = starkinfra.issuingwithdrawal.get("5155165527080960")
 print(invoice)
 ```
 
-## Query card issuing withdrawals
+### Query issuing withdrawals
 
 You can get a list of created invoices given some filters.
 
@@ -570,7 +575,7 @@ for withdrawal in withdrawals:
     print(withdrawal)
 ```
 
-## Create Cards
+### Create issuing cards
 
 You can create boletos to charge customers or to receive money from accounts
 you have in other banks.
@@ -593,7 +598,7 @@ for card in cards:
     print(card)
 ```
 
-## Query cards
+### Query issuing cards
 
 You can get a list of created cards given some filters.
 
@@ -610,7 +615,7 @@ for card in cards:
     print(card)
 ```
 
-## Get a card
+### Get an issuing card
 
 After its creation, information on a card may be retrieved by its id.
 
@@ -622,7 +627,7 @@ card = starkinfra.issuingcard.get("5155165527080960")
 print(card)
 ```
 
-## Delete a card
+### Delete an issuing card
 
 You can also cancel a card by its id.
 Note that this is not possible if it has been processed already.
@@ -635,7 +640,7 @@ card = starkinfra.issuingcard.delete("5155165527080960")
 print(card)
 ```
 
-## Query card logs
+### Query issuing card logs
 
 Logs are pretty important to understand the life cycle of a card.
 
@@ -648,7 +653,7 @@ for log in logs:
     print(log)
 ```
 
-## Get a card log
+### Get an issuing card log
 
 You can get a single log by its id.
 
@@ -661,7 +666,7 @@ print(log)
 ```
 
 
-## Query purchases
+### Query issuing purchases
 
 You can get a list of created purchases given some filters.
 
@@ -678,7 +683,7 @@ for purchase in purchases:
     print(purchase)
 ```
 
-## Get a purchase
+### Get an issuing purchase
 
 After its creation, information on a purchase may be retrieved by its id. 
 
@@ -690,7 +695,7 @@ purchase = starkinfra.issuingpurchase.get("5155165527080960")
 print(purchase)
 ```
 
-## Query purchase logs
+### Query issuing purchase logs
 
 Logs are pretty important to understand the life cycle of a purchase.
 
@@ -703,7 +708,7 @@ for log in logs:
     print(log)
 ```
 
-## Get a purchase log
+### Get an issuing purchase log
 
 You can get a single log by its id.
 
@@ -728,15 +733,14 @@ For example:
 
 ```python
 import starkbank
+import starkinfra
 
 try:
-    transactions = starkbank.transaction.create([
-        starkbank.Transaction(
+    withdrawals = starkinfra.issuingwithdrawal.create([
+        starkinfra.IssuingWithdrawal(
             amount=99999999999999,  # (R$ 999,999,999,999.99)
-            receiver_id="1029378109327810",
-            description=".",
-            external_id="12345",  # so we can block anything you send twice by mistake
-            tags=["provider"]
+            external_id="123",  # so we can block anything you send twice by mistake
+            description="Sending back"
         ),
     ])
 except starkbank.error.InputErrors as exception:

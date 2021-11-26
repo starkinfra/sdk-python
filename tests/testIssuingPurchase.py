@@ -8,7 +8,7 @@ starkinfra.user = exampleProject
 class TestIssuingPurchaseQuery(TestCase):
 
     def test_success(self):
-        purchases = starkinfra.issuingpurchase.query(user=exampleProject)
+        purchases = starkinfra.issuingpurchase.query()
         for purchase in purchases:
             self.assertIsInstance(purchase.id, str)
 
@@ -16,8 +16,8 @@ class TestIssuingPurchaseQuery(TestCase):
 class TestIssuingPurchaseGet(TestCase):
 
     def test_success(self):
-        purchases = starkinfra.issuingpurchase.query(user=exampleProject, limit=1)
-        purchase = starkinfra.issuingpurchase.get(user=exampleProject, id=next(purchases).id)
+        purchases = starkinfra.issuingpurchase.query(limit=1)
+        purchase = starkinfra.issuingpurchase.get(id=next(purchases).id)
         self.assertIsInstance(purchase.id, str)
 
 

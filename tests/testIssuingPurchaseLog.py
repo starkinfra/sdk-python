@@ -8,7 +8,7 @@ starkinfra.user = exampleProject
 class TestIssuingPurchaseLogQuery(TestCase):
 
     def test_success(self):
-        logs = starkinfra.issuingpurchase.log.query(user=exampleProject)
+        logs = starkinfra.issuingpurchase.log.query()
         for log in logs:
             self.assertIsInstance(log.id, str)
 
@@ -16,8 +16,8 @@ class TestIssuingPurchaseLogQuery(TestCase):
 class TestIssuingPurchaseLogGet(TestCase):
 
     def test_success(self):
-        logs = starkinfra.issuingpurchase.log.query(user=exampleProject, limit=1)
-        log = starkinfra.issuingpurchase.log.get(user=exampleProject, id=next(logs).id)
+        logs = starkinfra.issuingpurchase.log.query(limit=1)
+        log = starkinfra.issuingpurchase.log.get(id=next(logs).id)
         self.assertIsInstance(log.id, str)
 
 

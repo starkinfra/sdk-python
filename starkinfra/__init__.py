@@ -29,3 +29,5 @@ from .issuingwithdrawal.__issuingwithdrawal import IssuingWithdrawal
 
 from . import issuingbin
 from .issuingbin.__issuingbin import IssuingBin
+
+import error

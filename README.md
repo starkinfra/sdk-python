@@ -14,7 +14,7 @@ is as easy as sending a text message to your client!
 
 - [Introduction](#introduction)
     - [Supported Python versions](#supported-python-versions)
-    - [API documentation](#stark-bank-api-documentation)
+    - [API documentation](#stark-infra-api-documentation)
     - [Versioning](#versioning)
 - [Setup](#setup)
     - [Install our SDK](#1-install-our-sdk)
@@ -37,18 +37,18 @@ is as easy as sending a text message to your client!
 - [Handling errors](#handling-errors)
 - [Help and Feedback](#help-and-feedback)
 
-### Supported Python Versions
+## Supported Python Versions
 
 This library supports the following Python versions:
 
 * Python 2.7
 * Python 3.4+
 
-### Stark Infra API documentation
+## Stark Infra API documentation
 
 Feel free to take a look at our [API docs](https://www.starkinfra.com/docs/api).
 
-### Versioning
+## Versioning
 
 This project adheres to the following versioning pattern:
 
@@ -75,7 +75,7 @@ python setup.py install
 ```
 
 **Note**: This SDKs uses the starkbank SDK as its core dependency, so watch out for version and user conflicts if you are using both SDKs.
-Also, the rest of this setup is pretty much the same as the starkbank SDK,so if you already use it, feel free to skip the rest of the section.
+Also, the rest of this setup is pretty much the same as the starkbank SDK, so if you already use it, feel free to skip the rest of the section.
 
 ## 2. Create your Private and Public Keys
 
@@ -241,7 +241,7 @@ starkbank.language = "en-US"
 
 Language options are "en-US" for english and "pt-BR" for brazilian portuguese. English is default.
 
-## Resource listing and manual pagination
+# Resource listing and manual pagination
 
 Almost all SDK resources provide a `query` and a `page` function.
 
@@ -342,7 +342,6 @@ You can create card holders to your Workspace.
 
 ```python
 import starkinfra
-from datetime import datetime, timedelta
 
 holders = starkinfra.issuingholder.create([
     starkinfra.IssuingHolder(
@@ -583,7 +582,6 @@ you have in other banks.
 ```python
 # coding: utf-8
 import starkinfra
-from datetime import datetime
 
 
 cards = starkinfra.issuingcard.create([
@@ -623,6 +621,18 @@ After its creation, information on a card may be retrieved by its id.
 import starkinfra
 
 card = starkinfra.issuingcard.get("5155165527080960")
+
+print(card)
+```
+
+### Update an issuing card
+
+You can update a specific Issuing Card by its id.
+
+```python
+import starkinfra
+
+card = starkinfra.issuingcard.update("5155165527080960", status="blocked")
 
 print(card)
 ```

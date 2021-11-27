@@ -42,8 +42,21 @@ class TestIssuingCardPostAndDelete(TestCase):
         holder = next(starkinfra.issuingholder.query(limit=1))
         cards = starkinfra.issuingcard.create(generateExampleCardsJson(n=1, holder=holder))
         card_id = cards[0].id
+        card = starkinfra.issuingcard.update(card_id, display_name="Updated Name")
+        self.assertEqual("Updated Name", card.display_name)
         card = starkinfra.issuingcard.delete(id=card_id)
-        self.assertIsInstance(card.id, str)
+        self.assertEqual("canceled", card.status)
+
+
+class TestIssuingCardUpdate(TestCase):
+
+    def test_success(self):
+        cards = starkinfra.issuingcard.query(status="active", limit=1)
+        for card in cards:
+            self.assertIsNotNone(card.id)
+            self.assertEqual(card.status, "active")
+            update_card = starkinfra.issuingcard.update(card.id, status="blocked")
+            self.assertEqual(update_card.status, "blocked")
 
 
 if __name__ == '__main__':

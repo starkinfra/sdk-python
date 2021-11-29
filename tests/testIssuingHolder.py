@@ -9,7 +9,7 @@ starkinfra.user = exampleProject
 class TestIssuingHolderQuery(TestCase):
 
     def test_success(self):
-        holders = starkinfra.issuingholder.query()
+        holders = starkinfra.issuingholder.query(expand=["rules"])
         for holder in holders:
             self.assertIsInstance(holder.id, str)
 
@@ -36,7 +36,7 @@ class TestIssuingHolderGet(TestCase):
         self.assertIsInstance(holder.id, str)
 
 
-class TestIssuingHolderPostAndDelete(TestCase):
+class TestIssuingHolderPostPatchAndDelete(TestCase):
 
     def test_success(self):
         holders = starkinfra.issuingholder.create(generateExampleHoldersJson(n=1))

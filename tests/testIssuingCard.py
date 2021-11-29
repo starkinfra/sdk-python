@@ -40,7 +40,8 @@ class TestIssuingCardPostAndDelete(TestCase):
 
     def test_success(self):
         holder = next(starkinfra.issuingholder.query(limit=1))
-        cards = starkinfra.issuingcard.create(generateExampleCardsJson(n=1, holder=holder))
+        cards = starkinfra.issuingcard.create(generateExampleCardsJson(n=1, holder=holder), expand=["security_code"])
+        self.assertNotEqual(cards[0].security_code, "***")
         card_id = cards[0].id
         card = starkinfra.issuingcard.update(card_id, display_name="Updated Name")
         self.assertEqual("Updated Name", card.display_name)

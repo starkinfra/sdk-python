@@ -34,7 +34,6 @@ class TestIssuingTransactionGet(TestCase):
     def test_success(self):
         transactions = starkinfra.issuingtransaction.query(limit=1)
         transaction = starkinfra.issuingtransaction.get(id=next(transactions).id)
-        print(transaction)
         self.assertIsInstance(transaction.amount, int)
 
 

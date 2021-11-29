@@ -6,6 +6,8 @@ timeout = 15
 
 from starkbank import Project, Organization
 
+from . import error
+
 from . import issuingbalance
 from .issuingbalance.__issuingbalance import IssuingBalance
 
@@ -30,4 +32,5 @@ from .issuingwithdrawal.__issuingwithdrawal import IssuingWithdrawal
 from . import issuingbin
 from .issuingbin.__issuingbin import IssuingBin
 
-import error
+from . import __issuingrule
+from .__issuingrule.__issuingrule import IssuingRule

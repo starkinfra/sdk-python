@@ -11,7 +11,6 @@ class TestIssuingWithdrawalQuery(TestCase):
     def test_success(self):
         withdrawals = starkinfra.issuingwithdrawal.query()
         for withdrawal in withdrawals:
-            print(withdrawal)
             self.assertIsInstance(withdrawal.id, str)
 
 

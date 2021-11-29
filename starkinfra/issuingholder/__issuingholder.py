@@ -3,7 +3,6 @@ from ..utils.resource import Resource
 from ..utils.checks import check_datetime
 
 
-
 class IssuingHolder(Resource):
     """# Issuing Holder object
     The Issuing Holder object displays the informations of Cards created to your Workspace.
@@ -12,8 +11,8 @@ class IssuingHolder(Resource):
     - tax_id [string]: card holder tax ID
     - external_id [string] card holder external ID
     ## Parameters (optional):
-    - rules [list of dictionaries, default None]: list of dictionaries with "amount": int, "currencyCode": string, "id": string, "interval": string, "name": string pairs
-    - tags [list of strings]: list of strings for tagging
+    - rules [list of IssuingRule, default None]: [EXPANDABLE] list of holder spending rules
+    - tags [list of strings]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when Balance is created. ex: "5656565656565656"
     - status [string, default None]: current Issuing Holder status. ex: "active", "blocked" or "canceled"
@@ -50,7 +49,7 @@ def create(holders, user=None):
     return rest.post_multi(resource=_resource, entities=holders, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, user=None):
+def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, expand=None, user=None):
     """# Retrieve Issuing Holders
     Receive a generator of Issuing Holder objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -60,7 +59,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     - status [string, default None]: filter for status of retrieved objects. ex: "paid" or "registered"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - expand [string, default NOne]: fields to to expand information. ex: "rules, securityCode, number, expiration"
+    - expand [string, default None]: fields to to expand information. ex: "rules"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of Issuing Holder objects with updated attributes
@@ -73,11 +72,12 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
         status=status,
         tags=tags,
         ids=ids,
+        expand=expand,
         user=user,
     )
 
 
-def page(limit=None, after=None, before=None, status=None, sort=None, tags=None, ids=None, cursor=None, user=None):
+def page(limit=None, after=None, before=None, status=None, sort=None, tags=None, ids=None, expand=None, cursor=None, user=None):
     """# Retrieve Issuing Holders
     Receive a list of Issuing Holder objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
@@ -87,7 +87,7 @@ def page(limit=None, after=None, before=None, status=None, sort=None, tags=None,
     - status [string, default None]: filter for status of retrieved objects. ex: "paid" or "registered"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - expand [string, default NOne]: fields to to expand information. ex: "rules, securityCode, number, expiration"
+    - expand [string, default None]: fields to to expand information. ex: "rules, securityCode, number, expiration"
     - cursor [string, default None]: cursor returned on the previous page function call
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
@@ -103,6 +103,7 @@ def page(limit=None, after=None, before=None, status=None, sort=None, tags=None,
         status=status,
         tags=tags,
         ids=ids,
+        expand=expand,
         cursor=cursor,
         user=user,
     )

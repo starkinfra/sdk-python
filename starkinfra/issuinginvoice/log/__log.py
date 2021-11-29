@@ -2,7 +2,7 @@ from ...utils import rest
 from ...utils.api import from_api_json
 from ...utils.resource import Resource
 from ...utils.checks import check_datetime, check_date
-from..__issuinginvoice import _resource as _issuing_holder_resource
+from..__issuinginvoice import _resource as _issuing_invoice_resource
 
 
 class Log(Resource):
@@ -19,15 +19,15 @@ class Log(Resource):
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, id, created, type, holder):
+    def __init__(self, id, created, type, invoice):
         Resource.__init__(self, id=id)
 
         self.type = type
-        self.holder = from_api_json(_issuing_holder_resource, holder)
+        self.invoice = from_api_json(_issuing_invoice_resource, invoice)
         self.created = check_datetime(created)
 
 
-_resource = {"class": Log, "name": "IssuingHolderLog"}
+_resource = {"class": Log, "name": "IssuingInvoiceLog"}
 
 
 def query(ids=None, types=None, after=None, before=None, limit=None, user=None):

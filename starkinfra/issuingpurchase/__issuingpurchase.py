@@ -8,9 +8,9 @@ class IssuingPurchase(Resource):
     Displays the Issuing Invoice objects created to your Workspace.
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when Balance is created. ex: "5656565656565656"
-    - holder_name [string]: card holder name.
+    - holder_name [string]: card holder name. ex: "Tony Stark"
     - card_id [string, default None]: unique id returned when Issuing Card is created. ex: "5656565656565656"
-    - card_ending [string, default None]: last 4 digits of the card number
+    - card_ending [string, default None]: last 4 digits of the card number. ex: "1234"
     - amount [string, default None]: Issuing Invoice value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
     - tax [string, default None]:
     - issuer_amount [string, default None]:
@@ -30,7 +30,7 @@ class IssuingPurchase(Resource):
     - issuing_transaction_ids [string, default None]: ledger transaction ids linked to this Purchase
     - end_to_end_id [string, default None]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     - status [string, default None]: current Issuing Card status. ex: "approved", "canceled", "denied", "confirmed" or "voided"
-    - tags [string, default None]: list of strings for tagging
+    - tags [string, default None]: list of strings for tagging. ex: ["travel", "food"]
     - updated [datetime.datetime, default None]: latest update datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime, default None]: creation datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """

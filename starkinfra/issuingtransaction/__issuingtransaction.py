@@ -11,9 +11,9 @@ class IssuingTransaction(Resource):
     - amount [string, default None]: Issuing Invoice value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
     - sub_issuer_id [string, default None]:
     - balance [integer, default None]: balance amount of the workspace at the instant of the Transaction in cents. ex: 200 (= R$ 2.00)
-    - description [string, default None]: Issuing Transaction description
-    - source [string, default None]: source of the transaction
-    - tags [string, default None]: list of strings for tagging
+    - description [string, default None]: Issuing Transaction description. ex: "Buying food"
+    - source [string, default None]: source of the transaction. ex: "issuing-purchase/5656565656565656"
+    - tags [string, default None]: list of strings for tagging ex: ["tony", "stark"]
     - created [datetime.datetime, default None]: creation datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 

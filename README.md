@@ -295,7 +295,7 @@ Here are a few examples on how to use the SDK. If you have any doubts, use the b
 
 ## Issuing
 
-### Query issuing transactions
+### Query Issuing Transactions
 
 To understand your balance changes (issuing statement), you can query
 transactions. Note that our system creates transactions for you when
@@ -312,7 +312,7 @@ for transaction in transactions:
     print(transaction)
 ```
 
-### Get an issuing transaction
+### Get an Issuing Transaction
 
 You can get a specific transaction by its id:
 
@@ -324,7 +324,7 @@ transaction = starkinfra.issuingtransaction.get("5155165527080960")
 print(transaction)
 ```
 
-### Get issuing balance
+### Get Issuing Balance
 
 To know how much money you have in your workspace, run:
 
@@ -336,7 +336,7 @@ balance = starkinfra.issuingbalance.get()
 print(balance)
 ```
 
-### Create issuing holders
+### Create Issuing Holders
 
 You can create card holders to your Workspace.
 
@@ -368,7 +368,7 @@ for holder in holders:
 
 **Note**: Instead of using IssuingHolder objects, you can also pass each transfer element in dictionary format
 
-### Query issuing holders
+### Query Issuing Holders
 
 You can query multiple transfers according to filters.
 
@@ -381,9 +381,9 @@ for holder in holders:
     print(holder)
 ```
 
-### Delete an issuing holder
+### Delete an Issuing Holder
 
-To cancel a single issuing holder by its id, run:
+To cancel a single Issuing Holder by its id, run:
 
 ```python
 import starkinfra
@@ -393,9 +393,9 @@ holder = starkinfra.issuingholder.delete("5155165527080960")
 print(holder)
 ```
 
-### Get an issuing holder
+### Get an Issuing Holder
 
-To get a single issuing holder by its id, run:
+To get a single Issuing Holder by its id, run:
 
 ```python
 import starkinfra
@@ -405,7 +405,7 @@ holder = starkinfra.issuingholder.get("5155165527080960")
 print(holder)
 ```
 
-### Query issuing holder logs
+### Query Issuing Holder logs
 
 You can query transfer logs to better understand transfer life cycles.
 
@@ -418,7 +418,7 @@ for log in logs:
     print(log.id)
 ```
 
-### Get an issuing holder log
+### Get an Issuing Holder log
 
 You can also get a specific log by its id.
 
@@ -430,7 +430,7 @@ log = starkinfra.issuingholder.log.get("5155165527080960")
 print(log)
 ```
 
-### Query issuing BINs
+### Query Issuing BINs
 
 To take a look at the sub-issuer BINs linked to your workspace, just run the following:
 
@@ -442,7 +442,7 @@ for bin in bins:
     print(bin)
 ```
 
-### Create issuing invoices
+### Create Issuing Invoices
 
 You can create dynamic QR Code invoices to receive money from accounts you have in other banks to your Issuing account.
 
@@ -468,7 +468,7 @@ for invoice in invoices:
 
 **Note**: Instead of using Invoice objects, you can also pass each invoice element in dictionary format
 
-### Get an issuing invoice
+### Get an Issuing Invoice
 
 After its creation, information on an invoice may be retrieved by its id. 
 Its status indicates whether it's been paid.
@@ -481,7 +481,7 @@ invoice = starkinfra.issuinginvoice.get("5155165527080960")
 print(invoice)
 ```
 
-### Query issuing invoices
+### Query Issuing Invoices
 
 You can get a list of created invoices given some filters.
 
@@ -498,7 +498,7 @@ for invoice in invoices:
     print(invoice)
 ```
 
-### Query issuing invoice logs
+### Query Issuing Invoice logs
 
 Logs are pretty important to understand the life cycle of an invoice.
 
@@ -511,7 +511,7 @@ for log in logs:
     print(log)
 ```
 
-### Get an issuing invoice log
+### Get an Issuing Invoice log
 
 You can get a single log by its id.
 
@@ -523,7 +523,7 @@ log = starkinfra.issuinginvoice.log.get("5155165527080960")
 print(log)
 ```
 
-### Create issuing withdrawals
+### Create Issuing Withdrawals
 
 You can create withdrawals to send back cash to your Banking account by using the Withdrawal resource
 
@@ -545,7 +545,7 @@ for withdrawal in withdrawals:
 
 **Note**: Instead of using Withdrawal objects, you can also pass each withdrawal element in dictionary format
 
-### Get an issuing withdrawal
+### Get an Issuing Withdrawal
 
 After its creation, information on an withdrawal may be retrieved by its id.
 
@@ -557,7 +557,7 @@ invoice = starkinfra.issuingwithdrawal.get("5155165527080960")
 print(invoice)
 ```
 
-### Query issuing withdrawals
+### Query Issuing Withdrawals
 
 You can get a list of created invoices given some filters.
 
@@ -574,7 +574,7 @@ for withdrawal in withdrawals:
     print(withdrawal)
 ```
 
-### Create issuing cards
+### Create Issuing Cards
 
 You can create boletos to charge customers or to receive money from accounts
 you have in other banks.
@@ -596,7 +596,7 @@ for card in cards:
     print(card)
 ```
 
-### Query issuing cards
+### Query Issuing Cards
 
 You can get a list of created cards given some filters.
 
@@ -613,7 +613,7 @@ for card in cards:
     print(card)
 ```
 
-### Get an issuing card
+### Get an Issuing Card
 
 After its creation, information on a card may be retrieved by its id.
 
@@ -625,7 +625,7 @@ card = starkinfra.issuingcard.get("5155165527080960")
 print(card)
 ```
 
-### Update an issuing card
+### Update an Issuing Card
 
 You can update a specific Issuing Card by its id.
 
@@ -637,7 +637,7 @@ card = starkinfra.issuingcard.update("5155165527080960", status="blocked")
 print(card)
 ```
 
-### Delete an issuing card
+### Delete an Issuing Card
 
 You can also cancel a card by its id.
 Note that this is not possible if it has been processed already.
@@ -650,7 +650,7 @@ card = starkinfra.issuingcard.delete("5155165527080960")
 print(card)
 ```
 
-### Query issuing card logs
+### Query Issuing Card logs
 
 Logs are pretty important to understand the life cycle of a card.
 
@@ -663,7 +663,7 @@ for log in logs:
     print(log)
 ```
 
-### Get an issuing card log
+### Get an Issuing Card log
 
 You can get a single log by its id.
 
@@ -676,7 +676,7 @@ print(log)
 ```
 
 
-### Query issuing purchases
+### Query Issuing Purchases
 
 You can get a list of created purchases given some filters.
 
@@ -693,7 +693,7 @@ for purchase in purchases:
     print(purchase)
 ```
 
-### Get an issuing purchase
+### Get an Issuing Purchase
 
 After its creation, information on a purchase may be retrieved by its id. 
 
@@ -705,7 +705,7 @@ purchase = starkinfra.issuingpurchase.get("5155165527080960")
 print(purchase)
 ```
 
-### Query issuing purchase logs
+### Query Issuing Purchase logs
 
 Logs are pretty important to understand the life cycle of a purchase.
 
@@ -718,7 +718,7 @@ for log in logs:
     print(log)
 ```
 
-### Get an issuing purchase log
+### Get an Issuing Purchase log
 
 You can get a single log by its id.
 

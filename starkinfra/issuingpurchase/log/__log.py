@@ -40,7 +40,7 @@ def get(id, user=None):
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - boleto.Log object with updated attributes
+    - issuingpurchase.Log object with updated attributes
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
@@ -53,7 +53,7 @@ def query(ids=None, purchase_ids=None, types=None, after=None, before=None, limi
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter for log event types. ex: "approved" or "denied"
-    - purchase_ids [list of strings, default None]: list of Boleto ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
+    - purchase_ids [list of strings, default None]: list of Purchase ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of issuingpurchase.Log objects with updated attributes

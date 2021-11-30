@@ -30,8 +30,8 @@ is as easy as sending a text message to your client!
         - [Balance](#get-issuing-balance): Account balance
         - [Holders](#create-issuing-holders): Wallet Card holders
         - [BINs](#query-issuing-bins): Account sub-issue BINs
-        - [Issuing Invoices](#create-issuing-invoices): Instutitions recognized by the Central Bank
-        - [Withdrawals](#create-issuing-withdrawals): send money back to your Stark Bank account
+        - [Issuing Invoices](#create-issuing-invoices): Charge your Issuing account
+        - [Withdrawals](#create-issuing-withdrawals): Send money back to your Stark Bank account
         - [Cards](#create-issuing-cards): Create virtual Cards
         - [Purchases](#query-issuing-purchases): View your past purchases
 - [Handling errors](#handling-errors)
@@ -81,7 +81,7 @@ Also, the rest of this setup is pretty much the same as the starkbank SDK, so if
 
 We use ECDSA. That means you need to generate a secp256k1 private
 key to sign your requests to our API, and register your public key
-with us so we can validate those requests.
+with us, so we can validate those requests.
 
 You can use one of following methods:
 
@@ -189,7 +189,7 @@ organization = starkinfra.Organization(
 
 # To dynamically use your organization credentials in a specific workspace_id,
 # you can use the Organization.replace() function:
-balance = starkinfra.issuingbalance.get(user=starkinfra.Organization.replace(organization, "4848484848484848")
+balance = starkinfra.issuingbalance.get(user=starkinfra.Organization.replace(organization, "4848484848484848"))
 ```
 
 NOTE 1: Never hard-code your private key. Get it from an environment variable or an encrypted database.
@@ -277,13 +277,13 @@ To simplify the following SDK examples, we will only use the `query` function, b
 # Testing in Sandbox
 
 Your initial balance is zero. For many operations in Stark Infra, you'll need funds
-in your account, which can be added to your balance by creating an Invoice or a Boleto. 
+in your account, which can be added to your balance by creating an Issuing Invoice. 
 
-In the Sandbox environment, most of the created Invoices and Boletos will be automatically paid,
+In the Sandbox environment, most of the created Invoices will be automatically paid,
 so there's nothing else you need to do to add funds to your account. Just create
 a few Invoices and wait around a bit.
 
-In Production, you (or one of your clients) will need to actually pay this Invoice or Boleto
+In Production, you (or one of your clients) will need to actually pay this Invoice
 for the value to be credited to your account.
 
 
@@ -299,7 +299,7 @@ Here are a few examples on how to use the SDK. If you have any doubts, use the b
 
 To understand your balance changes (issuing statement), you can query
 transactions. Note that our system creates transactions for you when
-you receive boleto payments, pay a bill or make transfers, for example.
+you make purchases, withdrawals, receive issuing invoice payments, for example.
 
 ```python
 import starkinfra
@@ -370,7 +370,7 @@ for holder in holders:
 
 ### Query Issuing Holders
 
-You can query multiple transfers according to filters.
+You can query multiple holders according to filters.
 
 ```python
 import starkinfra
@@ -407,7 +407,7 @@ print(holder)
 
 ### Query Issuing Holder logs
 
-You can query transfer logs to better understand transfer life cycles.
+You can query holder logs to better understand holder life cycles.
 
 ```python
 import starkinfra
@@ -457,7 +457,7 @@ Also, other banks will most likely only allow payment scheduling on invoices def
 import starkinfra
 
 invoices = starkinfra.issuinginvoice.create([
-    IssuingInvoice(
+    starkinfra.IssuingInvoice(
         amount=1000,
     )
 ])
@@ -511,18 +511,6 @@ for log in logs:
     print(log)
 ```
 
-### Get an Issuing Invoice log
-
-You can get a single log by its id.
-
-```python
-import starkinfra
-
-log = starkinfra.issuinginvoice.log.get("5155165527080960")
-
-print(log)
-```
-
 ### Create Issuing Withdrawals
 
 You can create withdrawals to send back cash to your Banking account by using the Withdrawal resource
@@ -547,7 +535,7 @@ for withdrawal in withdrawals:
 
 ### Get an Issuing Withdrawal
 
-After its creation, information on an withdrawal may be retrieved by its id.
+After its creation, information on a withdrawal may be retrieved by its id.
 
 ```python
 import starkinfra
@@ -576,8 +564,7 @@ for withdrawal in withdrawals:
 
 ### Create Issuing Cards
 
-You can create boletos to charge customers or to receive money from accounts
-you have in other banks.
+You can issue cards with specific spending rules to make purchases.
 
 ```python
 # coding: utf-8
@@ -585,11 +572,17 @@ import starkinfra
 
 
 cards = starkinfra.issuingcard.create([
-    {
-        "holderName": "Developers",
-        "holderTaxId": "012.345.678-90",
-        "holderExternalId": "1234"
-    }
+    starkinfra.IssuingCard(
+        holder_name="Developers",
+        holder_tax_id="012.345.678-90",
+        holder_external_id="1234",
+        rules=starkinfra.IssuingRule(
+            name="general",
+            interval="week",
+            amount=50000,
+            currency_code="USD"
+        )
+    )
 ])
 
 for card in cards:

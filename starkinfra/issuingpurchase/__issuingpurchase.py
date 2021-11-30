@@ -7,7 +7,7 @@ class IssuingPurchase(Resource):
     """# Issuing Purchase object
     Displays the Issuing Invoice objects created to your Workspace.
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when Balance is created. ex: "5656565656565656"
+    - id [string, default None]: unique id returned when Issuing Transaction is created. ex: "5656565656565656"
     - holder_name [string]: card holder name. ex: "Tony Stark"
     - card_id [string, default None]: unique id returned when Issuing Card is created. ex: "5656565656565656"
     - card_ending [string, default None]: last 4 digits of the card number. ex: "1234"

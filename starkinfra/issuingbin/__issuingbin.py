@@ -4,7 +4,7 @@ from ..utils import rest
 
 class IssuingBin(Resource):
     """# IssuingBin object
-    The IssuingBalance object displays the informations of BINs registered to your Workspace.
+    The IssuingBin object displays the informations of BINs registered to your Workspace.
     ## Attributes (return-only):
     - id [string, default None]: unique BIN number registered within the card network. ex: "53810200"
     - network [string, default None]: card network flag. ex: "mastercard"

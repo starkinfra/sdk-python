@@ -13,7 +13,7 @@ class IssuingWithdrawal(Resource):
     ## Parameters (optional):
     - tags [list of strings]: list of strings for tagging. ex: ["tony", "stark"]
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when Balance is created. ex: "5656565656565656"
+    - id [string, default None]: unique id returned when Issuing Withdrawal is created. ex: "5656565656565656"
     - transaction_id [string, default None]: Stark Bank ledger transaction ids linked to this Issuing Withdrawal
     - issuing_transaction_id [string, default None]: issuing ledger transaction ids linked to this Issuing Withdrawal
     - updated [datetime.datetime, default None]: latest update datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)

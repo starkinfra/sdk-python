@@ -4,8 +4,8 @@ from ..utils.checks import check_datetime
 
 
 class IssuingHolder(Resource):
-    """# Issuing Holder object
-    The Issuing Holder object displays the informations of Cards created to your Workspace.
+    """# IssuingHolder object
+    The IssuingHolder object displays the informations of Cards created to your Workspace.
     ## Parameters (required):
     - name [string]: card holder name.
     - tax_id [string]: card holder tax ID
@@ -14,10 +14,10 @@ class IssuingHolder(Resource):
     - rules [list of IssuingRule, default None]: [EXPANDABLE] list of holder spending rules
     - tags [list of strings]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when Issuing Holder is created. ex: "5656565656565656"
-    - status [string, default None]: current Issuing Holder status. ex: "active", "blocked" or "canceled"
-    - updated [datetime.datetime, default None]: latest update datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - created [datetime.datetime, default None]: creation datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - id [string, default None]: unique id returned when IssuingHolder is created. ex: "5656565656565656"
+    - status [string, default None]: current IssuingHolder status. ex: "active", "blocked" or "canceled"
+    - updated [datetime.datetime, default None]: latest update datetime for the IssuingHolder. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - created [datetime.datetime, default None]: creation datetime for the IssuingHolder. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, id=None, external_id=None, name=None, rules=None, status=None, tags=None, tax_id=None,
@@ -37,34 +37,34 @@ _resource = {"class": IssuingHolder, "name": "IssuingHolder"}
 
 
 def create(holders, user=None):
-    """# Create Issuing Holder
-    Send a list of Issuing Holder objects for creation in the Stark Infra API
+    """# Create IssuingHolder
+    Send a list of IssuingHolder objects for creation in the Stark Infra API
     ## Parameters (required):
-    - holders [list of Issuing Holder objects]: list of Issuing Holder objects to be created in the API
+    - holders [list of IssuingHolder objects]: list of IssuingHolder objects to be created in the API
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - list of Issuing Holder objects with updated attributes
+    - list of IssuingHolder objects with updated attributes
     """
     return rest.post_multi(resource=_resource, entities=holders, user=user)
 
 
 def get(id, user=None):
-    """# Retrieve a specific Issuing Holder
-    Receive a single Issuing Holder object previously created in the Stark Infra API by its id
+    """# Retrieve a specific IssuingHolder
+    Receive a single IssuingHolder object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - Issuing Holder object with updated attributes
+    - IssuingHolder object with updated attributes
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, expand=None, user=None):
-    """# Retrieve Issuing Holders
-    Receive a generator of Issuing Holder objects previously created in the Stark Infra API
+    """# Retrieve IssuingHolders
+    Receive a generator of IssuingHolder objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
@@ -75,7 +75,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     - expand [string, default None]: fields to to expand information. ex: "rules"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - generator of Issuing Holder objects with updated attributes
+    - generator of IssuingHolder objects with updated attributes
     """
     return rest.get_stream(
         resource=_resource,
@@ -91,7 +91,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
 
 
 def page(limit=None, after=None, before=None, status=None, sort=None, tags=None, ids=None, expand=None, cursor=None, user=None):
-    """# Retrieve Issuing Holders
+    """# Retrieve IssuingHolders
     Receive a list of Issuing Holder objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35

@@ -11,31 +11,26 @@ class IssuingRule(Resource):
     - interval [string, default None]: interval to reset the counters of the rule. ex: "instant", "day", "week", "month", "year" or "lifetime"
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when Rule is created. ex: "5656565656565656"
-    - counter [string, default None]: current counter of purchases within informed interval. ex: 10
     - currency_code [string, default None]: code of the currency used by the rule. ex: "BRL" or "USD"
-    - merchant_ids [list of strings, default []]: merchant IDs used by the rule. ex: ["5656565656565656"]
     ## Attributes (expanded return-only):
-    - categories [list of strings, default []]: merchant categories accepted by the rule. ex: ["eatingPlacesRestaurants", "travelAgenciesTourOperators"]
     - counter_amount [integer, default None:
-    - countries [list of strings, default []]: countries accepted by the rule. ex: ["BRA", "USA"]
     - currency_name [string, default None: currency name. ex: "Brazilian Real"
     - currency_symbol [string, default None: currency symbol. ex: "R$"
+    - categories [list of strings, default []]: merchant categories accepted by the rule. ex: ["eatingPlacesRestaurants", "travelAgenciesTourOperators"]
+    - countries [list of strings, default []]: countries accepted by the rule. ex: ["BRA", "USA"]
     - methods [list of strings, default []]: methods accepted by the rule. ex: ["contactless", "token"]
     """
 
-    def __init__(self, id=None, counter=None, name=None, amount=None, currency_code=None, interval=None,
-                 categories=None, merchant_ids=None, countries=None, methods=None, counter_amount=None,
-                 currency_name=None, currency_symbol=None):
+    def __init__(self, id=None, name=None, interval=None, amount=None, currency_code=None, counter_amount=None,
+                 currency_name=None, currency_symbol=None, categories=None, countries=None, methods=None):
         super().__init__(id)
-        self.counter = counter
         self.name = name
+        self.interval = interval
         self.amount = amount
         self.currency_code = currency_code
-        self.interval = interval
-        self.categories = categories
-        self.merchant_ids = merchant_ids
-        self.countries = countries
-        self.methods = methods
         self.counter_amount = counter_amount
         self.currency_name = currency_name
         self.currency_symbol = currency_symbol
+        self.categories = categories
+        self.countries = countries
+        self.methods = methods

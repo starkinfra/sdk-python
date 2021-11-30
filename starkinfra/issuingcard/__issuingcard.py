@@ -23,15 +23,15 @@ class IssuingCard(Resource):
     - state_code [string, default None]: card holder address state. ex: "GO"
     - zip_code [string]: card holder address zip code. ex: "01311-200"
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when Issuing Card is created. ex: "5656565656565656"
+    - id [string, default None]: unique id returned when IssuingCard is created. ex: "5656565656565656"
     - holder_id [string, default None]: card holder unique id. ex: "5656565656565656"
     - type [string, default None]: card type. ex: "virtual"
-    - status [string, default None]: current Issuing Card status. ex: "canceled" or "active"
+    - status [string, default None]: current IssuingCard status. ex: "canceled" or "active"
     - number [string, default None]: [EXPANDABLE] masked card number. ex: "1234 5678 1234 5678"
     - security_code [string, default None]: [EXPANDABLE] masked card verification value (cvv). Expand to unmask the value. ex: "123".
     - expiration [string, default None]: [EXPANDABLE] masked card expiration datetime. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - updated [datetime.datetime, default None]: latest update datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - created [datetime.datetime, default None]: creation datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - updated [datetime.datetime, default None]: latest update datetime for the IssuingCard. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - created [datetime.datetime, default None]: creation datetime for the IssuingCard. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, holder_name, holder_tax_id, holder_external_id, id=None, holder_id=None, type=None, display_name=None, status=None,
@@ -66,22 +66,22 @@ _resource = {"class": IssuingCard, "name": "IssuingCard"}
 
 
 def create(cards, expand=None, user=None):
-    """# Create Issuing Cards
-    Send a list of Issuing Card objects for creation in the Stark Infra API
+    """# Create IssuingCards
+    Send a list of IssuingCard objects for creation in the Stark Infra API
     ## Parameters (required):
-    - cards [list of IssuingCard objects]: list of Issuing Card objects to be created in the API
+    - cards [list of IssuingCard objects]: list of IssuingCard objects to be created in the API
     ## Parameters (optional):
     - expand [list of strings, default []]: fields to to expand information. ex: ["rules", "security_code", "number", "expiration"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - list of Issuing Card objects with updated attributes
+    - list of IssuingCard objects with updated attributes
     """
     return rest.post_multi(resource=_resource, entities=cards, expand=expand, user=user)
 
 
 def query(status=None, types=None, holder_ids=None, after=None, before=None, tags=None, ids=None, limit=None, expand=None, user=None):
-    """# Retrieve Issuing Cards
-    Receive a generator of Issuing Cards objects previously created in the Stark Infra API
+    """# Retrieve IssuingCards
+    Receive a generator of IssuingCards objects previously created in the Stark Infra API
     ## Parameters (optional):
     - status [string, default None]: filter for status of retrieved objects. ex: "paid" or "registered"
     - types [string, default None]: card type. ex: "virtual"
@@ -94,7 +94,7 @@ def query(status=None, types=None, holder_ids=None, after=None, before=None, tag
     - expand [list of strings, default []]: fields to to expand information. ex: ["rules", "security_code", "number", "expiration"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - generator of Issuing Cards objects with updated attributes
+    - generator of IssuingCards objects with updated attributes
     """
     return rest.get_stream(
         resource=_resource,

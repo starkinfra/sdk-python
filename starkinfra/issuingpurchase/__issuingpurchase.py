@@ -4,24 +4,24 @@ from ..utils.checks import check_datetime
 
 
 class IssuingPurchase(Resource):
-    """# Issuing Purchase object
-    Displays the Issuing Invoice objects created to your Workspace.
+    """# IssuingPurchase object
+    Displays the IssuingPurchase objects created to your Workspace.
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when Issuing Purchase is created. ex: "5656565656565656"
+    - id [string, default None]: unique id returned when IssuingPurchase is created. ex: "5656565656565656"
     - holder_name [string]: card holder name. ex: "Tony Stark"
-    - card_id [string, default None]: unique id returned when Issuing Card is created. ex: "5656565656565656"
+    - card_id [string, default None]: unique id returned when IssuingCard is created. ex: "5656565656565656"
     - card_ending [string, default None]: last 4 digits of the card number. ex: "1234"
-    - amount [integer, default None]: Issuing Invoice value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
-    - tax [string, default None]:
-    - issuer_amount [integer, default None]:
+    - amount [integer, default None]: IssuingInvoice value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
+    - tax [integer, default 0]: IOF amount taxed for international purchases. ex: 1234 (= R$ 12.34)
+    - issuer_amount [integer, default None]: issuer amount. ex: 1234 (= R$ 12.34)
     - issuer_currency_code [string, default None]: issuer currency code. ex: "USD"
     - issuer_currency_symbol [string, default None]: issuer currency symbol. ex: "$"
-    - merchant_amount [integer, default None]:
+    - merchant_amount [integer, default None]: merchant amount. ex: 1234 (= R$ 12.34)
     - merchant_currency_code [string, default None]: merchant currency code. ex: "USD"
     - merchant_currency_symbol [string, default None]: merchant currency symbol. ex: "$"
     - merchant_category_code [string, default None]: merchant category code. ex: "eatingPlacesRestaurants"
     - merchant_country_code [string, default None]: merchant country code. ex: "USA"
-    - acquirer_id [string, default None]: acquire ID. ex: "5656565656565656"
+    - acquirer_id [string, default None]: acquirer ID. ex: "5656565656565656"
     - merchant_id [string, default None]: merchant ID. ex: "5656565656565656"
     - merchant_name [string, default None]: merchant name. ex: "Google Cloud Platform"
     - wallet_id [string, default None]: virtual wallet ID. ex: "5656565656565656"
@@ -29,10 +29,10 @@ class IssuingPurchase(Resource):
     - score [float, default 0.0]: internal score calculated for the authenticity of the purchase. ex: 7.6
     - issuing_transaction_ids [string, default None]: ledger transaction ids linked to this Purchase
     - end_to_end_id [string, default None]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
-    - status [string, default None]: current Issuing Card status. ex: "approved", "canceled", "denied", "confirmed" or "voided"
+    - status [string, default None]: current IssuingCard status. ex: "approved", "canceled", "denied", "confirmed" or "voided"
     - tags [string, default None]: list of strings for tagging. ex: ["travel", "food"]
-    - updated [datetime.datetime, default None]: latest update datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - created [datetime.datetime, default None]: creation datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - updated [datetime.datetime, default None]: latest update datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - created [datetime.datetime, default None]: creation datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, id, holder_name, card_id, card_ending, amount, tax, issuer_amount, issuer_currency_code,
@@ -71,22 +71,22 @@ _resource = {"class": IssuingPurchase, "name": "IssuingPurchase"}
 
 
 def get(id, user=None):
-    """# Retrieve a specific Issuing Purchase
-    Receive a single Issuing Purchase object previously created in the Stark Bank API by its id
+    """# Retrieve a specific IssuingPurchase
+    Receive a single IssuingPurchase object previously created in the Stark Bank API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - Issuing Purchase object with updated attributes
+    - IssuingPurchase object with updated attributes
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after=None, before=None, ids=None,
           limit=None, user=None):
-    """# Retrieve Issuing Purchase
-    Receive a generator of Issuing Invoices objects previously created in the Stark Infra API
+    """# Retrieve IssuingPurchase
+    Receive a generator of IssuingInvoices objects previously created in the Stark Infra API
     ## Parameters (optional):
     - end_to_end_ids [list of strings, default []]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     - holder_ids [list of strings, default []]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]

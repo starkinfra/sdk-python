@@ -4,17 +4,17 @@ from ..utils.checks import check_datetime
 
 
 class IssuingTransaction(Resource):
-    """# Issuing Transaction object
-    Displays the Issuing Transaction objects created to your Workspace.
+    """# IssuingTransaction object
+    Displays the IssuingTransaction objects created to your Workspace.
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when Issuing Transaction is created. ex: "5656565656565656"
-    - amount [integer, default None]: Issuing Invoice value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
+    - id [string, default None]: unique id returned when IssuingTransaction is created. ex: "5656565656565656"
+    - amount [integer, default None]: IssuingInvoice value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
     - sub_issuer_id [string, default None]:
     - balance [integer, default None]: balance amount of the workspace at the instant of the Transaction in cents. ex: 200 (= R$ 2.00)
-    - description [string, default None]: Issuing Transaction description. ex: "Buying food"
+    - description [string, default None]: IssuingTransaction description. ex: "Buying food"
     - source [string, default None]: source of the transaction. ex: "issuing-purchase/5656565656565656"
     - tags [string, default None]: list of strings for tagging ex: ["tony", "stark"]
-    - created [datetime.datetime, default None]: creation datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - created [datetime.datetime, default None]: creation datetime for the IssuingTransaction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, id, amount, sub_issuer_id, balance, created, description, source, tags):
@@ -32,22 +32,22 @@ _resource = {"class": IssuingTransaction, "name": "IssuingTransaction"}
 
 
 def get(id, user=None):
-    """# Retrieve a specific Issuing Transaction
-    Receive a single Issuing Transaction object previously created in the Stark Bank API by its id
+    """# Retrieve a specific IssuingTransaction
+    Receive a single IssuingTransaction object previously created in the Stark Bank API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - Issuing Transaction object with updated attributes
+    - IssuingTransaction object with updated attributes
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(source=None, tags=None, external_ids=None, after=None, before=None,
           ids=None, limit=None, user=None):
-    """# Retrieve Issuing Transaction
-    Receive a generator of Issuing Transaction objects previously created in the Stark Infra API
+    """# Retrieve IssuingTransaction
+    Receive a generator of IssuingTransaction objects previously created in the Stark Infra API
     ## Parameters (optional):
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - external_ids [list of strings, default []]: external IDs. ex: ["5656565656565656", "4545454545454545"]
@@ -58,7 +58,7 @@ def query(source=None, tags=None, external_ids=None, after=None, before=None,
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - generator of Issuing Transaction objects with updated attributes
+    - generator of IssuingTransaction objects with updated attributes
     """
     return rest.get_stream(
         resource=_resource,
@@ -75,8 +75,8 @@ def query(source=None, tags=None, external_ids=None, after=None, before=None,
 
 def page(source=None, tags=None, external_ids=None, after=None, before=None,
          ids=None, limit=None, cursor=None, user=None):
-    """# Retrieve paged Issuing Transaction
-    Receive a list of Issuing Transaction objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged IssuingTransaction
+    Receive a list of IssuingTransaction objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - external_ids [list of strings, default []]: external IDs. ex: ["5656565656565656", "4545454545454545"]
@@ -88,8 +88,8 @@ def page(source=None, tags=None, external_ids=None, after=None, before=None,
     - cursor [string, default None]: cursor returned on the previous page function call
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - list of Issuing Transaction objects with updated attributes
-    - cursor to retrieve the next page of Issuing Purchase objects
+    - list of IssuingTransaction objects with updated attributes
+    - cursor to retrieve the next page of IssuingPurchase objects
     """
     return rest.get_page(
         resource=_resource,

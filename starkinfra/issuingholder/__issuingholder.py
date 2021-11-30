@@ -14,7 +14,7 @@ class IssuingHolder(Resource):
     - rules [list of IssuingRule, default None]: [EXPANDABLE] list of holder spending rules
     - tags [list of strings]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when Balance is created. ex: "5656565656565656"
+    - id [string, default None]: unique id returned when Issuing Holder is created. ex: "5656565656565656"
     - status [string, default None]: current Issuing Holder status. ex: "active", "blocked" or "canceled"
     - updated [datetime.datetime, default None]: latest update datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime, default None]: creation datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)

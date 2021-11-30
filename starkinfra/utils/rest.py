@@ -8,6 +8,9 @@ def relaySettings(func):
         starkbank.user = starkinfra.user
         starkbank.language = starkinfra.language
         starkbank.timeout = starkinfra.timeout
+        # kwargs["user"] = kwargs.get("user") or starkinfra.user
+        # kwargs["timeout"] = kwargs.get("timeout") or starkinfra.timeout
+        # kwargs["language"] = kwargs.get("language") or starkinfra.language
         return func(*args, **kwargs)
     return wrapper
 

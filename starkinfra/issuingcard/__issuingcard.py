@@ -113,8 +113,8 @@ def query(status=None, types=None, holder_ids=None, after=None, before=None, tag
 
 def page(status=None, types=None, holder_ids=None, after=None, before=None, tags=None, ids=None,
          limit=None, cursor=None, expand=None, user=None):
-    """# Retrieve paged Issuing Cards
-    Receive a list of Issuing Cards objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged IssuingCards
+    Receive a list of IssuingCards objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - status [string, default None]: filter for status of retrieved objects. ex: "paid" or "registered"
     - types [string, default None]: card type. ex: "virtual"
@@ -128,8 +128,8 @@ def page(status=None, types=None, holder_ids=None, after=None, before=None, tags
     - expand [list of strings, default []]: fields to to expand information. ex: ["rules", "security_code", "number", "expiration"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - list of Issuing Cards objects with updated attributes
-    - cursor to retrieve the next page of Issuing Cards objects
+    - list of IssuingCards objects with updated attributes
+    - cursor to retrieve the next page of IssuingCards objects
     """
     return rest.get_page(
         resource=_resource,
@@ -148,31 +148,31 @@ def page(status=None, types=None, holder_ids=None, after=None, before=None, tags
 
 
 def get(id, expand=None, user=None):
-    """# Retrieve a specific Issuing Cards
-    Receive a single Issuing Cards object previously created in the Stark Infra API by its id
+    """# Retrieve a specific IssuingCards
+    Receive a single IssuingCards object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - Issuing Cards object with updated attributes
+    - IssuingCards object with updated attributes
     """
     return rest.get_id(resource=_resource, id=id, expand=expand, user=user)
 
 
 def update(id, status=None, display_name=None, rules=None, tags=None, user=None):
-    """# Update Issuing Card entity
-    Update an Issuing Card by passing id.
+    """# Update IssuingCard entity
+    Update an IssuingCard by passing id.
     ## Parameters (required):
-    - id [string]: Issuing Card id. ex: '5656565656565656'
+    - id [string]: IssuingCard id. ex: '5656565656565656'
     ## Parameters (optional):
-    - status [string]: You may block the Issuing Card by passing 'blocked' in the status
+    - status [string]: You may block the IssuingCard by passing 'blocked' in the status
     - display_name [string, default None]: card displayed name
     - rules [list of dictionaries, default None]: list of dictionaries with "amount": int, "currencyCode": string, "id": string, "interval": string, "name": string pairs.
     - tags [list of strings]: list of strings for tagging
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - target Issuing Card with updated attributes
+    - target IssuingCard with updated attributes
     """
     payload = {
         "status": status,
@@ -184,13 +184,13 @@ def update(id, status=None, display_name=None, rules=None, tags=None, user=None)
 
 
 def delete(id, user=None):
-    """# Delete a Issuing Card entity
-    Delete a Issuing Card entity previously created in the Stark Infra API
+    """# Delete a IssuingCard entity
+    Delete a IssuingCard entity previously created in the Stark Infra API
     ## Parameters (required):
-    - id [string]: Issuing Card unique id. ex: "5656565656565656"
+    - id [string]: IssuingCard unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - deleted Issuing Card object
+    - deleted IssuingCard object
     """
     return rest.delete_id(resource=_resource, id=id, user=user)

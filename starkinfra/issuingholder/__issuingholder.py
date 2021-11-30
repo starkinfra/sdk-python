@@ -92,7 +92,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
 
 def page(limit=None, after=None, before=None, status=None, sort=None, tags=None, ids=None, expand=None, cursor=None, user=None):
     """# Retrieve IssuingHolders
-    Receive a list of Issuing Holder objects previously created in the Stark Infra API and the cursor to the next page.
+    Receive a list of IssuingHolder objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
@@ -104,8 +104,8 @@ def page(limit=None, after=None, before=None, status=None, sort=None, tags=None,
     - cursor [string, default None]: cursor returned on the previous page function call
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - list of Issuing Holder objects with updated attributes
-    - cursor to retrieve the next page of Issuing Cards objects
+    - list of IssuingHolder objects with updated attributes
+    - cursor to retrieve the next page of IssuingHolder objects
     """
     return rest.get_page(
         resource=_resource,
@@ -123,18 +123,18 @@ def page(limit=None, after=None, before=None, status=None, sort=None, tags=None,
 
 
 def update(id, status=None, name=None, rules=None, tags=None, user=None):
-    """# Update Issuing Holder entity
-    Update an Issuing Holder by passing id, if it hasn't been paid yet.
+    """# Update IssuingHolder entity
+    Update an IssuingHolder by passing id, if it hasn't been paid yet.
     ## Parameters (required):
-    - id [string]: Issuing Holder id. ex: '5656565656565656'
+    - id [string]: IssuingHolder id. ex: '5656565656565656'
     ## Parameters (optional):
-    - status [string]: You may block the Issuing Holder by passing 'blocked' in the status
+    - status [string]: You may block the IssuingHolder by passing 'blocked' in the status
     - name [string]: card holder name.
     - tags [list of strings]: list of strings for tagging
     - rules [list of dictionaries, default None]: list of dictionaries with "amount": int, "currencyCode": string, "id": string, "interval": string, "name": string pairs
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - target Issuing Holder with updated attributes
+    - target IssuingHolder with updated attributes
     """
     payload = {
         "status": status,
@@ -146,13 +146,13 @@ def update(id, status=None, name=None, rules=None, tags=None, user=None):
 
 
 def delete(id, user=None):
-    """# Delete a Issuing Holder entity
-    Delete a Issuing Holder entity previously created in the Stark Infra API
+    """# Delete a IssuingHolder entity
+    Delete a IssuingHolder entity previously created in the Stark Infra API
     ## Parameters (required):
-    - id [string]: Issuing Holder unique id. ex: "5656565656565656"
+    - id [string]: IssuingHolder unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - deleted Issuing Holder object
+    - deleted IssuingHolder object
     """
     return rest.delete_id(resource=_resource, id=id, user=user)

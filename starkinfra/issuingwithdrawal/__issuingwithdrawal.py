@@ -15,7 +15,7 @@ class IssuingWithdrawal(Resource):
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when IssuingWithdrawal is created. ex: "5656565656565656"
     - transaction_id [string, default None]: Stark Bank ledger transaction ids linked to this IssuingWithdrawal
-    - issuing_transaction_id [string, default None]: issuing ledger transaction ids linked to this Issuing Withdrawal
+    - issuing_transaction_id [string, default None]: issuing ledger transaction ids linked to this IssuingWithdrawal
     - updated [datetime.datetime, default None]: latest update datetime for the IssuingWithdrawal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime, default None]: creation datetime for the IssuingWithdrawal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -73,7 +73,7 @@ def query(external_ids=None, after=None, before=None, limit=None, tags=None, use
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - generator of IssuingInvoices objects with updated attributes
+    - generator of IssuingWithdrawals objects with updated attributes
     """
     return rest.get_stream(
         resource=_resource,
@@ -87,8 +87,8 @@ def query(external_ids=None, after=None, before=None, limit=None, tags=None, use
 
 
 def page(external_ids=None, after=None, before=None, limit=None, tags=None, cursor=None, user=None):
-    """# Retrieve Issuing Withdrawal
-    Receive a list of Issuing Withdrawal objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve IssuingWithdrawal
+    Receive a list of IssuingWithdrawal objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - external_ids [list of strings, default []]: external IDs. ex: ["5656565656565656", "4545454545454545"]
@@ -97,8 +97,8 @@ def page(external_ids=None, after=None, before=None, limit=None, tags=None, curs
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - list of Issuing Withdrawal objects with updated attributes
-    - cursor to retrieve the next page of Issuing Withdrawal objects
+    - list of IssuingWithdrawal objects with updated attributes
+    - cursor to retrieve the next page of IssuingWithdrawal objects
     """
     return rest.get_page(
         resource=_resource,

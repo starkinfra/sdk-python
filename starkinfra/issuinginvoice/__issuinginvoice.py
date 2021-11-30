@@ -75,7 +75,7 @@ def query(status=None, after=None, before=None, tags=None, limit=None, user=None
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - generator of Issuing Invoices objects with updated attributes
+    - generator of IssuingInvoices objects with updated attributes
     """
     return rest.get_stream(
         resource=_resource,
@@ -89,8 +89,8 @@ def query(status=None, after=None, before=None, tags=None, limit=None, user=None
 
 
 def page(status=None, after=None, before=None, tags=None, limit=None, cursor=None, user=None):
-    """# Retrieve Issuing Holders
-    Receive a list of Issuing Holder objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve IssuingInvoices
+    Receive a list of IssuingInvoices objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
@@ -100,8 +100,8 @@ def page(status=None, after=None, before=None, tags=None, limit=None, cursor=Non
     - cursor [string, default None]: cursor returned on the previous page function call
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - list of Issuing Holder objects with updated attributes
-    - cursor to retrieve the next page of Issuing Cards objects
+    - list of IssuingInvoices objects with updated attributes
+    - cursor to retrieve the next page of IssuingInvoices objects
     """
     return rest.get_page(
         resource=_resource,

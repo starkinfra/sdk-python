@@ -11,7 +11,7 @@ class IssuingPurchase(Resource):
     - holder_name [string]: card holder name. ex: "Tony Stark"
     - card_id [string, default None]: unique id returned when IssuingCard is created. ex: "5656565656565656"
     - card_ending [string, default None]: last 4 digits of the card number. ex: "1234"
-    - amount [integer, default None]: IssuingInvoice value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
+    - amount [integer, default None]: IssuingPurchase value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
     - tax [integer, default 0]: IOF amount taxed for international purchases. ex: 1234 (= R$ 12.34)
     - issuer_amount [integer, default None]: issuer amount. ex: 1234 (= R$ 12.34)
     - issuer_currency_code [string, default None]: issuer currency code. ex: "USD"
@@ -86,7 +86,7 @@ def get(id, user=None):
 def query(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after=None, before=None, ids=None,
           limit=None, user=None):
     """# Retrieve IssuingPurchase
-    Receive a generator of IssuingInvoices objects previously created in the Stark Infra API
+    Receive a generator of IssuingPurchases objects previously created in the Stark Infra API
     ## Parameters (optional):
     - end_to_end_ids [list of strings, default []]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     - holder_ids [list of strings, default []]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
@@ -99,7 +99,7 @@ def query(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, afte
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - generator of Issuing Purchase objects with updated attributes
+    - generator of IssuingPurchase objects with updated attributes
     """
     return rest.get_stream(
         resource=_resource,
@@ -117,8 +117,8 @@ def query(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, afte
 
 def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after=None, before=None, ids=None,
          cursor=None, limit=None, user=None):
-    """# Retrieve paged Issuing Purchase
-    Receive a list of Issuing Purchase objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged IssuingPurchase
+    Receive a list of IssuingPurchase objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - end_to_end_ids [list of strings, default []]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     - holder_ids [list of strings, default []]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
@@ -132,8 +132,8 @@ def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after
     - cursor [string, default None]: cursor returned on the previous page function call
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - list of Issuing Purchase objects with updated attributes
-    - cursor to retrieve the next page of Issuing Purchase objects
+    - list of IssuingPurchase objects with updated attributes
+    - cursor to retrieve the next page of IssuingPurchase objects
     """
     return rest.get_page(
         resource=_resource,

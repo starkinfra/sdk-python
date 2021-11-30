@@ -8,7 +8,7 @@ class IssuingTransaction(Resource):
     Displays the IssuingTransaction objects created to your Workspace.
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when IssuingTransaction is created. ex: "5656565656565656"
-    - amount [integer, default None]: IssuingInvoice value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
+    - amount [integer, default None]: IssuingTransaction value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
     - sub_issuer_id [string, default None]:
     - balance [integer, default None]: balance amount of the workspace at the instant of the Transaction in cents. ex: 200 (= R$ 2.00)
     - description [string, default None]: IssuingTransaction description. ex: "Buying food"

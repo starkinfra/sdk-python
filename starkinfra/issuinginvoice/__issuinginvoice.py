@@ -13,7 +13,7 @@ class IssuingInvoice(Resource):
     - name [string]: payer name. ex: "Iron Bank S.A."
     - tags [list of strings]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when Balance is created. ex: "5656565656565656"
+    - id [string, default None]: unique id returned when Invoice is created. ex: "5656565656565656"
     - status [string, default None]: current Issuing Holder status. ex: "active", "blocked" or "canceled"
     - issuing_transaction_id [string, default None]: ledger transaction ids linked to this Issuing Invoice. ex: "issuing-invoice/5656565656565656"
     - updated [datetime.datetime, default None]: latest update datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)

@@ -11,12 +11,12 @@ class IssuingPurchase(Resource):
     - holder_name [string]: card holder name. ex: "Tony Stark"
     - card_id [string, default None]: unique id returned when Issuing Card is created. ex: "5656565656565656"
     - card_ending [string, default None]: last 4 digits of the card number. ex: "1234"
-    - amount [string, default None]: Issuing Invoice value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
+    - amount [integer, default None]: Issuing Invoice value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
     - tax [string, default None]:
-    - issuer_amount [string, default None]:
+    - issuer_amount [integer, default None]:
     - issuer_currency_code [string, default None]:
     - issuer_currency_symbol [string, default None]:
-    - merchant_amount [string, default None]:
+    - merchant_amount [integer, default None]:
     - merchant_currency_code [string, default None]: merchant currency code. ex: "USD"
     - merchant_currency_symbol [string, default None]: merchant currency symbol. ex: "$"
     - merchant_category_code [string, default None]: merchant category code. ex: "eatingPlacesRestaurants"

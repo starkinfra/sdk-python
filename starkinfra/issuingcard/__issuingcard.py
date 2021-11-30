@@ -27,9 +27,9 @@ class IssuingCard(Resource):
     - holder_id [string, default None]: card holder unique id. ex: "5656565656565656"
     - type [string, default None]: card type. ex: "virtual"
     - status [string, default None]: current Issuing Card status. ex: "canceled" or "active"
-    - number [string, default None]: [EXPANDABLE] card number. ex: "1234 5678 1234 5678"
+    - number [string, default None]: [EXPANDABLE] masked card number. ex: "1234 5678 1234 5678"
     - security_code [string, default None]: [EXPANDABLE] masked card verification value (cvv). Expand to unmask the value. ex: "123".
-    - expiration [string, default None]: [EXPANDABLE] expiration datetime for the Card. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - expiration [string, default None]: [EXPANDABLE] masked card expiration datetime. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime, default None]: latest update datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime, default None]: creation datetime for the bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """

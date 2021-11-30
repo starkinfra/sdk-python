@@ -14,19 +14,19 @@ class IssuingPurchase(Resource):
     - amount [integer, default None]: Issuing Invoice value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
     - tax [string, default None]:
     - issuer_amount [integer, default None]:
-    - issuer_currency_code [string, default None]:
-    - issuer_currency_symbol [string, default None]:
+    - issuer_currency_code [string, default None]: issuer currency code. ex: "USD"
+    - issuer_currency_symbol [string, default None]: issuer currency symbol. ex: "$"
     - merchant_amount [integer, default None]:
     - merchant_currency_code [string, default None]: merchant currency code. ex: "USD"
     - merchant_currency_symbol [string, default None]: merchant currency symbol. ex: "$"
     - merchant_category_code [string, default None]: merchant category code. ex: "eatingPlacesRestaurants"
     - merchant_country_code [string, default None]: merchant country code. ex: "USA"
-    - acquirer_id [string, default None]: acquire ID
-    - merchant_id [string, default None]: merchant ID
-    - merchant_name [string, default None]: merchant name
-    - wallet_id [string, default None]: virtual wallet ID
+    - acquirer_id [string, default None]: acquire ID. ex: "5656565656565656"
+    - merchant_id [string, default None]: merchant ID. ex: "5656565656565656"
+    - merchant_name [string, default None]: merchant name. ex: "Google Cloud Platform"
+    - wallet_id [string, default None]: virtual wallet ID. ex: "5656565656565656"
     - method_code [string, default None]: method code. ex: "chip", "token", "server", "manual", "magstripe" or "contactless"
-    - score [string, default None]:
+    - score [float, default 0.0]: internal score calculated for the authenticity of the purchase. ex: 7.6
     - issuing_transaction_ids [string, default None]: ledger transaction ids linked to this Purchase
     - end_to_end_id [string, default None]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     - status [string, default None]: current Issuing Card status. ex: "approved", "canceled", "denied", "confirmed" or "voided"

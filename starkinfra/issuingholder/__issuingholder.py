@@ -49,6 +49,19 @@ def create(holders, user=None):
     return rest.post_multi(resource=_resource, entities=holders, user=user)
 
 
+def get(id, user=None):
+    """# Retrieve a specific Issuing Holder
+    Receive a single Issuing Holder object previously created in the Stark Infra API by its id
+    ## Parameters (required):
+    - id [string]: object unique id. ex: "5656565656565656"
+    ## Parameters (optional):
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    ## Return:
+    - Issuing Holder object with updated attributes
+    """
+    return rest.get_id(resource=_resource, id=id, user=user)
+
+
 def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, expand=None, user=None):
     """# Retrieve Issuing Holders
     Receive a generator of Issuing Holder objects previously created in the Stark Infra API
@@ -107,19 +120,6 @@ def page(limit=None, after=None, before=None, status=None, sort=None, tags=None,
         cursor=cursor,
         user=user,
     )
-
-
-def get(id, user=None):
-    """# Retrieve a specific Issuing Holder
-    Receive a single Issuing Holder object previously created in the Stark Infra API by its id
-    ## Parameters (required):
-    - id [string]: object unique id. ex: "5656565656565656"
-    ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
-    ## Return:
-    - Issuing Holder object with updated attributes
-    """
-    return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def update(id, status=None, name=None, rules=None, tags=None, user=None):

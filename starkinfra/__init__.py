@@ -10,5 +10,8 @@ from .user.__project import Project
 from . import pixrequest
 from .pixrequest.__pixrequest import PixRequest
 
+from . import pixreversal
+from .pixreversal.__pixreversal import PixReversal
+
 from . import error
 from . import key

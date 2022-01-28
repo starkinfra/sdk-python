@@ -4,9 +4,29 @@ from ..utils.resource import Resource
 
 
 class PixReversal(Resource):
+    """# PixReversal object
+   When you initialize a PixReversal, the entity will not be automatically
+   created in the Stark Infra API. The 'create' function sends the objects
+   to the Stark Infra API and returns the list of created objects.
+   ## Parameters (required):
+   - amount [integer]: amount in cents to be transferred. ex: 1234 (= R$ 12.34)
+   - external_id [string, default None]: url safe string that must be unique among all your transfers. Duplicated external_ids will cause failures. By default, this parameter will block any transfer that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
+   - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
+   - reason [string]: reason why the pix request is being reversed. Options are "bankError", "fraud", "pixWithdrawError", "refund3ByEndCustomer"
+   ## Parameters (optional):
+   - transaction_id [string]: transaction id linked to a pix reversal. ex: ["19827356981273"]
+   - fee [string]: fee charged by this Invoice. ex: 200 (= R$ 2.00)
+   - return_id [string]:
+   - tags [string]: [list of strings]: list of strings for reference when searching for transfers. ex: ["employees", "monthly"]
+   - bank_code [string]: code of the bank institution in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
+   - created [datetime.datetime, default None]: creation datetime for the transfer. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+   - updated [datetime.datetime, default None]: latest update datetime for the transfer. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+   ## Attributes (return-only):
+   - id [string, default None]: unique id returned when the pix reversal is created. ex: "5656565656565656"
+   """
 
-    def __init__(self, amount, end_to_end_id, external_id, reason, transaction_id=None, id=None, fee=None,
-                 return_id=None, tags=None, bank_code=None, created=None, updated=None):
+    def __init__(self, amount, end_to_end_id, external_id, reason, transaction_id=None, fee=None,
+                 return_id=None, tags=None, bank_code=None, created=None, updated=None, id=None):
         Resource.__init__(self, id=id)
         
         self.amount = amount
@@ -29,9 +49,9 @@ def create(reversals, user=None):
     """# Create PixReversals
     Send a list of PixReversal objects for creation in the Stark Infra API
     ## Parameters (required):
-    - transfers [list of PixReversal objects]: list of PixReversal objects to be created in the API
+    - reversals [list of PixReversal objects]: list of PixReversal objects to be created in the API
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkbank.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of PixReversal objects with updated attributes
     """
@@ -75,7 +95,7 @@ def query(limit=None, after=None, before=None, transaction_ids=None, status=None
 def page(cursor=None, limit=None, after=None, before=None, transaction_ids=None, status=None, tags=None, ids=None, user=None):
     """# Retrieve paged PixReversals
     Receive a list of up to 100 PixReversal objects previously created in the Stark Infra API and the cursor to the next page.
-    Use this function instead of query if you want to manually page your requests.
+    Use this function instead of query if you want to manually page your reversals.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     ## Return:

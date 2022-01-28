@@ -1,6 +1,6 @@
 from ..utils import rest
 from ..utils.resource import Resource
-from ..utils.checks import check_date
+from ..utils.checks import check_date, check_datetime
 
 
 class PixStatement(Resource):
@@ -9,15 +9,15 @@ class PixStatement(Resource):
     a specific day at the workspace. It must be created by the used before it can be
     accessed by the user.
     ## Parameters (required):
-    - after [string, default None]: unique id returned when Balance is created. ex: "5656565656565656"
-    - before [integer, default None]: current balance amount of the workspace in cents. ex: 200 (= R$ 2.00)
+    - after [datetime.date]: date which the transactions will be retrieved, must be the same as before. ex: (2022-01-01)
+    - before [datetime.date]: date which the transactions will be retrieved, must be the same as after. ex: (2022-01-01)
     - statement_type [string, default None]: 
-    - status [datetime.datetime, default None]: latest update datetime for the balance. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - transaction_count [datetime.datetime, default None]: latest update datetime for the balance. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - created [datetime.datetime, default None]: latest update datetime for the balance. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - updated [datetime.datetime, default None]: latest update datetime for the balance. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when the pix statement is created. ex: "5656565656565656"
+    - status [string, default None]: current statement status. ex: "success" or "failed"
+    - transaction_count [integer]: number of transactions that happened during the day that the statement was requested. ex 11
+    - created [datetime.datetime, default None]: creation datetime for the pix statement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - updated [datetime.datetime, default None]: latest update datetime for the pix statement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, after, before, statement_type, status=None, transaction_count=None, created=None, updated=None,
@@ -29,8 +29,8 @@ class PixStatement(Resource):
         self.statement_type = statement_type
         self.status = status
         self.transaction_count = transaction_count
-        self.created = check_date(created)
-        self.updated = check_date(updated)
+        self.created = check_datetime(created)
+        self.updated = check_datetime(updated)
 
 
 _resource = {"class": PixStatement, "name": "PixStatement"}

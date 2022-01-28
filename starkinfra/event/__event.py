@@ -26,10 +26,10 @@ class Event(Resource):
     list all generated updates on entities.
     ## Attributes:
     - id [string]: unique id returned when the event is created. ex: "5656565656565656"
-    - log [Log]: a Log object from one of the subscribed services (TransferLog, InvoiceLog, DepositLog, BoletoLog, BoletoHolmesLog, BrcodePaymentLog, BoletoPaymentLog, UtilityPaymentLog, TaxPaymentLog or DarfPaymentLog)
+    - log [Log]: a Log object from one of the subscribed services (PixRequestLog, PixReversalLog)
     - created [datetime.datetime]: creation datetime for the notification event. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - is_delivered [bool]: true if the event has been successfully delivered to the user url. ex: False
-    - subscription [string]: service that triggered this event. ex: "transfer", "utility-payment"
+    - subscription [string]: service that triggered this event. ex: "pix-request.in", "pix-request.out"
     - workspace_id [string]: ID of the Workspace that generated this event. Mostly used when multiple Workspaces have Webhooks registered to the same endpoint. ex: "4545454545454545"
     """
 

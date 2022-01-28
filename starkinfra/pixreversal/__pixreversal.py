@@ -14,30 +14,32 @@ class PixReversal(Resource):
    - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
    - reason [string]: reason why the pix request is being reversed. Options are "bankError", "fraud", "pixWithdrawError", "refund3ByEndCustomer"
    ## Parameters (optional):
-   - transaction_id [string]: transaction id linked to a pix reversal. ex: ["19827356981273"]
-   - fee [string]: fee charged by this Invoice. ex: 200 (= R$ 2.00)
    - return_id [string]:
-   - tags [string]: [list of strings]: list of strings for reference when searching for transfers. ex: ["employees", "monthly"]
    - bank_code [string]: code of the bank institution in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
-   - created [datetime.datetime, default None]: creation datetime for the transfer. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-   - updated [datetime.datetime, default None]: latest update datetime for the transfer. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+   - tags [string]: [list of strings]: list of strings for reference when searching for transfers. ex: ["employees", "monthly"]
    ## Attributes (return-only):
    - id [string, default None]: unique id returned when the pix reversal is created. ex: "5656565656565656"
+   - fee [string]: fee charged by this Invoice. ex: 200 (= R$ 2.00)
+   - status [string]: current PixReversal status. ex: "registered" or "paid"
+   - transaction_id [string]: ledger transaction ids linked to this pix reversal. ex: ["19827356981273"]
+   - created [datetime.datetime, default None]: creation datetime for the transfer. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+   - updated [datetime.datetime, default None]: latest update datetime for the transfer. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
    """
 
-    def __init__(self, amount, end_to_end_id, external_id, reason, transaction_id=None, fee=None,
-                 return_id=None, tags=None, bank_code=None, created=None, updated=None, id=None):
+    def __init__(self, amount, end_to_end_id, external_id, reason, return_id=None, bank_code=None,
+                 tags=None, id=None, fee=None, status=None, transaction_id=None, created=None, updated=None):
         Resource.__init__(self, id=id)
         
         self.amount = amount
-        self.transaction_id = transaction_id
         self.reason = reason
         self.end_to_end_id = end_to_end_id
         self.external_id = external_id
-        self.fee = fee
         self.return_id = return_id
-        self.tags = tags
         self.bank_code = bank_code
+        self.tags = tags
+        self.fee = fee
+        self.status = status
+        self.transaction_id = transaction_id
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
 

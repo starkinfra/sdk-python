@@ -42,17 +42,16 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(limit=None, after=None, before=None, types=None, transfer_ids=None, user=None):
+def query(limit=None, after=None, before=None, types=None, request_ids=None, user=None):
     """# Retrieve PixRequest.Logs
     Receive a generator of PixRequest.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
-    - transaction_ids [list of strings, default None]: list of transaction IDs linked to the desired pix requests. ex: ["5656565656565656", "4545454545454545"]
     - status [string, default None]: filter for status of retrieved objects. ex: "success" or "failed"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - request_ids [list of strings, default None]: list of pix request IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixRequest.Log objects with updated attributes
@@ -63,12 +62,12 @@ def query(limit=None, after=None, before=None, types=None, transfer_ids=None, us
         after=check_date(after),
         before=check_date(before),
         types=types,
-        transfer_ids=transfer_ids,
+        request_ids=request_ids,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, types=None, transfer_ids=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, types=None, request_ids=None, user=None):
     """# Retrieve paged PixRequest.Logs
     Receive a list of up to 100 PixRequest.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
@@ -77,10 +76,9 @@ def page(cursor=None, limit=None, after=None, before=None, types=None, transfer_
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
-    - transaction_ids [list of strings, default None]: list of transaction IDs linked to the desired pix requests. ex: ["5656565656565656", "4545454545454545"]
+    - request_ids [list of strings, default None]: list of pix request IDs linked to the desired pix requests. ex: ["5656565656565656", "4545454545454545"]
     - status [string, default None]: filter for status of retrieved objects. ex: "success" or "failed"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of PixRequest.Log objects with updated attributes
@@ -93,6 +91,6 @@ def page(cursor=None, limit=None, after=None, before=None, types=None, transfer_
         after=check_date(after),
         before=check_date(before),
         types=types,
-        transfer_ids=transfer_ids,
+        request_ids=request_ids,
         user=user,
     )

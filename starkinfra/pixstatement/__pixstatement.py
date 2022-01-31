@@ -7,17 +7,17 @@ class PixStatement(Resource):
     """# PixStatement object
     The PixStatement object stores information about all the transactions that happened on
     a specific day at the workspace. It must be created by the used before it can be
-    accessed by the user.
+    accessed by the user. This feature is only available for direct participants.
     ## Parameters (required):
-    - after [datetime.date]: date which the transactions will be retrieved, must be the same as before. ex: (2022-01-01)
-    - before [datetime.date]: date which the transactions will be retrieved, must be the same as after. ex: (2022-01-01)
+    - after [datetime.date]: transactions that happened at this date are stored in the PixStatement , must be the same as before. ex: (2022-01-01)
+    - before [datetime.date]: transactions that happened at this date are stored in the PixStatement, must be the same as after. ex: (2022-01-01)
     - statement_type [string, default None]: 
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when the pix statement is created. ex: "5656565656565656"
-    - status [string, default None]: current statement status. ex: "success" or "failed"
-    - transaction_count [integer]: number of transactions that happened during the day that the statement was requested. ex 11
-    - created [datetime.datetime, default None]: creation datetime for the pix statement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - updated [datetime.datetime, default None]: latest update datetime for the pix statement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - id [string, default None]: unique id returned when the PixStatement is created. ex: "5656565656565656"
+    - status [string, default None]: current PixStatement status. ex: "success" or "failed"
+    - transaction_count [integer]: number of transactions that happened during the day that the PixStatement was requested. ex 11
+    - created [datetime.datetime, default None]: creation datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - updated [datetime.datetime, default None]: latest update datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, after, before, statement_type, status=None, transaction_count=None, created=None, updated=None,
@@ -37,8 +37,8 @@ _resource = {"class": PixStatement, "name": "PixStatement"}
 
 
 def create(statements, user=None):
-    """# Create a PixStatement object
-    Create a list of pix statements linked to your workspace in the Stark Infra API
+    """# Create a PixStatement objects
+    Create a list of PixStatements linked to your workspace in the Stark Infra API
     ## Parameters (optional):
     - statements [list of PixStatements objects]: list of PixStatement objects to be created in the API.
     ## Parameters (optional):
@@ -46,12 +46,12 @@ def create(statements, user=None):
     ## Return:
     - list of PixStatement objects with updated attributes
     """
-    return rest.post_single(resource=_resource, entity=statements, user=user)
+    return rest.post_multi(resource=_resource, entities=statements, user=user)
 
 
 def get(id, user=None):
     """# Retrieve a PixStatement object
-    Receive the PixStatement object linked to your workspace in the Stark Infra API by its Id.
+    Retrieve the PixStatement object linked to your workspace in the Stark Infra API by its Id.
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
@@ -62,41 +62,45 @@ def get(id, user=None):
     return rest.get_id(id=id, resource=_resource, user=user)
 
 
-def query(limit=None, after=None, before=None, ids=None, user=None):
+def query(limit=None, after=None, before=None, status=None, ids=None, user=None):
     """# Retrieve PixStatements
     Receive a generator of PixStatements objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
+    - status [string, default None]: current PixStatement status. ex: "success" or "failed"
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixStatement objects with updated attributes
     """
+
     return rest.get_stream(
         resource=_resource,
         limit=limit,
         after=check_date(after),
         before=check_date(before),
+        status=status,
         ids=ids,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None):
+def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, user=None):
     """# Retrieve paged PixStatements
     Receive a list of up to 100 PixStatements objects previously created in the Stark Infra API
     ## Parameters (optional):
+    - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
+    - status [string, default None]: current PixStatement status. ex: "success" or "failed"
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - generator of PixRequest objects with updated attributes
-    - list of PixRequest objects with updated attributes
-    - cursor to retrieve the next page of PixRequest objects
+    - list of PixStatement objects with updated attributes
+    - cursor to retrieve the next page of PixStatement objects
     """
     return rest.get_page(
         resource=_resource,
@@ -104,17 +108,20 @@ def page(cursor=None, limit=None, after=None, before=None):
         limit=limit,
         after=check_date(after),
         before=check_date(before),
+        status=status,
+        ids=ids,
+        user=user,
     )
 
 
-def csv(id, layout=None, hidden_fields=None, user=None):
-    """# Retrieve a specific Pix Statement csv file by its id.
-    Receive a single Pix Statement csv file generated in the Stark Infra API by its id.
+def csv(id, user=None):
+    """# Retrieve a specific PixStatement csv file by its id.
+    Receive a single PixStatement csv file generated in the Stark Infra API by its id.
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - Pix Statement csv file
+    - PixStatement csv file
     """
-    return rest.get_content(resource=_resource, id=id, layout=layout, hidden_fields=hidden_fields, user=user, sub_resource_name="csv")
+    return rest.get_content(resource=_resource, id=id, user=user, sub_resource_name="csv")

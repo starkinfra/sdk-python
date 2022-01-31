@@ -8,18 +8,19 @@ class PixDirector(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
-    - email [string]:
-    - name [string]:
-    - password [string]:
-    - phone [string]:
-    - tax_id [string]:
-    - team_email [list of strings]:
-    - team_phones [list of strings]:
+    - name [string]: name of the PixDirector.
+    - tax_id [string]: CPF/CNPJ of the PixDirector. ex: "03.300.300/0001-00"
+    - phone [string]: phone of the PixDirector. ex: "+55-1198989898"
+    - email [string]: email of the PixDirector. ex: "ned.stark@starkbank.com"
+    - password [string]: password of the PixDirector. ex: "12345678"
+    - team_email [list of strings]: list of emails of the team. ex: ["aria.stark@starkbank.com","sansa.stark@starkbank.com"]
+    - team_phones [list of strings]: list of phones of the team. ex: ["+55-11988889999", "+55-11988889998"]
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when the PixDirector is created. ex: "5656565656565656"
+    - status [string]: current PixRequest status. ex: "created"
     """
 
-    def __init__(self, email, name, password, phone, tax_id, team_email, team_phones, id=None):
+    def __init__(self, name, tax_id, phone, email, password, team_email, team_phones, id=None, status=None):
         Resource.__init__(self, id=id)
 
         self.email = email
@@ -29,6 +30,7 @@ class PixDirector(Resource):
         self.tax_id = tax_id
         self.team_email = team_email
         self.team_phones = team_phones
+        self.status = status
 
 
 _resource = {"class": PixDirector, "name": "PixDirector"}
@@ -42,6 +44,6 @@ def create(director, user=None):
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - PixDirector object with updated attributes
+    - PixDirector objects with updated attributes
     """
-    return rest.post_single(resource=_resource, entity=director, user=user)
+    return rest.post_multi(resource=_resource, entities=director, user=user)

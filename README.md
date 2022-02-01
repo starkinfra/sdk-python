@@ -22,6 +22,9 @@ This SDK version is compatible with the Stark Infra API v2.
 - [Testing in Sandbox](#testing-in-sandbox) 
 - [Usage](#usage)
     - [PixRequests](#create-pix-requests)
+    - [PixReversal](#create-pix-reversals)
+    - [PixBalance](#get-pix-balance)
+    - [PixStatement](#create-pix-statements)
 - [Handling errors](#handling-errors)
 - [Help and Feedback](#help-and-feedback)
 
@@ -31,6 +34,10 @@ This library supports the following Python versions:
 
 * Python 2.7
 * Python 3.4+
+
+## Stark Infra API documentation
+
+Feel free to take a look at our [API docs](https://www.starkinfra.com/docs/api).
 
 ## Versioning
 
@@ -62,11 +69,11 @@ python setup.py install
 
 We use ECDSA. That means you need to generate a secp256k1 private
 key to sign your requests to our API, and register your public key
-with us so we can validate those requests.
+with us, so we can validate those requests.
 
 You can use one of the following methods:
 
-2.1. Check out the options in our [tutorial](LINK). "will change"
+2.1. Check out the options in our [tutorial](https://starkbank.com/faq/how-to-create-ecdsa-keys). 
 
 2.2. Use our SDK:
 
@@ -96,7 +103,7 @@ Since this user is unique in your entire organization, only one credential can b
 
 3.1. To create a Project in Sandbox:
 
-3.1.1. Log into [Starkinfra Sandbox](https://web.sandbox.starkbank.com)
+3.1.1. Log into [StarkInfra Sandbox](https://web.sandbox.starkinfra.com)
 
 3.1.2. Go to Menu > Integrations
 
@@ -133,7 +140,7 @@ project = starkinfra.Project(
 
 3.2. To create Organization credentials in Sandbox:
 
-3.2.1. Log into [Starinfra Sandbox](https://web.sandbox.starkbank.com)
+3.2.1. Log into [Starkinfra Sandbox](https://web.sandbox.starkinfra.com)
 
 3.2.2. Go to Menu > Integrations
 
@@ -230,7 +237,7 @@ If you are not worried about data volume or processing time, this is the way to 
 ```python
 import starkinfra
 
-for request in starinfra.pixrequest.query(limit=200):
+for request in starkinfra.pixrequest.query(limit=200):
     print(request)
 ```
 
@@ -284,13 +291,13 @@ requests = starkinfra.pixrequest.create([
         sender_branch_code="0000",
         sender_account_number="00000-0",
         sender_account_type="checking",
-        sender_name="Tyrion Lennister",
+        sender_name="Tyrion Lannister",
         sender_tax_id="012.345.678-90",
         receiver_bank_code="00000001",
         receiver_branch_code="0001",
         receiver_account_number="00000-1",
         receiver_account_type="checking",
-        receiver_name="Jamie Lennister",
+        receiver_name="Jamie Lannister",
         receiver_tax_id="45.987.245/0001-92",
         end_to_end_id="E20018183202201201450u34sDGd19lz",
         fee=1,
@@ -361,7 +368,7 @@ import starkinfra
 logs = starkinfra.pixrequest.log.query(
     limit=50, 
     after="2022-01-01",
-    before="2022-01-20,
+    before="2022-01-20",
 )
 
 for log in logs:
@@ -373,19 +380,19 @@ for log in logs:
 You can also get a specific log by its id.
 
 ```python
-import starinfra
+import starkinfra
 
 log = starkinfra.pixrequest.log.get("5155165527080960")
 
 print(log)
 ```
 
-## Create a pix reversal
+## Create pix reversals
 
 You can reverse a pix request by whole or by a fraction of its amount using a pix reversal.
 
 ```python
-import starinfra
+import starkinfra
 
 reversal = starkinfra.pixreversal.create([
     starkinfra.PixReversal(
@@ -409,7 +416,7 @@ import starkinfra
 logs = starkinfra.pixreversal.log.query(
     limit=50, 
     after="2022-01-01",
-    before="2022-01-20,
+    before="2022-01-20",
 )
 
 for log in logs:
@@ -421,7 +428,7 @@ for log in logs:
 After its creation, information on a pix reversal may be retrieved by its id. Its status indicated whether it has been paid.
 
 ```python
-import starinfra
+import starkinfra
 
 reversal = starkinfra.pixreversal.get("5155165527080960")
 
@@ -438,7 +445,7 @@ import starkinfra
 logs = starkinfra.pixreversal.log.query(
     limit=50, 
     after="2022-01-01",
-    before="2022-01-20,
+    before="2022-01-20",
 )
 
 for log in logs:
@@ -450,14 +457,14 @@ for log in logs:
 You can also get a specific log by its id.
 
 ```python
-import starinfra
+import starkinfra
 
 log = starkinfra.pixreversal.log.get("5155165527080960")
 
 print(log)
 ```
 
-## Get balance 
+## Get pix balance 
 
 To know how much money you have in your workspace, run:
 
@@ -469,22 +476,22 @@ balance = starkinfra.pixbalance.get()
 print(balance)
 ```
 
-## Create pix statement
+## Create pix statements
 
 Statements are only available for direct participants. To create a statement of all the transactions that happened on your workspace during a specific day, run:
 
 ```python
 import starkinfra
 
-statement = starkinfra.pixstatement.create([
-    PixStatement(
-        after = "2022-01-01"  # This is the date that you want to create a statement
-        before = "2022-01-01" # After and before must be the same date.
-        statement_type = "transaction" # Options are "interchange", "interchangeTotal", "transaction".
+statements = starkinfra.pixstatement.create([
+    starkinfra.PixStatement(
+        after="2022-01-01", # This is the date that you want to create a statement.
+        before="2022-01-01", # After and before must be the same date.
+        statement_type="transaction" # Options are "interchange", "interchangeTotal", "transaction".
     )
 ])
 
-print(statement)
+print(statements)
 ```
 
 ## Query pix statements
@@ -497,7 +504,7 @@ import starkinfra
 statement = starkinfra.pixstatement.query(
     limit=50, 
     after="2022-01-01", # Note that this after and before parameters are different from the ones used in the creation of the statement. 
-    before="2022-01-20,
+    before="2022-01-20",
 )
 
 print(statement)
@@ -549,3 +556,49 @@ if event.subscription == "pix-request.in" or event.subscription == "pix-request.
 elif event.subscription == "pix-reversal.in" or event.subscription == "pix-reversal.out":
     print(event.log.reversal)
 ```
+
+# Handling errors
+
+The SDK may raise one of four types of errors: __InputErrors__, __InternalServerError__, __UnknownError__, __InvalidSignatureError__
+
+__InputErrors__ will be raised whenever the API detects an error in your request (status code 400).
+If you catch such an error, you can get its elements to verify each of the
+individual errors that were detected in your request by the API.
+For example:
+
+```python
+import starkinfra
+
+try:
+    reversal = starkinfra.pixreversal.create([
+        starkinfra.PixReversal(
+            amount=100,
+            end_to_end_id="E00000000202201060100rzsJzG9PzMg",
+            external_id="17238435823958934",
+            reason="bankError",
+        )
+    ])
+except starkinfra.error.InputErrors as exception:
+    for error in exception.errors:
+        print(error.code)
+        print(error.message)
+```
+
+__InternalServerError__ will be raised if the API runs into an internal error.
+If you ever stumble upon this one, rest assured that the development team
+is already rushing in to fix the mistake and get you back up to speed.
+
+__UnknownError__ will be raised if a request encounters an error that is
+neither __InputErrors__ nor an __InternalServerError__, such as connectivity problems.
+
+__InvalidSignatureError__ will be raised specifically by starkinfra.event.parse()
+when the provided content and signature do not check out with the Stark Infra public
+key.
+
+# Help and Feedback
+
+If you have any questions about our SDK, just send us an email.
+We will respond you quickly, pinky promise. We are here to help you integrate with us ASAP.
+We also love feedback, so don't be shy about sharing your thoughts with us.
+
+Email: developers@starkbank.com

@@ -2,6 +2,7 @@ from ..utils import rest
 from ..utils.resource import Resource
 from ..utils.checks import check_datetime
 
+
 class IndirectParticipant(Resource):
     """# IndirectParticipant object
     When you initialize a IndirectParticipant object, the entity will not be automatically

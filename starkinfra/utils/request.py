@@ -26,7 +26,6 @@ def fetch(method, path, payload=None, query=None, user=None, version="v2"):
     url = {
         Environment.production:  "https://api.starkinfra.com/",
         Environment.sandbox:     "https://sandbox.api.starkinfra.com/",
-        Environment.development: "https://development.api.starkinfra.com/",
     }[user.environment] + version
 
     url = "{base_url}/{path}{query}".format(base_url=url, path=path, query=urlencode(query))

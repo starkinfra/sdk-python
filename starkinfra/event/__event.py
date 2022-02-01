@@ -77,7 +77,7 @@ def parse(content, signature, user=None):
     if _is_valid(content=content, signature=signature, public_key=public_key):
         return event
 
-    raise InvalidSignatureError("The provided signature and content do not match the Stark Bank public key")
+    raise InvalidSignatureError("The provided signature and content do not match the Stark Infra public key")
 
 
 def _is_valid(content, signature, public_key):

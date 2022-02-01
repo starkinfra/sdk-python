@@ -300,7 +300,6 @@ requests = starkinfra.pixrequest.create([
         receiver_name="Jamie Lannister",
         receiver_tax_id="45.987.245/0001-92",
         end_to_end_id="E20018183202201201450u34sDGd19lz",
-        fee=1,
         description="For saving my life",
     ),
     starkinfra.PixRequest(
@@ -318,7 +317,6 @@ requests = starkinfra.pixrequest.create([
         receiver_name="John Snow",
         receiver_tax_id="012.345.678-90",
         end_to_end_id="E20018183202201201450u34sDGd19lz",
-        fee=1,
         tags=["Needle", "sword"],
     )
 ])

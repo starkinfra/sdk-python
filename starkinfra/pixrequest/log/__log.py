@@ -41,7 +41,7 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(limit=None, after=None, before=None, types=None, request_ids=None, tags=None, user=None):
+def query(limit=None, after=None, before=None, types=None, request_ids=None, user=None):
     """# Retrieve PixRequest.Logs
     Receive a generator of PixRequest.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -50,7 +50,6 @@ def query(limit=None, after=None, before=None, types=None, request_ids=None, tag
     - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
     - types [string, default None]: filter retrieved objects by types. ex: "success" or "failed"
     - request_ids [list of strings, default None]: list of PixRequest IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixRequest.Log objects with updated attributes
@@ -62,12 +61,11 @@ def query(limit=None, after=None, before=None, types=None, request_ids=None, tag
         before=check_date(before),
         types=types,
         request_ids=request_ids,
-        tags=tags,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, types=None, request_ids=None, tags=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, types=None, request_ids=None, user=None):
     """# Retrieve paged PixRequest.Logs
     Receive a list of up to 100 PixRequest.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
@@ -78,7 +76,6 @@ def page(cursor=None, limit=None, after=None, before=None, types=None, request_i
     - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
     - types [string, default None]: filter retrieved objects by types. ex: "success" or "failed"
     - request_ids [list of strings, default None]: list of PixRequest IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of PixRequest.Log objects with updated attributes
@@ -92,6 +89,5 @@ def page(cursor=None, limit=None, after=None, before=None, types=None, request_i
         before=check_date(before),
         types=types,
         request_ids=request_ids,
-        tags=tags,
         user=user,
     )

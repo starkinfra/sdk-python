@@ -41,7 +41,7 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(limit=None, after=None, before=None, types=None, reversal_ids=None, tags=None, user=None):
+def query(limit=None, after=None, before=None, types=None, reversal_ids=None, user=None):
     """# Retrieve PixReversal.Logs
     Receive a generator of PixReversal.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -50,7 +50,6 @@ def query(limit=None, after=None, before=None, types=None, reversal_ids=None, ta
     - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
     - types [string, default None]: filter retrieved objects by types. ex: "success" or "failed"
     - reversal_ids [list of strings, default None]: list of PixReversal IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixReversal.Log objects with updated attributes
@@ -62,12 +61,11 @@ def query(limit=None, after=None, before=None, types=None, reversal_ids=None, ta
         before=check_date(before),
         types=types,
         reversal_ids=reversal_ids,
-        tags=tags,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, types=None, reversal_ids=None, tags=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, types=None, reversal_ids=None, user=None):
     """# Retrieve paged PixReversal.Logs
     Receive a list of up to 100 PixReversal.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your reversals.
@@ -78,7 +76,6 @@ def page(cursor=None, limit=None, after=None, before=None, types=None, reversal_
     - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
     - types [string, default None]: filter retrieved objects by types. ex: "success" or "failed"
     - reversal_ids [list of strings, default None]: list of PixReversal IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of PixReversal.Log objects with updated attributes
@@ -92,6 +89,5 @@ def page(cursor=None, limit=None, after=None, before=None, types=None, reversal_
         before=check_date(before),
         types=types,
         reversal_ids=reversal_ids,
-        tags=tags,
         user=user,
     )

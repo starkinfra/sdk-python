@@ -20,8 +20,8 @@ class PixStatement(Resource):
     - updated [datetime.datetime, default None]: latest update datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, after, before, statement_type, status=None, transaction_count=None, created=None, updated=None,
-                id=None):
+    def __init__(self, after, before, statement_type, id=None, status=None, transaction_count=None, created=None,
+                 updated=None):
         Resource.__init__(self, id=id)
 
         self.after = check_date(after)
@@ -46,7 +46,7 @@ def create(statements, user=None):
     ## Return:
     - list of PixStatement objects with updated attributes
     """
-    return rest.post_multi(resource=_resource, entities=statements, user=user)
+    return rest.post_single(resource=_resource, entity=statements, user=user)
 
 
 def get(id, user=None):

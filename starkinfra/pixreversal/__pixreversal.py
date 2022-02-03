@@ -16,8 +16,8 @@ class PixReversal(Resource):
    ## Parameters (optional):
    - tags [string]: [list of strings]: list of strings for reference when searching for PixReversals. ex: ["employees", "monthly"]
    ## Attributes (return-only):
-   - id [string, default None]: unique id returned when the PixReversal is created. ex: "5656565656565656"
-   - return_id [string]:
+   - id [string, default None]: unique id returned when the PixReversal is created. ex: "5656565656565656".
+   - return_id [string]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo".
    - bank_code [string]: code of the bank institution in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
    - fee [string]: fee charged by this PixReversal. ex: 200 (= R$ 2.00)
    - status [string]: current PixReversal status. ex: "registered" or "paid"

@@ -8,8 +8,8 @@ class PixDirector(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
-    - name [string]: name of the PixDirector.
-    - tax_id [string]: CPF/CNPJ of the PixDirector. ex: "03.300.300/0001-00"
+    - name [string]: name of the PixDirector. ex: Anthony Eddard Stark".
+    - tax_id [string]: tax ID (CPF/CNPJ) of the PixDirector. ex: "03.300.300/0001-00"
     - phone [string]: phone of the PixDirector. ex: "+55-1198989898"
     - email [string]: email of the PixDirector. ex: "ned.stark@starkbank.com"
     - password [string]: password of the PixDirector. ex: "12345678"

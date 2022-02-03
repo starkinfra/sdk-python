@@ -9,14 +9,14 @@ class IndirectParticipant(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (Required):
-    - request_url [string]: IndirectParticipant request url
-    - rsfn_url [string]: IndirectParticipant rsfn url
+    - request_url [string]: IndirectParticipant request url.
+    - rsfn_url [string]: IndirectParticipant rsfn url.
     - tax_id [string]: IndirectParticipant tax ID (CPF or CNPJ). ex: "012.345.678-90" or "20.018.183/0001-80"
     - workspace_id [string]:  ID of the Workspace of the IndirectParticipant. ex: "4545454545454545"
     ## Parameters (Optional):
-    - bank_code []:
-    - direct_id []:
-    - organization_id []:
+    - bank_code []: indirect participant's bank code. ex: "00000000"
+    - direct_id []: direct participant id.
+    - organization_id []: indirect participant's organization id.
     ## Attributes (return-only):
     - id [string, default None]: unique ID returned when the IndirectParticipant is created. ex: "5656565656565656"
     - status [string]: current IndirectParticipant status. ex:

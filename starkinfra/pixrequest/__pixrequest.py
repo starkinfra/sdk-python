@@ -9,7 +9,7 @@ class PixRequest(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
-    - amount [integer]: amount in cents to be transferred. ex: 1234 (= R$ 12.34)
+    - amount [integer]: amount in cents to be transferred. ex: 11234 (= R$ 112.34)
     - external_id [string, default None]: url safe string that must be unique among all your PixRequests. Duplicated external_ids will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
     - sender_name [string]: sender full name. ex: "Anthony Edward Stark"
     - sender_tax_id [string]: sender tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
@@ -24,20 +24,20 @@ class PixRequest(Resource):
     - receiver_account_type [string]: receiver bank account type. ex: "checking", "savings", "salary" or "payment"
     - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     ## Parameters (optional):
-    - receiver_key_id [string]:
+    - receiver_key_id [string]: Receiver's dict key, can be phone number, tax_id (CPF/CNPJ)... .
     - reconciliation_id [string]: Reconciliation ID linked to this payment. ex: "txId", "payment-123"
     - description [string, default None]: optional description to override default description to be shown in the bank statement. ex: "Payment for service #1234"
-    - initiator_tax_id [string]:
-    - cash_amount [string]:
-    - cashier_bank_code [string]:
-    - cashier_type [string]:
+    - initiator_tax_id [string]: Payment initiator's tax id (CPF/CNPJ). ex: "01234567890" or "20.018.183/0001-80"
+    - cash_amount [integer]: Amount to be withdrawal from the cashier in cents. ex: 1000 (= R$ 10.00)
+    - cashier_bank_code [string]: Cashier's bank code. ex: "00000000"
+    - cashier_type [string]: Cashier's type. ex: [merchant, other, participant]
     - tags [string]: [list of strings]: list of strings for reference when searching for PixRequests. ex: ["employees", "monthly"]
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when the PixRequest is created. ex: "5656565656565656"
     - fee [integer, default None]: fee charged when PixRequest o is paid. ex: 200 (= R$ 2.00)
     - status [string]: current PixRequest status. ex: "registered" or "paid"
     - flow [string]: direction of money flow. ex: "in" or "out"
-    - method [string]:
+    - method [string]: execution  method of the PIX. ex: "manual", "key", "QR code".
     - sender_bank_code [string]: code of the sender bank institution in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
     - created [datetime.datetime, default None]: creation datetime for the PixRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime, default None]: latest update datetime for the PixRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)

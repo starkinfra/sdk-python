@@ -25,19 +25,19 @@ class PixRequest(Resource):
     - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     ## Parameters (optional):
     - receiver_key_id [string]: Receiver's dict key. Example: tax_id (CPF/CNPJ).
-    - reconciliation_id [string]: Reconciliation ID linked to this payment. ex: "b77f5236-7ab9-4487-9f95-66ee6eaf1781"
     - description [string, default None]: optional description to override default description to be shown in the bank statement. ex: "Payment for service #1234"
     - initiator_tax_id [string]: Payment initiator's tax id (CPF/CNPJ). ex: "01234567890" or "20.018.183/0001-80"
     - cash_amount [integer]: Amount to be withdrawal from the cashier in cents. ex: 1000 (= R$ 10.00)
     - cashier_bank_code [string]: Cashier's bank code. ex: "00000000"
     - cashier_type [string]: Cashier's type. ex: [merchant, other, participant]
-    - tags [string]: [list of strings]: list of strings for reference when searching for PixRequests. ex: ["employees", "monthly"]
+    - tags [list of strings]: list of strings for reference when searching for PixRequests. ex: ["employees", "monthly"]
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when the PixRequest is created. ex: "5656565656565656"
     - fee [integer, default None]: fee charged when PixRequest o is paid. ex: 200 (= R$ 2.00)
     - status [string]: current PixRequest status. ex: "registered" or "paid"
     - flow [string]: direction of money flow. ex: "in" or "out"
     - method [string]: execution  method of creation of the PIX. ex: "manual", "payerQrcode", "dynamicQrcode".
+    - reconciliation_id [string]: Reconciliation ID linked to this payment. ex: "b77f5236-7ab9-4487-9f95-66ee6eaf1781"
     - sender_bank_code [string]: code of the sender bank institution in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
     - created [datetime.datetime, default None]: creation datetime for the PixRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime, default None]: latest update datetime for the PixRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
@@ -46,9 +46,9 @@ class PixRequest(Resource):
     def __init__(self, amount,  external_id, sender_name, sender_tax_id, sender_branch_code,
                  sender_account_number, sender_account_type, receiver_name, receiver_tax_id, receiver_bank_code,
                  receiver_account_number, receiver_branch_code, receiver_account_type, end_to_end_id,
-                 receiver_key_id=None, reconciliation_id=None, description=None, initiator_tax_id=None,
-                 cash_amount=None, cashier_bank_code=None, cashier_type=None, tags=None, id=None, fee=None,
-                 status=None, flow=None, method=None, sender_bank_code=None, created=None, updated=None):
+                 receiver_key_id=None, description=None, initiator_tax_id=None, cash_amount=None,
+                 cashier_bank_code=None, cashier_type=None, tags=None, id=None, fee=None, status=None,
+                 flow=None, method=None, reconciliation_id=None, sender_bank_code=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.amount = amount
@@ -66,7 +66,6 @@ class PixRequest(Resource):
         self.receiver_account_type = receiver_account_type
         self.end_to_end_id = end_to_end_id
         self.receiver_key_id = receiver_key_id
-        self.reconciliation_id = reconciliation_id
         self.description = description
         self.initiator_tax_id = initiator_tax_id
         self.cash_amount = cash_amount
@@ -77,6 +76,7 @@ class PixRequest(Resource):
         self.status = status
         self.flow = flow
         self.method = method
+        self.reconciliation_id = reconciliation_id
         self.sender_bank_code = sender_bank_code
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)

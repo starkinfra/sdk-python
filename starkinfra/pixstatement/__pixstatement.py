@@ -37,14 +37,14 @@ _resource = {"class": PixStatement, "name": "PixStatement"}
 
 
 def create(statements, user=None):
-    """# Create a PixStatement objects
-    Create a list of PixStatements linked to your workspace in the Stark Infra API
+    """# Create a PixStatement object
+    Create a PixStatements linked to your workspace in the Stark Infra API
     ## Parameters (optional):
-    - statements [list of PixStatements objects]: list of PixStatement objects to be created in the API.
+    - statement [PixStatement object]: PixStatement object to be created in the API.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - list of PixStatement objects with updated attributes
+    - PixStatement object with updated attributes.
     """
     return rest.post_single(resource=_resource, entity=statements, user=user)
 

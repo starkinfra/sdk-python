@@ -10,18 +10,18 @@ class PixReversal(Resource):
    to the Stark Infra API and returns the list of created objects.
    ## Parameters (required):
    - amount [integer]: amount in cents to be reversed from PixRequest. ex: 1234 (= R$ 12.34)
-   - external_id [string, default None]: url safe string that must be unique among all your PixReversals. Duplicated external_ids will cause failures. By default, this parameter will block any PixReversal that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
+   - external_id [string]: url safe string that must be unique among all your PixReversals. Duplicated external_ids will cause failures. By default, this parameter will block any PixReversal that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
    - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
    - reason [string]: reason why the PixRequest is being reversed. Options are "bankError", "fraud", "pixWithdrawError", "refund3ByEndCustomer"
    ## Parameters (optional):
-   - tags [string]: [list of strings]: list of strings for reference when searching for PixReversals. ex: ["employees", "monthly"]
+   - tags [string, default None]: [list of strings]: list of strings for reference when searching for PixReversals. ex: ["employees", "monthly"]
    ## Attributes (return-only):
    - id [string, default None]: unique id returned when the PixReversal is created. ex: "5656565656565656".
-   - return_id [string]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo".
-   - bank_code [string]: code of the bank institution in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
-   - fee [string]: fee charged by this PixReversal. ex: 200 (= R$ 2.00)
-   - status [string]: current PixReversal status. ex: "registered" or "paid"
-   - flow [string]: direction of money flow. ex: "in" or "out"
+   - return_id [string, default None]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo".
+   - bank_code [string, default None]: code of the bank institution in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
+   - fee [string, default None]: fee charged by this PixReversal. ex: 200 (= R$ 2.00)
+   - status [string, default None]: current PixReversal status. ex: "registered" or "paid"
+   - flow [string, default None]: direction of money flow. ex: "in" or "out"
    - created [datetime.datetime, default None]: creation datetime for the PixReversal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
    - updated [datetime.datetime, default None]: latest update datetime for the PixReversal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
    """

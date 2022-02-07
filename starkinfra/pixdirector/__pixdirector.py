@@ -17,7 +17,7 @@ class PixDirector(Resource):
     - team_phones [list of strings]: list of phones of the team. ex: ["+55-11988889999", "+55-11988889998"]
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when the PixDirector is created. ex: "5656565656565656"
-    - status [string]: current PixRequest status. ex: "created"
+    - status [string, default None]: current PixRequest status. ex: "created"
     """
 
     def __init__(self, name, tax_id, phone, email, password, team_email, team_phones, id=None, status=None):

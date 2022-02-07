@@ -14,4 +14,4 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
-- Full Stark Infra API v2 compatibility
+- Indirect Participant compatibility

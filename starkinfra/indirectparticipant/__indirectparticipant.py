@@ -5,37 +5,32 @@ from ..utils.checks import check_datetime
 
 class IndirectParticipant(Resource):
     """# IndirectParticipant object
-    When you initialize a IndirectParticipant object, the entity will not be automatically
+    When you initialize an IndirectParticipant object, the entity will not be automatically
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (Required):
-    - request_url [string]: IndirectParticipant request url.
-    - rsfn_url [string]: IndirectParticipant rsfn url.
-    - tax_id [string]: IndirectParticipant tax ID (CPF or CNPJ). ex: "012.345.678-90" or "20.018.183/0001-80"
-    - workspace_id [string]:  ID of the Workspace of the IndirectParticipant. ex: "4545454545454545"
+    - tax_id [string]: indirectParticipant's tax_id (CPF/CNPJ). ex: "00000000"
+    - workspace_id [string]: indirectParticipant's workspace ID. ex: "4545454545454545"
+    - rsfn_url [string]: indirectParticipant's rsfn url.
+    - request_url [string]: indirectParticipant's request url.
     ## Parameters (Optional):
-    - bank_code []: indirect participant's bank code. ex: "00000000"
-    - direct_id []: direct participant id.
-    - organization_id []: indirect participant's organization id.
+    - reversal_url [string]: indirectParticipant's reversal url.
     ## Attributes (return-only):
     - id [string, default None]: unique ID returned when the IndirectParticipant is created. ex: "5656565656565656"
     - status [string]: current IndirectParticipant status. ex:
     - created [datetime.datetime, default None]: creation datetime for the IndirectParticipant. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime, default None]: latest update datetime for the IndirectParticipant. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
-
-    def __init__(self, request_url, rsfn_url, tax_id, workspace_id, id=None, bank_code=None,
-                 status=None, direct_id=None, organization_id=None, created=None, updated=None):
+    def __init__(self, tax_id, workspace_id, rsfn_url, request_url, reversal_url=None, id=None, status=None,
+                 created=None, updated=None):
         Resource.__init__(self, id=id)
 
-        self.request_url = request_url
-        self.rsfn_url = rsfn_url
         self.tax_id = tax_id
         self.workspace_id = workspace_id
-        self.bank_code = bank_code
+        self.rsfn_url = rsfn_url
+        self.request_url = request_url
+        self.reversal_url = reversal_url
         self.status = status
-        self.direct_id = direct_id
-        self.organization_id = organization_id
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
 

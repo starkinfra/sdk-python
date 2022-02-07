@@ -4,8 +4,7 @@ user = None
 language = "en-US"
 timeout = 15
 
-from .user.__organization import Organization
-from .user.__project import Project
+from starkbank import Project, Organization
 
 from . import pixrequest
 from .pixrequest.__pixrequest import PixRequest

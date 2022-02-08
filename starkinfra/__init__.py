@@ -18,8 +18,8 @@ from .pixstatement.__pixstatement import PixStatement
 from . import pixbalance
 from .pixbalance.__pixbalance import PixBalance
 
-from . import brcodecertificate
-from .brcodecertificate.__brcodecertificate import BrcodeCertificate
+# from . import brcodecertificate
+# from .brcodecertificate.__brcodecertificate import BrcodeCertificate
 
 from . import pixdirector
 from .pixdirector.__pixdirector import PixDirector

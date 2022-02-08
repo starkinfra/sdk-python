@@ -81,10 +81,10 @@ You can use one of the following methods:
 ```python
 import starkinfra
 
-privateKey, publicKey = starkinfra.key.create()
+privateKey, publicKey = starkbank.key.create()
 
 # or, to also save .pem files in a specific path
-privateKey, publicKey = starkinfra.key.create("file/keys/")
+privateKey, publicKey = starkbank.key.create("file/keys/")
 ```
 
 **NOTE**: When you are creating new credentials, it is recommended that you create the
@@ -132,7 +132,7 @@ IF16ZoTVt1FzZ8WkYQ3XomRD4HS13A==
 -----END EC PRIVATE KEY-----
 """
 
-project = starkinfra.Project(
+project = starkbank.Project(
     environment="sandbox",
     id="5656565656565656",
     private_key=private_key_content
@@ -169,7 +169,7 @@ IF16ZoTVt1FzZ8WkYQ3XomRD4HS13A==
 -----END EC PRIVATE KEY-----
 """
 
-organization = starkinfra.Organization(
+organization = starkbank.Organization(
     environment="sandbox",
     id="5656565656565656",
     private_key=private_key_content,
@@ -207,7 +207,7 @@ balance = starkinfra.pixbalance.get(user=project)  # or organization
 ```python
 import starkinfra
 
-starkinfra.user = project  # or organization
+starkbank.user = project  # or organization
 
 balance = starkinfra.pixbalance.get()
 ```

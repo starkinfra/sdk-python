@@ -24,8 +24,8 @@ This SDK version is compatible with the Stark Infra API v2.
     - [PixRequests](#create-pix-requests)
     - [PixReversal](#create-pix-reversals)
     - [PixBalance](#get-pix-balance)
-    - [PixStatement](#create-pix-statements)
-    - [Event](#)
+    - [PixStatement](#create-pix-statement)
+    - [Event](#Process-webhook-events)
 - [Handling errors](#handling-errors)
 - [Help and Feedback](#help-and-feedback)
 
@@ -475,22 +475,22 @@ balance = starkinfra.pixbalance.get()
 print(balance)
 ```
 
-## Create pix statements
+## Create pix statement
 
 Statements are only available for direct participants. To create a statement of all the transactions that happened on your workspace during a specific day, run:
 
 ```python
 import starkinfra
 
-statements = starkinfra.pixstatement.create([
+statement = starkinfra.pixstatement.create(
     starkinfra.PixStatement(
         after="2022-01-01", # This is the date that you want to create a statement.
         before="2022-01-01", # After and before must be the same date.
         statement_type="transaction" # Options are "interchange", "interchangeTotal", "transaction".
     )
-])
+)
 
-print(statements)
+print(statement)
 ```
 
 ## Query pix statements
@@ -500,13 +500,14 @@ You can query multiple pix statements according to filters.
 ```python
 import starkinfra
 
-statement = starkinfra.pixstatement.query(
+statements = starkinfra.pixstatement.query(
     limit=50, 
     after="2022-01-01", # Note that this after and before parameters are different from the ones used in the creation of the statement. 
     before="2022-01-20",
 )
 
-print(statement)
+for statement in statements:
+    print(statement)
 ```
 
 ## Get a pix statement
@@ -528,9 +529,10 @@ To get a .csv file of a pix statement using its id, run:
 ```python
 import starkinfra
 
-statement = starkinfra.pixstatement.csv("5155165527080960")
+csv = starkinfra.pixstatement.csv("5155165527080960")
 
-print(statement)
+with open("test.csv", "wb") as file:
+    file.write(csv)
 ```
 
 ## Process webhook events

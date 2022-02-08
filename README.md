@@ -21,11 +21,11 @@ This SDK version is compatible with the Stark Infra API v2.
 - [Resource listing and manual pagination](#resource-listing-and-manual-pagination)
 - [Testing in Sandbox](#testing-in-sandbox) 
 - [Usage](#usage)
-    - [PixRequests](#create-pix-requests)
-    - [PixReversal](#create-pix-reversals)
-    - [PixBalance](#get-pix-balance)
-    - [PixStatement](#create-pix-statement)
-    - [Event](#Process-webhook-events)
+    - [PixRequests](#create-pix-requests): PIX receivables
+    - [PixReversal](#create-pix-reversals): Reverse a PIX transaction
+    - [PixBalance](#get-pix-balance): Account balance
+    - [PixStatement](#create-pix-statement): Account statement entries
+    - [Event](#process-webhook-events): Manage webhook events
 - [Handling errors](#handling-errors)
 - [Help and Feedback](#help-and-feedback)
 

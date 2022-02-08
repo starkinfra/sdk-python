@@ -18,7 +18,7 @@ def check_private_key(pem):
 
 
 def check_user(user):
-    from ..user.__user import User
+    from starkbank.user.__user import User
     assert isinstance(user, User), "A user is required to access our API. Check our README: https://github.com/starkinfra/sdk-python/"
     return user
 

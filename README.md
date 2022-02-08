@@ -25,6 +25,7 @@ This SDK version is compatible with the Stark Infra API v2.
     - [PixReversal](#create-pix-reversals)
     - [PixBalance](#get-pix-balance)
     - [PixStatement](#create-pix-statements)
+    - [Event](#)
 - [Handling errors](#handling-errors)
 - [Help and Feedback](#help-and-feedback)
 

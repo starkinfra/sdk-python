@@ -12,7 +12,7 @@ class PixReversal(Resource):
    - amount [integer]: amount in cents to be reversed from PixRequest. ex: 1234 (= R$ 12.34)
    - external_id [string]: url safe string that must be unique among all your PixReversals. Duplicated external_ids will cause failures. By default, this parameter will block any PixReversal that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
    - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
-   - reason [string]: reason why the PixRequest is being reversed. Options are "bankError", "fraud", "pixWithdrawError", "refund3ByEndCustomer"
+   - reason [string]: reason why the PixRequest is being reversed. Options are "bankError", "fraud", "pixWithdrawError", "refundByEndCustomer"
    ## Parameters (optional):
    - tags [string, default None]: [list of strings]: list of strings for reference when searching for PixReversals. ex: ["employees", "monthly"]
    ## Attributes (return-only):

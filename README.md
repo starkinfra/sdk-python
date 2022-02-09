@@ -25,7 +25,7 @@ This SDK version is compatible with the Stark Infra API v2.
     - [PixReversal](#create-pix-reversals): Reverse a PIX transaction
     - [PixBalance](#get-pix-balance): Account balance
     - [PixStatement](#create-pix-statement): Account statement entries
-    - [Event](#process-webhook-events): Manage webhook events
+    - [WebhookEvents](#process-webhook-events): Manage webhook events
 - [Handling errors](#handling-errors)
 - [Help and Feedback](#help-and-feedback)
 

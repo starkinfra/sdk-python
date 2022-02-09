@@ -67,9 +67,6 @@ def query(limit=None, after=None, before=None, status=None, ids=None, user=None)
     Receive a generator of PixStatements objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
-    - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
-    - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [string, default None]: current PixStatement status. ex: "success" or "failed"
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
@@ -79,9 +76,6 @@ def query(limit=None, after=None, before=None, status=None, ids=None, user=None)
     return rest.get_stream(
         resource=_resource,
         limit=limit,
-        after=check_date(after),
-        before=check_date(before),
-        status=status,
         ids=ids,
         user=user,
     )
@@ -93,9 +87,6 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
-    - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
-    - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [string, default None]: current PixStatement status. ex: "success" or "failed"
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
@@ -106,9 +97,6 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
         resource=_resource,
         cursor=cursor,
         limit=limit,
-        after=check_date(after),
-        before=check_date(before),
-        status=status,
         ids=ids,
         user=user,
     )

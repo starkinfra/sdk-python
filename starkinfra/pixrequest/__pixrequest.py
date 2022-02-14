@@ -123,8 +123,8 @@ def query(fields=None, limit=None, after=None, before=None, status=None, tags=No
     - status [string, default None]: filter for status of retrieved objects. ex: "success" or "failed"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
-    - external_id [string, default None]: url safe string that must be unique among all your PixRequests. Duplicated external IDs will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
+    - end_to_end_ids [list of strings, default None]: central bank's unique transaction IDs. ex: ["E79457883202101262140HHX553UPqeq", "E79457883202101262140HHX553UPxzx"]
+    - external_ids [list of strings, default None]: url safe strings that must be unique among all your PixRequests. Duplicated external IDs will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: ["my-internal-id-123456", "my-internal-id-654321"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixRequest objects with updated attributes
@@ -158,8 +158,8 @@ def page(cursor=None, fields=None, limit=None, after=None, before=None, status=N
     - status [string, default None]: filter for status of retrieved objects. ex: "success" or "failed"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
-    - external_id [string, default None]: url safe string that must be unique among all your PixRequests. Duplicated external IDs will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
+    - end_to_end_ids [list of strings, default None]: central bank's unique transaction IDs. ex: ["E79457883202101262140HHX553UPqeq", "E79457883202101262140HHX553UPxzx"]
+    - external_ids [list of strings, default None]: url safe strings that must be unique among all your PixRequests. Duplicated external IDs will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: ["my-internal-id-123456", "my-internal-id-654321"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of PixRequest objects with updated attributes

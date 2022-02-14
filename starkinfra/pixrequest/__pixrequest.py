@@ -18,9 +18,9 @@ class PixRequest(Resource):
     - sender_account_type [string, default "checking"]: sender bank account type. ex: "checking", "savings", "salary" or "payment"
     - receiver_name [string]: receiver full name. ex: "Anthony Edward Stark"
     - receiver_tax_id [string]: receiver tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
-    - receiver_bank_code [string]: code of the receiver bank institution in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
+    - receiver_bank_code [string]: code of the receiver bank institution in Brazil. ex: "20018183" or "341"
     - receiver_account_number [string]: receiver bank account number. Use '-' before the verifier digit. ex: "876543-2"
-    - receiver_branch_code [string]: receiver bank account branch. Use '-' in case there is a verifier digit. ex: "1357-9"
+    - receiver_branch_code [string]: receiver bank account branch code. Use '-' in case there is a verifier digit. ex: "1357-9"
     - receiver_account_type [string]: receiver bank account type. ex: "checking", "savings", "salary" or "payment"
     - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     ## Parameters (optional):

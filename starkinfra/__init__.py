@@ -5,6 +5,7 @@ language = "en-US"
 timeout = 15
 
 from starkbank import Project, Organization
+from starkbank import key
 
 from . import pixrequest
 from .pixrequest.__pixrequest import PixRequest

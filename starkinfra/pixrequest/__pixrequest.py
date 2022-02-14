@@ -10,10 +10,10 @@ class PixRequest(Resource):
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
     - amount [integer]: amount in cents to be transferred. ex: 11234 (= R$ 112.34)
-    - external_id [string, default None]: url safe string that must be unique among all your PixRequests. Duplicated external_ids will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
+    - external_id [string, default None]: url safe string that must be unique among all your PixRequests. Duplicated external IDs will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
     - sender_name [string]: sender full name. ex: "Anthony Edward Stark"
     - sender_tax_id [string]: sender tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
-    - sender_branch_code [string]: sender bank account branch. Use '-' in case there is a verifier digit. ex: "1357-9"
+    - sender_branch_code [string]: sender bank account branch code. Use '-' in case there is a verifier digit. ex: "1357-9"
     - sender_account_number [string]: sender bank account number. Use '-' before the verifier digit. ex: "876543-2"
     - sender_account_type [string, default "checking"]: sender bank account type. ex: "checking", "savings", "salary" or "payment"
     - receiver_name [string]: receiver full name. ex: "Anthony Edward Stark"
@@ -35,7 +35,7 @@ class PixRequest(Resource):
     - method [string, default None]: execution  method for thr creation of the PIX. ex: "manual", "payerQrcode", "dynamicQrcode".
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when the PixRequest is created. ex: "5656565656565656"
-    - fee [integer, default None]: fee charged when PixRequest o is paid. ex: 200 (= R$ 2.00)
+    - fee [integer, default None]: fee charged when PixRequest is paid. ex: 200 (= R$ 2.00)
     - status [string, default None]: current PixRequest status. ex: "registered" or "paid"
     - flow [string, default None]: direction of money flow. ex: "in" or "out"
     - sender_bank_code [string, default None]: code of the sender bank institution in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
@@ -111,44 +111,55 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, user=None):
+def query(fields=None, limit=None, after=None, before=None, status=None, tags=None, ids=None, end_to_end_id=None,
+          external_id=None, user=None):
     """# Retrieve PixRequests
     Receive a generator of PixRequest objects previously created in the Stark Infra API
     ## Parameters (optional):
+    - fields [list of strings, default None]: parameters to be retrieved from PixRequest objects. ex: ["amount", "id"]
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
     - status [string, default None]: filter for status of retrieved objects. ex: "success" or "failed"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
+    - external_id [string, default None]: url safe string that must be unique among all your PixRequests. Duplicated external IDs will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixRequest objects with updated attributes
     """
     return rest.get_stream(
         resource=_resource,
+        fields=fields,
         limit=limit,
         after=check_date(after),
         before=check_date(before),
         status=status,
         tags=tags,
         ids=ids,
+        end_to_end_id=end_to_end_id,
+        external_id=external_id,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, status=None, tags=None, ids=None, user=None):
+def page(cursor=None, fields=None, limit=None, after=None, before=None, status=None, tags=None, ids=None,
+         end_to_end_id=None, external_id=None, user=None):
     """# Retrieve paged PixRequests
     Receive a list of up to 100 PixRequest objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
+    - fields [list of strings, default None]: parameters to be retrieved from PixRequest objects. ex: ["amount", "id"]
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
     - status [string, default None]: filter for status of retrieved objects. ex: "success" or "failed"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
+    - external_id [string, default None]: url safe string that must be unique among all your PixRequests. Duplicated external IDs will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of PixRequest objects with updated attributes
@@ -157,11 +168,14 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
     return rest.get_page(
         resource=_resource,
         cursor=cursor,
+        fields=fields,
         limit=limit,
         after=check_date(after),
         before=check_date(before),
         status=status,
         tags=tags,
         ids=ids,
+        end_to_end_id=end_to_end_id,
+        external_id=external_id,
         user=user,
     )

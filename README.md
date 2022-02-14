@@ -337,8 +337,13 @@ import starkinfra
 from datetime import datetime
 
 requests = starkinfra.pixrequest.query(
+    fields=["amount", "id"],
+    limit=10,
     after=datetime(2020, 1, 1),
-    before=datetime(2020, 4, 1)
+    before=datetime(2020, 4, 1),
+    status="success",
+    tags=["iron", "suit"],
+    end_to_end_id="E79457883202101262140HHX553UPqeq",
 )
 
 for request in requests:
@@ -371,7 +376,7 @@ logs = starkinfra.pixrequest.log.query(
 )
 
 for log in logs:
-    print(log.id)
+    print(log)
 ```
 
 ## Get a pix request log
@@ -412,14 +417,18 @@ You can query multiple pix reversals according to filters.
 ```python
 import starkinfra
 
-logs = starkinfra.pixreversal.log.query(
-    limit=50, 
-    after="2022-01-01",
-    before="2022-01-20",
+reversals = starkinfra.pixreversal.query(
+    fields=["amount", "id"],
+    limit=10,
+    after=datetime(2020, 1, 1),
+    before=datetime(2020, 4, 1),
+    status="success",
+    tags=["iron", "suit"],
+    return_id="D20018183202202030109X3OoBHG74wo",
 )
 
-for log in logs:
-    print(log.id)
+for reversal in reversals:
+    print(reversal)
 ```
 
 ## Get a pix reversal
@@ -448,7 +457,7 @@ logs = starkinfra.pixreversal.log.query(
 )
 
 for log in logs:
-    print(log.id)
+    print(log)
 ```
 
 ## Get a pix reversal log
@@ -486,7 +495,7 @@ statement = starkinfra.pixstatement.create(
     starkinfra.PixStatement(
         after="2022-01-01", # This is the date that you want to create a statement.
         before="2022-01-01", # After and before must be the same date.
-        statement_type="transaction" # Options are "interchange", "interchangeTotal", "transaction".
+        type="transaction" # Options are "interchange", "interchangeTotal", "transaction".
     )
 )
 

@@ -10,7 +10,7 @@ class PixReversal(Resource):
    to the Stark Infra API and returns the list of created objects.
    ## Parameters (required):
    - amount [integer]: amount in cents to be reversed from PixRequest. ex: 1234 (= R$ 12.34)
-   - external_id [string]: url safe string that must be unique among all your PixReversals. Duplicated external_ids will cause failures. By default, this parameter will block any PixReversal that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
+   - external_id [string]: url safe string that must be unique among all your PixReversals. Duplicated external IDs will cause failures. By default, this parameter will block any PixReversal that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
    - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
    - reason [string]: reason why the PixRequest is being reversed. Options are "bankError", "fraud", "pixWithdrawError", "refundByEndCustomer"
    ## Parameters (optional):
@@ -18,7 +18,7 @@ class PixReversal(Resource):
    ## Attributes (return-only):
    - id [string, default None]: unique id returned when the PixReversal is created. ex: "5656565656565656".
    - return_id [string, default None]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo".
-   - bank_code [string, default None]: code of the bank institution in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
+   - bank_code [string, default None]: code of the bank institution in Brazil. ex: "20018183" or "341"
    - fee [string, default None]: fee charged by this PixReversal. ex: 200 (= R$ 2.00)
    - status [string, default None]: current PixReversal status. ex: "registered" or "paid"
    - flow [string, default None]: direction of money flow. ex: "in" or "out"
@@ -73,16 +73,20 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, user=None):
+def query(fields=None, limit=None, after=None, before=None, status=None, tags=None, ids=None, return_id=None,
+          external_id=None, user=None):
     """# Retrieve PixReversals
     Receive a generator of PixReversal objects previously created in the Stark Infra API
     ## Parameters (optional):
+    - fields [list of strings, default None]: parameters to be retrieved from PixRequest objects. ex: ["amount", "id"]
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
     - status [string, default None]: filter for status of retrieved objects. ex: "success" or "failed"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - return_id [string, default None]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo".
+    - external_id [string]: url safe string that must be unique among all your PixReversals. Duplicated external IDs will cause failures. By default, this parameter will block any PixReversal that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixReversal objects with updated attributes
@@ -90,28 +94,35 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
 
     return rest.get_stream(
         resource=_resource,
+        fields=fields,
         limit=limit,
         after=check_date(after),
         before=check_date(before),
         status=status,
         tags=tags,
         ids=ids,
+        return_id=return_id,
+        external_id=external_id,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, status=None, tags=None, ids=None, user=None):
+def page(cursor=None, fields=None, limit=None, after=None, before=None, status=None, tags=None, ids=None, return_id=None,
+         external_id=None, user=None):
     """# Retrieve paged PixReversals
     Receive a list of up to 100 PixReversal objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your reversals.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
+    - fields [list of strings, default None]: parameters to be retrieved from PixRequest objects. ex: ["amount", "id"]
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
     - status [string, default None]: filter for status of retrieved objects. ex: "success" or "failed"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - return_id [string, default None]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo".
+    - external_id [string, default None]: url safe string that must be unique among all your PixReversals. Duplicated external IDs will cause failures. By default, this parameter will block any PixReversal that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of PixReversal objects with updated attributes
@@ -120,11 +131,14 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
     return rest.get_page(
         resource=_resource,
         cursor=cursor,
+        fields=fields,
         limit=limit,
         after=check_date(after),
         before=check_date(before),
         status=status,
         tags=tags,
         ids=ids,
+        return_id=return_id,
+        external_id=external_id,
         user=user,
     )

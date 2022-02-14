@@ -9,9 +9,9 @@ class PixStatement(Resource):
     a specific day at the workspace. It must be created by the user before it can be
     accessed by the user. This feature is only available for direct participants.
     ## Parameters (required):
-    - after [datetime.date]: transactions that happened at this date are stored in the PixStatement , must be the same as before. ex: (2022-01-01)
+    - after [datetime.date]: transactions that happened at this date are stored in the PixStatement, must be the same as before. ex: (2022-01-01)
     - before [datetime.date]: transactions that happened at this date are stored in the PixStatement, must be the same as after. ex: (2022-01-01)
-    - statement_type [string, default None]: types of entities to include in statement. Options: ["interchange", "interchangeTotal", "transaction"]
+    - type [string, default None]: types of entities to include in statement. Options: ["interchange", "interchangeTotal", "transaction"]
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when the PixStatement is created. ex: "5656565656565656"
     - status [string, default None]: current PixStatement status. ex: "success" or "failed"
@@ -20,13 +20,13 @@ class PixStatement(Resource):
     - updated [datetime.datetime, default None]: latest update datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, after, before, statement_type, id=None, status=None, transaction_count=None, created=None,
+    def __init__(self, after, before, type, id=None, status=None, transaction_count=None, created=None,
                  updated=None):
         Resource.__init__(self, id=id)
 
         self.after = check_date(after)
         self.before = check_date(before)
-        self.statement_type = statement_type
+        self.type = type
         self.status = status
         self.transaction_count = transaction_count
         self.created = check_datetime(created)

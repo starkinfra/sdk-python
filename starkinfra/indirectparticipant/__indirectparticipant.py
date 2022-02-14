@@ -9,7 +9,7 @@ class IndirectParticipant(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (Required):
-    - tax_id [string]: indirectParticipant's tax_id (CPF/CNPJ). ex: "00000000"
+    - tax_id [string]: indirectParticipant's tax ID (CPF/CNPJ). ex: "00000000"
     - workspace_id [string]: indirectParticipant's workspace ID. ex: "4545454545454545"
     - rsfn_url [string]: indirectParticipant's rsfn url.
     - request_url [string]: indirectParticipant's request url.

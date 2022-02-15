@@ -14,7 +14,7 @@ class PixReversal(Resource):
    - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
    - reason [string]: reason why the PixRequest is being reversed. Options are "bankError", "fraud", "pixWithdrawError", "refundByEndCustomer"
    ## Parameters (optional):
-   - tags [string, default None]: [list of strings]: list of strings for reference when searching for PixReversals. ex: ["employees", "monthly"]
+   - tags [list of strings, default None]: list of strings for reference when searching for PixReversals. ex: ["employees", "monthly"]
    ## Attributes (return-only):
    - id [string, default None]: unique id returned when the PixReversal is created. ex: "5656565656565656".
    - return_id [string, default None]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo".

@@ -10,22 +10,22 @@ class PixRequest(Resource):
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
     - amount [integer]: amount in cents to be transferred. ex: 11234 (= R$ 112.34)
-    - external_id [string, default None]: url safe string that must be unique among all your PixRequests. Duplicated external IDs will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
-    - sender_name [string]: sender full name. ex: "Anthony Edward Stark"
-    - sender_tax_id [string]: sender tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
-    - sender_branch_code [string]: sender bank account branch code. Use '-' in case there is a verifier digit. ex: "1357-9"
-    - sender_account_number [string]: sender bank account number. Use '-' before the verifier digit. ex: "876543-2"
-    - sender_account_type [string, default "checking"]: sender bank account type. ex: "checking", "savings", "salary" or "payment"
-    - receiver_name [string]: receiver full name. ex: "Anthony Edward Stark"
-    - receiver_tax_id [string]: receiver tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
-    - receiver_bank_code [string]: code of the receiver bank institution in Brazil. ex: "20018183" or "341"
-    - receiver_account_number [string]: receiver bank account number. Use '-' before the verifier digit. ex: "876543-2"
-    - receiver_branch_code [string]: receiver bank account branch code. Use '-' in case there is a verifier digit. ex: "1357-9"
-    - receiver_account_type [string]: receiver bank account type. ex: "checking", "savings", "salary" or "payment"
+    - external_id [string]: url safe string that must be unique among all your PixRequests. Duplicated external IDs will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
+    - sender_name [string]: sender's full name. ex: "Anthony Edward Stark"
+    - sender_tax_id [string]: sender's tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
+    - sender_branch_code [string]: sender's bank account branch code. Use '-' in case there is a verifier digit. ex: "1357-9"
+    - sender_account_number [string]: sender's bank account number. Use '-' before the verifier digit. ex: "876543-2"
+    - sender_account_type [string, default "checking"]: sender's bank account type. ex: "checking", "savings", "salary" or "payment"
+    - receiver_name [string]: receiver's full name. ex: "Anthony Edward Stark"
+    - receiver_tax_id [string]: receiver's tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
+    - receiver_bank_code [string]: receiver's bank institution code in Brazil. ex: "20018183" or "341"
+    - receiver_account_number [string]: receiver's bank account number. Use '-' before the verifier digit. ex: "876543-2"
+    - receiver_branch_code [string]: receiver's bank account branch code. Use '-' in case there is a verifier digit. ex: "1357-9"
+    - receiver_account_type [string]: receiver's bank account type. ex: "checking", "savings", "salary" or "payment"
     - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     ## Parameters (optional):
     - receiver_key_id [string, default None]: Receiver's dict key. Example: tax_id (CPF/CNPJ).
-    - description [string, default None, default None]: optional description to override default description to be shown in the bank statement. ex: "Payment for service #1234"
+    - description [string, default None]: optional description to override default description to be shown in the bank statement. ex: "Payment for service #1234"
     - reconciliation_id [string, default None]: Reconciliation ID linked to this payment. ex: "b77f5236-7ab9-4487-9f95-66ee6eaf1781"
     - initiator_tax_id [string, default None]: Payment initiator's tax id (CPF/CNPJ). ex: "01234567890" or "20.018.183/0001-80"
     - cash_amount [integer, default None]: Amount to be withdrawal from the cashier in cents. ex: 1000 (= R$ 10.00)
@@ -38,7 +38,7 @@ class PixRequest(Resource):
     - fee [integer, default None]: fee charged when PixRequest is paid. ex: 200 (= R$ 2.00)
     - status [string, default None]: current PixRequest status. ex: "registered" or "paid"
     - flow [string, default None]: direction of money flow. ex: "in" or "out"
-    - sender_bank_code [string, default None]: code of the sender bank institution in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
+    - sender_bank_code [string, default None]: sender's bank institution code in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
     - created [datetime.datetime, default None]: creation datetime for the PixRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime, default None]: latest update datetime for the PixRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """

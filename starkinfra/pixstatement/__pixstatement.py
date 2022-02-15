@@ -11,7 +11,7 @@ class PixStatement(Resource):
     ## Parameters (required):
     - after [datetime.date]: transactions that happened at this date are stored in the PixStatement, must be the same as before. ex: (2022-01-01)
     - before [datetime.date]: transactions that happened at this date are stored in the PixStatement, must be the same as after. ex: (2022-01-01)
-    - type [string, default None]: types of entities to include in statement. Options: ["interchange", "interchangeTotal", "transaction"]
+    - type [string]: types of entities to include in statement. Options: ["interchange", "interchangeTotal", "transaction"]
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when the PixStatement is created. ex: "5656565656565656"
     - status [string, default None]: current PixStatement status. ex: "success" or "failed"

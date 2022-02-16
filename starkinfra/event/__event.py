@@ -3,12 +3,7 @@ from ..utils.checks import check_datetime
 from ..utils.resource import Resource
 from ..pixrequest.log.__log import _resource as _pixrequest_log_resource
 from ..pixreversal.log.__log import _resource as _pixreversal_log_resource
-from json import loads, dumps
-from requests import get as get_request
-from ellipticcurve import Ecdsa, Signature, PublicKey
-from ..utils.request import fetch
-from ..error import InvalidSignatureError
-from ..utils import cache
+from ..utils.parse import parse_and_verify
 
 
 _resource_by_subscription = {
@@ -62,41 +57,4 @@ def parse(content, signature, user=None):
     - Parsed Event object
     """
 
-    event = from_api_json(_resource, loads(content)["event"])
-
-    try:
-        signature = Signature.fromBase64(signature)
-    except:
-        raise InvalidSignatureError("The provided signature is not valid")
-
-    public_key = _get_public_key(user=user)
-    if _is_valid(content=content, signature=signature, public_key=public_key):
-        return event
-
-    public_key = _get_public_key(user=user, refresh=True)
-    if _is_valid(content=content, signature=signature, public_key=public_key):
-        return event
-
-    raise InvalidSignatureError("The provided signature and content do not match the Stark Infra public key")
-
-
-def _is_valid(content, signature, public_key):
-    if Ecdsa.verify(message=content, signature=signature, publicKey=public_key):
-        return True
-
-    normalized = dumps(loads(content), sort_keys=True)
-    if Ecdsa.verify(message=normalized, signature=signature, publicKey=public_key):
-        return True
-
-    return False
-
-
-def _get_public_key(user, refresh=False):
-    public_key = cache.get("starkinfra-public-key")
-    if public_key and not refresh:
-        return public_key
-
-    pem = fetch(method=get_request, path="/public-key", query={"limit": 1}, user=user).json()["publicKeys"][0]["content"]
-    public_key = PublicKey.fromPem(pem)
-    cache["starkinfra-public-key"] = public_key
-    return public_key
+    return parse_and_verify(content, signature, user, _resource, "event")

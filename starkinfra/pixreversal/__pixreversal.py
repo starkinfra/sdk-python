@@ -1,6 +1,7 @@
 from ..utils import rest
 from ..utils.checks import check_datetime, check_date
 from ..utils.resource import Resource
+from ..utils.parse import parse_and_verify
 
 
 class PixReversal(Resource):
@@ -142,3 +143,20 @@ def page(cursor=None, fields=None, limit=None, after=None, before=None, status=N
         external_id=external_id,
         user=user,
     )
+
+
+def parse(content, signature, user=None):
+    """# Create single authorized PixRequest object from a content string
+    Create a single PixRequest object from a content string received from a handler listening at a subscribed user endpoint.
+    If the provided digital signature does not check out with the StarkInfra public key, a
+    starkinfra.exception.InvalidSignatureException will be raised.
+    ## Parameters (required):
+    - content [string]: response content from request received at user endpoint (not parsed)
+    - signature [string]: base-64 digital signature received at response header "Digital-Signature"
+    ## Parameters (optional):
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    ## Return:
+    - Parsed PixRequest object
+    """
+
+    return parse_and_verify(content, signature, user, _resource)

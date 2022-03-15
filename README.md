@@ -1,4 +1,4 @@
-# Stark Infra Python SDK
+# Stark Infra Python SDK - Beta
 
 Welcome to the Stark Infra Python SDK! This tool is made for Python 
 developers who want to easily integrate with our API.

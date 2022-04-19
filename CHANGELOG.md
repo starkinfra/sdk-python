@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- CreditNote resource for money lending with Stark Infra's endorsement
 
 ## [0.0.2] - 2022-03-15
 ### Added

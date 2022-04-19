@@ -21,11 +21,12 @@ This SDK version is compatible with the Stark Infra API v2.
 - [Resource listing and manual pagination](#resource-listing-and-manual-pagination)
 - [Testing in Sandbox](#testing-in-sandbox) 
 - [Usage](#usage)
-    - [PixRequests](#create-pix-requests): PIX receivables
-    - [PixReversals](#create-pix-reversals): Reverse PIX transactions
+    - [PixRequests](#create-pix-requests): Pix receivables
+    - [PixReversals](#create-pix-reversals): Reverse Pix transactions
     - [PixBalance](#get-pix-balance): Account balance
     - [PixStatement](#create-pix-statement): Account statement entry
     - [WebhookEvents](#process-webhook-events): Manage webhook events
+    - [CreditNote](#create-credit-notes): Manage credit notes
 - [Handling errors](#handling-errors)
 - [Help and Feedback](#help-and-feedback)
 
@@ -326,7 +327,7 @@ for request in requests:
     print(request)
 ```
 
-**Note**: Instead of using Pix Request objects, you can also pass each transaction element in dictionary format
+**Note**: Instead of using PixRequest objects, you can also pass each element in dictionary format
 
 ## Query pix requests
 
@@ -343,7 +344,7 @@ requests = starkinfra.pixrequest.query(
     before=datetime(2020, 4, 1),
     status="success",
     tags=["iron", "suit"],
-    end_to_end_id="E79457883202101262140HHX553UPqeq",
+    end_to_end_ids=["E79457883202101262140HHX553UPqeq"],
 )
 
 for request in requests:
@@ -443,7 +444,7 @@ reversals = starkinfra.pixreversal.query(
     before=datetime(2020, 4, 1),
     status="success",
     tags=["iron", "suit"],
-    return_id="D20018183202202030109X3OoBHG74wo",
+    return_ids=["D20018183202202030109X3OoBHG74wo"],
 )
 
 for reversal in reversals:
@@ -605,6 +606,152 @@ elif "pix-reversal" in event.subscription:
     print(event.log.reversal)
 ```
 
+## Create credit notes
+You can create a Credit Note to generate a CCB contract:
+
+```python
+import starkinfra
+
+notes = starkinfra.creditnote.create([
+    starkinfra.CreditNote(
+        template_id="0123456789101112",
+        name="Jamie Lannister",
+        tax_id="012.345.678-90",
+        nominal_amount=100000,
+        scheduled="2022-04-28",
+        invoices=[
+            {
+                "due": "2023-06-25",
+                "amount": 120000,
+                "fine": 10,
+                "interest": 2
+            }
+        ],
+        transfer={
+            "bank_code": "00000000",
+            "branch_code": "1234",
+            "account_number": "129340-1",
+            "name": "Jamie Lannister",
+            "taxId": "012.345.678-90"
+        },
+        signers=[
+            {
+                "name": "Jamie Lannister",
+                "contact": "jamie.lannister@gmail.com"
+            }
+        ],
+    ),
+    starkinfra.CreditNote(
+        template_id="5656565656565656",
+        name="Jamie Lannister",
+        tax_id="012.345.678-90",
+        nominal_amount=240000,
+        scheduled="2022-04-28",
+        invoices=[
+            {
+                "due": "2023-06-25",
+                "amount": 100000,
+                "fine": 10,
+                "interest": 2
+            },
+            {
+                "due": "2023-07-25",
+                "amount": 100000,
+                "fine": 11,
+                "interest": 2.1
+            },
+            {
+                "due": "2023-08-25",
+                "amount": 100000,
+                "fine": 12.5,
+                "interest": 2.2
+            }
+        ],
+        tags=["test", "testing"],
+        transfer={
+            "bank_code": "00000000",
+            "branch_code": "1234",
+            "account_number": "129340-1",
+            "name": "Jamie Lannister",
+            "taxId": "012.345.678-90"
+        },
+        signers=[
+            {
+                "name": "Jamie Lannister",
+                "contact": "jamie.lannister@gmail.com",
+                "method": "link"
+            }
+        ],
+    )
+])
+
+for note in notes:
+    print(note)
+```
+
+**Note**: Instead of using CreditNote objects, you can also pass each element in dictionary format
+
+## Query credit notes
+
+You can query multiple credit notes according to filters.
+
+```python
+import starkinfra
+from datetime import datetime
+
+notes = starkinfra.creditnote.query(
+    limit=10,
+    after=datetime(2020, 1, 1),
+    before=datetime(2020, 4, 1),
+    status="success",
+    tags=["iron", "suit"],
+)
+
+for note in notes:
+    print(note)
+```
+
+## Get a credit note
+
+After its creation, information on a credit note may be retrieved by its id.
+
+```python
+import starkinfra
+
+note = starkinfra.creditnote.get("5155165527080960")
+
+print(note)
+```
+  
+## Query credit note logs
+
+You can query credit note logs to better understand credit note life cycles. 
+
+```python
+import starkinfra
+
+logs = starkinfra.creditnote.log.query(
+    limit=50, 
+    after="2022-01-01",
+    before="2022-01-20",
+)
+
+for log in logs:
+    print(log)
+```
+
+## Get a credit note log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.creditnote.log.get("5155165527080960")
+
+print(log)
+```
+
 # Handling errors
 
 The SDK may raise one of four types of errors: __InputErrors__, __InternalServerError__, __UnknownError__, __InvalidSignatureError__
@@ -649,4 +796,4 @@ If you have any questions about our SDK, just send us an email.
 We will respond you quickly, pinky promise. We are here to help you integrate with us ASAP.
 We also love feedback, so don't be shy about sharing your thoughts with us.
 
-Email: developers@starkbank.com
+Email: help@starkbank.com

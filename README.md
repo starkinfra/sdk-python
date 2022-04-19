@@ -344,7 +344,7 @@ requests = starkinfra.pixrequest.query(
     before=datetime(2020, 4, 1),
     status="success",
     tags=["iron", "suit"],
-    end_to_end_id="E79457883202101262140HHX553UPqeq",
+    end_to_end_ids=["E79457883202101262140HHX553UPqeq"],
 )
 
 for request in requests:
@@ -444,7 +444,7 @@ reversals = starkinfra.pixreversal.query(
     before=datetime(2020, 4, 1),
     status="success",
     tags=["iron", "suit"],
-    return_id="D20018183202202030109X3OoBHG74wo",
+    return_ids=["D20018183202202030109X3OoBHG74wo"],
 )
 
 for reversal in reversals:
@@ -612,7 +612,7 @@ You can create a Credit Note to generate a CCB contract:
 ```python
 import starkinfra
 
-requests = starkinfra.creditnote.create([
+notes = starkinfra.creditnote.create([
     starkinfra.CreditNote(
         template_id="0123456789101112",
         name="Jamie Lannister",
@@ -678,17 +678,18 @@ requests = starkinfra.creditnote.create([
         signers=[
             {
                 "name": "Jamie Lannister",
-                "contact": "jamie.lannister@gmail.com"
+                "contact": "jamie.lannister@gmail.com",
+                "method": "link"
             }
         ],
     )
 ])
 
-for request in requests:
-    print(request)
+for note in notes:
+    print(note)
 ```
 
-**Note**: Instead of using Credit Note objects, you can also pass each transaction element in dictionary format
+**Note**: Instead of using Credit Note objects, you can also pass each element in dictionary format
 
 ## Query credit notes
 
@@ -698,7 +699,7 @@ You can query multiple credit notes according to filters.
 import starkinfra
 from datetime import datetime
 
-requests = starkinfra.creditnote.query(
+notes = starkinfra.creditnote.query(
     limit=10,
     after=datetime(2020, 1, 1),
     before=datetime(2020, 4, 1),
@@ -706,8 +707,8 @@ requests = starkinfra.creditnote.query(
     tags=["iron", "suit"],
 )
 
-for request in requests:
-    print(request)
+for note in notes:
+    print(note)
 ```
 
 ## Get a credit note
@@ -717,9 +718,9 @@ After its creation, information on a credit note may be retrieved by its id.
 ```python
 import starkinfra
 
-request = starkinfra.creditnote.get("5155165527080960")
+note = starkinfra.creditnote.get("5155165527080960")
 
-print(request)
+print(note)
 ```
   
 ## Query credit note logs

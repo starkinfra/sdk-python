@@ -34,7 +34,8 @@ example_note = CreditNote(
     signers=[
         {
             "name": "Jamie Lannister",
-            "contact": "jamie.lannister@gmail.com"
+            "contact": "jamie.lannister@gmail.com",
+            "method": "link"
         }
     ],
 )
@@ -48,7 +49,8 @@ example_invoice = {
 
 example_signer = {
     "name": "Jamie Lannister",
-    "contact": "jamie.lannister@gmail.com"
+    "contact": "jamie.lannister@gmail.com",
+    "method": "link"
 }
 
 
@@ -60,14 +62,14 @@ def generateExampleCreditNoteJson(n=1, nominal_amount=None):
         note.name = get_full_name()
         note.tax_id = TaxIdGenerator.taxId()
 
-        note_nominal_amount = randint(10000, 1000000)
+        note_nominal_amount = randint(100000, 1000000)
         if nominal_amount is not None:
             note_nominal_amount = int(nominal_amount)
 
         note.nominal_amount = note_nominal_amount
-        note.scheduled = randomFutureDatetime(days=100)
+        note.scheduled = randomFutureDatetime(days=600)
 
-        note.invoices = generateExampleInvoiceJson(n=randint(1, 3), noteNominalAmount=note.nominal_amount, noteScheduled=note.scheduled)
+        note.invoices = generateExampleInvoiceJson(n=randint(3, 4), noteNominalAmount=note.nominal_amount // 2, noteScheduled=note.scheduled)
 
         note.transfer["bank_code"] = choice(["18236120", "60701190"])
         note.transfer["branch_code"] = "{:04}".format(randint(1, 10**4))

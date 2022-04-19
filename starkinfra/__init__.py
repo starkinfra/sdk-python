@@ -22,3 +22,6 @@ from .pixdirector.__pixdirector import PixDirector
 
 from . import event
 from .event.__event import Event
+
+from . import creditnote
+from .creditnote.__creditnote import CreditNote

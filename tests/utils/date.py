@@ -1,5 +1,5 @@
-from datetime import datetime, timedelta, date
 from random import randint
+from datetime import datetime, timedelta, date
 
 
 def randomFutureDate(days=7):

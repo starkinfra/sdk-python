@@ -1,5 +1,4 @@
 import starkinfra
-from random import choice
 from json import loads, dumps
 from unittest import TestCase, main
 from starkcore.error import InvalidSignatureError

@@ -1,7 +1,7 @@
 import starkinfra
 from datetime import timedelta, date
 from unittest import TestCase, main
-from tests.utils.PixRequest import generateExamplePixRequestJson
+from tests.utils.pixRequest import generateExamplePixRequestJson
 from tests.utils.user import exampleProject
 from starkcore.error import InvalidSignatureError
 

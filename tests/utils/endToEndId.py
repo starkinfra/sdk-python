@@ -1,6 +1,6 @@
-from datetime import datetime
 import starkinfra
 from random import choice
+from datetime import datetime
 from tests.utils.user import exampleProject
 
 

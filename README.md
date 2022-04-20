@@ -21,12 +21,24 @@ This SDK version is compatible with the Stark Infra API v2.
 - [Resource listing and manual pagination](#resource-listing-and-manual-pagination)
 - [Testing in Sandbox](#testing-in-sandbox) 
 - [Usage](#usage)
-    - [PixRequests](#create-pix-requests): Pix receivables
-    - [PixReversals](#create-pix-reversals): Reverse Pix transactions
-    - [PixBalance](#get-pix-balance): Account balance
-    - [PixStatement](#create-pix-statement): Account statement entry
-    - [WebhookEvents](#process-webhook-events): Manage webhook events
-    - [CreditNote](#create-credit-notes): Manage credit notes
+    - [Issuing](#issuing)
+        - [Authorizations](#process-authorizations): Respond card purchase authorization requests
+        - [Balance](#get-your-issuingbalance): View your issuing balance
+        - [Transactions](#query-issuingtransactions): View the transactions that have affected your issuing balance
+        - [Holders](#create-issuingholders): Manage card holders
+        - [BINs](#query-issuingbins): View available sub-issuer BINs (a.k.a. card number ranges)
+        - [Invoices](#create-issuinginvoices): Add money to your issuing balance
+        - [Withdrawals](#create-issuingwithdrawals): Send money back to your Workspace from your issuing balance
+        - [Cards](#create-issuingcards): Create virtual and/or physical cards
+        - [Purchases](#query-issuingpurchases): View your past purchases
+    - [Pix](#pix)
+        - [PixRequests](#create-pixrequests): Create Pix transactions
+        - [PixReversals](#create-pixreversals): Reverse Pix transactions
+        - [PixBalance](#get-pixbalance): View your account balance
+        - [PixStatement](#create-pixstatement): Request your account statement
+    - [Credit Note](#credit-note)
+        - [CreditNote](#create-creditnotes): Create credit notes
+    - [WebhookEvents](#process-webhook-events): Manage Webhook events
 - [Handling errors](#handling-errors)
 - [Help and Feedback](#help-and-feedback)
 
@@ -278,9 +290,468 @@ for the value to be credited to your account.
 
 Here are a few examples on how to use the SDK. If you have any doubts, use the built-in
 `help()` function to get more info on the desired functionality
-(for example: `help(starkinfra.boleto.create)`)
+(for example: `help(starkinfra.issuinginvoice.create)`)
 
-## Create pix requests
+## Issuing
+
+### Process Authorizations
+
+It's easy to process Authorizations delivered to your Webhook endpoint. 
+
+If you do not approve or decline the authorization within 2 seconds, the authorization will be denied.
+
+```python
+import starkinfra
+
+request = listen()  # this is the method you made to get the events posted to your webhook endpoint
+
+authorization = starkinfra.issuingauthorization.parse(
+    content=request.data.decode("utf-8"),
+    signature=request.headers["Digital-Signature"],
+)
+
+sendResponse(  # you should also implement this method
+    starkinfra.issuingauthorization.response(  # this optional method just helps you build the response JSON
+        status="accepted",
+        amount=authorization.amount,
+        tags=["my-purchase-id/123"],
+    )
+)
+
+# or 
+
+sendResponse(
+    starkinfra.issuingauthorization.response(
+        status="denied",
+        reason="other",
+        tags=["other-id/456"],
+    )
+)
+```
+
+### Get your IssuingBalance
+
+To know how much money you have in your workspace, run:
+
+```python
+import starkinfra
+
+balance = starkinfra.issuingbalance.get()
+
+print(balance)
+```
+
+### Query IssuingTransactions
+
+To understand your balance changes (issuing statement), you can query
+transactions. Note that our system creates transactions for you when
+you make purchases, withdrawals, receive issuing invoice payments, for example.
+
+```python
+import starkinfra
+
+transactions = starkinfra.issuingtransaction.query(
+    after="2020-01-01",
+    before="2020-03-01"
+)
+for transaction in transactions:
+    print(transaction)
+```
+
+### Get an IssuingTransaction
+
+You can get a specific transaction by its id:
+
+```python
+import starkinfra
+
+transaction = starkinfra.issuingtransaction.get("5155165527080960")
+
+print(transaction)
+```
+
+### Create IssuingHolders
+
+You can create card holders to your Workspace.
+
+```python
+import starkinfra
+
+holders = starkinfra.issuingholder.create([
+    starkinfra.IssuingHolder(
+        name="Iron Bank S.A.",
+        external_id="1234",
+        tax_id="012.345.678-90",
+        tags=[
+            "Traveler Employee"
+        ],
+        rules=[
+            {
+                "name": "General USD",
+                "interval": "day",
+                "amount": 100000,
+                "currencyCode": "USD"
+            }
+        ]
+    )
+])
+
+for holder in holders:
+    print(holder)
+```
+
+**Note**: Instead of using IssuingHolder objects, you can also pass each element in dictionary format
+
+### Query IssuingHolders
+
+You can query multiple holders according to filters.
+
+```python
+import starkinfra
+
+holders = starkinfra.issuingholder.query()
+
+for holder in holders:
+    print(holder)
+```
+
+### Delete an IssuingHolder
+
+To cancel a single Issuing Holder by its id, run:
+
+```python
+import starkinfra
+
+holder = starkinfra.issuingholder.delete("5155165527080960")
+
+print(holder)
+```
+
+### Get an IssuingHolder
+
+To get a single Issuing Holder by its id, run:
+
+```python
+import starkinfra
+
+holder = starkinfra.issuingholder.get("5155165527080960")
+
+print(holder)
+```
+
+### Query IssuingHolder logs
+
+You can query holder logs to better understand holder life cycles.
+
+```python
+import starkinfra
+
+logs = starkinfra.issuingholder.log.query(limit=50)
+
+for log in logs:
+    print(log.id)
+```
+
+### Get an IssuingHolder log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.issuingholder.log.get("5155165527080960")
+
+print(log)
+```
+
+### Query IssuingBins
+
+To take a look at the sub-issuer BINs linked to your workspace, just run the following:
+
+```python
+import starkinfra
+
+bins = starkinfra.issuingbin.query()
+for bin in bins:
+    print(bin)
+```
+
+### Create IssuingInvoices
+
+You can create dynamic QR Code invoices to receive money from accounts you have in other banks to your Issuing account.
+
+Since the banking system only understands value modifiers (discounts, fines and interest) when dealing with **dates** (instead of **datetimes**), these values will only show up in the end user banking interface if you use **dates** in the "due" and "discounts" fields. 
+
+If you use **datetimes** instead, our system will apply the value modifiers in the same manner, but the end user will only see the final value to be paid on his interface.
+
+Also, other banks will most likely only allow payment scheduling on invoices defined with **dates** instead of **datetimes**.
+
+```python
+import starkinfra
+
+invoice = starkinfra.issuinginvoice.create(
+    amount=1000
+)
+
+print(invoice)
+```
+
+**Note**: Instead of using Invoice objects, you can also pass each element in dictionary format
+
+### Get an IssuingInvoice
+
+After its creation, information on an invoice may be retrieved by its id. 
+Its status indicates whether it's been paid.
+
+```python
+import starkinfra
+
+invoice = starkinfra.issuinginvoice.get("5155165527080960")
+
+print(invoice)
+```
+
+### Query IssuingInvoices
+
+You can get a list of created invoices given some filters.
+
+```python
+import starkinfra
+from datetime import datetime
+
+invoices = starkinfra.issuinginvoice.query(
+    after=datetime(2020, 1, 1),
+    before=datetime(2020, 3, 1)
+)
+
+for invoice in invoices:
+    print(invoice)
+```
+
+### Query IssuingInvoice logs
+
+Logs are pretty important to understand the life cycle of an invoice.
+
+```python
+import starkinfra
+
+logs = starkinfra.issuinginvoice.log.query(limit=150)
+
+for log in logs:
+    print(log)
+```
+
+### Create IssuingWithdrawals
+
+You can create withdrawals to send back cash to your Banking account by using the Withdrawal resource
+
+```python
+import starkinfra
+
+withdrawal = starkinfra.issuingwithdrawal.create(
+    amount=10000,
+    external_id="123",
+    description="Sending back"
+)
+
+print(withdrawal)
+```
+
+**Note**: Instead of using Withdrawal objects, you can also pass each element in dictionary format
+
+### Get an IssuingWithdrawal
+
+After its creation, information on a withdrawal may be retrieved by its id.
+
+```python
+import starkinfra
+
+invoice = starkinfra.issuingwithdrawal.get("5155165527080960")
+
+print(invoice)
+```
+
+### Query IssuingWithdrawals
+
+You can get a list of created invoices given some filters.
+
+```python
+import starkinfra
+from datetime import datetime
+
+withdrawals = starkinfra.issuingwithdrawal.query(
+    after=datetime(2020, 1, 1),
+    before=datetime(2020, 3, 1)
+)
+
+for withdrawal in withdrawals:
+    print(withdrawal)
+```
+
+### Create IssuingCards
+
+You can issue cards with specific spending rules to make purchases.
+
+```python
+import starkinfra
+
+cards = starkinfra.issuingcard.create([
+    starkinfra.IssuingCard(
+        holder_name="Developers",
+        holder_tax_id="012.345.678-90",
+        holder_external_id="1234",
+        rules=starkinfra.IssuingRule(
+            name="general",
+            interval="week",
+            amount=50000,
+            currency_code="USD"
+        )
+    )
+])
+
+for card in cards:
+    print(card)
+```
+
+### Query IssuingCards
+
+You can get a list of created cards given some filters.
+
+```python
+import starkinfra
+from datetime import datetime
+
+cards = starkinfra.issuingcard.query(
+    after=datetime(2020, 1, 1),
+    before=datetime(2020, 3, 1)
+)
+
+for card in cards:
+    print(card)
+```
+
+### Get an IssuingCard
+
+After its creation, information on a card may be retrieved by its id.
+
+```python
+import starkinfra
+
+card = starkinfra.issuingcard.get("5155165527080960")
+
+print(card)
+```
+
+### Update an IssuingCard
+
+You can update a specific Issuing Card by its id.
+
+```python
+import starkinfra
+
+card = starkinfra.issuingcard.update("5155165527080960", status="blocked")
+
+print(card)
+```
+
+### Delete an IssuingCard
+
+You can also cancel a card by its id.
+Note that this is not possible if it has been processed already.
+
+```python
+import starkinfra
+
+card = starkinfra.issuingcard.delete("5155165527080960")
+
+print(card)
+```
+
+### Query IssuingCard logs
+
+Logs are pretty important to understand the life cycle of a card.
+
+```python
+import starkinfra
+
+logs = starkinfra.issuingcard.log.query(limit=150)
+
+for log in logs:
+    print(log)
+```
+
+### Get an IssuingCard log
+
+You can get a single log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.issuingcard.log.get("5155165527080960")
+
+print(log)
+```
+
+
+### Query IssuingPurchases
+
+You can get a list of created purchases given some filters.
+
+```python
+import starkinfra
+from datetime import datetime
+
+purchases = starkinfra.issuingpurchase.query(
+    after=datetime(2020, 1, 1),
+    before=datetime(2020, 3, 1)
+)
+
+for purchase in purchases:
+    print(purchase)
+```
+
+### Get an IssuingPurchase
+
+After its creation, information on a purchase may be retrieved by its id. 
+
+```python
+import starkinfra
+
+purchase = starkinfra.issuingpurchase.get("5155165527080960")
+
+print(purchase)
+```
+
+### Query IssuingPurchase logs
+
+Logs are pretty important to understand the life cycle of a purchase.
+
+```python
+import starkinfra
+
+logs = starkinfra.issuingpurchase.log.query(limit=150)
+
+for log in logs:
+    print(log)
+```
+
+### Get an IssuingPurchase log
+
+You can get a single log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.issuingpurchase.log.get("5155165527080960")
+
+print(log)
+```
+
+**Note**: the Organization user can only update a workspace with the Workspace ID set.
+
+## Pix
+
+### Create PixRequests
 You can create a Pix request to charge a user:
 
 ```python
@@ -329,7 +800,7 @@ for request in requests:
 
 **Note**: Instead of using PixRequest objects, you can also pass each element in dictionary format
 
-## Query pix requests
+### Query PixRequests
 
 You can query multiple pix requests according to filters.
 
@@ -351,7 +822,7 @@ for request in requests:
     print(request)
 ```
 
-## Get a pix request
+### Get a PixRequest
 
 After its creation, information on a pix request may be retrieved by its id. Its status indicates whether it has been paid.
 
@@ -363,7 +834,7 @@ request = starkinfra.pixrequest.get("5155165527080960")
 print(request)
 ```
 
-## Process pix request authorization requests
+### Process PixRequests authorization requests
 
 It's easy to process authorization requests that arrived in your handler. Remember to pass the
 signature header so the SDK can make sure it's StarkInfra that sent you
@@ -382,7 +853,7 @@ pix_request = starkinfra.pixrequest.parse(
 print(pix_request)
 ```
   
-## Query pix request logs
+### Query PixRequest logs
 
 You can query pix request logs to better understand pix request life cycles. 
 
@@ -399,7 +870,7 @@ for log in logs:
     print(log)
 ```
 
-## Get a pix request log
+### Get a pix request log
 
 You can also get a specific log by its id.
 
@@ -411,7 +882,7 @@ log = starkinfra.pixrequest.log.get("5155165527080960")
 print(log)
 ```
 
-## Create pix reversals
+### Create PixReversals
 
 You can reverse a pix request by whole or by a fraction of its amount using a pix reversal.
 
@@ -430,7 +901,7 @@ reversal = starkinfra.pixreversal.create([
 print(reversal)
 ```
 
-## Query pix reversals 
+### Query PixReversals 
 
 You can query multiple pix reversals according to filters. 
 
@@ -451,7 +922,7 @@ for reversal in reversals:
     print(reversal)
 ```
 
-## Get a pix reversal
+### Get a PixReversal
 
 After its creation, information on a pix reversal may be retrieved by its id. Its status indicates whether it has been paid.
 
@@ -463,7 +934,7 @@ reversal = starkinfra.pixreversal.get("5155165527080960")
 print(reversal)
 ```
 
-## Process pix reversal authorization requests
+### Process PixReversal authorization requests
 
 It's easy to process authorization requests that arrived in your handler. Remember to pass the
 signature header so the SDK can make sure it's StarkInfra that sent you
@@ -482,7 +953,7 @@ reversal = starkinfra.pixreversal.parse(
 print(reversal)
 ```
 
-## Query pix reversal logs
+### Query PixReversal logs
 
 You can query pix reversal logs to better understand pix reversal life cycles. 
 
@@ -499,7 +970,7 @@ for log in logs:
     print(log)
 ```
 
-## Get a pix reversal log
+### Get a PixReversal log
 
 You can also get a specific log by its id.
 
@@ -511,7 +982,7 @@ log = starkinfra.pixreversal.log.get("5155165527080960")
 print(log)
 ```
 
-## Get pix balance 
+### Get PixBalance 
 
 To know how much money you have in your workspace, run:
 
@@ -523,7 +994,7 @@ balance = starkinfra.pixbalance.get()
 print(balance)
 ```
 
-## Create pix statement
+### Create PixStatement
 
 Statements are only available for direct participants. To create a statement of all the transactions that happened on your workspace during a specific day, run:
 
@@ -541,7 +1012,7 @@ statement = starkinfra.pixstatement.create(
 print(statement)
 ```
 
-## Query pix statements
+### Query PixStatements
 
 You can query multiple pix statements according to filters. 
 
@@ -558,7 +1029,7 @@ for statement in statements:
     print(statement)
 ```
 
-## Get a pix statement
+### Get a PixStatement
 
 Statements are only available for direct participants. To get a pix statement by its id:
 
@@ -570,7 +1041,7 @@ statement = starkinfra.pixstatement.get("5155165527080960")
 print(statement)
 ```
 
-## Get a pix statement .csv file
+### Get a PixStatement .csv file
 
 To get a .csv file of a pix statement using its id, run:
 
@@ -583,30 +1054,9 @@ with open("test.zip", "wb") as file:
     file.write(csv)
 ```
 
-## Process webhook events
+## Credit Note
 
-It's easy to process events delivered to your Webhook endpoint. Remember to pass the
-signature header so the SDK can make sure it was StarkInfra that sent you
-the event.
-
-```python
-import starkinfra
-
-request = listen()  # this is the method you made to get the events posted to your webhook endpoint
-
-event = starkinfra.event.parse(
-    content=request.data.decode("utf-8"),
-    signature=request.headers["Digital-Signature"],
-)
-
-if "pix-request" in event.subscription:
-    print(event.log.request)
-
-elif "pix-reversal" in event.subscription:
-    print(event.log.reversal)
-```
-
-## Create credit notes
+### Create CreditNotes
 You can create a Credit Note to generate a CCB contract:
 
 ```python
@@ -637,7 +1087,8 @@ notes = starkinfra.creditnote.create([
         signers=[
             {
                 "name": "Jamie Lannister",
-                "contact": "jamie.lannister@gmail.com"
+                "contact": "jamie.lannister@gmail.com",
+                "method": "link"
             }
         ],
     ),
@@ -691,7 +1142,7 @@ for note in notes:
 
 **Note**: Instead of using CreditNote objects, you can also pass each element in dictionary format
 
-## Query credit notes
+### Query CreditNotes
 
 You can query multiple credit notes according to filters.
 
@@ -711,7 +1162,7 @@ for note in notes:
     print(note)
 ```
 
-## Get a credit note
+### Get a CreditNote
 
 After its creation, information on a credit note may be retrieved by its id.
 
@@ -723,7 +1174,7 @@ note = starkinfra.creditnote.get("5155165527080960")
 print(note)
 ```
   
-## Query credit note logs
+### Query CreditNote logs
 
 You can query credit note logs to better understand credit note life cycles. 
 
@@ -740,7 +1191,7 @@ for log in logs:
     print(log)
 ```
 
-## Get a credit note log
+### Get a CreditNote log
 
 You can also get a specific log by its id.
 
@@ -750,6 +1201,38 @@ import starkinfra
 log = starkinfra.creditnote.log.get("5155165527080960")
 
 print(log)
+```
+
+## Process webhook events
+
+It's easy to process events delivered to your Webhook endpoint. Remember to pass the
+signature header so the SDK can make sure it was StarkInfra that sent you
+the event.
+
+```python
+import starkinfra
+
+request = listen()  # this is the method you made to get the events posted to your webhook endpoint
+
+event = starkinfra.event.parse(
+    content=request.data.decode("utf-8"),
+    signature=request.headers["Digital-Signature"],
+)
+
+if "pix-request" in event.subscription:
+    print(event.log.request)
+
+elif "pix-reversal" in event.subscription:
+    print(event.log.reversal)
+
+elif "issuing-card" in event.subscription:
+    print(event.log.card)
+
+elif "issuing-invoice" in event.subscription:
+    print(event.log.invoice)
+
+elif "issuing-purchase" in event.subscription:
+    print(event.log.purchase)
 ```
 
 # Handling errors

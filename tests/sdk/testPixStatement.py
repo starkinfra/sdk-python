@@ -1,6 +1,6 @@
 import starkinfra
 from unittest import TestCase, main
-from tests.utils.PixStatement import generateExamplePixStatementJson
+from tests.utils.pixStatement import generateExamplePixStatementJson
 from tests.utils.user import exampleProject
 
 

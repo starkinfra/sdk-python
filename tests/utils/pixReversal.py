@@ -1,9 +1,8 @@
-#coding: utf-8
 from uuid import uuid4
 from copy import deepcopy
 from starkinfra import PixReversal
 from random import randint, choice
-from ..utils.end_to_end_id import get_end_to_end_id
+from ..utils.endToEndId import get_end_to_end_id
 
 
 example_pix_reversal = PixReversal(

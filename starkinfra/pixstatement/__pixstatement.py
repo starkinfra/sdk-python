@@ -14,7 +14,7 @@ class PixStatement(Resource):
     - type [string]: types of entities to include in statement. Options: ["interchange", "interchangeTotal", "transaction"]
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when the PixStatement is created. ex: "5656565656565656"
-    - status [string, default None]: current PixStatement status. ex: "success" or "failed"
+    - status [string, default None]: current PixStatement status. ex: ["success", "failed"]
     - transaction_count [integer, default None]: number of transactions that happened during the day that the PixStatement was requested. ex 11
     - created [datetime.datetime, default None]: creation datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime, default None]: latest update datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)

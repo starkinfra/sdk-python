@@ -1,12 +1,10 @@
-#coding: utf-8
 from uuid import uuid4
 from copy import deepcopy
-from datetime import date, timedelta, datetime
 from starkinfra import PixRequest
 from .names.names import get_full_name
 from .taxIdGenerator import TaxIdGenerator
 from random import randint, choice
-from ..utils.end_to_end_id import BacenId
+from ..utils.endToEndId import BacenId
 from ..utils.user import ispb
 
 

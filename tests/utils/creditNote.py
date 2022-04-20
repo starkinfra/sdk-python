@@ -1,4 +1,3 @@
-# coding: utf-8
 from uuid import uuid4
 from copy import deepcopy
 from random import randint, choice

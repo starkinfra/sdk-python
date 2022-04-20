@@ -55,5 +55,15 @@ class TestCreditNoteInfoGet(TestCase):
             self.assertEqual(note.id, note_id)
 
 
+class TestCreditNotePostAndDelete(TestCase):
+    
+    def test_success(self):
+        notes = generateExampleCreditNoteJson(n=1)
+        notes = starkinfra.creditnote.create(notes)
+        note_id = notes[0].id
+        note = starkinfra.creditnote.delete(id=note_id)
+        print(note.id)
+
+
 if __name__ == '__main__':
     main()

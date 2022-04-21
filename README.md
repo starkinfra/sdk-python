@@ -1173,6 +1173,18 @@ note = starkinfra.creditnote.get("5155165527080960")
 
 print(note)
 ```
+
+## Cancel a CreditNote
+
+You can cancel a credit note if it has not been signed yet.
+
+```python
+import starkinfra
+
+note = starkinfra.creditnote.delete("5155165527080960")
+
+print(note)
+```
   
 ### Query CreditNote logs
 
@@ -1233,6 +1245,9 @@ elif "issuing-invoice" in event.subscription:
 
 elif "issuing-purchase" in event.subscription:
     print(event.log.purchase)
+
+elif "credit-note" in event.subscription:
+    print(event.log.note)
 ```
 
 # Handling errors

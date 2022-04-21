@@ -106,9 +106,10 @@ def generateExampleSignersJson(n=1):
         signer = deepcopy(example_signer)
 
         signer["name"] = get_full_name()
-        signer["contact"] = "{name}.{lastName}@gmail.com".format(
+        signer["contact"] = "{name}.{lastName}.{uuid}@invaliddomain.com".format(
             name=signer["name"].split(" ")[0].lower(),
-            lastName=signer["name"].split(" ")[1].lower()
+            lastName=signer["name"].split(" ")[1].lower(),
+            uuid=str(uuid4())
         )
 
         signers.append(signer)

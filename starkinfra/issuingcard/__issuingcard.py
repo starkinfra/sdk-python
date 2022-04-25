@@ -153,6 +153,7 @@ def get(id, expand=None, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
+    - expand [list of strings, default None]: fields to expand information. ex: ["rules"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - IssuingCards object with updated attributes

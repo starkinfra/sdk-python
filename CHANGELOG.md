@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- expand parameter to issuingholder.get()
 
 ## [0.0.3] - 2022-04-22
 ### Added

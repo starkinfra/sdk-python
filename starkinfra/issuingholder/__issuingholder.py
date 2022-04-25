@@ -49,17 +49,18 @@ def create(holders, user=None):
     return rest.post_multi(resource=_resource, entities=holders, user=user)
 
 
-def get(id, user=None):
+def get(id, expand=None, user=None):
     """# Retrieve a specific IssuingHolder
     Receive a single IssuingHolder object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
+    - expand [list of strings, default None]: fields to expand information. ex: ["rules"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - IssuingHolder object with updated attributes
     """
-    return rest.get_id(resource=_resource, id=id, user=user)
+    return rest.get_id(resource=_resource, id=id, expand=expand, user=user)
 
 
 def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, expand=None, user=None):

@@ -2,7 +2,7 @@ import os
 import starkinfra
 
 
-ispb = os.environ["SANDBOX_ISPB"]
+bank_code = os.environ["SANDBOX_BANK_CODE"]
 
 exampleProject = starkinfra.Project(
     environment="sandbox",

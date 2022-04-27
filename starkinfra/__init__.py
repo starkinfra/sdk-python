@@ -23,6 +23,18 @@ from .pixbalance.__pixbalance import PixBalance
 from . import pixdirector
 from .pixdirector.__pixdirector import PixDirector
 
+from . import pixkey
+from .pixkey.__pixkey import PixKey
+
+from . import pixclaim
+from .pixclaim.__pixclaim import PixClaim
+
+from . import infractionreport
+from .infractionreport.__infractionreport import InfractionReport
+
+from . import reversalrequest
+from .reversalrequest.__reversalrequest import ReversalRequest
+
 from . import issuingauthorization
 from .issuingauthorization.__issuingauthorization import IssuingAuthorization
 
@@ -55,3 +67,5 @@ from .issuingbin.__issuingbin import IssuingBin
 
 from . import __issuingrule
 from .__issuingrule.__issuingrule import IssuingRule
+
+from .utils import new_end_to_end_id

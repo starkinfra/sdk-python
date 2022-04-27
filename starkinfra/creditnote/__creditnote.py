@@ -16,10 +16,10 @@ class CreditNote(Resource):
         - scheduled [datetime.date, datetime.datetime or string, default now]: date of transfer execution. ex: scheduled=datetime(2020, 3, 10)
         - invoices [list of Invoice objects]: list of Invoice objects to be created and sent to the credit receiver. ex: invoices=[Invoice(), Invoice()]
         - transfer [Transfer object]: Transfer object to be created and sent to the credit receiver. ex: transfer=Transfer()
-        - signers [list of contacts]: name and e-mail of signers that sign the contract. ex: signers=[{"name": "Tony Stark", "contact": "tony@starkindustries.com", "method": "link"}]
+        - signers [list of dictionaries]: signer's name, e-mail and delivery method for the contract. ex: signers=[{"name": "Tony Stark", "contact": "tony@starkindustries.com", "method": "link"}]
         Parameters (optional):
         - rebateAmount [integer, default None]: credit analysis fee deducted from lent amount. ex: rebateAmount=11234 (= R$ 112.34)
-        - tags [list of strings, default None]: list of strings for reference when searching for CreditNotes. ex: tags=[\"employees\", \"monthly\"]
+        - tags [list of strings, default None]: list of strings for reference when searching for CreditNotes. ex: tags=["employees", "monthly"]
         - externalId [string]: url safe string that must be unique among all your CreditNotes. ex: externalId="my-internal-id-123456"
         Attributes (return-only):
         - id [string, default None]: unique id returned when the CreditNote is created. ex: "5656565656565656"
@@ -57,7 +57,7 @@ def create(notes, user=None):
     ## Parameters (required):
     - notes [list of CreditNote objects]: list of CreditNote objects to be created in the API
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkbank.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of CreditNote objects with updated attributes
     """
@@ -70,7 +70,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkbank.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - CreditNote object with updated attributes
     """
@@ -87,7 +87,7 @@ def query(limit=None, status=None, tags=None, ids=None, after=None, before=None,
     - status [string, default None]: filter for status of retrieved objects. ex: "paid" or "registered"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkbank.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of CreditNote objects with updated attributes
     """
@@ -115,7 +115,7 @@ def page(cursor=None, limit=None, status=None, tags=None, ids=None, after=None, 
     - status [string, default None]: filter for status of retrieved objects. ex: "paid" or "registered"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkbank.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of CreditNote objects with updated attributes
     - cursor to retrieve the next page of CreditNote objects
@@ -138,9 +138,8 @@ def delete(id, user=None):
     ## Parameters (required):
     - id [string]: Credit Note unique id. ex: "6306109539221504"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkbank.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - deleted Credit Note object
     """
-
     return rest.delete_id(resource=_resource, id=id, user=user)

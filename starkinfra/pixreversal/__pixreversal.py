@@ -6,6 +6,8 @@ from starkcore.utils.checks import check_datetime, check_date
 
 class PixReversal(Resource):
     """# PixReversal object
+   PixReversals are instant payments used to revert PixRequest. You can only
+    revert inbound PixRequests.
    When you initialize a PixReversal, the entity will not be automatically
    created in the Stark Infra API. The 'create' function sends the objects
    to the Stark Infra API and returns the list of created objects.
@@ -74,16 +76,15 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(fields=None, limit=None, after=None, before=None, status=None, tags=None, ids=None, return_ids=None,
+def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, return_ids=None,
           external_ids=None, user=None):
     """# Retrieve PixReversals
     Receive a generator of PixReversal objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - fields [list of strings, default None]: parameters to be retrieved from PixRequest objects. ex: ["amount", "id"]
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
-    - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
-    - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [string, default None]: filter for status of retrieved objects. ex: ["success", "failed"]
+    - limit [integer, default None]: maximum number of objects to be retrieved. Max = 100. ex: 35
+    - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
+    - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: "created", "processing", "success" and "failed"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - return_ids [list of strings, default None]: central bank's unique reversal transaction IDs. ex: ["D20018183202202030109X3OoBHG74wo", "D20018183202202030109X3OoBHG72rd"].
@@ -95,7 +96,6 @@ def query(fields=None, limit=None, after=None, before=None, status=None, tags=No
 
     return rest.get_stream(
         resource=_resource,
-        fields=fields,
         limit=limit,
         after=check_date(after),
         before=check_date(before),
@@ -108,18 +108,17 @@ def query(fields=None, limit=None, after=None, before=None, status=None, tags=No
     )
 
 
-def page(cursor=None, fields=None, limit=None, after=None, before=None, status=None, tags=None, ids=None,
+def page(cursor=None, limit=None, after=None, before=None, status=None, tags=None, ids=None,
          return_ids=None, external_ids=None, user=None):
     """# Retrieve paged PixReversals
     Receive a list of up to 100 PixReversal objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your reversals.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
-    - fields [list of strings, default None]: parameters to be retrieved from PixRequest objects. ex: ["amount", "id"]
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
-    - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
-    - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [string, default None]: filter for status of retrieved objects. ex: ["success", "failed"]
+    - limit [integer, default None]: maximum number of objects to be retrieved. Max = 100. ex: 35
+    - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
+    - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: "created", "processing", "success" and "failed"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - return_ids [list of strings, default None]: central bank's unique reversal transaction ID. ex: ["D20018183202202030109X3OoBHG74wo", "D20018183202202030109X3OoBHG72rd"].
@@ -132,7 +131,6 @@ def page(cursor=None, fields=None, limit=None, after=None, before=None, status=N
     return rest.get_page(
         resource=_resource,
         cursor=cursor,
-        fields=fields,
         limit=limit,
         after=check_date(after),
         before=check_date(before),

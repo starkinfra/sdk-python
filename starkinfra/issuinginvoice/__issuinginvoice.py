@@ -20,7 +20,7 @@ class IssuingInvoice(Resource):
     - created [datetime.datetime]: creation datetime for the IssuingInvoice. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, id=None, name=None, amount=None, tax_id=None, status=None, issuing_transaction_id=None,
+    def __init__(self, amount, id=None, name=None, tax_id=None, status=None, issuing_transaction_id=None,
                  tags=None, updated=None, created=None):
         Resource.__init__(self, id=id)
         self.amount = amount

@@ -36,6 +36,8 @@ This SDK version is compatible with the Stark Infra API v2.
         - [PixReversals](#create-pixreversals): Reverse Pix transactions
         - [PixBalance](#get-pixbalance): View your account balance
         - [PixStatement](#create-pixstatement): Request your account statement
+        - [PixKey](#create-a-pix-key): Create a Pix Key
+        - [PixClaim](#create-a-pix-claim): Claim a Pix Key
     - [Credit Note](#credit-note)
         - [CreditNote](#create-creditnotes): Create credit notes
     - [WebhookEvents](#process-webhook-events): Manage Webhook events
@@ -809,7 +811,6 @@ import starkinfra
 from datetime import datetime
 
 requests = starkinfra.pixrequest.query(
-    fields=["amount", "id"],
     limit=10,
     after=datetime(2020, 1, 1),
     before=datetime(2020, 4, 1),
@@ -907,9 +908,9 @@ You can query multiple pix reversals according to filters.
 
 ```python
 import starkinfra
+from datetime import datetime
 
 reversals = starkinfra.pixreversal.query(
-    fields=["amount", "id"],
     limit=10,
     after=datetime(2020, 1, 1),
     before=datetime(2020, 4, 1),
@@ -1021,8 +1022,6 @@ import starkinfra
 
 statements = starkinfra.pixstatement.query(
     limit=50, 
-    after="2022-01-01", # Note that this after and before parameters are different from the ones used in the creation of the statement. 
-    before="2022-01-20",
 )
 
 for statement in statements:
@@ -1052,6 +1051,468 @@ csv = starkinfra.pixstatement.csv("5155165527080960")
 
 with open("test.zip", "wb") as file:
     file.write(csv)
+```
+
+## Create a pix key
+You can create a Pix Key to link bank account information to a key id:
+
+```python
+import starkinfra
+
+key = starkinfra.pixkey.create(
+    starkinfra.PixKey(
+        account_created="2022-02-01T00:00:00.00",
+        account_number="00000",
+        account_type="savings",
+        branch_code="0000",
+        name="Jamie Lannister",
+        tax_id="012.345.678-90",
+        id =  "+5511989898989",
+    )
+)
+
+print(key)
+```
+
+## Query pix keys
+
+You can query multiple pix keys according to filters.
+
+```python
+import starkinfra
+from datetime import datetime
+
+keys = starkinfra.pixkey.query(
+    limit=1,
+    after="2022-01-01",
+    before="2022-01-12",
+    status="registered",
+    tags=["iron", "bank"],
+    ids=["+5511989898989"],
+    type="phone"
+)
+
+for key in keys:
+    print(key)
+```
+
+## Get a pix key
+
+After its creation, information on a Pix key may be retrieved by its id and the tax id of the consulting agent.
+
+```python
+import starkinfra
+
+key = starkinfra.pixkey.get("5155165527080960", payer_id="012.345.678-90", end_to_end_id=starkinfra.new_end_to_end_id("20018183"))
+
+print(key)
+```
+
+## Patch a pix key
+
+Update the account information or the holder's name linked to a Pix Key.
+
+```python
+import starkinfra
+
+key = starkinfra.pixkey.update(
+    id="+5511989898989",
+    reason="branchTransfer",
+    name="Jamie Lannister"
+)
+
+print(key)
+```
+
+## Delete a pix key
+
+Cancel a specific Pix Key using its id.
+
+```python
+import starkinfra
+
+key = starkinfra.pixkey.delete("5155165527080960")
+
+print(key)
+```
+
+## Query pix key logs
+
+You can query pix key logs to better understand pix key life cycles. 
+
+```python
+import starkinfra
+
+logs = starkinfra.pixkey.log.query(
+    limit=50, 
+    ids=["5729405850615808"],
+    after="2022-01-01",
+    before="2022-01-20",
+    types=["created"],
+    key_ids=["+5511989898989"]
+)
+
+for log in logs:
+    print(log)
+```
+
+## Get a pix key log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.pixkey.log.get("5155165527080960")
+
+print(log)
+```
+
+## Create a pix claim
+You can create a Pix claim to request a transfer of a Pix key to another account:
+
+```python
+import starkinfra
+
+claim = starkinfra.pixclaim.create(
+    starkinfra.PixClaim(
+        account_created="2022-02-01T00:00:00.00",
+        account_number="5692908409716736",
+        account_type="checking",
+        branch_code="0000",
+        name="testKey",
+        tax_id="012.345.678-90",
+        type="ownership",
+        key_id="+5511989898989"
+    )
+)
+
+print(claim)
+```
+
+## Query pix claims
+
+You can query multiple pix claims according to filters.
+
+```python
+import starkinfra
+
+claims = starkinfra.pixclaim.query(
+    limit=1,
+    after="2022-01-01",
+    before="2022-01-12",
+    status="registered",
+    ids=["5729405850615808"],
+    type="ownership",
+    agent="claimed",
+    key_type="phone",
+    key_id="+5511989898989"
+)
+
+for claim in claims:
+    print(claim)
+```
+
+## Get a pix claim
+
+After its creation, information on a pix claim may be retrieved by its id. Its status indicates whether it has been paid.
+
+```python
+import starkinfra
+
+claim = starkinfra.pixclaim.get("5155165527080960")
+
+print(claim)
+```
+
+## Patch a pix claim
+
+A Pix Claim can be patched for two distinct reasons. A received Pix Claim can be confirmed or canceled by patching 
+its status. A received Pix Claim must be confirmed by the donor to be completed. Ownership Pix Claims can only be 
+canceled by the donor if the reason is fraud. A sent Pix Claim can also be canceled by patching its status.
+
+```python
+import starkinfra
+
+claim = starkinfra.pixclaim.update(
+    id="+5511989898989",
+    status="confirmed"
+)
+
+print(claim)
+```
+
+## Query pix claim logs
+
+You can query pix claim logs to better understand pix claim life cycles. 
+
+```python
+import starkinfra
+
+logs = starkinfra.pixclaim.log.query(
+    limit=50, 
+    ids=["5729405850615808"],
+    after="2022-01-01",
+    before="2022-01-20",
+    types=["registered"],
+    claim_ids=["5719405850615809"]
+)
+
+for log in logs:
+    print(log)
+```
+
+## Get a pix claim log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.pixclaim.log.get("5155165527080960")
+
+print(log)
+```
+
+## Create an infraction report
+Infraction reports are used to report transactions that are suspected of fraud, to request a refund or to 
+reverse a refund. Infraction reports can be created by either participant of a transaction.
+```python
+import starkinfra
+
+report = starkinfra.infractionreport.create(
+    starkinfra.InfractionReport(
+        reference_id="E20018183202201201450u34sDGd19lz",
+        type="fraud",
+    )
+)
+
+print(report)
+```
+
+## Query infraction reports
+
+You can query multiple infraction reports according to filters.
+
+```python
+import starkinfra
+
+reports = starkinfra.infractionreport.query(
+    limit=1,
+    after="2022-01-01",
+    before="2022-01-12",
+    status="registered",
+    ids=["5155165527080960"],
+    type="phone"
+)
+
+for report in reports:
+    print(report)
+```
+
+## Get an infraction report
+
+After its creation, information on an Infraction Report may be retrieved by its.
+
+```python
+import starkinfra
+
+report = starkinfra.infractionreport.get("5155165527080960")
+
+print(report)
+```
+
+## Patch an infraction report
+
+A received Infraction Report can be confirmed or declined by patching its status. After an Infraction Report 
+is Patched, its status changes to closed.
+
+```python
+import starkinfra
+
+report = starkinfra.infractionreport.update(
+    id="5155165527080960",
+    result="agreed",
+)
+
+print(report)
+```
+
+## Delete an infraction report
+
+Cancel a specific Infraction Report using its id.
+
+```python
+import starkinfra
+
+report = starkinfra.infractionreport.delete("5155165527080960")
+
+print(report)
+```
+
+## Query infraction report logs
+
+You can query infraction report logs to better understand infraction report life cycles. 
+
+```python
+import starkinfra
+
+logs = starkinfra.infractionreport.log.query(
+    limit=50, 
+    ids=["5729405850615808"],
+    after="2022-01-01",
+    before="2022-01-20",
+    types=["created"],
+    report_ids=["5155165527080960"]
+)
+
+for log in logs:
+    print(log)
+```
+
+## Get an infraction report log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.infractionreport.log.get("5155165527080960")
+
+print(log)
+```
+
+## Create an reversal request
+A reversal request can be created when fraud is detected on a transaction or a system malfunction 
+results in an erroneous transaction. The reversal request can be made by the user or by the payer's 
+participant directly.
+```python
+import starkinfra
+
+request = starkinfra.reversalrequest.create(
+    starkinfra.ReversalRequest(
+        amount=100,
+        reference_id="E20018183202201201450u34sDGd19lz",
+        reason="fraud",
+    )
+)
+
+print(request)
+```
+
+## Query reversal requests
+
+You can query multiple reversal requests according to filters.
+
+```python
+import starkinfra
+
+requests = starkinfra.reversalrequest.query(
+    limit=1,
+    after="2022-01-01",
+    before="2022-01-12",
+    status="registered",
+    ids=["5155165527080960"]
+)
+
+for request in requests:
+    print(request)
+```
+
+## Get an reversal request
+
+After its creation, information on a Reversal Request may be retrieved by its.
+
+```python
+import starkinfra
+
+request = starkinfra.reversalrequest.get("5155165527080960")
+
+print(request)
+```
+
+## Patch an reversal request
+
+A received Reversal Request can be accepted or rejected by patching its status. After a Reversal Request 
+is Patched, its status changes to closed.
+
+```python
+import starkinfra
+
+request = starkinfra.reversalrequest.update(
+    id="5155165527080960",
+    result="accepted",
+    reversal_reference_id="D20018183202201201450u34sDGd19lz"
+)
+
+print(request)
+```
+
+## Delete an reversal request
+
+Cancel a specific Reversal Request using its id.
+
+```python
+import starkinfra
+
+request = starkinfra.reversalrequest.delete("5155165527080960")
+
+print(request)
+```
+
+## Query reversal request logs
+
+You can query reversal request logs to better understand reversal request life cycles. 
+
+```python
+import starkinfra
+
+logs = starkinfra.reversalrequest.log.query(
+    limit=50, 
+    ids=["5729405850615808"],
+    after="2022-01-01",
+    before="2022-01-20",
+    types=["created"],
+    request_ids=["5155165527080960"]
+)
+
+for log in logs:
+    print(log)
+```
+
+## Get an reversal request log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.reversalrequest.log.get("5155165527080960")
+
+print(log)
+```
+
+## Process webhook events
+
+It's easy to process events delivered to your Webhook endpoint. Remember to pass the
+signature header so the SDK can make sure it was StarkInfra that sent you
+the event.
+
+```python
+import starkinfra
+
+request = listen()  # this is the method you made to get the events posted to your webhook endpoint
+
+event = starkinfra.event.parse(
+    content=request.data.decode("utf-8"),
+    signature=request.headers["Digital-Signature"],
+)
+
+if "pix-request" in event.subscription:
+    print(event.log.request)
+
+elif "pix-reversal" in event.subscription:
+    print(event.log.reversal)
 ```
 
 ## Credit Note
@@ -1174,7 +1635,7 @@ note = starkinfra.creditnote.get("5155165527080960")
 print(note)
 ```
 
-## Cancel a CreditNote
+### Cancel a CreditNote
 
 You can cancel a credit note if it has not been signed yet.
 
@@ -1215,7 +1676,7 @@ log = starkinfra.creditnote.log.get("5155165527080960")
 print(log)
 ```
 
-## Process webhook events
+### Process webhook events
 
 It's easy to process events delivered to your Webhook endpoint. Remember to pass the
 signature header so the SDK can make sure it was StarkInfra that sent you
@@ -1236,6 +1697,12 @@ if "pix-request" in event.subscription:
 
 elif "pix-reversal" in event.subscription:
     print(event.log.reversal)
+    
+elif "pix-key" in event.subscription:
+    print(event.log.key)
+    
+elif "pix-claim" in event.subscription:
+    print(event.log.claim)
 
 elif "issuing-card" in event.subscription:
     print(event.log.card)

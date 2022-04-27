@@ -6,6 +6,8 @@ from starkcore.utils.checks import check_datetime, check_date
 
 class PixRequest(Resource):
     """# PixRequest object
+    PixRequests are used to receive or send instant payments to accounts
+    hosted in other Pix participants.
     When you initialize a PixRequest, the entity will not be automatically
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
@@ -39,7 +41,7 @@ class PixRequest(Resource):
     - fee [integer, default None]: fee charged when PixRequest is paid. ex: 200 (= R$ 2.00)
     - status [string, default None]: current PixRequest status. ex: "registered" or "paid"
     - flow [string, default None]: direction of money flow. ex: "in" or "out"
-    - sender_bank_code [string, default None]: sender's bank institution code in Brazil. If an ISPB (8 digits) is informed. ex: "20018183" or "341"
+    - sender_bank_code [string, default None]: sender's bank institution code in Brazil. ex: "20018183" or "341".
     - created [datetime.datetime, default None]: creation datetime for the PixRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime, default None]: latest update datetime for the PixRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -112,16 +114,15 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(fields=None, limit=None, after=None, before=None, status=None, tags=None, ids=None, end_to_end_ids=None,
+def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, end_to_end_ids=None,
           external_ids=None, user=None):
     """# Retrieve PixRequests
     Receive a generator of PixRequest objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - fields [list of strings, default None]: parameters to be retrieved from PixRequest objects. ex: ["amount", "id"]
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
-    - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
-    - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [string, default None]: filter for status of retrieved objects. ex: ["success", "failed"]
+    - limit [integer, default None]: maximum number of objects to be retrieved. Max = 100. ex: 35
+    - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
+    - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: "created", "processing", "success" and "failed"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - end_to_end_ids [list of strings, default None]: central bank's unique transaction IDs. ex: ["E79457883202101262140HHX553UPqeq", "E79457883202101262140HHX553UPxzx"]
@@ -132,7 +133,6 @@ def query(fields=None, limit=None, after=None, before=None, status=None, tags=No
     """
     return rest.get_stream(
         resource=_resource,
-        fields=fields,
         limit=limit,
         after=check_date(after),
         before=check_date(before),
@@ -145,18 +145,17 @@ def query(fields=None, limit=None, after=None, before=None, status=None, tags=No
     )
 
 
-def page(cursor=None, fields=None, limit=None, after=None, before=None, status=None, tags=None, ids=None,
+def page(cursor=None, limit=None, after=None, before=None, status=None, tags=None, ids=None,
          end_to_end_ids=None, external_ids=None, user=None):
     """# Retrieve paged PixRequests
     Receive a list of up to 100 PixRequest objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
-    - fields [list of strings, default None]: parameters to be retrieved from PixRequest objects. ex: ["amount", "id"]
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
-    - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
-    - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [string, default None]: filter for status of retrieved objects. ex: ["success", "failed"]
+    - limit [integer, default None]: maximum number of objects to be retrieved. Max = 100. ex: 35
+    - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
+    - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: "created", "processing", "success" and "failed"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - end_to_end_ids [list of strings, default None]: central bank's unique transaction IDs. ex: ["E79457883202101262140HHX553UPqeq", "E79457883202101262140HHX553UPxzx"]
@@ -169,7 +168,6 @@ def page(cursor=None, fields=None, limit=None, after=None, before=None, status=N
     return rest.get_page(
         resource=_resource,
         cursor=cursor,
-        fields=fields,
         limit=limit,
         after=check_date(after),
         before=check_date(before),

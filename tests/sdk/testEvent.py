@@ -1,10 +1,47 @@
 import starkinfra
+from random import choice
 from json import loads, dumps
 from unittest import TestCase, main
-from starkcore.error import InvalidSignatureError
 from tests.utils.user import exampleProject
+from starkcore.error import InvalidSignatureError
 
 starkinfra.user = exampleProject
+
+
+class TestEventQuery(TestCase):
+
+    def test_success(self):
+        events = list(starkinfra.event.query(limit=5))
+        for event in events:
+            print(event.id)
+            for attempt in starkinfra.event.attempt.query(event_ids=event.id, limit=1):
+                print(starkinfra.event.attempt.get(attempt.id).id)
+                break
+
+
+class TestEventPage(TestCase):
+
+    def test_success(self):
+        cursor = None
+        ids = []
+        for _ in range(2):
+            events, cursor = starkinfra.event.page(limit=2, cursor=cursor)
+            for event in events:
+                print(event)
+                self.assertFalse(event.id in ids)
+                ids.append(event.id)
+            if cursor is None:
+                break
+        self.assertTrue(len(ids) == 4)
+
+
+class TestEventInfoGet(TestCase):
+    def test_success(self):
+        events = starkinfra.event.query(user=exampleProject)
+        event_id = next(events).id
+        event = starkinfra.event.get(user=exampleProject, id=event_id)
+        self.assertIsNotNone(event.id)
+        self.assertEqual(event_id, event.id)
 
 
 class TesteEventProcess(TestCase):
@@ -40,6 +77,25 @@ class TesteEventProcess(TestCase):
                 content=self.content,
                 signature=self.malformed_signature,
             )
+
+
+class TestEventDelete(TestCase):
+
+    def test_success(self):
+        event = choice(list(starkinfra.event.query(limit=100, is_delivered=True)))
+        event = starkinfra.event.delete(event.id)
+        print(event)
+
+
+class TestEventSetDelivered(TestCase):
+
+    def test_success(self):
+        event = choice(list(starkinfra.event.query(limit=100, is_delivered=False)))
+        assert event.is_delivered is False
+        event = starkinfra.event.update(id=event.id, is_delivered=True)
+        event = starkinfra.event.get(event.id)
+        assert event.is_delivered is True
+        print(event)
 
 
 if __name__ == '__main__':

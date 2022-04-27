@@ -15,6 +15,10 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ## [Unreleased]
 ### Added
 - expand parameter to issuingholder.get()
+- PixClaim resource for Indirect and Direct Participants
+- PixKey resource for Indirect and Direct Participants
+- InfractionReport resource for Indirect and Direct Participants
+- ReversalRequest resource for Indirect and Direct Participants
 
 ## [0.0.3] - 2022-04-22
 ### Added

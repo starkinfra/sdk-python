@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.0.4] - 2022-05-01
 ### Added
 - expand parameter to issuingholder.get()
 - PixClaim resource for Indirect and Direct Participants

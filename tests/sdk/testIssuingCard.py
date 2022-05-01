@@ -11,7 +11,7 @@ class TestIssuingCardQuery(TestCase):
     def test_success(self):
         cards = starkinfra.issuingcard.query(limit=10)
         for card in cards:
-            self.assertIsInstance(card.id, (str, unicode))
+            self.assertEqual(card.id, str(card.id))
 
 
 class TestIssuingCardPage(TestCase):
@@ -33,7 +33,7 @@ class TestIssuingCardGet(TestCase):
     def test_success(self):
         cards = starkinfra.issuingcard.query(limit=1)
         card = starkinfra.issuingcard.get(id=next(cards).id)
-        self.assertIsInstance(card.id, (str, unicode))
+        self.assertEqual(card.id, str(card.id))
 
 
 class TestIssuingCardPostAndDelete(TestCase):

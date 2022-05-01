@@ -11,7 +11,6 @@ example_pix_statement = PixStatement(
 )
 
 
-# TODO: Method, reconciliation_id and receiver_key_id are left out
 def generateExamplePixStatementJson():
     pix_statement = deepcopy(example_pix_statement)
     pix_statement.type = choice(["interchange", "interchangeTotal", "transaction"])

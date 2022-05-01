@@ -1,11 +1,10 @@
 from uuid import uuid4
 from copy import deepcopy
-from starkinfra import PixRequest
+from ..utils.user import bank_code
+from starkinfra import PixRequest, endtoendid
+from random import randint, choice
 from .names.names import get_full_name
 from .taxIdGenerator import TaxIdGenerator
-from random import randint, choice
-from ..utils.endToEndId import BacenId
-from ..utils.user import ispb
 
 
 example_pix_request = PixRequest(
@@ -22,11 +21,10 @@ example_pix_request = PixRequest(
     receiver_account_type="checking",
     receiver_name="maria",
     receiver_tax_id="01234567890",
-    end_to_end_id=BacenId.newEndToEndId(ispb),
+    end_to_end_id=endtoendid.create(bank_code),
 )
 
 
-# TODO: Method, reconciliation_id and receiver_key_id are left out
 def generateExamplePixRequestJson(n=1):
     pix_requests = []
     for _ in range(n):
@@ -45,7 +43,7 @@ def generateExamplePixRequestJson(n=1):
         pix_request.receiver_account_number = "{}-{}".format(randint(10000, 100000000), randint(0, 9))
         pix_request.receiver_branch_code = str(randint(1, 999))
         pix_request.receiver_account_type = choice(["checking", "savings", "salary", "payment"])
-        pix_request.end_to_end_id = BacenId.newEndToEndId(ispb)
+        pix_request.end_to_end_id = endtoendid.create(bank_code)
         pix_request.description = choice([None, "Test description"])
         pix_request.initiator_tax_id = TaxIdGenerator.taxId()
         pix_request.cash_amount = randint(1000, 10000)

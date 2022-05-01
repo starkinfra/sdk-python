@@ -10,7 +10,11 @@ class TestPixRequestLogQuery(TestCase):
 
     def test_success(self):
         logs = list(starkinfra.pixrequest.log.query(limit=10))
-        logs = list(starkinfra.pixrequest.log.query(limit=10, request_ids={log.request.id for log in logs}, types={log.type for log in logs}))
+        logs = list(starkinfra.pixrequest.log.query(
+            limit=10,
+            request_ids={log.request.id for log in logs},
+            types={log.type for log in logs}
+        ))
         self.assertEqual(10, len(logs))
         print("Number of logs:", len(logs))
 
@@ -35,7 +39,8 @@ class TestPixRequestLogInfoGet(TestCase):
     def test_success(self):
         logs = starkinfra.pixrequest.log.query()
         log_id = next(logs).id
-        logs = starkinfra.pixrequest.log.get(id=log_id)
+        log = starkinfra.pixrequest.log.get(id=log_id)
+        self.assertEqual(log_id, log.id)
 
 
 if __name__ == '__main__':

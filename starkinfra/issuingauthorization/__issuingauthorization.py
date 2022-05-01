@@ -64,13 +64,13 @@ _resource = {"class": IssuingAuthorization, "name": "IssuingAuthorization"}
 def parse(content, signature, user=None):
     """# Create single IssuingAuthorization from a content string
     Create a single IssuingAuthorization object received from IssuingAuthorization at the informed endpoint.
-    If the provided digital signature does not check out with the StarkBank public key, a
-    starkbank.exception.InvalidSignatureException will be raised.
+    If the provided digital signature does not check out with the StarkInfra public key, a
+    stark.exception.InvalidSignatureException will be raised.
     ## Parameters (required):
     - content [string]: response content from request received at user endpoint (not parsed)
     - signature [string]: base-64 digital signature received at response header "Digital-Signature"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkbank.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - Parsed IssuingAuthorization object
     """

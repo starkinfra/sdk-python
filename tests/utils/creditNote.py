@@ -111,6 +111,7 @@ def generateExampleSignersJson(n=1):
             lastName=signer["name"].split(" ")[1].lower(),
             uuid=str(uuid4())
         )
+        signer["method"] = "link"
 
         signers.append(signer)
 

@@ -10,7 +10,7 @@ class TestIssuingInvoiceLogQuery(TestCase):
     def test_success(self):
         logs = starkinfra.issuinginvoice.log.query(limit=10)
         for log in logs:
-            self.assertIsInstance(log.id, (str, unicode))
+            self.assertEqual(log.id, str(log.id))
 
 
 class TestIssuingInvoiceLogPage(TestCase):

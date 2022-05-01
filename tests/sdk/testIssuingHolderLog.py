@@ -10,7 +10,7 @@ class TestIssuingHolderLogQuery(TestCase):
     def test_success(self):
         logs = starkinfra.issuingholder.log.query(limit=10)
         for log in logs:
-            self.assertIsInstance(log.id, (str, unicode))
+            self.assertEqual(log.id, str(log.id))
 
 
 class TestIssuingHolderLogGet(TestCase):
@@ -18,7 +18,7 @@ class TestIssuingHolderLogGet(TestCase):
     def test_success(self):
         logs = starkinfra.issuingholder.log.query(limit=1)
         log = starkinfra.issuingholder.log.get(id=next(logs).id)
-        self.assertIsInstance(log.id, (str, unicode))
+        self.assertEqual(log.id, str(log.id))
 
 
 if __name__ == '__main__':

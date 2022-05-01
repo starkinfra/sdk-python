@@ -5,7 +5,8 @@ from ..utils import rest
 
 class IssuingWithdrawal(Resource):
     """# IssuingWithdrawal object
-    Displays the IssuingWithdrawal objects created in your Workspace.
+    Displays the IssuingWithdrawal objects created in your Workspace to return cash from your Issuing balance to your
+    Banking balance.
     ## Parameters (required):
     - amount [integer]: IssuingWithdrawal value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
     - external_id [string] IssuingWithdrawal external ID. ex: "12345"
@@ -69,7 +70,7 @@ def query(external_ids=None, after=None, before=None, limit=None, tags=None, use
     """# Retrieve IssuingWithdrawal
     Receive a generator of IssuingWithdrawal objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - external_ids [list of strings, default []]: external IDs. ex: ["5656565656565656", "4545454545454545"]
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
@@ -93,7 +94,7 @@ def page(external_ids=None, after=None, before=None, limit=None, tags=None, curs
     """# Retrieve IssuingWithdrawal
     Receive a list of IssuingWithdrawal objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - external_ids [list of strings, default []]: external IDs. ex: ["5656565656565656", "4545454545454545"]
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)

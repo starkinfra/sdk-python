@@ -37,7 +37,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkbank.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - creditnote.Log object with updated attributes
     """
@@ -48,12 +48,12 @@ def query(limit=None, after=None, before=None, types=None, note_ids=None, user=N
     """# Retrieve creditnote.Logs
     Receive a generator of creditnote.Log objects previously created in the Stark Bank API
     ## Parameters (optional):
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter for log event types. ex: ["registered", "paid"]
     - note_ids [list of strings, default None]: list of CreditNote ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkbank.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of creditnote.Log objects with updated attributes
     """
@@ -79,7 +79,7 @@ def page(cursor=None, after=None, before=None, types=None, note_ids=None, limit=
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter for log event types. ex: ["registered", "paid"]
     - note_ids [list of strings, default None]: list of CreditNote ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkbank.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of creditnote.Log objects with updated attributes
     - cursor to retrieve the next page of creditnote.Log objects

@@ -1,9 +1,9 @@
 import starkinfra
 from datetime import timedelta, date
 from unittest import TestCase, main
-from tests.utils.pixReversal import generateExamplePixReversalJson
 from tests.utils.user import exampleProject
 from starkcore.error import InvalidSignatureError
+from tests.utils.pixReversal import generateExamplePixReversalJson
 
 
 starkinfra.user = exampleProject
@@ -28,7 +28,6 @@ class TestPixReversalQuery(TestCase):
 
     def test_success_with_params(self):
         pix_reversals = starkinfra.pixreversal.query(
-            fields=["amount", "id"],
             limit=10,
             after=date.today() - timedelta(days=100),
             before=date.today(),

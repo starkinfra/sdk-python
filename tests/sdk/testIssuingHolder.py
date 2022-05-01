@@ -11,7 +11,7 @@ class TestIssuingHolderQuery(TestCase):
     def test_success(self):
         holders = starkinfra.issuingholder.query(limit=10, expand=["rules"])
         for holder in holders:
-            self.assertIsInstance(holder.id, (str, unicode))
+            self.assertEqual(holder.id, str(holder.id))
 
 
 class TestIssuingHolderPage(TestCase):
@@ -33,7 +33,7 @@ class TestIssuingHolderGet(TestCase):
     def test_success(self):
         holders = starkinfra.issuingholder.query(limit=1)
         holder = starkinfra.issuingholder.get(id=next(holders).id)
-        self.assertIsInstance(holder.id, (str, unicode))
+        self.assertEqual(holder.id, str(holder.id))
 
 
 class TestIssuingHolderPostPatchAndDelete(TestCase):

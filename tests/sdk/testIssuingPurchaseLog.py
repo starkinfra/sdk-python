@@ -10,7 +10,7 @@ class TestIssuingPurchaseLogQuery(TestCase):
     def test_success(self):
         logs = starkinfra.issuingpurchase.log.query(limit=10)
         for log in logs:
-            self.assertIsInstance(log.id, (str, unicode))
+            self.assertEqual(log.id, str(log.id))
 
 
 class TestIssuingPurchaseLogGet(TestCase):
@@ -18,7 +18,7 @@ class TestIssuingPurchaseLogGet(TestCase):
     def test_success(self):
         logs = starkinfra.issuingpurchase.log.query(limit=1)
         log = starkinfra.issuingpurchase.log.get(id=next(logs).id)
-        self.assertIsInstance(log.id, (str, unicode))
+        self.assertEqual(log.id, str(log.id))
 
 
 if __name__ == '__main__':

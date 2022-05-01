@@ -11,7 +11,7 @@ class TestIssuingWithdrawalQuery(TestCase):
     def test_success(self):
         withdrawals = starkinfra.issuingwithdrawal.query(limit=10)
         for withdrawal in withdrawals:
-            self.assertIsInstance(withdrawal.id, (str, unicode))
+            self.assertEqual(withdrawal.id, str(withdrawal.id))
 
 
 class TestIssuingWithdrawalGet(TestCase):
@@ -19,7 +19,7 @@ class TestIssuingWithdrawalGet(TestCase):
     def test_success(self):
         withdrawals = starkinfra.issuingwithdrawal.query(limit=1)
         withdrawal = starkinfra.issuingwithdrawal.get(id=next(withdrawals).id)
-        self.assertIsInstance(withdrawal.id, (str, unicode))
+        self.assertEqual(withdrawal.id, str(withdrawal.id))
 
 
 class TestIssuingWithdrawalPost(TestCase):
@@ -31,7 +31,7 @@ class TestIssuingWithdrawalPost(TestCase):
             external_id=example_withdrawal.external_id,
             description=example_withdrawal.description,
         )
-        self.assertIsInstance(withdrawal.id, (str, unicode))
+        self.assertEqual(withdrawal.id, str(withdrawal.id))
 
 
 if __name__ == '__main__':

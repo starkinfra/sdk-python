@@ -11,7 +11,7 @@ class TestIssuingBinQuery(TestCase):
     def test_success(self):
         bins = starkinfra.issuingbin.query()
         for bin in bins:
-            self.assertIsInstance(bin.id, (str, unicode))
+            self.assertEqual(bin.id, str(bin.id))
 
 
 class TestIssuingBinPage(TestCase):

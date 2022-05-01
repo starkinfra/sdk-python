@@ -11,7 +11,7 @@ class TestIssuingInvoiceQuery(TestCase):
     def test_success(self):
         invoices = starkinfra.issuinginvoice.query()
         for invoice in invoices:
-            self.assertIsInstance(invoice.id, (str, unicode))
+            self.assertEqual(invoice.id, str(invoice.id))
 
 
 class TestIssuingInvoiceGet(TestCase):
@@ -19,7 +19,7 @@ class TestIssuingInvoiceGet(TestCase):
     def test_success(self):
         invoices = starkinfra.issuinginvoice.query(limit=1)
         invoice = starkinfra.issuinginvoice.get(id=next(invoices).id)
-        self.assertIsInstance(invoice.id, (str, unicode))
+        self.assertEqual(invoice.id, str(invoice.id))
 
 
 class TestIssuingInvoicePost(TestCase):
@@ -27,7 +27,7 @@ class TestIssuingInvoicePost(TestCase):
     def test_success(self):
         example_invoice = generateExampleInvoicesJson()
         invoice = starkinfra.issuinginvoice.create(amount=example_invoice.amount)
-        self.assertIsInstance(invoice.id, (str, unicode))
+        self.assertEqual(invoice.id, str(invoice.id))
         print(invoice)
 
 

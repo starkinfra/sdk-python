@@ -15,6 +15,12 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ## [Unreleased]
 ### Added
 - expand parameter to issuingholder.get()
+- PixClaim resource for Indirect and Direct Participants
+- PixKey resource for Indirect and Direct Participants
+- InfractionReport resource for Indirect and Direct Participants
+- ReversalRequest resource for Indirect and Direct Participants
+- event.get(), event.query(), event.page(), event.delete() and event.update() functions
+- Event.Attempt sub-resource to allow retrieval of information on failed webhook event delivery attempts
 
 ## [0.0.3] - 2022-04-22
 ### Added

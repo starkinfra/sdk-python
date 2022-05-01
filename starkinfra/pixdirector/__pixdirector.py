@@ -8,7 +8,7 @@ class PixDirector(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
-    - name [string]: name of the PixDirector. ex: Anthony Eddard Stark".
+    - name [string]: name of the PixDirector. ex: "Edward Stark".
     - tax_id [string]: tax ID (CPF/CNPJ) of the PixDirector. ex: "03.300.300/0001-00"
     - phone [string]: phone of the PixDirector. ex: "+55-1198989898"
     - email [string]: email of the PixDirector. ex: "ned.stark@starkbank.com"
@@ -17,7 +17,7 @@ class PixDirector(Resource):
     - team_phones [list of strings]: list of phones of the team. ex: ["+55-11988889999", "+55-11988889998"]
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when the PixDirector is created. ex: "5656565656565656"
-    - status [string, default None]: current PixRequest status. ex: "created"
+    - status [string, default None]: current PixDirector status. ex: "success"
     """
 
     def __init__(self, name, tax_id, phone, email, password, team_email, team_phones, id=None, status=None):

@@ -5,7 +5,7 @@ from ..utils import rest
 
 class IssuingHolder(Resource):
     """# IssuingHolder object
-    The IssuingHolder object displays the informations of Cards created in your Workspace.
+    The IssuingHolder object displays the informations of holders created in your Workspace.
     ## Parameters (required):
     - name [string]: card holder name.
     - tax_id [string]: card holder tax ID
@@ -20,8 +20,7 @@ class IssuingHolder(Resource):
     - created [datetime.datetime]: creation datetime for the IssuingHolder. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, id=None, external_id=None, name=None, rules=None, status=None, tags=None, tax_id=None,
-                 updated=None, created=None):
+    def __init__(self, name, tax_id, external_id, id=None,  rules=None, status=None, tags=None, updated=None, created=None):
         Resource.__init__(self, id=id)
         self.name = name
         self.tax_id = tax_id
@@ -67,7 +66,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     """# Retrieve IssuingHolders
     Receive a generator of IssuingHolder objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - status [string, default None]: filter for status of retrieved objects. ex: "paid" or "registered"
@@ -95,7 +94,7 @@ def page(limit=None, after=None, before=None, status=None, sort=None, tags=None,
     """# Retrieve IssuingHolders
     Receive a list of IssuingHolder objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - status [string, default None]: filter for status of retrieved objects. ex: "paid" or "registered"

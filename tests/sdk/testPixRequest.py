@@ -1,9 +1,9 @@
 import starkinfra
-from datetime import timedelta, date
 from unittest import TestCase, main
-from tests.utils.pixRequest import generateExamplePixRequestJson
+from datetime import timedelta, date
 from tests.utils.user import exampleProject
 from starkcore.error import InvalidSignatureError
+from tests.utils.pixRequest import generateExamplePixRequestJson
 
 
 starkinfra.user = exampleProject
@@ -26,13 +26,12 @@ class TestPixRequestQuery(TestCase):
 
     def test_success_with_params(self):
         pix_requests = starkinfra.pixrequest.query(
-            fields=["amount", "id"],
             limit=10,
             after=date.today() - timedelta(days=100),
             before=date.today(),
             status="failed",
             tags=["iron", "bank"],
-            ids=["1", "2", "3"],  # HUSTON
+            ids=["1", "2", "3"],
             external_ids=["1", "2", "3"],
             end_to_end_ids=["1", "2", "3"],
         )
@@ -86,13 +85,6 @@ class TesteEventProcess(TestCase):
             signature=self.valid_signature
         )
         print(request)
-
-    # def test_normalized_success(self):
-    #     request = starkinfra.pixrequest.parse(
-    #         content=dumps(loads(self.content), sort_keys=False, indent=4),
-    #         signature=self.valid_signature
-    #     )
-    #     print(request)
 
     def test_invalid_signature(self):
         with self.assertRaises(InvalidSignatureError):

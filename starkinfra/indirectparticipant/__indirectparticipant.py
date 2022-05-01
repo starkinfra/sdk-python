@@ -16,18 +16,23 @@ class IndirectParticipant(Resource):
     - reversal_url [string, default None]: indirectParticipant's url to send PixReversal authorizations. ex: "https://reversalhadler656565.com"
     ## Attributes (return-only):
     - id [string, default None]: unique ID returned when the IndirectParticipant is created. ex: "5656565656565656"
+    - organization_id [string, default None]: direct participant's organization id.
+    - direct_id [string, default None]:direct participant's id. ex: "5656565656565656"
+    - bank_code [string, default None]: indirect participant's bank code. ex: "20018183".
     - status [string, default None]: current IndirectParticipant status. ex: "processing", "processing"
     - created [datetime.datetime, default None]: creation datetime for the IndirectParticipant. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime, default None]: latest update datetime for the IndirectParticipant. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
-    def __init__(self, tax_id, workspace_id, request_url, reversal_url=None, id=None, status=None,
-                 created=None, updated=None):
+    def __init__(self, tax_id, workspace_id, request_url, reversal_url=None, id=None, organization_id=None,
+                 direct_id=None, status=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.tax_id = tax_id
         self.workspace_id = workspace_id
         self.request_url = request_url
         self.reversal_url = reversal_url
+        self.organization_id = organization_id
+        self.direct_id = direct_id
         self.status = status
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
@@ -50,7 +55,7 @@ def create(participants, user=None):
 
 def get(id, user=None):
     """# Retrieve the IndirectParticipant object by its id
-    Receive a IndirectParticipant object linked to your workspace in the Stark Infra API
+    Receive a IndirectParticipant object linked to your Workspace in the Stark Infra API
     ## Parameters (optional):
     - id [string]: IndirectParticipant object unique id. ex: "5656565656565656"
     ## Parameters (optional):
@@ -59,3 +64,17 @@ def get(id, user=None):
     - IndirectParticipant object with updated attributes
     """
     return rest.get_id(resource=_resource, id=id, user=user)
+
+
+def delete(id, user=None):
+    """# Delete the IndirectParticipant object by its id
+    Delete a IndirectParticipant object linked to your Workspace in the Stark Infra API. This will also
+    remove the link this participant has with the Central Bank.
+    ## Parameters (optional):
+    - id [string]: IndirectParticipant object unique id. ex: "5656565656565656"
+    ## Parameters (optional):
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    ## Return:
+    - IndirectParticipant object with updated attributes
+    """
+    return rest.delete_id(resource=_resource, id=id, user=user)

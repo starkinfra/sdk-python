@@ -10,7 +10,11 @@ class TestPixReversalLogQuery(TestCase):
 
     def test_success(self):
         logs = list(starkinfra.pixreversal.log.query(limit=10))
-        logs = list(starkinfra.pixreversal.log.query(limit=10, reversal_ids={log.reversal.id for log in logs}, types={log.type for log in logs}))
+        logs = list(starkinfra.pixreversal.log.query(
+            limit=10,
+            reversal_ids={log.reversal.id for log in logs},
+            types={log.type for log in logs}
+        ))
         self.assertEqual(10, len(logs))
         print("Number of logs:", len(logs))
 
@@ -35,7 +39,8 @@ class TestPixReversalLogInfoGet(TestCase):
     def test_success(self):
         logs = starkinfra.pixreversal.log.query()
         log_id = next(logs).id
-        logs = starkinfra.pixreversal.log.get(id=log_id)
+        log = starkinfra.pixreversal.log.get(id=log_id)
+        self.assertEqual(log_id, log.id)
 
 
 if __name__ == '__main__':

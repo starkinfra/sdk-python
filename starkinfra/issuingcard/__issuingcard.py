@@ -6,7 +6,8 @@ from starkcore.utils.checks import check_datetime
 class IssuingCard(Resource):
 
     """# IssuingCard object
-    The IssuingCard object displays the informations of Cards created in your Workspace.
+    The IssuingCard object displays the information of the cards created in your Workspace.
+    Sensitive information will only be returned when the "expand" parameter is used, to avoid security concerns.
     ## Parameters (required):
     - holder_name [string]: card holder name. ex: "Tony Stark"
     - holder_tax_id [string]: card holder tax ID. ex: "012.345.678-90"
@@ -90,7 +91,7 @@ def query(status=None, types=None, holder_ids=None, after=None, before=None, tag
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - expand [list of strings, default []]: fields to expand information. ex: ["rules", "security_code", "number", "expiration"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
@@ -123,7 +124,7 @@ def page(status=None, types=None, holder_ids=None, after=None, before=None, tags
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - cursor [string, default None]: cursor returned on the previous page function call
     - expand [list of strings, default []]: fields to expand information. ex: ["rules", "security_code", "number", "expiration"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call

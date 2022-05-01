@@ -41,15 +41,16 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(limit=None, after=None, before=None, types=None, request_ids=None, user=None):
+def query(limit=None, after=None, before=None, types=None, request_ids=None, reconciliation_id=None, user=None):
     """# Retrieve PixRequest.Logs
     Receive a generator of PixRequest.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
-    - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
-    - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
-    - types [string, default None]: filter retrieved objects by types. ex: ["success", "failed"]
-    - request_ids [list of strings, default None]: list of PixRequest IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
+    - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
+    - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
+    - types [list of strings, default None]: filter retrieved objects by types. Options: "sent", "denied", "failed", "created", "success", "approved", "credited", "refunded", "processing".
+    - request_ids [list of strings, default None]: list of PixRequest ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - reconciliation_id [string]: PixRequest reconciliation id to filter retrieved objects. ex: "b77f5236-7ab9-4487-9f95-66ee6eaf1781"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixRequest.Log objects with updated attributes
@@ -61,21 +62,23 @@ def query(limit=None, after=None, before=None, types=None, request_ids=None, use
         before=check_date(before),
         types=types,
         request_ids=request_ids,
+        reconciliation_id=reconciliation_id,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, types=None, request_ids=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, types=None, request_ids=None, reconciliation_id=None, user=None):
     """# Retrieve paged PixRequest.Logs
     Receive a list of up to 100 PixRequest.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
-    - after [datetime.date or string, default None]: date filter for objects created or updated only after specified date. ex: datetime.date(2020, 3, 10)
-    - before [datetime.date or string, default None]: date filter for objects created or updated only before specified date. ex: datetime.date(2020, 3, 10)
-    - types [string, default None]: filter retrieved objects by types. ex: ["success", "failed"]
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
+    - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
+    - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
+    - types [list of strings, default None]: filter retrieved objects by types. Options: "sent", "denied", "failed", "created", "success", "approved", "credited", "refunded", "processing".
     - request_ids [list of strings, default None]: list of PixRequest IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - reconciliation_id [string]: PixRequest reconciliation id to filter retrieved objects. ex: "b77f5236-7ab9-4487-9f95-66ee6eaf1781"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of PixRequest.Log objects with updated attributes
@@ -89,5 +92,6 @@ def page(cursor=None, limit=None, after=None, before=None, types=None, request_i
         before=check_date(before),
         types=types,
         request_ids=request_ids,
+        reconciliation_id=reconciliation_id,
         user=user,
     )

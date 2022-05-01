@@ -5,9 +5,12 @@ from starkcore.utils.checks import check_datetime, check_date
 
 class PixStatement(Resource):
     """# PixStatement object
-    The PixStatement object stores information about all the transactions that happened on
-    a specific day at the workspace. It must be created by the user before it can be
-    accessed by the user. This feature is only available for direct participants.
+    The PixStatement object stores information about all the transactions that
+    happened on a specific day at the Workspace according to the Central Bank.
+    This feature is only available for direct participants.
+    When you initialize a PixStatement, the entity will not be automatically
+    created in the Stark Infra API. The 'create' function sends the objects
+    to the Stark Infra API and returns the created object.
     ## Parameters (required):
     - after [datetime.date]: transactions that happened at this date are stored in the PixStatement, must be the same as before. ex: (2022-01-01)
     - before [datetime.date]: transactions that happened at this date are stored in the PixStatement, must be the same as after. ex: (2022-01-01)
@@ -36,9 +39,9 @@ class PixStatement(Resource):
 _resource = {"class": PixStatement, "name": "PixStatement"}
 
 
-def create(statements, user=None):
+def create(statement, user=None):
     """# Create a PixStatement object
-    Create a PixStatements linked to your workspace in the Stark Infra API
+    Create a PixStatement linked to your Workspace in the Stark Infra API
     ## Parameters (optional):
     - statement [PixStatement object]: PixStatement object to be created in the API.
     ## Parameters (optional):
@@ -46,12 +49,12 @@ def create(statements, user=None):
     ## Return:
     - PixStatement object with updated attributes.
     """
-    return rest.post_single(resource=_resource, entity=statements, user=user)
+    return rest.post_single(resource=_resource, entity=statement, user=user)
 
 
 def get(id, user=None):
     """# Retrieve a PixStatement object
-    Retrieve the PixStatement object linked to your workspace in the Stark Infra API by its Id.
+    Retrieve the PixStatement object linked to your Workspace in the Stark Infra API by its id.
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
@@ -66,7 +69,7 @@ def query(limit=None, ids=None, user=None):
     """# Retrieve PixStatements
     Receive a generator of PixStatements objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
@@ -86,7 +89,7 @@ def page(cursor=None, limit=None, ids=None, user=None):
     Receive a list of up to 100 PixStatements objects previously created in the Stark Infra API
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:

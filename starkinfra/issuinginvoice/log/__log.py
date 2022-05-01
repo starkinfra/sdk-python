@@ -34,7 +34,7 @@ def query(ids=None, types=None, after=None, before=None, limit=None, user=None):
     """# Retrieve issuinginvoice.Log
     Receive a generator of issuinginvoice.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter for log event types. ex: ["created", "paid"]

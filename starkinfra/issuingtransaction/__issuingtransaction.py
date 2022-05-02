@@ -5,11 +5,10 @@ from ..utils import rest
 
 class IssuingTransaction(Resource):
     """# IssuingTransaction object
-    Displays the IssuingTransaction objects created in your Workspace to represent each balance shift.
+    The IssuingTransaction objects created in your Workspace to represent each balance shift.
     ## Attributes (return-only):
     - id [string]: unique id returned when IssuingTransaction is created. ex: "5656565656565656"
     - amount [integer]: IssuingTransaction value in cents. ex: 1234 (= R$ 12.34)
-    - sub_issuer_id [string]:
     - balance [integer]: balance amount of the Workspace at the instant of the Transaction in cents. ex: 200 (= R$ 2.00)
     - description [string]: IssuingTransaction description. ex: "Buying food"
     - source [string]: source of the transaction. ex: "issuing-purchase/5656565656565656"
@@ -17,10 +16,9 @@ class IssuingTransaction(Resource):
     - created [datetime.datetime]: creation datetime for the IssuingTransaction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, id, amount, sub_issuer_id, balance, created, description, source, tags):
+    def __init__(self, id, amount, balance, created, description, source, tags):
         Resource.__init__(self, id=id)
         self.amount = amount
-        self.sub_issuer_id = sub_issuer_id
         self.balance = balance
         self.description = description
         self.source = source

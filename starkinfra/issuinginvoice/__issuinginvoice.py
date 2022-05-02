@@ -5,7 +5,7 @@ from ..utils import rest
 
 class IssuingInvoice(Resource):
     """# IssuingInvoice object
-    Displays the IssuingInvoice objects created in your Workspace to load your Issuing balance.
+    The IssuingInvoice objects created in your Workspace load your Issuing balance when paid.
     ## Parameters (required):
     - amount [integer]: IssuingInvoice value in cents. ex: 1234 (= R$ 12.34)
     ## Parameters (optional):

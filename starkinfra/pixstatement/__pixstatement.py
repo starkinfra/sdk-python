@@ -6,7 +6,8 @@ from starkcore.utils.checks import check_datetime, check_date
 class PixStatement(Resource):
     """# PixStatement object
     The PixStatement object stores information about all the transactions that
-    happened on a specific day at the Workspace according to the Central Bank.
+    happened on a specific day at your settlment account according to the Central Bank.
+    It must be created by the user before it can be accessed.
     This feature is only available for direct participants.
     When you initialize a PixStatement, the entity will not be automatically
     created in the Stark Infra API. The 'create' function sends the objects

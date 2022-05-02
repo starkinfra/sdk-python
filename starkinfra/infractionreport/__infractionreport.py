@@ -11,7 +11,7 @@ class InfractionReport(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the created object.
     ## Parameters (required):
-    - reference_id [string]: end_to_end_id or return_id of the transaction being reported. ex: reference_id= "E20018183202201201450u34sDGd19lz"
+    - reference_id [string]: end_to_end_id or return_id of the transaction being reported. ex: "E20018183202201201450u34sDGd19lz"
     - type [string]: type of infraction report. Options: "fraud", "reversal", "reversalChargeback"
     ## Parameters (optional):
     - description [string, Default None]: description for any details that can help with the infraction investigation.

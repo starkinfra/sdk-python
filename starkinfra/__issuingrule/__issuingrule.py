@@ -4,10 +4,10 @@ from starkcore.utils.resource import Resource
 class IssuingRule(Resource):
 
     """# IssuingRule object
-    The IssuingRule object displays the spending rules of Cards created in your Workspace.
+    The IssuingRule object displays the spending rules of IssuingCards and IssuingHolders created in your Workspace.
     ## Parameters (required):
     - name [string]: rule name. ex: "Travel" or "Food"
-    - amount [string]: maximum amount that can be spent in the informed interval. ex: 200000 (= R$ 2000.00)
+    - amount [integer]: maximum amount that can be spent in the informed interval. ex: 200000 (= R$ 2000.00)
     - interval [string]: interval after which the rule amount counter will be reset to 0. ex: "instant", "day", "week", "month", "year" or "lifetime"
     ## Parameters (optional):
     - currency_code [string, default "BRL"]: code of the currency that the rule amount refers to. ex: "BRL" or "USD"

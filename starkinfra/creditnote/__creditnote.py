@@ -10,16 +10,16 @@ class CreditNote(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
-    - templateId [string]: ID of the contract template on which the credit note will be based. ex: templateId="0123456789101112"
+    - template_id [string]: ID of the contract template on which the credit note will be based. ex: template_id="0123456789101112"
     - name [string]: credit receiver's full name. ex: name="Edward Stark"
-    - taxId [string]: credit receiver's tax ID (CPF or CNPJ). ex: taxId="20.018.183/0001-80"
-    - nominalAmount [integer]: amount in cents transferred to the credit receiver, before deductions. ex: nominalAmount=11234 (= R$ 112.34)
+    - tax_id [string]: credit receiver's tax ID (CPF or CNPJ). ex: "20.018.183/0001-80"
+    - nominal_amount [integer]: amount in cents transferred to the credit receiver, before deductions. ex: nominal_amount=11234 (= R$ 112.34)
     - scheduled [datetime.date, datetime.datetime or string, default now]: date of transfer execution. ex: scheduled=datetime(2020, 3, 10)
     - invoices [list of Invoice objects]: list of Invoice objects to be created and sent to the credit receiver. ex: invoices=[Invoice(), Invoice()]
     - transfer [Transfer object]: Transfer object to be created and sent to the credit receiver. ex: transfer=Transfer()
     - signers [list of dictionaries]: signer's name, e-mail and delivery method for the contract. ex: signers=[{"name": "Tony Stark", "contact": "tony@starkindustries.com", "method": "link"}]
     Parameters (optional):
-    - rebateAmount [integer, default None]: credit analysis fee deducted from lent amount. ex: rebateAmount=11234 (= R$ 112.34)
+    - rebate_amount [integer, default None]: credit analysis fee deducted from lent amount. ex: rebate_amount=11234 (= R$ 112.34)
     - tags [list of strings, default None]: list of strings for reference when searching for CreditNotes. ex: tags=["employees", "monthly"]
     - externalId [string]: url safe string that must be unique among all your CreditNotes. ex: externalId="my-internal-id-123456"
     Attributes (return-only):

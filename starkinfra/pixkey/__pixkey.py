@@ -4,8 +4,9 @@ from starkcore.utils.checks import check_datetime, check_date
 
 
 class PixKey(Resource):
-    """# PixKeys link bank account information to key ids. Key ids are a convenient
-    way to search and pass bank account information.
+    """# PixKey object
+    PixKeys link bank account information to key ids.
+    Key ids are a convenient way to search and pass bank account information.
     When you initialize a Pix Key, the entity will not be automatically
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the created object.

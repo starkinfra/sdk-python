@@ -68,7 +68,7 @@ def generateExampleCreditNoteJson(n=1, nominal_amount=None):
         note.nominal_amount = note_nominal_amount
         note.scheduled = randomFutureDatetime(days=600)
 
-        note.invoices = generateExampleInvoiceJson(n=randint(3, 4), noteNominalAmount=note.nominal_amount // 2, noteScheduled=note.scheduled)
+        note.invoices = generateExampleInvoiceJson(n=randint(3, 4), note_nominal_amount=note.nominal_amount // 2, note_scheduled=note.scheduled)
 
         note.transfer["bank_code"] = choice(["18236120", "60701190"])
         note.transfer["branch_code"] = "{:04}".format(randint(1, 10**4))
@@ -84,14 +84,14 @@ def generateExampleCreditNoteJson(n=1, nominal_amount=None):
     return credit_notes
 
 
-def generateExampleInvoiceJson(n=1, noteNominalAmount=0, noteScheduled=datetime.now()):
+def generateExampleInvoiceJson(n=1, note_nominal_amount=0, note_scheduled=datetime.now()):
     invoices = []
 
     for _ in range(n):
         invoice = deepcopy(example_invoice)
 
-        invoice["due"] = randomDatetimeBetween(noteScheduled + timedelta(days=500), noteScheduled + timedelta(days=1000))
-        invoice["amount"] = randint(noteNominalAmount, noteNominalAmount+100000)
+        invoice["due"] = randomDatetimeBetween(note_scheduled + timedelta(days=500), note_scheduled + timedelta(days=1000))
+        invoice["amount"] = randint(note_nominal_amount, note_nominal_amount + 100000)
         invoice["fine"] = randint(0, 20)
         invoice["interest"] = randint(0, 20)
 
@@ -116,6 +116,3 @@ def generateExampleSignersJson(n=1):
         signers.append(signer)
 
     return signers
-
-
-

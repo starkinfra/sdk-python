@@ -5,7 +5,7 @@ from starkinfra.utils.parse import parse_and_verify
 
 class IssuingAuthorization(Resource):
     """# IssuingAuthorization object
-    An IssuingAuthorization is the received purchase data to be analysed and answered with the approval or decline.
+    An IssuingAuthorization presents purchase data to be analysed and answered with an approval or a declination.
     ## Attributes:
     - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     - amount [integer]: IssuingPurchase value in cents. Minimum = 0. ex: 1234 (= R$ 12.34)

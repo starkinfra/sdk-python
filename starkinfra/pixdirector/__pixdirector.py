@@ -4,6 +4,7 @@ from starkcore.utils.resource import Resource
 
 class PixDirector(Resource):
     """# PixDirector object
+    Mandatory data that must be registered within the Central Bank for emergency contact purposes.
     When you initialize a PixDirector, the entity will not be automatically
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
@@ -13,7 +14,7 @@ class PixDirector(Resource):
     - phone [string]: phone of the PixDirector. ex: "+55-1198989898"
     - email [string]: email of the PixDirector. ex: "ned.stark@starkbank.com"
     - password [string]: password of the PixDirector. ex: "12345678"
-    - team_email [list of strings]: list of emails of the team. ex: ["aria.stark@starkbank.com", "sansa.stark@starkbank.com"]
+    - team_email [string]: team email. ex: "aria.stark@starkbank.com"
     - team_phones [list of strings]: list of phones of the team. ex: ["+55-11988889999", "+55-11988889998"]
     ## Attributes (return-only):
     - id [string, default None]: unique id returned when the PixDirector is created. ex: "5656565656565656"
@@ -38,7 +39,7 @@ _resource = {"class": PixDirector, "name": "PixDirector"}
 
 def create(director, user=None):
     """# Create a PixDirector Object
-    Send a list of PixDirector objects for creation in the Stark Infra API
+    Send a PixDirector object for creation in the Stark Infra API
     ## Parameters (required):
     - director [list of PixDirector Object]: list of PixDirector objects to be created in the API
     ## Parameters (optional):
@@ -46,4 +47,4 @@ def create(director, user=None):
     ## Return:
     - PixDirector objects with updated attributes
     """
-    return rest.post_multi(resource=_resource, entities=director, user=user)
+    return rest.post_single(resource=_resource, entity=director, user=user)

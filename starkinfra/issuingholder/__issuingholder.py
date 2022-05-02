@@ -5,7 +5,7 @@ from ..utils import rest
 
 class IssuingHolder(Resource):
     """# IssuingHolder object
-    The IssuingHolder object displays the informations of holders created in your Workspace.
+    The IssuingHolder describes a card holder that may group several cards.
     ## Parameters (required):
     - name [string]: card holder name.
     - tax_id [string]: card holder tax ID

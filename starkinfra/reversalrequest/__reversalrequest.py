@@ -4,8 +4,10 @@ from starkcore.utils.checks import check_date
 
 
 class ReversalRequest(Resource):
-    """# A reversal request can be created when fraud is detected on a transaction or a system malfunction
+    """# ReversalRequest object
+    A reversal request can be created when fraud is detected on a transaction or a system malfunction
     results in an erroneous transaction.
+    It notifies another participant of your request to reverse the payment they have received.
     When you initialize a ReversalRequest, the entity will not be automatically
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the created object.

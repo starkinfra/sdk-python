@@ -5,7 +5,7 @@ from ..utils import rest
 
 class IssuingWithdrawal(Resource):
     """# IssuingWithdrawal object
-    Displays the IssuingWithdrawal objects created in your Workspace to return cash from your Issuing balance to your
+    The IssuingWithdrawal objects created in your Workspace return cash from your Issuing balance to your
     Banking balance.
     ## Parameters (required):
     - amount [integer]: IssuingWithdrawal value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)

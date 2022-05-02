@@ -5,7 +5,7 @@ from starkcore.utils.checks import check_datetime, check_date
 
 class PixClaim(Resource):
     """# PixClaim object
-    Pix Claims are claims to transfer a Pix Key from one account to another.
+    PixClaims intend to transfer a PixKey from one account to another.
     When you initialize a PixClaim, the entity will not be automatically
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the created object.

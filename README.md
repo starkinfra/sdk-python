@@ -35,8 +35,9 @@ This SDK version is compatible with the Stark Infra API v2.
         - [PixReversals](#create-pixreversals): Reverse Pix transactions
         - [PixBalance](#get-your-pixbalance): View your account balance
         - [PixStatement](#create-a-pixstatement): Request your account statement
-        - [PixKey](#create-a-pix-key): Create a Pix Key
-        - [PixClaim](#create-a-pix-claim): Claim a Pix Key
+        - [PixKey](#create-a-pixkey): Create a Pix Key
+        - [PixClaim](#create-a-pixclaim): Claim a Pix Key
+        - [PixDirector](#create-a-pixdirector): Create a Pix Director
         - [InfractionReport](#create-an-infractionreport): Create a Pix Key
         - [ReversalRequest](#create-a-reversalrequest): Claim a Pix Key
     - [Credit Note](#credit-note)
@@ -1280,6 +1281,28 @@ import starkinfra
 log = starkinfra.pixclaim.log.get("5155165527080960")
 
 print(log)
+```
+
+## Create a PixDirector
+
+To register the Pix director contact information at the Central Bank, run the following:
+
+```python
+import starkinfra
+
+director = starkinfra.pixdirector.create(
+    starkinfra.PixDirector(
+        name="Edward Stark",
+        tax_id="03.300.300/0001-00",
+        phone="+55-11999999999",
+        email="ned.stark@company.com",
+        password="12345678",
+        team_email="pix.team@company.com",
+        team_phones=["+55-11988889999", "+55-11988889998"],
+    )
+)
+
+print(director)
 ```
 
 ## Create an InfractionReport

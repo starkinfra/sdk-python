@@ -1686,12 +1686,6 @@ if "pix-request" in event.subscription:
 
 elif "pix-reversal" in event.subscription:
     print(event.log.reversal)
-    
-elif "pix-key" in event.subscription:
-    print(event.log.key)
-    
-elif "pix-claim" in event.subscription:
-    print(event.log.claim)
 
 elif "issuing-card" in event.subscription:
     print(event.log.card)

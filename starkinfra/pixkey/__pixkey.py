@@ -30,7 +30,7 @@ class PixKey(Resource):
     - created [datetime.datetime, default None]: creation datetime for the PixKey. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self,  account_created, account_number, account_type, branch_code, name, tax_id, id=None, tags=None,
+    def __init__(self, account_created, account_number, account_type, branch_code, name, tax_id, id=None, tags=None,
                  owned=None, owner_type=None, status=None, bank_code=None, bank_name=None, type=None, created=None):
         Resource.__init__(self, id=id)
 

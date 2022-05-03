@@ -30,7 +30,7 @@ class InfractionReport(Resource):
     """
 
     def __init__(self,  reference_id, type, description=None, credited_bank_code=None, agent=None, analysis=None,
-                 bacen_id=None, bank_code=None, debited_bank_code=None, id=None, reported_by=None, result=None, status=None,
+                 bacen_id=None, debited_bank_code=None, id=None, reported_by=None, result=None, status=None,
                  created=None, updated=None):
         Resource.__init__(self, id=id)
 
@@ -41,7 +41,6 @@ class InfractionReport(Resource):
         self.agent = agent
         self.analysis = analysis
         self.bacen_id = bacen_id
-        self.bank_code = bank_code
         self.debited_bank_code = debited_bank_code
         self.reported_by = reported_by
         self.result = result
@@ -109,8 +108,9 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, type=None,
          user=None):
-    """# Retrieve InfractionReports
-    Receive a generator of InfractionReports objects previously created in the Stark Infra API
+    """# Retrieve paged InfractionReports
+    Receive a list of up to 100 InfractionReports objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call.
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
@@ -121,8 +121,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - type [list of strings, default None]: filter for the type of retrieved InfractionReports. Options: "fraud", "reversal", "reversalChargeback"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - cursor to retrieve the next page of InfractionReport objects
-    - generator of InfractionReport objects with updated attributes
+    - list of InfractionReport objects with updated attributes and cursor to retrieve the next page of InfractionReport objects
     """
     return rest.get_page(
         resource=_resource,

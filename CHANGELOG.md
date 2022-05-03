@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- PixDirector resource for Indirect and Direct Participants
 
 ## [0.0.4] - 2022-05-01
 ### Added
@@ -44,5 +46,4 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - PixDirector resource for Indirect and Direct Participants
 - PixBalance resource for Indirect and Direct Participants
 - PixStatement resource for Direct Participants
-- IndirectParticipant resource for Direct Participants
 - Event resource for webhook receptions

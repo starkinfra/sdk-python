@@ -57,8 +57,8 @@ _resource = {"class": PixClaim, "name": "PixClaim"}
 def create(claim, user=None):
     """# Create a PixClaim object
     Create a PixClaim to request the transfer of a PixKey to an account
-     hosted at other Pix participants in the Stark Infra API.
-    ## Parameters (optional):
+    hosted at other Pix participants in the Stark Infra API.
+    ## Parameters (required):
     - claim [PixClaim object]: PixClaim object to be created in the API.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
@@ -115,8 +115,9 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
 
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, type=None, agent=None, key_type=None, key_id=None, user=None):
-    """# Retrieve PixClaims
-    Receive a generator of PixClaims objects previously created in the Stark Infra API
+    """# Retrieve paged PixClaims
+    Receive a list of up to 100 PixClaims objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call.
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
@@ -130,8 +131,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - key_id [string, default None]: filter PixClaims linked to a specific PixKey id. Example: "+5511989898989".
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - cursor to retrieve the next page of PixClaim objects
-    - generator of PixClaim objects with updated attributes
+    - list of PixClaim objects with updated attributes and cursor to retrieve the next page of PixClaim objects
     """
     return rest.get_page(
         resource=_resource,
@@ -157,6 +157,7 @@ def update(id, status, reason=None, user=None):
     - status [string]: patched status for Pix Claim. Options: "confirmed" and "canceled"
     ## Parameters (optional):
     - reason [string, default: "userRequested"]: reason why the PixClaim is being patched. Options: "fraud", "userRequested".
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - PixClaim with updated attributes
     """

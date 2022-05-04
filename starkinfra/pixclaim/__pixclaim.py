@@ -18,15 +18,15 @@ class PixClaim(Resource):
     - tax_id [string]: holder's taxId of the account claiming the PixKey (CPF/CNPJ). ex: "012.345.678-90".
     - key_id [string]: id of the registered Pix Key to be claimed. Allowed keyTypes are CPF, CNPJ, phone number or email. ex: "+5511989898989".
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when the PixClaim is created. ex: "5656565656565656"
-    - status [string, default None]: current PixClaim status. Options: "created", "failed", "delivered", "confirmed", "success", "canceled"
+    - id [string]: unique id returned when the PixClaim is created. ex: "5656565656565656"
+    - status [string]: current PixClaim status. Options: "created", "failed", "delivered", "confirmed", "success", "canceled"
     - type [string]: type of Pix Claim. Options: "ownership", "portability".
-    - key_type [string, default None]: keyType of the claimed PixKey. Options: "CPF", "CNPJ", "phone" or "email"
-    - agent [string, default None]: Options: "claimer" if you requested the PixClaim or "claimed" if you received a PixClaim request.
-    - bank_code [string, default None]: bank_code of the account linked to the PixKey being claimed. ex: "20018183".
-    - claimed_bank_code [string, default None]: bank_code of the account donating the PixKey. ex: "20018183".
-    - created [datetime.datetime, default None]: creation datetime for the PixClaim. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - updated [datetime.datetime, default None]: update datetime for the PixClaim. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - key_type [string]: keyType of the claimed PixKey. Options: "CPF", "CNPJ", "phone" or "email"
+    - agent [string]: Options: "claimer" if you requested the PixClaim or "claimed" if you received a PixClaim request.
+    - bank_code [string]: bank_code of the account linked to the PixKey being claimed. ex: "20018183".
+    - claimed_bank_code [string]: bank_code of the account donating the PixKey. ex: "20018183".
+    - created [datetime.datetime]: creation datetime for the PixClaim. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - updated [datetime.datetime]: update datetime for the PixClaim. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, account_created, account_number, account_type, branch_code, name, tax_id, key_id, id=None,
@@ -165,4 +165,4 @@ def update(id, status, reason=None, user=None):
         "reason": reason,
         "status": status,
     }
-    return rest.patch_id(resource=_resource, id=id, user=user, **payload)
+    return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)

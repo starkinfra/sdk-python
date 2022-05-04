@@ -2,7 +2,7 @@ import starkinfra
 from unittest import TestCase, main
 from datetime import timedelta, date
 from tests.utils.user import exampleProject
-from tests.utils.pixClaim import generateExamplePixClaimJson, getPicClaimToPatch
+from tests.utils.pixClaim import generateExamplePixClaimJson, getPixClaimToPatch
 
 
 starkinfra.user = exampleProject
@@ -79,10 +79,9 @@ class TestPixClaimInfoGet(TestCase):
 class TestPixClaimInfoPatch(TestCase):
 
     def test_success_cancel(self):
-        pix_claim = getPicClaimToPatch()
+        pix_claim = getPixClaimToPatch()
         self.assertIsNotNone(pix_claim.id)
         self.assertEqual(pix_claim.status, "delivered")
-        print()
         updated_pix_claim = starkinfra.pixclaim.update(
             id=pix_claim.id,
             reason="userRequested",

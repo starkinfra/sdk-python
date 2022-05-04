@@ -17,11 +17,11 @@ class PixStatement(Resource):
     - before [datetime.date]: transactions that happened at this date are stored in the PixStatement, must be the same as after. ex: (2022-01-01)
     - type [string]: types of entities to include in statement. Options: ["interchange", "interchangeTotal", "transaction"]
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when the PixStatement is created. ex: "5656565656565656"
-    - status [string, default None]: current PixStatement status. ex: ["success", "failed"]
-    - transaction_count [integer, default None]: number of transactions that happened during the day that the PixStatement was requested. ex 11
-    - created [datetime.datetime, default None]: creation datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - updated [datetime.datetime, default None]: latest update datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - id [string]: unique id returned when the PixStatement is created. ex: "5656565656565656"
+    - status [string]: current PixStatement status. ex: ["success", "failed"]
+    - transaction_count [integer]: number of transactions that happened during the day that the PixStatement was requested. ex 11
+    - created [datetime.datetime]: creation datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - updated [datetime.datetime]: latest update datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, after, before, type, id=None, status=None, transaction_count=None, created=None,

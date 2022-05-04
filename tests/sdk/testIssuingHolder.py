@@ -41,7 +41,7 @@ class TestIssuingHolderPostPatchAndDelete(TestCase):
     def test_success(self):
         holders = starkinfra.issuingholder.create(generateExampleHoldersJson(n=1))
         holder_id = holders[0].id
-        holder = starkinfra.issuingholder.update(holder_id, name="Updated Name")
+        holder = starkinfra.issuingholder.update(id=holder_id, name="Updated Name")
         self.assertEqual("Updated Name", holder.name)
         holder = starkinfra.issuingholder.delete(id=holder_id)
         self.assertEqual("canceled", holder.status)

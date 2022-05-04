@@ -114,8 +114,8 @@ def page(cursor=None, limit=None, after=None, before=None, is_delivered=None, us
 
 
 def delete(id, user=None):
-    """# Delete a webhook Event entity
-    Delete a of notification Event entity previously created in the Stark Infra API by its ID
+    """# Delete a Webhook Event entity
+    Delete a notification Event entity previously created in the Stark Infra API by its ID
     ## Parameters (required):
     - id [string]: Event unique id. ex: "5656565656565656"
     ## Parameters (optional):

@@ -18,19 +18,19 @@ class CreditNote(Resource):
     - invoices [list of Invoice objects]: list of Invoice objects to be created and sent to the credit receiver. ex: invoices=[Invoice(), Invoice()]
     - transfer [Transfer object]: Transfer object to be created and sent to the credit receiver. ex: transfer=Transfer()
     - signers [list of dictionaries]: signer's name, e-mail and delivery method for the contract. ex: signers=[{"name": "Tony Stark", "contact": "tony@starkindustries.com", "method": "link"}]
+    - externalId [string]: a string that must be unique among all your CreditNotes, used to avoid resource duplication. ex: "my-internal-id-123456"
     Parameters (optional):
     - rebate_amount [integer, default None]: credit analysis fee deducted from lent amount. ex: rebate_amount=11234 (= R$ 112.34)
     - tags [list of strings, default None]: list of strings for reference when searching for CreditNotes. ex: tags=["employees", "monthly"]
-    - externalId [string]: url safe string that must be unique among all your CreditNotes. ex: externalId="my-internal-id-123456"
     Attributes (return-only):
-    - id [string, default None]: unique id returned when the CreditNote is created. ex: "5656565656565656"
+    - id [string]: unique id returned when the CreditNote is created. ex: "5656565656565656"
     - interest [float]: yearly effective interest rate of the credit note, in percentage. ex: 12.5
-    - created [datetime.datetime, default None]: creation datetime for the CreditNote. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - updated [datetime.datetime, default None]: latest update datetime for the CreditNote. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - created [datetime.datetime]: creation datetime for the CreditNote. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - updated [datetime.datetime]: latest update datetime for the CreditNote. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, template_id, name, tax_id, nominal_amount, scheduled, invoices, transfer, signers,
-                 external_id=None, interest=None, rebate_amount=None, tags=None, created=None, updated=None, id=None):
+                 external_id, interest=None, rebate_amount=None, tags=None, created=None, updated=None, id=None):
         Resource.__init__(self, id=id)
 
         self.template_id = template_id

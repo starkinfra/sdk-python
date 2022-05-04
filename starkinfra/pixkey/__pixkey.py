@@ -21,13 +21,13 @@ class PixKey(Resource):
     - id [string, default None]: id of the registered PixKey. Allowed types are: CPF, CNPJ, phone number or email. If this parameter is not passed, an EVP will be created. ex: "+5511989898989";
     - tags [list of strings, default None]: list of strings for reference when searching for PixKeys. ex: ["employees", "monthly"]
     ## Attributes (return-only):
-    - owned [datetime.datetime, default None]: datetime when the key was owned by the holder. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - owner_type [string, default None]: type of the owner of the PixKey. Options: "business" or "individual".
-    - status [string, default None]: current PixKey status. Options: "created", "registered", "canceled", "failed"
-    - bank_code [string, default None]: bank_code of the account linked to the Pix Key. ex: "20018183".
-    - bank_name [string, default None]: name of the bank that holds the account linked to the PixKey. ex: "StarkBank"
-    - type [string, default None]: type of the PixKey. Options: "cpf", "cnpj", "phone", "email" and "evp",
-    - created [datetime.datetime, default None]: creation datetime for the PixKey. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - owned [datetime.datetime]: datetime when the key was owned by the holder. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - owner_type [string]: type of the owner of the PixKey. Options: "business" or "individual".
+    - status [string]: current PixKey status. Options: "created", "registered", "canceled", "failed"
+    - bank_code [string]: bank_code of the account linked to the Pix Key. ex: "20018183".
+    - bank_name [string]: name of the bank that holds the account linked to the PixKey. ex: "StarkBank"
+    - type [string]: type of the PixKey. Options: "cpf", "cnpj", "phone", "email" and "evp",
+    - created [datetime.datetime]: creation datetime for the PixKey. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, account_created, account_number, account_type, branch_code, name, tax_id, id=None, tags=None,
@@ -167,7 +167,7 @@ def update(id, reason, account_created=None, account_number=None, account_type=N
         "branch_code": branch_code,
         "name": name,
     }
-    return rest.patch_id(resource=_resource, id=id, user=user, **payload)
+    return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)
 
 
 def delete(id, user=None):

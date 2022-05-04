@@ -14,7 +14,7 @@ class TestEventQuery(TestCase):
         events = list(starkinfra.event.query(limit=5))
         for event in events:
             print(event.id)
-            for attempt in starkinfra.event.attempt.query(event_ids=event.id, limit=1):
+            for attempt in starkinfra.event.attempt.query(event_ids=[event.id], limit=1):
                 print(starkinfra.event.attempt.get(attempt.id).id)
                 break
 

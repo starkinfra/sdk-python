@@ -40,6 +40,7 @@ This SDK version is compatible with the Stark Infra API v2.
         - [PixDirector](#create-a-pixdirector): Create a Pix Director
         - [InfractionReport](#create-an-infractionreport): Create a Pix Key
         - [ReversalRequest](#create-a-reversalrequest): Claim a Pix Key
+        - [BrcodeCertificate](#query-brcodecertificates): View registered SPI participants certificates
     - [Credit Note](#credit-note)
         - [CreditNote](#create-creditnotes): Create credit notes
     - [Webhook Events](#webhook-events):
@@ -1055,7 +1056,7 @@ with open("test.zip", "wb") as file:
     file.write(csv)
 ```
 
-## Create a PixKey
+### Create a PixKey
 
 You can create a Pix Key to link a bank account information to a key id:
 
@@ -1070,14 +1071,14 @@ key = starkinfra.pixkey.create(
         branch_code="0000",
         name="Jamie Lannister",
         tax_id="012.345.678-90",
-        id =  "+5511989898989",
+        id="+5511989898989",
     )
 )
 
 print(key)
 ```
 
-## Query PixKeys
+### Query PixKeys
 
 You can query multiple Pix keys you own according to filters.
 
@@ -1098,7 +1099,7 @@ for key in keys:
     print(key)
 ```
 
-## Get a PixKey
+### Get a PixKey
 
 Information on a Pix key may be retrieved by its id and the tax ID of the consulting agent.
 An endToEndId must be informed so you can link any resulting purchases to this query,
@@ -1116,7 +1117,7 @@ key = starkinfra.pixkey.get(
 print(key)
 ```
 
-## Patch a PixKey
+### Patch a PixKey
 
 Update the account information linked to a Pix Key.
 
@@ -1132,7 +1133,7 @@ key = starkinfra.pixkey.update(
 print(key)
 ```
 
-## Delete a PixKey
+### Delete a PixKey
 
 Cancel a specific Pix Key using its id.
 
@@ -1144,7 +1145,7 @@ key = starkinfra.pixkey.delete("5155165527080960")
 print(key)
 ```
 
-## Query PixKey logs
+### Query PixKey logs
 
 You can query pix key logs to better understand a Pix key life cycle. 
 
@@ -1164,7 +1165,7 @@ for log in logs:
     print(log)
 ```
 
-## Get a PixKey log
+### Get a PixKey log
 
 You can also get a specific log by its id.
 
@@ -1176,7 +1177,7 @@ log = starkinfra.pixkey.log.get("5155165527080960")
 print(log)
 ```
 
-## Create a PixClaim
+### Create a PixClaim
 
 You can create a Pix claim to request the transfer of a Pix key from another bank to one of your accounts:
 
@@ -1198,7 +1199,7 @@ claim = starkinfra.pixclaim.create(
 print(claim)
 ```
 
-## Query PixClaims
+### Query PixClaims
 
 You can query multiple Pix claims according to filters.
 
@@ -1221,7 +1222,7 @@ for claim in claims:
     print(claim)
 ```
 
-## Get a PixClaim
+### Get a PixClaim
 
 After its creation, information on a pix claim may be retrieved by its id.
 
@@ -1233,7 +1234,7 @@ claim = starkinfra.pixclaim.get("5155165527080960")
 print(claim)
 ```
 
-## Patch a PixClaim
+### Patch a PixClaim
 
 A Pix Claim can be confirmed or canceled by patching its status.
 A received Pix Claim must be confirmed by the donor to be completed.
@@ -1251,7 +1252,7 @@ claim = starkinfra.pixclaim.update(
 print(claim)
 ```
 
-## Query PixClaim logs
+### Query PixClaim logs
 
 You can query Pix claim logs to better understand Pix claim life cycles.
 
@@ -1271,7 +1272,7 @@ for log in logs:
     print(log)
 ```
 
-## Get a PixClaim log
+### Get a PixClaim log
 
 You can also get a specific log by its id.
 
@@ -1283,7 +1284,7 @@ log = starkinfra.pixclaim.log.get("5155165527080960")
 print(log)
 ```
 
-## Create a PixDirector
+### Create a PixDirector
 
 To register the Pix director contact information at the Central Bank, run the following:
 
@@ -1305,7 +1306,7 @@ director = starkinfra.pixdirector.create(
 print(director)
 ```
 
-## Create an InfractionReport
+### Create an InfractionReport
 
 Infraction reports are used to report transactions that raise fraud suspicion, to request a refund or to 
 reverse a refund. Infraction reports can be created by either participant of a transaction.
@@ -1323,7 +1324,7 @@ report = starkinfra.infractionreport.create(
 print(report)
 ```
 
-## Query InfractionReports
+### Query InfractionReports
 
 You can query multiple infraction reports according to filters.
 
@@ -1342,7 +1343,7 @@ for report in reports:
     print(report)
 ```
 
-## Get an InfractionReport
+### Get an InfractionReport
 
 After its creation, information on an Infraction Report may be retrieved by its id.
 
@@ -1354,7 +1355,7 @@ report = starkinfra.infractionreport.get("5155165527080960")
 print(report)
 ```
 
-## Patch an InfractionReport
+### Patch an InfractionReport
 
 A received Infraction Report can be confirmed or declined by patching its status.
 After an Infraction Report is patched, its status changes to closed.
@@ -1370,7 +1371,7 @@ report = starkinfra.infractionreport.update(
 print(report)
 ```
 
-## Delete an InfractionReport
+### Delete an InfractionReport
 
 Cancel a specific Infraction Report using its id.
 
@@ -1382,7 +1383,7 @@ report = starkinfra.infractionreport.delete("5155165527080960")
 print(report)
 ```
 
-## Query InfractionReport logs
+### Query InfractionReport logs
 
 You can query infraction report logs to better understand their life cycles. 
 
@@ -1402,7 +1403,7 @@ for log in logs:
     print(log)
 ```
 
-## Get an InfractionReport log
+### Get an InfractionReport log
 
 You can also get a specific log by its id.
 
@@ -1414,7 +1415,7 @@ log = starkinfra.infractionreport.log.get("5155165527080960")
 print(log)
 ```
 
-## Create a ReversalRequest
+### Create a ReversalRequest
 
 A reversal request can be created when fraud is detected on a transaction or a system malfunction 
 results in an erroneous transaction.
@@ -1433,7 +1434,7 @@ request = starkinfra.reversalrequest.create(
 print(request)
 ```
 
-## Query ReversalRequests
+### Query ReversalRequests
 
 You can query multiple reversal requests according to filters.
 
@@ -1452,7 +1453,7 @@ for request in requests:
     print(request)
 ```
 
-## Get a ReversalRequest
+### Get a ReversalRequest
 
 After its creation, information on a Reversal Request may be retrieved by its.
 
@@ -1464,7 +1465,7 @@ request = starkinfra.reversalrequest.get("5155165527080960")
 print(request)
 ```
 
-## Patch a ReversalRequest
+### Patch a ReversalRequest
 
 A received Reversal Request can be accepted or rejected by patching its status.
 After a Reversal Request is patched, its status changes to closed.
@@ -1481,7 +1482,7 @@ request = starkinfra.reversalrequest.update(
 print(request)
 ```
 
-## Delete a ReversalRequest
+### Delete a ReversalRequest
 
 Cancel a specific Reversal Request using its id.
 
@@ -1493,7 +1494,7 @@ request = starkinfra.reversalrequest.delete("5155165527080960")
 print(request)
 ```
 
-## Query ReversalRequest logs
+### Query ReversalRequest logs
 
 You can query reversal request logs to better understand reversal request life cycles. 
 
@@ -1513,7 +1514,7 @@ for log in logs:
     print(log)
 ```
 
-## Get a ReversalRequest log
+### Get a ReversalRequest log
 
 You can also get a specific log by its id.
 
@@ -1523,6 +1524,18 @@ import starkinfra
 log = starkinfra.reversalrequest.log.get("5155165527080960")
 
 print(log)
+```
+
+### Query BrcodeCertificates
+
+You can query for certificates of registered SPI participants able to issue dynamic QR Codes.
+
+```python
+import starkinfra
+
+brcodeCertificates = starkinfra.brcodecertificate.query()
+for certificate in brcodeCertificates:
+    print(certificate)
 ```
 
 ## Credit Note
@@ -1686,7 +1699,6 @@ log = starkinfra.creditnote.log.get("5155165527080960")
 print(log)
 ```
 
-
 ## Webhook Events
 
 ### Process webhook events
@@ -1723,7 +1735,7 @@ elif "credit-note" in event.subscription:
     print(event.log.note)
 ```
 
-## Query webhook events
+### Query webhook events
 
 To search for webhooks events, run:
 
@@ -1736,7 +1748,7 @@ for event in events:
     print(event)
 ```
 
-## Get a webhook event
+### Get a webhook event
 
 You can get a specific webhook event by its id.
 
@@ -1748,7 +1760,7 @@ event = starkinfra.event.get("10827361982368179")
 print(event)
 ```
 
-## Delete a webhook event
+### Delete a webhook event
 
 You can also delete a specific webhook event by its id.
 
@@ -1760,7 +1772,7 @@ event = starkinfra.event.delete("10827361982368179")
 print(event)
 ```
 
-## Set webhook events as delivered
+### Set webhook events as delivered
 
 This can be used in case you've lost events.
 With this function, you can manually set events retrieved from the API as
@@ -1774,7 +1786,7 @@ event = starkinfra.event.update(id="129837198237192", is_delivered=True)
 print(event)
 ```
 
-## Query failed webhook event delivery attempts information
+### Query failed webhook event delivery attempts information
 
 You can also get information on failed webhook event delivery attempts.
 
@@ -1788,7 +1800,7 @@ for attempt in attempts:
     print(attempt.message)
 ```
 
-## Get a failed webhook event delivery attempt information
+### Get a failed webhook event delivery attempt information
 
 To retrieve information on a single attempt, use the following function:
 

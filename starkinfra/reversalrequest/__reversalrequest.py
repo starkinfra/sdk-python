@@ -18,17 +18,17 @@ class ReversalRequest(Resource):
     ## Parameters (optional):
     - description [string, default None]: description for the ReversalRequest.
     ## Attributes (return-only):
-    - analysis [string, Default None]: analysis that led to the result.
-    - bacen_id [string, Default None]: central bank's unique UUID that identifies the ReversalRequest.
-    - sender_bank_code [string, Default None]: bank_code of the Pix participant that created the ReversalRequest. ex: "20018183"
-    - receiver_bank_code [string, Default None]: bank_code of the Pix participant that received the ReversalRequest. ex: "20018183"
-    - rejection_reason [string, Default None]: reason for the rejection of the reversal request. Options: "noBalance", "accountClosed", "unableToReverse"
-    - reversal_reference_id [string, Default None]: return id of the reversal transaction. ex: "D20018183202202030109X3OoBHG74wo".
-    - id [string, default None]: unique id returned when the ReversalRequest is created. ex: "5656565656565656"
-    - result [string, Default None]: result after the analysis of the ReversalRequest by the receiving party. Options: "rejected", "accepted", "partiallyAccepted"
-    - status [string, default None]: current ReversalRequest status. Options: "created", "failed", "delivered", "closed", "canceled".
-    - created [datetime.datetime, default None]: creation datetime for the ReversalRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - updated [datetime.datetime, default None]: latest update datetime for the ReversalRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - analysis [string]: analysis that led to the result.
+    - bacen_id [string]: central bank's unique UUID that identifies the ReversalRequest.
+    - sender_bank_code [string]: bank_code of the Pix participant that created the ReversalRequest. ex: "20018183"
+    - receiver_bank_code [string]: bank_code of the Pix participant that received the ReversalRequest. ex: "20018183"
+    - rejection_reason [string]: reason for the rejection of the reversal request. Options: "noBalance", "accountClosed", "unableToReverse"
+    - reversal_reference_id [string]: return id of the reversal transaction. ex: "D20018183202202030109X3OoBHG74wo".
+    - id [string]: unique id returned when the ReversalRequest is created. ex: "5656565656565656"
+    - result [string]: result after the analysis of the ReversalRequest by the receiving party. Options: "rejected", "accepted", "partiallyAccepted"
+    - status [string]: current ReversalRequest status. Options: "created", "failed", "delivered", "closed", "canceled".
+    - created [datetime.datetime]: creation datetime for the ReversalRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - updated [datetime.datetime]: latest update datetime for the ReversalRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self,  amount, reference_id, reason, description=None, analysis=None, bacen_id=None,
@@ -155,7 +155,7 @@ def update(id, result, rejection_reason=None, reversal_reference_id=None, analys
         "reversal_reference_id": reversal_reference_id,
         "analysis": analysis
     }
-    return rest.patch_id(resource=_resource, id=id, user=user, **payload)
+    return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)
 
 
 def delete(id, user=None):

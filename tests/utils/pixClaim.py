@@ -28,7 +28,7 @@ def generateExamplePixClaimJson():
     return pix_claim
 
 
-def getPicClaimToPatch():
+def getPixClaimToPatch():
     pix_claims = []
     cursor = None
     while len(pix_claims) < 1:

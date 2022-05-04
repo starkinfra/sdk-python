@@ -29,6 +29,9 @@ from .pixkey.__pixkey import PixKey
 from . import pixclaim
 from .pixclaim.__pixclaim import PixClaim
 
+from . import brcodecertificate
+from .brcodecertificate.__brcodecertificate import BrcodeCertificate
+
 from . import infractionreport
 from .infractionreport.__infractionreport import InfractionReport
 

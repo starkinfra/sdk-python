@@ -37,13 +37,13 @@ class PixRequest(Resource):
     - tags [list of strings, default None]: list of strings for reference when searching for PixRequests. ex: ["employees", "monthly"]
     - method [string, default None]: execution  method for thr creation of the PIX. ex: "manual", "payerQrcode", "dynamicQrcode".
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when the PixRequest is created. ex: "5656565656565656"
-    - fee [integer, default None]: fee charged when PixRequest is paid. ex: 200 (= R$ 2.00)
-    - status [string, default None]: current PixRequest status. ex: "registered" or "paid"
-    - flow [string, default None]: direction of money flow. ex: "in" or "out"
-    - sender_bank_code [string, default None]: sender's bank institution code in Brazil. ex: "20018183"
-    - created [datetime.datetime, default None]: creation datetime for the PixRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - updated [datetime.datetime, default None]: latest update datetime for the PixRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - id [string]: unique id returned when the PixRequest is created. ex: "5656565656565656"
+    - fee [integer]: fee charged when PixRequest is paid. ex: 200 (= R$ 2.00)
+    - status [string]: current PixRequest status. ex: "registered" or "paid"
+    - flow [string]: direction of money flow. ex: "in" or "out"
+    - sender_bank_code [string]: sender's bank institution code in Brazil. ex: "20018183"
+    - created [datetime.datetime]: creation datetime for the PixRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - updated [datetime.datetime]: latest update datetime for the PixRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, amount, external_id, sender_name, sender_tax_id, sender_branch_code,

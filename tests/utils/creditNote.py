@@ -37,6 +37,7 @@ example_note = CreditNote(
             "method": "link"
         }
     ],
+    external_id="1234",
 )
 
 example_invoice = {

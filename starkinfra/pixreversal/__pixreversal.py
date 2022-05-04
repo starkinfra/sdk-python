@@ -19,14 +19,14 @@ class PixReversal(Resource):
     ## Parameters (optional):
     - tags [list of strings, default None]: list of strings for reference when searching for PixReversals. ex: ["employees", "monthly"]
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when the PixReversal is created. ex: "5656565656565656".
-    - return_id [string, default None]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo".
-    - bank_code [string, default None]: code of the bank institution in Brazil. ex: "20018183"
-    - fee [string, default None]: fee charged by this PixReversal. ex: 200 (= R$ 2.00)
-    - status [string, default None]: current PixReversal status. ex: "registered" or "paid"
-    - flow [string, default None]: direction of money flow. ex: "in" or "out"
-    - created [datetime.datetime, default None]: creation datetime for the PixReversal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - updated [datetime.datetime, default None]: latest update datetime for the PixReversal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - id [string]: unique id returned when the PixReversal is created. ex: "5656565656565656".
+    - return_id [string]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo".
+    - bank_code [string]: code of the bank institution in Brazil. ex: "20018183"
+    - fee [string]: fee charged by this PixReversal. ex: 200 (= R$ 2.00)
+    - status [string]: current PixReversal status. ex: "registered" or "paid"
+    - flow [string]: direction of money flow. ex: "in" or "out"
+    - created [datetime.datetime]: creation datetime for the PixReversal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - updated [datetime.datetime]: latest update datetime for the PixReversal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, amount, external_id, end_to_end_id, reason, tags=None, id=None, return_id=None, bank_code=None,

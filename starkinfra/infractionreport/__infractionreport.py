@@ -17,16 +17,16 @@ class InfractionReport(Resource):
     - description [string, Default None]: description for any details that can help with the infraction investigation.
     - credited_bank_code [string, Default None]: bank_code of the credited Pix participant in the reported transaction. ex: "20018183"
     ## Attributes (return-only):
-    - agent [string, Default None]: Options: "reporter" if you created the InfractionReport, "reported" if you received the InfractionReport.
-    - analysis [string, Default None]: analysis that led to the result.
-    - bacen_id [string, Default None]: central bank's unique UUID that identifies the infraction report.
-    - debited_bank_code [string, Default None]: bank_code of the debited Pix participant in the reported transaction. ex: "20018183"
-    - id [string, default None]: unique id returned when the InfractionReport is created. ex: "5656565656565656"
-    - reported_by [string, Default None]: agent that reported the InfractionReport. Options: "debited", "credited".
-    - result [string, Default None]: result after the analysis of the InfractionReport by the receiving party. Options: "agreed", "disagreed"
-    - status [string, default None]: current InfractionReport status. Options: "created", "failed", "delivered", "closed", "canceled".
-    - created [datetime.datetime, default None]: creation datetime for the InfractionReport. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - updated [datetime.datetime, default None]: latest update datetime for the InfractionReport. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - agent [string]: Options: "reporter" if you created the InfractionReport, "reported" if you received the InfractionReport.
+    - analysis [string]: analysis that led to the result.
+    - bacen_id [string]: central bank's unique UUID that identifies the infraction report.
+    - debited_bank_code [string]: bank_code of the debited Pix participant in the reported transaction. ex: "20018183"
+    - id [string]: unique id returned when the InfractionReport is created. ex: "5656565656565656"
+    - reported_by [string]: agent that reported the InfractionReport. Options: "debited", "credited".
+    - result [string]: result after the analysis of the InfractionReport by the receiving party. Options: "agreed", "disagreed"
+    - status [string]: current InfractionReport status. Options: "created", "failed", "delivered", "closed", "canceled".
+    - created [datetime.datetime]: creation datetime for the InfractionReport. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - updated [datetime.datetime]: latest update datetime for the InfractionReport. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self,  reference_id, type, description=None, credited_bank_code=None, agent=None, analysis=None,
@@ -151,7 +151,7 @@ def update(id, result, analysis=None, user=None):
         "result": result,
         "analysis": analysis,
     }
-    return rest.patch_id(resource=_resource, id=id, user=user, **payload)
+    return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)
 
 
 def delete(id, user=None):

@@ -18,5 +18,4 @@ def generateExampleRuleJson(n=1):
         example_rule.amount = randint(1000, 100000)
         example_rule.currency_code = choice(["BRL", "USD"])
         rules.append(deepcopy(example_rule))
-    print(rules[0])
     return rules

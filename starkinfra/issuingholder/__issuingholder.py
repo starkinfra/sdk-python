@@ -69,7 +69,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [string, default None]: filter for status of retrieved objects. ex: "paid" or "registered"
+    - status [string, default None]: filter for status of retrieved objects. ex: "active", "blocked" or "canceled"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - expand [list of strings, default None]: fields to expand information. ex: ["rules"]
@@ -97,10 +97,10 @@ def page(limit=None, after=None, before=None, status=None, sort=None, tags=None,
     - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [string, default None]: filter for status of retrieved objects. ex: "paid" or "registered"
+    - status [string, default None]: filter for status of retrieved objects. ex: "active", "blocked" or "canceled"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - expand [string, default None]: fields to expand information. ex: "rules, securityCode, number, expiration"
+    - expand [string, default None]: fields to expand information. ex: ["rules"]
     - cursor [string, default None]: cursor returned on the previous page function call
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:

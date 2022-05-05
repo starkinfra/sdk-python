@@ -14,7 +14,7 @@ class IssuingInvoice(Resource):
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: unique id returned when IssuingInvoice is created. ex: "5656565656565656"
-    - status [string]: current IssuingHolder status. ex: "active", "blocked" or "canceled"
+    - status [string]: current IssuingInvoice status. ex: "created", "paid", "overdue" and "expired"
     - issuing_transaction_id [string]: ledger transaction ids linked to this IssuingInvoice. ex: "issuing-invoice/5656565656565656"
     - updated [datetime.datetime]: latest update datetime for the IssuingInvoice. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingInvoice. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)

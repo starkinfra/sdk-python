@@ -14,7 +14,6 @@ class Log(Resource):
     ## Attributes:
     - id [string]: unique id returned when the log is created. ex: "5656565656565656"
     - invoice [IssuingInvoice]: IssuingInvoice entity to which the log refers to.
-    - errors [list of strings]: list of errors linked to this IssuingInvoice event
     - type [string]: type of the IssuingInvoice event which triggered the log creation. ex: "created" or "paid"
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -28,6 +27,19 @@ class Log(Resource):
 
 
 _resource = {"class": Log, "name": "IssuingInvoiceLog"}
+
+
+def get(id, user=None):
+    """# Retrieve a specific issuinginvoice.Log
+    Receive a single issuinginvoice.Log object previously created by the Stark Infra API by its id
+    ## Parameters (required):
+    - id [string]: object unique id. ex: "5656565656565656"
+    ## Parameters (optional):
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    ## Return:
+    - issuinginvoice.Log object with updated attributes
+    """
+    return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(ids=None, types=None, after=None, before=None, limit=None, user=None):

@@ -133,6 +133,7 @@ def page(cursor=None, limit=None, status=None, tags=None, ids=None, after=None, 
         user=user,
     )
 
+
 def delete(id, user=None):
     """# Cancel a Credit Note entity
     Cancel a Credit Note entity previously created in the Stark Infra API

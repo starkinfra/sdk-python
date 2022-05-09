@@ -117,7 +117,6 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. Options: "created", "failed", "delivered", "closed", "canceled".
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - type [list of strings, default None]: filter for the type of retrieved ReversalRequests. Options: "fraud", "reversal", "reversalChargeback"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - cursor to retrieve the next page of ReversalRequest objects

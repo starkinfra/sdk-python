@@ -4,12 +4,11 @@ from starkcore.utils.subresource import SubResource
 
 class BrcodeCertificate(SubResource):
     """# BrcodeCertificate object
-    The BrcodeCertificate object displays the certificate information of registered SPI participants able
-    to issue dynamic QR Codes.
-    They are used in the validation of the URLs contained in the dynamic QR Codes.
+    The BrcodeCertificate object displays the QR Code domain certificate information of Pix participants.
+    All certificates must be registered with the Central Bank.
     ## Attributes (return-only):
-    - content [string]: certificate of the SPI participant in PEM format.
-    - domain [string]: current active domain (URL) of the SPI participant.
+    - content [string]: certificate of the Pix participant in PEM format.
+    - domain [string]: current active domain (URL) of the Pix participant.
     """
 
     def __init__(self, content=None, domain=None):

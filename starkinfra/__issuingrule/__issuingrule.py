@@ -13,7 +13,7 @@ class IssuingRule(Resource):
     - currency_code [string, default "BRL"]: code of the currency that the rule amount refers to. ex: "BRL" or "USD"
     - categories [list of strings, default []]: merchant categories accepted by the rule. ex: ["eatingPlacesRestaurants", "travelAgenciesTourOperators"]
     - countries [list of strings, default []]: countries accepted by the rule. ex: ["BRA", "USA"]
-    - methods [list of strings, default []]: card purchase methods accepted by the rule. ex: ["contactless", "manual"]
+    - methods [list of strings, default []]: card purchase methods accepted by the rule. ex: ["chip", "token", "server", "manual", "magstripe", "contactless"]
     ## Attributes (expanded return-only):
     - counter_amount [integer]: current rule spent amount. ex: 1000
     - currency_symbol [string]: currency symbol. ex: "R$"

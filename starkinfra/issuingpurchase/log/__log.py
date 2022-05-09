@@ -20,12 +20,13 @@ class Log(Resource):
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, id, created, issuing_transaction_id, type, purchase):
+    def __init__(self, id, created, issuing_transaction_id, errors, type, purchase):
         Resource.__init__(self, id=id)
 
-        self.type = type
         self.purchase = from_api_json(_issuing_purchase_resource, purchase)
         self.issuing_transaction_id = issuing_transaction_id
+        self.errors = errors
+        self.type = type
         self.created = check_datetime(created)
 
 

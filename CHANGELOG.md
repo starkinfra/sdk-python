@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- issuinginvoice.log.get() function
 
 ## [0.0.6] - 2022-05-04
 ### Added

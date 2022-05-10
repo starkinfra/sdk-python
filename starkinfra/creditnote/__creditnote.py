@@ -1,4 +1,7 @@
 from ..utils import rest
+from .transfer.__transfer import Transfer
+from .transfer.__transfer import _resource as _transfer_resource
+from starkcore.utils.api import from_api_json
 from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_datetime, check_date
 
@@ -16,8 +19,9 @@ class CreditNote(Resource):
     - nominal_amount [integer]: amount in cents transferred to the credit receiver, before deductions. ex: nominal_amount=11234 (= R$ 112.34)
     - scheduled [datetime.date, datetime.datetime or string, default now]: date of transfer execution. ex: scheduled=datetime(2020, 3, 10)
     - invoices [list of Invoice objects]: list of Invoice objects to be created and sent to the credit receiver. ex: invoices=[Invoice(), Invoice()]
-    - transfer [Transfer object]: Transfer object to be created and sent to the credit receiver. ex: transfer=Transfer()
-    - signers [list of dictionaries]: signer's name, e-mail and delivery method for the contract. ex: signers=[{"name": "Tony Stark", "contact": "tony@starkindustries.com", "method": "link"}]
+    - payment [Transfer]: payment entity to be created and sent to the credit receiver. ex: payment=Transfer()
+    - paymentType [string]: payment type referred to payment parameter. ex: "transfer"
+    - signers [list of Signer objects]: signer's name, e-mail and delivery method for the contract. ex: signers=[Signer(), Signer()]
     - externalId [string]: a string that must be unique among all your CreditNotes, used to avoid resource duplication. ex: "my-internal-id-123456"
     Parameters (optional):
     - rebate_amount [integer, default None]: credit analysis fee deducted from lent amount. ex: rebate_amount=11234 (= R$ 112.34)
@@ -29,7 +33,7 @@ class CreditNote(Resource):
     - updated [datetime.datetime]: latest update datetime for the CreditNote. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, template_id, name, tax_id, nominal_amount, scheduled, invoices, transfer, signers,
+    def __init__(self, template_id, name, tax_id, nominal_amount, scheduled, invoices, payment, paymentType, signers,
                  external_id, interest=None, rebate_amount=None, tags=None, created=None, updated=None, id=None):
         Resource.__init__(self, id=id)
 
@@ -39,7 +43,6 @@ class CreditNote(Resource):
         self.nominal_amount = nominal_amount
         self.scheduled = scheduled
         self.invoices = invoices
-        self.transfer = transfer
         self.signers = signers
         self.external_id = external_id
         self.interest = interest
@@ -48,8 +51,33 @@ class CreditNote(Resource):
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
 
+        self.payment, self.paymentType = _parse_payment(payment, paymentType)
+
 
 _resource = {"class": CreditNote, "name": "CreditNote"}
+
+
+def _parse_payment(payment, paymentType):
+    if isinstance(payment, dict):
+        try:
+            return from_api_json(*({
+                "transfer": _transfer_resource,
+            }[paymentType], payment)), paymentType
+        except KeyError:
+            return payment, paymentType
+
+    if paymentType:
+        return payment, paymentType
+
+    if isinstance(payment, Transfer):
+        return payment, "transfer"
+
+    raise Exception(
+        "payment must be either "
+        "a dictionary"
+        ", a starkinfra.creditnote.Transfer"
+        ", but not a {}".format(paymentType(payment))
+    )
 
 
 def create(notes, user=None):

@@ -2,56 +2,48 @@ from uuid import uuid4
 from copy import deepcopy
 from random import randint, choice
 from datetime import timedelta, datetime
-from starkinfra import CreditNote
 from .names.names import get_full_name
 from .taxIdGenerator import TaxIdGenerator
 from .date import randomDatetimeBetween, randomFutureDatetime
+from starkinfra import CreditNote
+from starkinfra.creditnote import Invoice, Transfer, Signer
 
 
 example_note = CreditNote(
-    template_id="5745297539989504",
+    template_id="5707012469948416",
     name="Jamie Lannister",
     tax_id="012.345.678-90",
     nominal_amount=100000,
     scheduled="2022-04-28",
     invoices=[
-        {
-            "due": "2023-06-25",
-            "amount": 120000,
-            "fine": 10,
-            "interest": 2
-        }
+        Invoice(
+            due="2023-06-25",
+            amount=120000,
+            fine=10,
+            interest=2,
+            tax_id="012.345.678-90",
+            name="Jamie Lannister"
+        )
     ],
     tags=["test", "testing"],
-    transfer={
-        "bank_code": "00000000",
-        "branch_code": "1234",
-        "account_number": "129340-1",
-        "name": "Jamie Lannister",
-        "taxId": "012.345.678-90"
-    },
+    payment=Transfer(
+        bank_code="00000000",
+        branch_code="1234",
+        account_number="129340-1",
+        name="Jamie Lannister",
+        tax_id="012.345.678-90",
+        amount=100000,
+    ),
+    paymentType="transfer",
     signers=[
-        {
-            "name": "Jamie Lannister",
-            "contact": "jamie.lannister@gmail.com",
-            "method": "link"
-        }
+        Signer(
+            name="Jamie Lannister",
+            contact="jamie.lannister@gmail.com",
+            method="link"
+        )
     ],
     external_id="1234",
 )
-
-example_invoice = {
-    "due": "2023-06-25",
-    "amount": 60000,
-    "fine": 10,
-    "interest": 2
-}
-
-example_signer = {
-    "name": "Jamie Lannister",
-    "contact": "jamie.lannister@gmail.com",
-    "method": "link"
-}
 
 
 def generateExampleCreditNoteJson(n=1, nominal_amount=None):
@@ -71,11 +63,16 @@ def generateExampleCreditNoteJson(n=1, nominal_amount=None):
 
         note.invoices = generateExampleInvoiceJson(n=randint(3, 4), note_nominal_amount=note.nominal_amount // 2, note_scheduled=note.scheduled)
 
-        note.transfer["bank_code"] = choice(["18236120", "60701190"])
-        note.transfer["branch_code"] = "{:04}".format(randint(1, 10**4))
-        note.transfer["account_number"] = "{:07}".format(randint(1, 10**7))
-        note.transfer["name"] = get_full_name()
-        note.transfer["tax_id"] = TaxIdGenerator.taxId()
+        transfer = Transfer(
+            bank_code=choice(["18236120", "60701190"]),
+            branch_code="{:04}".format(randint(1, 10**4)),
+            account_number="{:07}".format(randint(1, 10**7)),
+            name=get_full_name(),
+            tax_id=TaxIdGenerator.taxId(),
+            amount=note_nominal_amount
+        )
+        note.payment = transfer
+        note.paymentType = "transfer"
 
         note.signers = generateExampleSignersJson(n=randint(1, 3))
 
@@ -89,14 +86,15 @@ def generateExampleInvoiceJson(n=1, note_nominal_amount=0, note_scheduled=dateti
     invoices = []
 
     for _ in range(n):
-        invoice = deepcopy(example_invoice)
+        invoices.append(Invoice(
+            due=randomDatetimeBetween(note_scheduled + timedelta(days=500), note_scheduled + timedelta(days=1000)),
+            amount=randint(note_nominal_amount, note_nominal_amount + 100000),
+            fine=randint(0, 20),
+            interest=randint(0, 20),
+            name=get_full_name(),
+            tax_id=TaxIdGenerator.taxId()
+        ))
 
-        invoice["due"] = randomDatetimeBetween(note_scheduled + timedelta(days=500), note_scheduled + timedelta(days=1000))
-        invoice["amount"] = randint(note_nominal_amount, note_nominal_amount + 100000)
-        invoice["fine"] = randint(0, 20)
-        invoice["interest"] = randint(0, 20)
-
-        invoices.append(invoice)
     return invoices
 
 
@@ -104,16 +102,15 @@ def generateExampleSignersJson(n=1):
     signers = []
 
     for _ in range(n):
-        signer = deepcopy(example_signer)
-
-        signer["name"] = get_full_name()
-        signer["contact"] = "{name}.{lastName}.{uuid}@invaliddomain.com".format(
-            name=signer["name"].split(" ")[0].lower(),
-            lastName=signer["name"].split(" ")[1].lower(),
-            uuid=str(uuid4())
-        )
-        signer["method"] = "link"
-
-        signers.append(signer)
+        name = get_full_name()
+        signers.append(Signer(
+            name=get_full_name(),
+            contact="{name}.{lastName}.{uuid}@invaliddomain.com".format(
+                name=name.split(" ")[0].lower(),
+                lastName=name.split(" ")[1].lower(),
+                uuid=str(uuid4())
+            ),
+            method="link"
+        ))
 
     return signers

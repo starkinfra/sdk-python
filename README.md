@@ -43,6 +43,8 @@ This SDK version is compatible with the Stark Infra API v2.
         - [BrcodeCertificate](#query-brcodecertificates): View registered SPI participants certificates
     - [Credit Note](#credit-note)
         - [CreditNote](#create-creditnotes): Create credit notes
+    - [Webhook](#webhook):
+        - [Webhook](#create-a-webhook-subscription): Configure your webhook endpoints and subscriptions
     - [Webhook Events](#webhook-events):
         - [WebhookEvents](#process-webhook-events): Manage Webhook events
         - [WebhookEventAttempts](#query-failed-webhook-event-delivery-attempts-information): Query failed webhook event deliveries
@@ -1709,6 +1711,60 @@ import starkinfra
 log = starkinfra.creditnote.log.get("5155165527080960")
 
 print(log)
+```
+
+## Webhook
+
+### Create a webhook subscription
+
+To create a webhook subscription and be notified whenever an event occurs, run:
+
+```python
+import starkinfra
+
+webhook = starkinfra.webhook.create(
+    url="https://webhook.site/dd784f26-1d6a-4ca6-81cb-fda0267761ec",
+    subscriptions=["card", "contract", "credit-note", "issuing-card", "issuing-invoice", "issuing-purchase", "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out", "signer"],
+)
+
+print(webhook)
+```
+
+### Query webhooks
+
+To search for registered webhooks, run:
+
+```python
+import starkinfra
+
+webhooks = starkinfra.webhook.query()
+
+for webhook in webhooks:
+    print(webhook)
+```
+
+### Get a webhook
+
+You can get a specific webhook by its id.
+
+```python
+import starkinfra
+
+webhook = starkinfra.webhook.get("10827361982368179")
+
+print(webhook)
+```
+
+### Delete a webhook
+
+You can also delete a specific webhook by its id.
+
+```python
+import starkinfra
+
+webhook = starkinfra.webhook.delete("10827361982368179")
+
+print(webhook)
 ```
 
 ## Webhook Events

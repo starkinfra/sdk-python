@@ -15,8 +15,8 @@ class InfractionReport(Resource):
     - type [string]: type of infraction report. Options: "fraud", "reversal", "reversalChargeback"
     ## Parameters (optional):
     - description [string, Default None]: description for any details that can help with the infraction investigation.
-    - credited_bank_code [string, Default None]: bank_code of the credited Pix participant in the reported transaction. ex: "20018183"
     ## Attributes (return-only):
+    - credited_bank_code [string, Default None]: bank_code of the credited Pix participant in the reported transaction. ex: "20018183"
     - agent [string]: Options: "reporter" if you created the InfractionReport, "reported" if you received the InfractionReport.
     - analysis [string]: analysis that led to the result.
     - bacen_id [string]: central bank's unique UUID that identifies the infraction report.

@@ -1,9 +1,9 @@
 import starkinfra
-from datetime import datetime, timedelta
+from datetime import datetime
 from unittest import TestCase, main
-from tests.utils.creditNote import generateExampleCreditNoteJson
 from tests.utils.date import randomPastDate
 from tests.utils.user import exampleProject
+from tests.utils.creditNote import generateExampleCreditNoteJson
 
 
 starkinfra.user = exampleProject

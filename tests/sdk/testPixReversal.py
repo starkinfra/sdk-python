@@ -1,8 +1,8 @@
 import starkinfra
-from datetime import timedelta, date
 from unittest import TestCase, main
-from tests.utils.user import exampleProject
+from datetime import timedelta, date
 from starkcore.error import InvalidSignatureError
+from tests.utils.user import exampleProject
 from tests.utils.pixReversal import generateExamplePixReversalJson
 
 
@@ -13,7 +13,6 @@ class TestPixReversalPost(TestCase):
 
     def test_success(self):
         pix_reversals = generateExamplePixReversalJson(n=1)
-        print(pix_reversals)
         pix_reversals = starkinfra.pixreversal.create(pix_reversals)
         self.assertEqual(len(pix_reversals), 1)
         for pix_reversal in pix_reversals:

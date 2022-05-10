@@ -156,7 +156,7 @@ def update(id, status, reason=None, user=None):
     - id [string]: PixClaim id. ex: '5656565656565656'
     - status [string]: patched status for Pix Claim. Options: "confirmed" and "canceled"
     ## Parameters (optional):
-    - reason [string, default: "userRequested"]: reason why the PixClaim is being patched. Options: "fraud", "userRequested".
+    - reason [string, default: "userRequested"]: reason why the PixClaim is being patched. Options: "fraud", "userRequested", "accountClosure".
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - PixClaim with updated attributes

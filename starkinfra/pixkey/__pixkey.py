@@ -92,7 +92,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     - status [list of strings, default None]: filter for status of retrieved objects. Options: "created", "registered", "canceled", "failed".
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - type [list of strings, default None]: filter for the type of retrieved PixKeys. Options: "cpf", "cnpj", "phone", "email", "evp".
+    - type [string, default None]: filter for the type of retrieved PixKeys. Options: "cpf", "cnpj", "phone", "email" and "evp"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixKey objects with updated attributes
@@ -123,7 +123,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
     - status [list of strings, default None]: filter for status of retrieved objects. Options: "created", "failed", "delivered", "confirmed", "success", "canceled"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - type [list of strings, default None]: filter for the type of retrieved PixKeys. Options: "cpf", "cnpj", "phone", "email", "evp".
+    - type [string, default None]: filter for the type of retrieved PixKeys. Options: "cpf", "cnpj", "phone", "email" and "evp"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - cursor to retrieve the next page of PixKey objects

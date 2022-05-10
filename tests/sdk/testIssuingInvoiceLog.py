@@ -27,5 +27,13 @@ class TestIssuingInvoiceLogPage(TestCase):
                 break
 
 
+class TestIssuingInvoiceLogGet(TestCase):
+
+    def test_success(self):
+        logs = starkinfra.issuinginvoice.log.query(limit=1)
+        log = starkinfra.issuinginvoice.log.get(id=next(logs).id)
+        self.assertEqual(log.id, str(log.id))
+
+
 if __name__ == '__main__':
     main()

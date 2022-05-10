@@ -662,6 +662,18 @@ for log in logs:
     print(log)
 ```
 
+### Get a IssuingInvoice log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.issuinginvoice.log.get("5155165527080960")
+
+print(log)
+```
+
 ### Create IssuingWithdrawals
 
 You can create withdrawals to send cash back from your Issuing balance to your Banking balance

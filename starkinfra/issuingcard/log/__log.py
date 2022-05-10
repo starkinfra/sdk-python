@@ -14,7 +14,6 @@ class Log(Resource):
     ## Attributes:
     - id [string]: unique id returned when the log is created. ex: "5656565656565656"
     - card [IssuingCard]: IssuingCard entity to which the log refers to.
-    - errors [list of strings]: list of errors linked to this IssuingCard event
     - type [string]: type of the IssuingCard event which triggered the log creation. ex: "created" or "blocked"
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """

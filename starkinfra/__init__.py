@@ -71,4 +71,7 @@ from .issuingbin.__issuingbin import IssuingBin
 from . import __issuingrule
 from .__issuingrule.__issuingrule import IssuingRule
 
+from . import webhook
+from .webhook.__webhook import Webhook
+
 from .utils import endtoendid, returnid

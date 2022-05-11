@@ -1,1 +1,1 @@
-starkcore==0.0.2
+starkcore==0.0.3

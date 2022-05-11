@@ -3,6 +3,7 @@ import starkinfra
 
 
 bank_code = os.environ["SANDBOX_BANK_CODE"]
+template_id = os.environ["SANDBOX_TEMPLATE_ID"]
 
 exampleProject = starkinfra.Project(
     environment="sandbox",

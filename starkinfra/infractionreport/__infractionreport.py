@@ -14,14 +14,14 @@ class InfractionReport(Resource):
     - reference_id [string]: end_to_end_id or return_id of the transaction being reported. ex: "E20018183202201201450u34sDGd19lz"
     - type [string]: type of infraction report. Options: "fraud", "reversal", "reversalChargeback"
     ## Parameters (optional):
-    - description [string, Default None]: description for any details that can help with the infraction investigation.
-    - credited_bank_code [string, Default None]: bank_code of the credited Pix participant in the reported transaction. ex: "20018183"
+    - description [string, default None]: description for any details that can help with the infraction investigation.
     ## Attributes (return-only):
+    - id [string]: unique id returned when the InfractionReport is created. ex: "5656565656565656"
+    - credited_bank_code [string]: bank_code of the credited Pix participant in the reported transaction. ex: "20018183"
+    - debited_bank_code [string]: bank_code of the debited Pix participant in the reported transaction. ex: "20018183"
     - agent [string]: Options: "reporter" if you created the InfractionReport, "reported" if you received the InfractionReport.
     - analysis [string]: analysis that led to the result.
     - bacen_id [string]: central bank's unique UUID that identifies the infraction report.
-    - debited_bank_code [string]: bank_code of the debited Pix participant in the reported transaction. ex: "20018183"
-    - id [string]: unique id returned when the InfractionReport is created. ex: "5656565656565656"
     - reported_by [string]: agent that reported the InfractionReport. Options: "debited", "credited".
     - result [string]: result after the analysis of the InfractionReport by the receiving party. Options: "agreed", "disagreed"
     - status [string]: current InfractionReport status. Options: "created", "failed", "delivered", "closed", "canceled".

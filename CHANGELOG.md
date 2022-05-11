@@ -14,7 +14,13 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- CreditNote.Signer sub-resource
+- CreditNote.Invoice sub-resource
+- CreditNote.Transfer sub-resource
 - issuinginvoice.log.get() function
+- Webhook resource to receive Events
+### Changed
+- CreditNote.transfer parameter to payment and paymentType
 
 ## [0.0.6] - 2022-05-04
 ### Added

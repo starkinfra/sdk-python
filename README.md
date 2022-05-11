@@ -43,6 +43,8 @@ This SDK version is compatible with the Stark Infra API v2.
         - [BrcodeCertificate](#query-brcodecertificates): View registered SPI participants certificates
     - [Credit Note](#credit-note)
         - [CreditNote](#create-creditnotes): Create credit notes
+    - [Webhook](#webhook):
+        - [Webhook](#create-a-webhook-subscription): Configure your webhook endpoints and subscriptions
     - [Webhook Events](#webhook-events):
         - [WebhookEvents](#process-webhook-events): Manage Webhook events
         - [WebhookEventAttempts](#query-failed-webhook-event-delivery-attempts-information): Query failed webhook event deliveries
@@ -1566,27 +1568,32 @@ notes = starkinfra.creditnote.create([
         nominal_amount=100000,
         scheduled="2022-04-28",
         invoices=[
-            {
-                "due": "2023-06-25",
-                "amount": 120000,
-                "fine": 10,
-                "interest": 2
-            }
+            starkinfra.creditnote.Invoice(
+                due="2023-06-25",
+                amount=120000,
+                fine=10,
+                interest=2,
+                tax_id="012.345.678-90",
+                name="Jamie Lannister"
+            )
         ],
-        transfer={
-            "bank_code": "00000000",
-            "branch_code": "1234",
-            "account_number": "129340-1",
-            "name": "Jamie Lannister",
-            "taxId": "012.345.678-90"
-        },
+        payment=starkinfra.creditnote.Transfer(
+            bank_code="00000000",
+            branch_code="1234",
+            account_number="129340-1",
+            name="Jamie Lannister",
+            tax_id="012.345.678-90",
+            amount=100000,
+        ),
+        paymentType="transfer",
         signers=[
-            {
-                "name": "Jamie Lannister",
-                "contact": "jamie.lannister@gmail.com",
-                "method": "link"
-            }
+            starkinfra.creditnote.Signer(
+                name="Jamie Lannister",
+                contact="jamie.lannister@gmail.com",
+                method="link"
+            )
         ],
+        external_id="1234"
     ),
     starkinfra.CreditNote(
         template_id="5656565656565656",
@@ -1595,40 +1602,42 @@ notes = starkinfra.creditnote.create([
         nominal_amount=240000,
         scheduled="2022-04-28",
         invoices=[
-            {
-                "due": "2023-06-25",
-                "amount": 100000,
-                "fine": 10,
-                "interest": 2
-            },
-            {
-                "due": "2023-07-25",
-                "amount": 100000,
-                "fine": 11,
-                "interest": 2.1
-            },
-            {
-                "due": "2023-08-25",
-                "amount": 100000,
-                "fine": 12.5,
-                "interest": 2.2
-            }
+            starkinfra.creditnote.Invoice(
+                due="2023-06-25",
+                amount=100000,
+                fine=10,
+                interest=2
+            ),
+            starkinfra.creditnote.Invoice(
+                due="2023-08-25",
+                amount=100000,
+                fine=11,
+                interest=2.1
+            ),
+            starkinfra.creditnote.Invoice(
+                due="2023-10-25",
+                amount=100000,
+                fine=12.5,
+                interest=2.2
+            )
         ],
         tags=["test", "testing"],
-        transfer={
-            "bank_code": "00000000",
-            "branch_code": "1234",
-            "account_number": "129340-1",
-            "name": "Jamie Lannister",
-            "taxId": "012.345.678-90"
-        },
+        payment=starkinfra.creditnote.Transfer(
+            bank_code="00000000",
+            branch_code="1234",
+            account_number="129340-1",
+            name="Jamie Lannister",
+            tax_id="012.345.678-90",
+        ),
+        paymentType="transfer",
         signers=[
-            {
-                "name": "Jamie Lannister",
-                "contact": "jamie.lannister@gmail.com",
-                "method": "link"
-            }
+            starkinfra.creditnote.Signer(
+                name="Jamie Lannister",
+                contact="jamie.lannister@gmail.com",
+                method="link"
+            )
         ],
+        external_id="1234"
     )
 ])
 
@@ -1709,6 +1718,64 @@ import starkinfra
 log = starkinfra.creditnote.log.get("5155165527080960")
 
 print(log)
+```
+
+## Webhook
+
+### Create a webhook subscription
+
+To create a webhook subscription and be notified whenever an event occurs, run:
+
+```python
+import starkinfra
+
+webhook = starkinfra.webhook.create(
+    url="https://webhook.site/dd784f26-1d6a-4ca6-81cb-fda0267761ec",
+    subscriptions=[
+        "contract", "credit-note", "signer",
+        "issuing-card", "issuing-invoice", "issuing-purchase",
+        "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out"
+    ],
+)
+
+print(webhook)
+```
+
+### Query webhooks
+
+To search for registered webhooks, run:
+
+```python
+import starkinfra
+
+webhooks = starkinfra.webhook.query()
+
+for webhook in webhooks:
+    print(webhook)
+```
+
+### Get a webhook
+
+You can get a specific webhook by its id.
+
+```python
+import starkinfra
+
+webhook = starkinfra.webhook.get("10827361982368179")
+
+print(webhook)
+```
+
+### Delete a webhook
+
+You can also delete a specific webhook by its id.
+
+```python
+import starkinfra
+
+webhook = starkinfra.webhook.delete("10827361982368179")
+
+print(webhook)
 ```
 
 ## Webhook Events

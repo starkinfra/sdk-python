@@ -20,9 +20,9 @@ def get_end_to_end_id_to_reverse():
         return end_to_end_ids
 
 
-def get_end_to_end_id():
+def get_end_to_end_id(n=1):
     end_to_end_ids = []
-    requests = starkinfra.pixrequest.query(limit=10)
+    requests = starkinfra.pixrequest.query(limit=n)
     for request in requests:
         end_to_end_ids.append(str(request.end_to_end_id))
     if len(end_to_end_ids) < 1:

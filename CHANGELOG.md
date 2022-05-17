@@ -19,8 +19,14 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - CreditNote.Transfer sub-resource
 - issuinginvoice.log.get() function
 - Webhook resource to receive Events
+- merchant_fee atribute to IssuingPurchase
 ### Changed
-- CreditNote.transfer parameter to payment and paymentType
+- CreditNote.transfer parameter to payment and payment_type
+- BrcodeCertificate resource name to PixDomain
+- InfractionReport resource name to PixInfraction
+- ReversalRequest resource name to PixChargeback
+- PixInfraction and PixChargeback to post in batches
+- delete methods name to cancel
 
 ## [0.0.6] - 2022-05-04
 ### Added

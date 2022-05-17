@@ -3,11 +3,11 @@ from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_datetime, check_date
 
 
-class InfractionReport(Resource):
-    """# IssuingAuthorization object
-    Infraction reports are used to report transactions that are suspected of
+class PixInfraction(Resource):
+    """# PixInfraction object
+    PixInfraction are used to report transactions that are suspected of
     fraud, to request a refund or to reverse a refund.
-    When you initialize a InfractionReport, the entity will not be automatically
+    When you initialize a PixInfraction, the entity will not be automatically
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the created object.
     ## Parameters (required):
@@ -16,17 +16,17 @@ class InfractionReport(Resource):
     ## Parameters (optional):
     - description [string, default None]: description for any details that can help with the infraction investigation.
     ## Attributes (return-only):
-    - id [string]: unique id returned when the InfractionReport is created. ex: "5656565656565656"
+    - id [string]: unique id returned when the PixInfraction is created. ex: "5656565656565656"
     - credited_bank_code [string]: bank_code of the credited Pix participant in the reported transaction. ex: "20018183"
     - debited_bank_code [string]: bank_code of the debited Pix participant in the reported transaction. ex: "20018183"
-    - agent [string]: Options: "reporter" if you created the InfractionReport, "reported" if you received the InfractionReport.
+    - agent [string]: Options: "reporter" if you created the PixInfraction, "reported" if you received the PixInfraction.
     - analysis [string]: analysis that led to the result.
     - bacen_id [string]: central bank's unique UUID that identifies the infraction report.
-    - reported_by [string]: agent that reported the InfractionReport. Options: "debited", "credited".
-    - result [string]: result after the analysis of the InfractionReport by the receiving party. Options: "agreed", "disagreed"
-    - status [string]: current InfractionReport status. Options: "created", "failed", "delivered", "closed", "canceled".
-    - created [datetime.datetime]: creation datetime for the InfractionReport. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - updated [datetime.datetime]: latest update datetime for the InfractionReport. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - reported_by [string]: agent that reported the PixInfraction. Options: "debited", "credited".
+    - result [string]: result after the analysis of the PixInfraction by the receiving party. Options: "agreed", "disagreed"
+    - status [string]: current PixInfraction status. Options: "created", "failed", "delivered", "closed", "canceled".
+    - created [datetime.datetime]: creation datetime for the PixInfraction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - updated [datetime.datetime]: latest update datetime for the PixInfraction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self,  reference_id, type, description=None, credited_bank_code=None, agent=None, analysis=None,
@@ -49,49 +49,48 @@ class InfractionReport(Resource):
         self.updated = check_datetime(updated)
 
 
-_resource = {"class": InfractionReport, "name": "InfractionReport"}
+_resource = {"class": PixInfraction, "name": "PixInfraction"}
 
 
-def create(report, user=None):
-    """# Create a InfractionReport object
-    Create a InfractionReport in the Stark Infra API
-    ## Parameters (optional):
-    - report [InfractionReport object]: InfractionReport object to be created in the API.
+def create(infractions, user=None):
+    """# Create a PixInfraction object
+    Create a PixInfraction in the Stark Infra API
+    ## Parameters (required):
+    - infractions [list of PixInfraction]: list of PixInfraction objects to be created in the API.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - InfractionReport object with updated attributes.
+    - list of PixInfraction objects with updated attributes
     """
-    return rest.post_single(resource=_resource, entity=report, user=user)
+    return rest.post_multi(resource=_resource, entities=infractions, user=user)
 
 
 def get(id, user=None):
-    """# Retrieve a InfractionReport object
-    Retrieve the InfractionReport object linked to your Workspace in the Stark Infra API using its id.
+    """# Retrieve a PixInfraction object
+    Retrieve the PixInfraction object linked to your Workspace in the Stark Infra API using its id.
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656".
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - InfractionReport object that corresponds to the given id.
+    - PixInfraction object that corresponds to the given id.
     """
-
     return rest.get_id(id=id, resource=_resource, user=user)
 
 
 def query(limit=None, after=None, before=None, status=None, ids=None, type=None, user=None):
-    """# Retrieve InfractionReports
-    Receive a generator of InfractionReports objects previously created in the Stark Infra API
+    """# Retrieve PixInfractions
+    Receive a generator of PixInfractions objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. Options: "created", "failed", "delivered", "closed", "canceled".
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "closed", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - type [list of strings, default None]: filter for the type of retrieved InfractionReports. Options: "fraud", "reversal", "reversalChargeback"
+    - type [list of strings, default None]: filter for the type of retrieved PixInfractions. Options: "fraud", "reversal", "reversalChargeback"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - generator of InfractionReport objects with updated attributes
+    - generator of PixInfraction objects with updated attributes
     """
 
     return rest.get_stream(
@@ -108,20 +107,20 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, type=None,
          user=None):
-    """# Retrieve paged InfractionReports
-    Receive a list of up to 100 InfractionReports objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged PixInfractions
+    Receive a list of up to 100 PixInfractions objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call.
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. Options: "created", "failed", "delivered", "closed", "canceled".
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "closed", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - type [list of strings, default None]: filter for the type of retrieved InfractionReports. Options: "fraud", "reversal", "reversalChargeback"
+    - type [list of strings, default None]: filter for the type of retrieved PixInfractions. Options: "fraud", "reversal", "reversalChargeback"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - list of InfractionReport objects with updated attributes and cursor to retrieve the next page of InfractionReport objects
+    - list of PixInfraction objects with updated attributes and cursor to retrieve the next page of PixInfraction objects
     """
     return rest.get_page(
         resource=_resource,
@@ -137,15 +136,15 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
 
 
 def update(id, result, analysis=None, user=None):
-    """# Update InfractionReport entity
-    Respond to a received InfractionReport.
+    """# Update PixInfraction entity
+    Respond to a received PixInfraction.
     ## Parameters (required):
-    - id [string]: InfractionReport id. ex: '5656565656565656'
-    - result [string]: result after the analysis of the InfractionReport. Options: "agreed", "disagreed"
+    - id [string]: PixInfraction id. ex: '5656565656565656'
+    - result [string]: result after the analysis of the PixInfraction. Options: "agreed", "disagreed"
     ## Parameters (optional):
     - analysis [string, default None]: analysis that led to the result.
     ## Return:
-    - InfractionReport with updated attributes
+    - PixInfraction with updated attributes
     """
     payload = {
         "result": result,
@@ -154,14 +153,14 @@ def update(id, result, analysis=None, user=None):
     return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)
 
 
-def delete(id, user=None):
-    """# Delete a InfractionReport entity
-    Delete a InfractionReport entity previously created in the Stark Infra API
+def cancel(id, user=None):
+    """# Cancel a PixInfraction entity
+    Cancel a PixInfraction entity previously created in the Stark Infra API
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - deleted InfractionReport object
+    - canceled PixInfraction object
     """
     return rest.delete_id(resource=_resource, id=id, user=user)

@@ -1,5 +1,4 @@
 from uuid import uuid4
-from copy import deepcopy
 from random import randint, choice
 from datetime import timedelta, datetime
 from .user import template_id
@@ -9,44 +8,55 @@ from .date import randomDatetimeBetween, randomFutureDatetime
 from starkinfra import CreditNote
 from starkinfra.creditnote import Invoice, Transfer, Signer
 
-example_note = CreditNote(
-    template_id=template_id,
-    name="Jamie Lannister",
-    tax_id="012.345.678-90",
-    nominal_amount=100000,
-    scheduled="2022-04-28",
-    invoices=[
-        Invoice(
-            due="2023-06-25",
-            amount=120000,
-            fine=10,
-            interest=2,
-        )
-    ],
-    tags=["test", "testing"],
-    payment=Transfer(
+
+def _generateCreditNote():
+    return CreditNote(
+        template_id=template_id,
+        name="Jamie Lannister",
+        tax_id="012.345.678-90",
+        nominal_amount=100000,
+        scheduled="2022-04-28",
+        invoices=[
+            Invoice(
+                due="2023-06-25",
+                amount=120000,
+                fine=10,
+                interest=2,
+            )
+        ],
+        tags=["test", "testing"],
+        payment=_generate_payment(),
+        signers=[
+            Signer(
+                name="Jamie Lannister",
+                contact="jamie.lannister@gmail.com",
+                method="link"
+            )
+        ],
+        external_id="1234",
+    )
+
+
+def _generate_payment(payment_type="transfer"):
+    return {
+        "transfer": _generateTransfer(),
+    }[payment_type]
+
+
+def _generateTransfer():
+    return Transfer(
         bank_code="00000000",
         branch_code="1234",
         account_number="129340-1",
         name="Jamie Lannister",
         tax_id="012.345.678-90",
-    ),
-    paymentType="transfer",
-    signers=[
-        Signer(
-            name="Jamie Lannister",
-            contact="jamie.lannister@gmail.com",
-            method="link"
-        )
-    ],
-    external_id="1234",
-)
+    )
 
 
 def generateExampleCreditNoteJson(n=1, nominal_amount=None):
     credit_notes = []
     for _ in range(n):
-        note = deepcopy(example_note)
+        note = _generateCreditNote()
 
         note.name = get_full_name()
         note.tax_id = TaxIdGenerator.taxId()
@@ -58,18 +68,18 @@ def generateExampleCreditNoteJson(n=1, nominal_amount=None):
         note.nominal_amount = note_nominal_amount
         note.scheduled = randomFutureDatetime(days=600)
 
-        note.invoices = generateExampleInvoiceJson(n=randint(3, 4), note_nominal_amount=note.nominal_amount // 2, note_scheduled=note.scheduled)
+        note.invoices = generateExampleInvoiceJson(n=randint(3, 4), note_nominal_amount=note.nominal_amount // 2,
+                                                   note_scheduled=note.scheduled)
         note.signers = generateExampleSignersJson(n=randint(1, 3))
 
-        transfer = Transfer(
+        note.payment = Transfer(
             bank_code=choice(["18236120", "60701190"]),
-            branch_code="{:04}".format(randint(1, 10**4)),
-            account_number="{:07}".format(randint(1, 10**7)),
+            branch_code="{:04}".format(randint(1, 10 ** 4)),
+            account_number="{:07}".format(randint(1, 10 ** 7)),
             name=get_full_name(),
             tax_id=TaxIdGenerator.taxId(),
         )
-        note.payment = transfer
-        note.paymentType = "transfer"
+        note.payment_type = "transfer"
 
         note.external_id = str(uuid4())
 

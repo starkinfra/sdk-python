@@ -1,5 +1,6 @@
 import starkinfra
 from unittest import TestCase, main
+from starkinfra import IssuingWithdrawal
 from tests.utils.user import exampleProject
 from tests.utils.withdrawal import generateExampleWithdrawalJson
 
@@ -27,9 +28,11 @@ class TestIssuingWithdrawalPost(TestCase):
     def test_success(self):
         example_withdrawal = generateExampleWithdrawalJson()
         withdrawal = starkinfra.issuingwithdrawal.create(
-            amount=example_withdrawal.amount,
-            external_id=example_withdrawal.external_id,
-            description=example_withdrawal.description,
+            withdrawal=IssuingWithdrawal(
+                amount=example_withdrawal.amount,
+                external_id=example_withdrawal.external_id,
+                description=example_withdrawal.description,
+            )
         )
         self.assertEqual(withdrawal.id, str(withdrawal.id))
 

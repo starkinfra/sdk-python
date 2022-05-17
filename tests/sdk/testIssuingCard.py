@@ -45,7 +45,7 @@ class TestIssuingCardPostAndDelete(TestCase):
         card_id = cards[0].id
         card = starkinfra.issuingcard.update(card_id, display_name="Updated Name")
         self.assertEqual("Updated Name", card.display_name)
-        card = starkinfra.issuingcard.delete(id=card_id)
+        card = starkinfra.issuingcard.cancel(id=card_id)
         self.assertEqual("canceled", card.status)
 
 

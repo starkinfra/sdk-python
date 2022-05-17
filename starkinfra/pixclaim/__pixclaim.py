@@ -88,7 +88,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. Options: "created", "failed", "delivered", "confirmed", "success", "canceled".
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "confirmed", "success", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - type [strings, default None]: filter for the type of retrieved PixClaims. Options: "ownership" or "portability".
     - agent [string, default None]: filter for the agent of retrieved PixClaims. Options: "claimer" or "claimed".
@@ -123,7 +123,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. Options: "created", "failed", "delivered", "confirmed", "success", "canceled"
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "confirmed", "success", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - type [strings, default None]: filter for the type of retrieved PixClaims. Options: "ownership" or "portability".
     - agent [string, default None]: filter for the agent of retrieved PixClaims. Options: "claimer" or "claimed".

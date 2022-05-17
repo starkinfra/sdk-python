@@ -15,7 +15,7 @@ class Log(Resource):
     - id [string]: unique id returned when the log is created. ex: "5656565656565656"
     - note [CreditNote]: CreditNote entity to which the log refers to.
     - errors [list of strings]: list of errors linked to this CreditNote event
-    - type [string]: type of the CreditNote event which triggered the log creation. ex: "registered" or "paid"
+    - type [string]: type of the CreditNote event which triggered the log creation. ex: "canceled", "created", "expired", "failed", "refunded", "registered", "sending", "sent", "signed", "success"
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
@@ -51,7 +51,7 @@ def query(limit=None, after=None, before=None, types=None, note_ids=None, user=N
     - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - types [list of strings, default None]: filter for log event types. ex: ["registered", "paid"]
+    - types [list of strings, default None]: filter for log event types. ex: ["canceled", "created", "expired", "failed", "refunded", "registered", "sending", "sent", "signed", "success"]
     - note_ids [list of strings, default None]: list of CreditNote ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
@@ -68,7 +68,7 @@ def query(limit=None, after=None, before=None, types=None, note_ids=None, user=N
     )
 
 
-def page(cursor=None, after=None, before=None, types=None, note_ids=None, limit=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, types=None, note_ids=None, user=None):
     """# Retrieve paged creditnote.Logs
     Receive a list of up to 100 creditnote.Log objects previously created in the Stark Bank API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
@@ -77,7 +77,7 @@ def page(cursor=None, after=None, before=None, types=None, note_ids=None, limit=
     - limit [integer, default 100]: maximum number of objects to be retrieved. It must be an integer between 1 and 100. ex: 50
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - types [list of strings, default None]: filter for log event types. ex: ["registered", "paid"]
+    - types [list of strings, default None]: filter for log event types. ex: ["canceled", "created", "expired", "failed", "refunded", "registered", "sending", "sent", "signed", "success"]
     - note_ids [list of strings, default None]: list of CreditNote ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:

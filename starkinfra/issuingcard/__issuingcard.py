@@ -27,7 +27,7 @@ class IssuingCard(Resource):
     - id [string]: unique id returned when IssuingCard is created. ex: "5656565656565656"
     - holder_id [string]: card holder unique id. ex: "5656565656565656"
     - type [string]: card type. ex: "virtual"
-    - status [string]: current IssuingCard status. ex: "canceled" or "active"
+    - status [string]: current IssuingCard status. ex: "active", "blocked", "canceled", "expired".
     - number [string]: [EXPANDABLE] masked card number. Expand to unmask the value. ex: "123".
     - security_code [string]: [EXPANDABLE] masked card verification value (cvv). Expand to unmask the value. ex: "123".
     - expiration [string]: [EXPANDABLE] masked card expiration datetime. Expand to unmask the value. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0).
@@ -80,18 +80,19 @@ def create(cards, expand=None, user=None):
     return rest.post_multi(resource=_resource, entities=cards, expand=expand, user=user)
 
 
-def query(status=None, types=None, holder_ids=None, after=None, before=None, tags=None, ids=None, limit=None, expand=None, user=None):
+def query(limit=None, ids=None, after=None, before=None, status=None, types=None, holder_ids=None, tags=None,
+          expand=None, user=None):
     """# Retrieve IssuingCards
     Receive a generator of IssuingCards objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - status [string, default None]: filter for status of retrieved objects. ex: "active", "blocked", "expired" or "canceled"
-    - types [list of strings, default None]: card type. ex: ["virtual"]
-    - holder_ids [list of strings]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["active", "blocked", "canceled", "expired"]
+    - types [list of strings, default None]: card type. ex: ["virtual"]
+    - holder_ids [list of strings]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - expand [list of strings, default []]: fields to expand information. ex: ["rules", "security_code", "number", "expiration"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
@@ -99,33 +100,33 @@ def query(status=None, types=None, holder_ids=None, after=None, before=None, tag
     """
     return rest.get_stream(
         resource=_resource,
+        limit=limit,
+        ids=ids,
+        after=check_datetime(after),
+        before=check_datetime(before),
         status=status,
         types=types,
         holder_ids=holder_ids,
-        after=check_datetime(after),
-        before=check_datetime(before),
         tags=tags,
-        ids=ids,
-        limit=limit,
         expand=expand,
         user=user,
     )
 
 
-def page(status=None, types=None, holder_ids=None, after=None, before=None, tags=None, ids=None,
-         limit=None, cursor=None, expand=None, user=None):
+def page(cursor=None, limit=None, ids=None, after=None, before=None, status=None, types=None, holder_ids=None,
+         tags=None, expand=None, user=None):
     """# Retrieve paged IssuingCards
     Receive a list of IssuingCards objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
-    - status [string, default None]: filter for status of retrieved objects. ex: "active", "blocked", "expired" or "canceled"
-    - types [list of strings, default None]: card type. ex: ["virtual"]
-    - holder_ids [list of strings, default None]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
+    - cursor [string, default None]: cursor returned on the previous page function call
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["active", "blocked", "canceled", "expired"]
+    - types [list of strings, default None]: card type. ex: ["virtual"]
+    - holder_ids [list of strings]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
-    - cursor [string, default None]: cursor returned on the previous page function call
     - expand [list of strings, default []]: fields to expand information. ex: ["rules", "security_code", "number", "expiration"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
@@ -134,15 +135,15 @@ def page(status=None, types=None, holder_ids=None, after=None, before=None, tags
     """
     return rest.get_page(
         resource=_resource,
+        cursor=cursor,
+        limit=limit,
+        ids=ids,
+        after=check_datetime(after),
+        before=check_datetime(before),
         status=status,
         types=types,
         holder_ids=holder_ids,
-        after=check_datetime(after),
-        before=check_datetime(before),
         tags=tags,
-        ids=ids,
-        limit=limit,
-        cursor=cursor,
         expand=expand,
         user=user,
     )
@@ -168,7 +169,7 @@ def update(id, status=None, display_name=None, rules=None, tags=None, user=None)
     ## Parameters (required):
     - id [string]: IssuingCard id. ex: '5656565656565656'
     ## Parameters (optional):
-    - status [string]: You may block the IssuingCard by passing 'blocked' or activate by passing 'active' in the status
+    - status [string, default None]: You may block the IssuingCard by passing 'blocked' or activate by passing 'active' in the status
     - display_name [string, default None]: card displayed name
     - rules [list of dictionaries, default None]: list of dictionaries with "amount": int, "currencyCode": string, "id": string, "interval": string, "name": string pairs.
     - tags [list of strings]: list of strings for tagging
@@ -185,14 +186,14 @@ def update(id, status=None, display_name=None, rules=None, tags=None, user=None)
     return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)
 
 
-def delete(id, user=None):
-    """# Delete an IssuingCard entity
-    Delete an IssuingCard entity previously created in the Stark Infra API
+def cancel(id, user=None):
+    """# Cancel an IssuingCard entity
+    Cancel an IssuingCard entity previously created in the Stark Infra API
     ## Parameters (required):
     - id [string]: IssuingCard unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - deleted IssuingCard object
+    - canceled IssuingCard object
     """
     return rest.delete_id(resource=_resource, id=id, user=user)

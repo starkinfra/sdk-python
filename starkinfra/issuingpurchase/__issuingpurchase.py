@@ -24,12 +24,13 @@ class IssuingPurchase(Resource):
     - acquirer_id [string]: acquirer ID. ex: "5656565656565656"
     - merchant_id [string]: merchant ID. ex: "5656565656565656"
     - merchant_name [string]: merchant name. ex: "Google Cloud Platform"
+    - merchant_fee [integer]: fee charged by the merchant to cover specific costs, such as ATM withdrawal logistics, etc. ex: 200 (= R$ 2.00)
     - wallet_id [string]: virtual wallet ID. ex: "5656565656565656"
     - method_code [string]: method code. ex: "chip", "token", "server", "manual", "magstripe" or "contactless"
     - score [float]: internal score calculated for the authenticity of the purchase. None in case of insufficient data. ex: 7.6
     - issuing_transaction_ids [string]: ledger transaction ids linked to this Purchase
     - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
-    - status [string]: current IssuingCard status. ex: "approved", "canceled", "denied", "confirmed" or "voided"
+    - status [string]: current IssuingCard status. ex: "approved", "canceled", "denied", "confirmed", "voided"
     - tags [string]: list of strings for tagging returned by the sub-issuer during the authorization. ex: ["travel", "food"]
     - updated [datetime.datetime]: latest update datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
@@ -37,8 +38,8 @@ class IssuingPurchase(Resource):
 
     def __init__(self, id, holder_name, card_id, card_ending, amount, tax, issuer_amount, issuer_currency_code,
                  issuer_currency_symbol, merchant_amount, merchant_currency_code, merchant_currency_symbol,
-                 merchant_category_code, merchant_country_code, acquirer_id, merchant_id, merchant_name, wallet_id,
-                 method_code, score, issuing_transaction_ids, end_to_end_id, status, tags, created, updated):
+                 merchant_category_code, merchant_country_code, acquirer_id, merchant_id, merchant_name, merchant_fee,
+                 wallet_id, method_code, score, issuing_transaction_ids, end_to_end_id, status, tags, created, updated):
         Resource.__init__(self, id=id)
         self.holder_name = holder_name
         self.card_id = card_id
@@ -56,6 +57,7 @@ class IssuingPurchase(Resource):
         self.acquirer_id = acquirer_id
         self.merchant_id = merchant_id
         self.merchant_name = merchant_name
+        self.merchant_fee = merchant_fee
         self.wallet_id = wallet_id
         self.method_code = method_code
         self.score = score
@@ -83,34 +85,33 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after=None, before=None, ids=None,
-          limit=None, user=None):
+def query(ids=None, limit=None, after=None, before=None, end_to_end_ids=None, holder_ids=None, card_ids=None,
+          status=None, user=None):
     """# Retrieve IssuingPurchase
     Receive a generator of IssuingPurchases objects previously created in the Stark Infra API
     ## Parameters (optional):
+    - ids [list of strings, default [], default None]: purchase IDs
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
+    - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - end_to_end_ids [list of strings, default []]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     - holder_ids [list of strings, default []]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
     - card_ids [list of strings, default []]: card  IDs. ex: ["5656565656565656", "4545454545454545"]
-    - status [string, default None]: filter for status of retrieved objects. ex: "approved", "canceled", "denied", "confirmed" or "voided"
-    - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
-    - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - ids [list of strings, default [], default None]: purchase IDs
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
-    - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["approved", "canceled", "denied", "confirmed", "voided"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of IssuingPurchase objects with updated attributes
     """
     return rest.get_stream(
         resource=_resource,
+        ids=ids,
+        limit=limit,
+        after=check_datetime(after),
+        before=check_datetime(before),
         end_to_end_ids=end_to_end_ids,
         holder_ids=holder_ids,
         card_ids=card_ids,
         status=status,
-        after=check_datetime(after),
-        before=check_datetime(before),
-        ids=ids,
-        limit=limit,
         user=user,
     )
 
@@ -120,16 +121,15 @@ def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after
     """# Retrieve paged IssuingPurchase
     Receive a list of IssuingPurchase objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
+    - cursor [string, default None]: cursor returned on the previous page function call
+    - ids [list of strings, default [], default None]: purchase IDs
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
+    - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - end_to_end_ids [list of strings, default []]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     - holder_ids [list of strings, default []]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
     - card_ids [list of strings, default []]: card  IDs. ex: ["5656565656565656", "4545454545454545"]
-    - status [string, default None]: filter for status of retrieved objects. ex: "approved", "canceled", "denied", "confirmed" or "voided"
-    - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
-    - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - ids [list of strings, default [], default None]: purchase IDs
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
-    - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - cursor [string, default None]: cursor returned on the previous page function call
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["approved", "canceled", "denied", "confirmed", "voided"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of IssuingPurchase objects with updated attributes
@@ -137,14 +137,14 @@ def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after
     """
     return rest.get_page(
         resource=_resource,
+        cursor=cursor,
+        ids=ids,
+        limit=limit,
+        after=check_datetime(after),
+        before=check_datetime(before),
         end_to_end_ids=end_to_end_ids,
         holder_ids=holder_ids,
         card_ids=card_ids,
         status=status,
-        after=check_datetime(after),
-        before=check_datetime(before),
-        ids=ids,
-        cursor=cursor,
-        limit=limit,
         user=user,
     )

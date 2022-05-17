@@ -19,7 +19,7 @@ class PixStatement(Resource):
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixStatement is created. ex: "5656565656565656"
     - status [string]: current PixStatement status. ex: ["success", "failed"]
-    - transaction_count [integer]: number of transactions that happened during the day that the PixStatement was requested. ex 11
+    - transaction_count [integer]: number of transactions that happened during the day that the PixStatement was requested. ex: 11
     - created [datetime.datetime]: creation datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -107,13 +107,13 @@ def page(cursor=None, limit=None, ids=None, user=None):
 
 
 def csv(id, user=None):
-    """# Retrieve a .cvs PixStatement
+    """# Retrieve a .csv PixStatement
     Retrieve a specific PixStatement by its ID in a .csv file.
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - PixStatement csv file
+    - .zip file containing a PixStatement in .csv format
     """
     return rest.get_content(resource=_resource, id=id, user=user, sub_resource_name="csv")

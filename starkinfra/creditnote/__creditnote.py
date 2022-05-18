@@ -1,4 +1,8 @@
+from .__signer import Signer
+from .__invoice import Invoice
 from .__transfer import Transfer
+from .__signer import _resource as _signer_resource
+from .__invoice import _resource as _invoice_resource
 from .__transfer import _resource as _transfer_resource
 from ..utils import rest
 from starkcore.utils.api import from_api_json
@@ -23,19 +27,26 @@ class CreditNote(Resource):
     - signers [list of creditnote.Signer objects]: signer's name, contact and delivery method for the signature request. ex: signers=[creditnote.Signer(), creditnote.Signer()]
     - externalId [string]: a string that must be unique among all your CreditNotes, used to avoid resource duplication. ex: "my-internal-id-123456"
     ## Parameters (conditionally required):
-    - paymentType [string]: payment type, inferred from the payment parameter if it is not a dictionary. ex: "transfer"
+    - payment_type [string]: payment type, inferred from the payment parameter if it is not a dictionary. ex: "transfer"
     Parameters (optional):
     - rebate_amount [integer, default None]: credit analysis fee deducted from lent amount. ex: rebate_amount=11234 (= R$ 112.34)
     - tags [list of strings, default None]: list of strings for reference when searching for CreditNotes. ex: tags=["employees", "monthly"]
     Attributes (return-only):
     - id [string]: unique id returned when the CreditNote is created. ex: "5656565656565656"
+    - amount [integer]: CreditNote value in cents. ex: 1234 (= R$ 12.34)
+    - expiration [integer or datetime.timedelta]: time interval in seconds between due date and expiration date. ex 123456789
+    - document_id [string]: ID of the signed document to execute this CreditNote. ex: "4545454545454545"
+    - status [string]: current status of the CreditNote. ex: "canceled", "created", "expired", "failed", "processing", "signed", "success"
+    - transaction_ids [list of strings]: ledger transaction ids linked to this CreditNote. ex: ["19827356981273"]
+    - workspace_id [string]: ID of the Workspace that generated this CreditNote. ex: "4545454545454545"
     - interest [float]: yearly effective interest rate of the credit note, in percentage. ex: 12.5
     - created [datetime.datetime]: creation datetime for the CreditNote. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the CreditNote. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, template_id, name, tax_id, nominal_amount, scheduled, invoices, payment, signers, external_id,
-                 paymentType=None, interest=None, rebate_amount=None, tags=None, created=None, updated=None, id=None):
+                 payment_type=None, interest=None, rebate_amount=None, amount=None, expiration=None, document_id=None,
+                 status=None, transaction_ids=None, workspace_id=None, tags=None, created=None, updated=None, id=None):
         Resource.__init__(self, id=id)
 
         self.template_id = template_id
@@ -43,32 +54,58 @@ class CreditNote(Resource):
         self.tax_id = tax_id
         self.nominal_amount = nominal_amount
         self.scheduled = scheduled
-        self.invoices = invoices
-        self.signers = signers
+        self.invoices = _parse_invoices(invoices)
+        self.signers = _parse_signers(signers)
         self.external_id = external_id
         self.interest = interest
         self.rebate_amount = rebate_amount
+        self.amount = amount
+        self.expiration = expiration
+        self.document_id = document_id
+        self.status = status
+        self.transaction_ids = transaction_ids
+        self.workspace_id = workspace_id
         self.tags = tags
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
 
-        self.payment, self.paymentType = _parse_payment(payment=payment, paymentType=paymentType)
+        self.payment, self.payment_type = _parse_payment(payment=payment, payment_type=payment_type)
 
 
 _resource = {"class": CreditNote, "name": "CreditNote"}
 
 
-def _parse_payment(payment, paymentType):
+def _parse_signers(signers):
+    parsed_signers = []
+    for signer in signers:
+        if isinstance(signer, Signer):
+            parsed_signers.append(signer)
+            continue
+        parsed_signers.append(from_api_json(_signer_resource, signer))
+    return parsed_signers
+
+
+def _parse_invoices(invoices):
+    parsed_invoices = []
+    for invoice in invoices:
+        if isinstance(invoice, Invoice):
+            parsed_invoices.append(invoice)
+            continue
+        parsed_invoices.append(from_api_json(_invoice_resource, invoice))
+    return parsed_invoices
+
+
+def _parse_payment(payment, payment_type):
     if isinstance(payment, dict):
         try:
             return from_api_json(*({
                 "transfer": _transfer_resource,
-            }[paymentType], payment)), paymentType
+            }[payment_type], payment)), payment_type
         except KeyError:
-            return payment, paymentType
+            return payment, payment_type
 
-    if paymentType:
-        return payment, paymentType
+    if payment_type:
+        return payment, payment_type
 
     if isinstance(payment, Transfer):
         return payment, "transfer"
@@ -114,7 +151,7 @@ def query(limit=None, status=None, tags=None, ids=None, after=None, before=None,
     - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [string, default None]: filter for status of retrieved objects. ex: "paid" or "registered"
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["canceled", "created", "expired", "failed", "processing", "signed", "success"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
@@ -142,7 +179,7 @@ def page(cursor=None, limit=None, status=None, tags=None, ids=None, after=None, 
     - limit [integer, default 100]: maximum number of objects to be retrieved. It must be an integer between 1 and 100. ex: 50
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [string, default None]: filter for status of retrieved objects. ex: "paid" or "registered"
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["canceled", "created", "expired", "failed", "processing", "signed", "success"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
@@ -163,7 +200,7 @@ def page(cursor=None, limit=None, status=None, tags=None, ids=None, after=None, 
     )
 
 
-def delete(id, user=None):
+def cancel(id, user=None):
     """# Cancel a Credit Note entity
     Cancel a Credit Note entity previously created in the Stark Infra API
     ## Parameters (required):
@@ -171,6 +208,6 @@ def delete(id, user=None):
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - deleted Credit Note object
+    - canceled Credit Note object
     """
     return rest.delete_id(resource=_resource, id=id, user=user)

@@ -1,7 +1,5 @@
 import starkinfra
-from datetime import datetime
 from unittest import TestCase, main
-from tests.utils.date import randomPastDate
 from tests.utils.user import exampleProject
 from tests.utils.creditNote import generateExampleCreditNoteJson
 
@@ -16,17 +14,15 @@ class TestCreditNotePost(TestCase):
         notes = starkinfra.creditnote.create(notes)
         for note in notes:
             self.assertIsNotNone(note.id)
-            print(note)
 
 
 class TestCreditNoteQuery(TestCase):
 
     def test_success_after_before(self):
-        after = randomPastDate(days=10)
-        before = datetime.today()
-        notes = starkinfra.creditnote.query(after=after, before=before)
-
-        print("Number of credit notes:", sum(1 for _ in notes))
+        notes = list(starkinfra.creditnote.query(limit=1))
+        for note in notes:
+            print(note)
+        print("Number of credit notes:", len(notes))
 
 
 class TestCreditNotePage(TestCase):
@@ -55,13 +51,13 @@ class TestCreditNoteInfoGet(TestCase):
             self.assertEqual(note.id, note_id)
 
 
-class TestCreditNotePostAndDelete(TestCase):
+class TestCreditNotePostAndCancel(TestCase):
     
     def test_success(self):
         notes = generateExampleCreditNoteJson(n=1)
         notes = starkinfra.creditnote.create(notes)
         note_id = notes[0].id
-        note = starkinfra.creditnote.delete(id=note_id)
+        note = starkinfra.creditnote.cancel(id=note_id)
         print(note.id)
 
 

@@ -12,10 +12,10 @@ class Log(Resource):
     ## Attributes:
     - id [string]: unique id returned when the log is created. ex: "5656565656565656"
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
-    - type [string]: type of the PixClaim event which triggered the log creation. ex: "created" or "failed"
+    - type [string]: type of the PixClaim event which triggered the log creation. ex: "created", "failed", "delivering", "delivered", "confirming", "confirmed", "success", "canceling", "canceled"
     - errors [list of strings]: list of errors linked to this PixClaim event
     - agent [string]: agent that modified the PixClaim resulting in the Log. Options: "claimer", "claimed".
-    - reason [string]: reason why the PixClaim was modified, resulting in the Log. Options: "fraud", "userRequested", "accountClosure", "defaultOperation", "reconciliation".
+    - reason [string]: reason why the PixClaim was modified, resulting in the Log. Options: "fraud", "userRequested", "accountClosure", "defaultOperation", "reconciliation"
     - claim [PixClaim]: PixClaim entity to which the log refers to.
     """
     def __init__(self, id, created, type, errors, agent, reason, claim):
@@ -53,7 +53,7 @@ def query(ids=None, limit=None, after=None, before=None, types=None, claim_ids=N
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
-    - types [list of strings, default None]: filter retrieved objects by types. ex: ["created"] or ["failed"]
+    - types [list of strings, default None]: filter retrieved objects by types. ex: ["created", "failed", "delivering", "delivered", "confirming", "confirmed", "success", "canceling", "canceled"]
     - claim_ids [list of strings, default None]: list of PixClaim ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
@@ -81,7 +81,7 @@ def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None,
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
-    - types [list of strings, default None]: filter retrieved objects by types. ex: ["created"] or ["failed"]
+    - types [list of strings, default None]: filter retrieved objects by types. ex: ["created", "failed", "delivering", "delivered", "confirming", "confirmed", "success", "canceling", "canceled"]
     - claim_ids [list of strings, default None]: list of PixClaim IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:

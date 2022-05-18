@@ -38,9 +38,9 @@ This SDK version is compatible with the Stark Infra API v2.
         - [PixKey](#create-a-pixkey): Create a Pix Key
         - [PixClaim](#create-a-pixclaim): Claim a Pix Key
         - [PixDirector](#create-a-pixdirector): Create a Pix Director
-        - [InfractionReport](#create-an-infractionreport): Create a Pix Key
-        - [ReversalRequest](#create-a-reversalrequest): Claim a Pix Key
-        - [BrcodeCertificate](#query-brcodecertificates): View registered SPI participants certificates
+        - [PixInfraction](#create-pixinfractions): Create Pix Infraction reports
+        - [PixChargeback](#create-pixchargebacks): Create Pix Chargeback requests
+        - [PixDomain](#query-pixdomains): View registered SPI participants certificates
     - [Credit Note](#credit-note)
         - [CreditNote](#create-creditnotes): Create credit notes
     - [Webhook](#webhook):
@@ -364,14 +364,14 @@ for holder in holders:
     print(holder)
 ```
 
-### Delete an IssuingHolder
+### Cancel an IssuingHolder
 
 To cancel a single Issuing Holder by its id, run:
 
 ```python
 import starkinfra
 
-holder = starkinfra.issuingholder.delete("5155165527080960")
+holder = starkinfra.issuingholder.cancel("5155165527080960")
 
 print(holder)
 ```
@@ -479,14 +479,14 @@ card = starkinfra.issuingcard.update("5155165527080960", status="blocked")
 print(card)
 ```
 
-### Delete an IssuingCard
+### Cancel an IssuingCard
 
 You can also cancel a card by its id.
 
 ```python
 import starkinfra
 
-card = starkinfra.issuingcard.delete("5155165527080960")
+card = starkinfra.issuingcard.cancel("5155165527080960")
 
 print(card)
 ```
@@ -613,7 +613,9 @@ allowing you to run your issuing operation.
 import starkinfra
 
 invoice = starkinfra.issuinginvoice.create(
-    amount=1000
+    invoice=starkinfra.IssuingInvoice(
+        amount=1000
+    )
 )
 
 print(invoice)
@@ -685,9 +687,11 @@ by using the Withdrawal resource.
 import starkinfra
 
 withdrawal = starkinfra.issuingwithdrawal.create(
-    amount=10000,
-    external_id="123",
-    description="Sending back"
+    withdrawal=starkinfra.IssuingWithdrawal(
+        amount=10000,
+        external_id="123",
+        description="Sending back"
+    )
 )
 
 print(withdrawal)
@@ -789,7 +793,7 @@ requests = starkinfra.pixrequest.create([
         receiver_account_type="checking",
         receiver_name="Jamie Lannister",
         receiver_tax_id="45.987.245/0001-92",
-        end_to_end_id="E20018183202201201450u34sDGd19lz",
+        end_to_end_id=starkinfra.endtoendid.create("20018183"),  # Pass your bank code to create an end to end ID
         description="For saving my life",
     ),
     starkinfra.PixRequest(
@@ -806,7 +810,7 @@ requests = starkinfra.pixrequest.create([
         receiver_account_type="checking",
         receiver_name="John Snow",
         receiver_tax_id="012.345.678-90",
-        end_to_end_id="E20018183202201201450u34sDGd19lz",
+        end_to_end_id=starkinfra.endtoendid.create("20018183"),  # Pass your bank code to create an end to end ID
         tags=["Needle", "sword"],
     )
 ])
@@ -1147,14 +1151,14 @@ key = starkinfra.pixkey.update(
 print(key)
 ```
 
-### Delete a PixKey
+### Cancel a PixKey
 
 Cancel a specific Pix Key using its id.
 
 ```python
 import starkinfra
 
-key = starkinfra.pixkey.delete("5155165527080960")
+key = starkinfra.pixkey.cancel("5155165527080960")
 
 print(key)
 ```
@@ -1320,32 +1324,34 @@ director = starkinfra.pixdirector.create(
 print(director)
 ```
 
-### Create an InfractionReport
+### Create PixInfractions
 
-Infraction reports are used to report transactions that raise fraud suspicion, to request a refund or to 
+Pix Infraction reports are used to report transactions that raise fraud suspicion, to request a refund or to 
 reverse a refund. Infraction reports can be created by either participant of a transaction.
 
 ```python
 import starkinfra
 
-report = starkinfra.infractionreport.create(
-    starkinfra.InfractionReport(
-        reference_id="E20018183202201201450u34sDGd19lz",
-        type="fraud",
-    )
+infraction = starkinfra.pixinfraction.create(
+    infractions=[
+        starkinfra.PixInfraction(
+            reference_id="E20018183202201201450u34sDGd19lz",
+            type="fraud",
+        )
+    ]
 )
 
-print(report)
+print(infraction)
 ```
 
-### Query InfractionReports
+### Query PixInfractions
 
 You can query multiple infraction reports according to filters.
 
 ```python
 import starkinfra
 
-reports = starkinfra.infractionreport.query(
+infractions = starkinfra.pixinfraction.query(
     limit=1,
     after="2022-01-01",
     before="2022-01-12",
@@ -1353,109 +1359,112 @@ reports = starkinfra.infractionreport.query(
     ids=["5155165527080960"],
 )
 
-for report in reports:
-    print(report)
+for infraction in infractions:
+    print(infraction)
 ```
 
-### Get an InfractionReport
+### Get an PixInfraction
 
-After its creation, information on an Infraction Report may be retrieved by its id.
+After its creation, information on an Pix Infraction may be retrieved by its id.
 
 ```python
 import starkinfra
 
-report = starkinfra.infractionreport.get("5155165527080960")
+infraction = starkinfra.pixinfraction.get("5155165527080960")
 
-print(report)
+print(infraction)
 ```
 
-### Patch an InfractionReport
+### Patch an PixInfraction
 
-A received Infraction Report can be confirmed or declined by patching its status.
-After an Infraction Report is patched, its status changes to closed.
+A received Pix Infraction can be confirmed or declined by patching its status.
+After a Pix Infraction is patched, its status changes to closed.
 
 ```python
 import starkinfra
 
-report = starkinfra.infractionreport.update(
+infraction = starkinfra.pixinfraction.update(
     id="5155165527080960",
     result="agreed",
 )
 
-print(report)
+print(infraction)
 ```
 
-### Delete an InfractionReport
+### Cancel an PixInfraction
 
-Cancel a specific Infraction Report using its id.
+Cancel a specific Pix Infraction using its id.
 
 ```python
 import starkinfra
 
-report = starkinfra.infractionreport.delete("5155165527080960")
+infraction = starkinfra.pixinfraction.cancel("5155165527080960")
 
-print(report)
+print(infraction)
 ```
 
-### Query InfractionReport logs
+### Query PixInfraction logs
 
 You can query infraction report logs to better understand their life cycles. 
 
 ```python
 import starkinfra
 
-logs = starkinfra.infractionreport.log.query(
+logs = starkinfra.pixinfraction.log.query(
     limit=50, 
     ids=["5729405850615808"],
     after="2022-01-01",
     before="2022-01-20",
     types=["created"],
-    report_ids=["5155165527080960"]
+    infraction_ids=["5155165527080960"]
 )
 
 for log in logs:
     print(log)
 ```
 
-### Get an InfractionReport log
+### Get an PixInfraction log
 
 You can also get a specific log by its id.
 
 ```python
 import starkinfra
 
-log = starkinfra.infractionreport.log.get("5155165527080960")
+log = starkinfra.pixinfraction.log.get("5155165527080960")
 
 print(log)
 ```
 
-### Create a ReversalRequest
+### Create PixChargebacks
 
-A reversal request can be created when fraud is detected on a transaction or a system malfunction 
+A Pix chargeback can be created when fraud is detected on a transaction or a system malfunction 
 results in an erroneous transaction.
 
 ```python
 import starkinfra
 
-request = starkinfra.reversalrequest.create(
-    starkinfra.ReversalRequest(
-        amount=100,
-        reference_id="E20018183202201201450u34sDGd19lz",
-        reason="fraud",
-    )
+chargebacks = starkinfra.pixchargeback.create(
+    chargebacks=[
+        starkinfra.PixChargeback(
+            amount=100,
+            reference_id="E20018183202201201450u34sDGd19lz",
+            reason="fraud",
+        )
+    ]
 )
 
-print(request)
+for chargeback in chargebacks:
+    print(chargeback)
 ```
 
-### Query ReversalRequests
+### Query PixChargebacks
 
-You can query multiple reversal requests according to filters.
+You can query multiple pix chargebacks according to filters.
 
 ```python
 import starkinfra
 
-requests = starkinfra.reversalrequest.query(
+chargebacks = starkinfra.pixchargeback.query(
     limit=1,
     after="2022-01-01",
     before="2022-01-12",
@@ -1463,93 +1472,93 @@ requests = starkinfra.reversalrequest.query(
     ids=["5155165527080960"]
 )
 
-for request in requests:
-    print(request)
+for chargeback in chargebacks:
+    print(chargeback)
 ```
 
-### Get a ReversalRequest
+### Get a PixChargeback
 
-After its creation, information on a Reversal Request may be retrieved by its.
+After its creation, information on a Pix Chargeback may be retrieved by its.
 
 ```python
 import starkinfra
 
-request = starkinfra.reversalrequest.get("5155165527080960")
+chargeback = starkinfra.pixchargeback.get("5155165527080960")
 
-print(request)
+print(chargeback)
 ```
 
-### Patch a ReversalRequest
+### Patch a PixChargeback
 
-A received Reversal Request can be accepted or rejected by patching its status.
-After a Reversal Request is patched, its status changes to closed.
+A received Pix Chargeback can be accepted or rejected by patching its status.
+After a Pix Chargeback is patched, its status changes to closed.
 
 ```python
 import starkinfra
 
-request = starkinfra.reversalrequest.update(
+chargeback = starkinfra.pixchargeback.update(
     id="5155165527080960",
     result="accepted",
     reversal_reference_id=starkinfra.returnid.create("20018183"),
 )
 
-print(request)
+print(chargeback)
 ```
 
-### Delete a ReversalRequest
+### Cancel a PixChargeback
 
-Cancel a specific Reversal Request using its id.
+Cancel a specific Pix Chargeback using its id.
 
 ```python
 import starkinfra
 
-request = starkinfra.reversalrequest.delete("5155165527080960")
+chargeback = starkinfra.pixchargeback.cancel("5155165527080960")
 
-print(request)
+print(chargeback)
 ```
 
-### Query ReversalRequest logs
+### Query PixChargeback logs
 
-You can query reversal request logs to better understand reversal request life cycles. 
+You can query pix chargeback logs to better understand pix chargeback life cycles. 
 
 ```python
 import starkinfra
 
-logs = starkinfra.reversalrequest.log.query(
+logs = starkinfra.pixchargeback.log.query(
     limit=50, 
     ids=["5729405850615808"],
     after="2022-01-01",
     before="2022-01-20",
     types=["created"],
-    request_ids=["5155165527080960"]
+    chargeback_ids=["5155165527080960"]
 )
 
 for log in logs:
     print(log)
 ```
 
-### Get a ReversalRequest log
+### Get a PixChargeback log
 
 You can also get a specific log by its id.
 
 ```python
 import starkinfra
 
-log = starkinfra.reversalrequest.log.get("5155165527080960")
+log = starkinfra.pixchargeback.log.get("5155165527080960")
 
 print(log)
 ```
 
-### Query BrcodeCertificates
+### Query PixDomains
 
-You can query for certificates of registered SPI participants able to issue dynamic QR Codes.
+You can query for domains of registered SPI participants able to issue dynamic QR Codes.
 
 ```python
 import starkinfra
 
-brcodeCertificates = starkinfra.brcodecertificate.query()
-for certificate in brcodeCertificates:
-    print(certificate)
+domains = starkinfra.pixdomain.query()
+for domain in domains:
+    print(domain)
 ```
 
 ## Credit Note
@@ -1585,7 +1594,7 @@ notes = starkinfra.creditnote.create([
             tax_id="012.345.678-90",
             amount=100000,
         ),
-        paymentType="transfer",
+        payment_type="transfer",
         signers=[
             starkinfra.creditnote.Signer(
                 name="Jamie Lannister",
@@ -1629,7 +1638,7 @@ notes = starkinfra.creditnote.create([
             name="Jamie Lannister",
             tax_id="012.345.678-90",
         ),
-        paymentType="transfer",
+        payment_type="transfer",
         signers=[
             starkinfra.creditnote.Signer(
                 name="Jamie Lannister",
@@ -1686,7 +1695,7 @@ You can cancel a credit note if it has not been signed yet.
 ```python
 import starkinfra
 
-note = starkinfra.creditnote.delete("5155165527080960")
+note = starkinfra.creditnote.cancel("5155165527080960")
 
 print(note)
 ```

@@ -15,7 +15,7 @@ class IssuingHolder(Resource):
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: unique id returned when IssuingHolder is created. ex: "5656565656565656"
-    - status [string]: current IssuingHolder status. ex: "active", "blocked" or "canceled"
+    - status [string]: current IssuingHolder status. ex: "active", "blocked", "canceled"
     - updated [datetime.datetime]: latest update datetime for the IssuingHolder. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingHolder. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -62,17 +62,17 @@ def get(id, expand=None, user=None):
     return rest.get_id(resource=_resource, id=id, expand=expand, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, expand=None, user=None):
+def query(limit=None, ids=None, after=None, before=None, status=None, tags=None, expand=None, user=None):
     """# Retrieve IssuingHolders
     Receive a generator of IssuingHolder objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [string, default None]: filter for status of retrieved objects. ex: "active", "blocked" or "canceled"
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["active", "blocked", "canceled"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - expand [list of strings, default None]: fields to expand information. ex: ["rules"]
+    - expand [string, default None]: fields to expand information. ex: ["rules"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of IssuingHolder objects with updated attributes
@@ -80,27 +80,27 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     return rest.get_stream(
         resource=_resource,
         limit=limit,
+        ids=ids,
         after=check_datetime(after),
         before=check_datetime(before),
         status=status,
         tags=tags,
-        ids=ids,
         expand=expand,
         user=user,
     )
 
 
-def page(limit=None, after=None, before=None, status=None, sort=None, tags=None, ids=None, expand=None, cursor=None, user=None):
+def page(cursor=None, limit=None, ids=None, after=None, before=None, status=None, tags=None, expand=None, user=None):
     """# Retrieve IssuingHolders
     Receive a list of IssuingHolder objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [string, default None]: filter for status of retrieved objects. ex: "active", "blocked" or "canceled"
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["active", "blocked", "canceled"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - expand [string, default None]: fields to expand information. ex: ["rules"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
@@ -109,15 +109,14 @@ def page(limit=None, after=None, before=None, status=None, sort=None, tags=None,
     """
     return rest.get_page(
         resource=_resource,
+        cursor=cursor,
         limit=limit,
+        ids=ids,
         after=check_datetime(after),
         before=check_datetime(before),
-        sort=sort,
         status=status,
         tags=tags,
-        ids=ids,
         expand=expand,
-        cursor=cursor,
         user=user,
     )
 
@@ -145,14 +144,14 @@ def update(id, status=None, name=None, rules=None, tags=None, user=None):
     return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)
 
 
-def delete(id, user=None):
-    """# Delete an IssuingHolder entity
-    Delete an IssuingHolder entity previously created in the Stark Infra API
+def cancel(id, user=None):
+    """# Cancel an IssuingHolder entity
+    Cancel an IssuingHolder entity previously created in the Stark Infra API
     ## Parameters (required):
     - id [string]: IssuingHolder unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - deleted IssuingHolder object
+    - canceled IssuingHolder object
     """
     return rest.delete_id(resource=_resource, id=id, user=user)

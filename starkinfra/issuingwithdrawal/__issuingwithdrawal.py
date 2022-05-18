@@ -37,20 +37,17 @@ class IssuingWithdrawal(Resource):
 _resource = {"class": IssuingWithdrawal, "name": "IssuingWithdrawal"}
 
 
-def create(amount, external_id, description, tags=None, user=None):
+def create(withdrawal, user=None):
     """# Create IssuingWithdrawal
     Send a list of IssuingWithdrawal objects for creation in the Stark Bank API
     ## Parameters (required):
-    - amount [integer]: IssuingWithdrawal value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
-    - external_id [string] IssuingWithdrawal external ID. ex: "12345"
-    - description [string]: IssuingWithdrawal description. ex: "sending money back"
+    - withdrawal [IssuingWithdrawal object]: IssuingWithdrawal object to be created in the API.
     ## Parameters (optional):
-    - tags [list of strings]: list of strings for tagging. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - IssuingWithdrawal object with updated attributes
     """
-    return rest.post_single(resource=_resource, entity=IssuingWithdrawal(amount=amount, external_id=external_id, description=description, tags=tags), user=user)
+    return rest.post_single(resource=_resource, entity=withdrawal, user=user)
 
 
 def get(id, user=None):

@@ -89,7 +89,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. Options: "created", "registered", "canceled", "failed".
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "registered", "canceled", "failed"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - type [string, default None]: filter for the type of retrieved PixKeys. Options: "cpf", "cnpj", "phone", "email" and "evp"
@@ -120,7 +120,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. Options: "created", "failed", "delivered", "confirmed", "success", "canceled"
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "registered", "canceled", "failed"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - type [string, default None]: filter for the type of retrieved PixKeys. Options: "cpf", "cnpj", "phone", "email" and "evp"
@@ -170,14 +170,14 @@ def update(id, reason, account_created=None, account_number=None, account_type=N
     return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)
 
 
-def delete(id, user=None):
-    """# Delete a pixKey entity
-    Delete a pixKey entity previously created in the Stark Infra API
+def cancel(id, user=None):
+    """# Cancel a pixKey entity
+    Cancel a pixKey entity previously created in the Stark Infra API
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - deleted pixKey object
+    - canceled pixKey object
     """
     return rest.delete_id(resource=_resource, id=id, user=user)

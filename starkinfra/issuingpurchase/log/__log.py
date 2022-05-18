@@ -16,7 +16,7 @@ class Log(Resource):
     - purchase [IssuingPurchase]: IssuingPurchase entity to which the log refers to.
     - issuing_transaction_id [string]: transaction ID related to the IssuingCard.
     - errors [list of strings]: list of errors linked to this IssuingPurchase event
-    - type [string]: type of the IssuingPurchase event which triggered the log creation. ex: ["approved", "denied"]
+    - type [string]: type of the IssuingPurchase event which triggered the log creation. ex: "approved", "canceled", "confirmed", "denied", "reversed", "voided".
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
@@ -46,14 +46,15 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(ids=None, purchase_ids=None, types=None, after=None, before=None, limit=None, user=None):
+def query(ids=None, limit=None, after=None, before=None, types=None, purchase_ids=None, user=None):
     """# Retrieve issuingpurchase.Log
     Receive a generator of issuingpurchase.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
+    - ids [list of strings, default None]: list of IssuingPurchase ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
     - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - types [list of strings, default None]: filter for log event types. ex: ["approved", "denied"]
+    - types [list of strings, default None]: filter for log event types. ex: ["approved", "canceled", "confirmed", "denied", "reversed", "voided"]
     - purchase_ids [list of strings, default None]: list of Purchase ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
@@ -62,26 +63,27 @@ def query(ids=None, purchase_ids=None, types=None, after=None, before=None, limi
     return rest.get_stream(
         resource=_resource,
         ids=ids,
-        purchase_ids=purchase_ids,
         limit=limit,
         after=check_date(after),
         before=check_date(before),
         types=types,
+        purchase_ids=purchase_ids,
         user=user,
     )
 
 
-def page(ids=None, purchase_ids=None, types=None, after=None, before=None, cursor=None, limit=None, user=None):
+def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None, purchase_ids=None, user=None):
     """# Retrieve paged issuingpurchase.Log
     Receive a list of up to 100 issuingpurchase.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
-    - limit [integer, default 100]: maximum number of objects to be retrieved. It must be an integer between 1 and 100. ex: 50
+    - ids [list of strings, default None]: list of IssuingPurchase ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - types [list of strings, default None]: filter for log event types. ex: ["approved", "denied"]
-    - purchase_ids [list of strings, default None]: list of IssuingPurchase ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
+    - types [list of strings, default None]: filter for log event types. ex: ["approved", "canceled", "confirmed", "denied", "reversed", "voided"]
+    - purchase_ids [list of strings, default None]: list of Purchase ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of issuingpurchase.Log objects with updated attributes
@@ -89,12 +91,12 @@ def page(ids=None, purchase_ids=None, types=None, after=None, before=None, curso
     """
     return rest.get_page(
         resource=_resource,
+        cursor=cursor,
         ids=ids,
-        purchase_ids=purchase_ids,
         limit=limit,
         after=check_date(after),
         before=check_date(before),
         types=types,
-        cursor=cursor,
+        purchase_ids=purchase_ids,
         user=user,
     )

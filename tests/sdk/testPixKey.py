@@ -80,7 +80,7 @@ class TestPixKeyInfoDelete(TestCase):
 
     def test_success(self):
         pix_key = next(starkinfra.pixkey.query(status="registered"))
-        deleted_pix_key = starkinfra.pixkey.delete(pix_key.id)
+        deleted_pix_key = starkinfra.pixkey.cancel(pix_key.id)
         self.assertIsNotNone(deleted_pix_key.id)
         self.assertEqual(deleted_pix_key.id, pix_key.id)
 

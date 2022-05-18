@@ -1,5 +1,6 @@
 import starkinfra
 from unittest import TestCase, main
+from starkinfra import IssuingInvoice
 from tests.utils.user import exampleProject
 from tests.utils.issuingInvoice import generateExampleInvoicesJson
 
@@ -26,7 +27,11 @@ class TestIssuingInvoicePost(TestCase):
 
     def test_success(self):
         example_invoice = generateExampleInvoicesJson()
-        invoice = starkinfra.issuinginvoice.create(amount=example_invoice.amount)
+        invoice = starkinfra.issuinginvoice.create(
+            invoice=IssuingInvoice(
+                amount=example_invoice.amount
+            )
+        )
         self.assertEqual(invoice.id, str(invoice.id))
         print(invoice)
 

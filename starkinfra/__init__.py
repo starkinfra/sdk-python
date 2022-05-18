@@ -29,14 +29,14 @@ from .pixkey.__pixkey import PixKey
 from . import pixclaim
 from .pixclaim.__pixclaim import PixClaim
 
-from . import brcodecertificate
-from .brcodecertificate.__brcodecertificate import BrcodeCertificate
+from . import pixdomain
+from .pixdomain.__pixdomain import PixDomain
 
-from . import infractionreport
-from .infractionreport.__infractionreport import InfractionReport
+from . import pixinfraction
+from .pixinfraction.__pixinfraction import PixInfraction
 
-from . import reversalrequest
-from .reversalrequest.__reversalrequest import ReversalRequest
+from . import pixchargeback
+from .pixchargeback.__pixchargeback import PixChargeback
 
 from . import issuingauthorization
 from .issuingauthorization.__issuingauthorization import IssuingAuthorization

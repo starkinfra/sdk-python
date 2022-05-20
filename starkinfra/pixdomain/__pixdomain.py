@@ -6,7 +6,7 @@ from starkcore.utils.subresource import SubResource
 
 class PixDomain(SubResource):
     """# PixDomain object
-    The PixDomain object displays the QR Code domain certificate information of Pix participants.
+    The PixDomain object displays the domain name and the QR Code domain certificate of Pix participants.
     All certificates must be registered with the Central Bank.
     ## Attributes (return-only):
     - certificates [list of pixdomain.Certificate]: certificate information of the Pix participant.

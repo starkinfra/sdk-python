@@ -16,11 +16,11 @@ class TestPixDirectorPost(TestCase):
         pix_director = PixDirector(
             name=get_full_name(),
             tax_id=TaxIdGenerator.taxId(),
-            phone="+55-11"+str(randint(100000000, 999999999)),
+            phone="+5511"+str(randint(100000000, 999999999)),
             email=(get_full_name()+"@gmail.com").replace(" ", ""),
             password=str(randint(10000000, 99999999)),
             team_email=(get_full_name()+"@gmail.com").replace(" ", ""),
-            team_phones=["+55-11"+str(randint(100000000, 999999999)), "+55-11"+str(randint(100000000, 999999999))],
+            team_phones=["+5511"+str(randint(100000000, 999999999)), "+5511"+str(randint(100000000, 999999999))],
         )
         print(pix_director)
         created_pix_director = starkinfra.pixdirector.create(pix_director)

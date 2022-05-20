@@ -39,14 +39,16 @@ class CreditNote(Resource):
     - status [string]: current status of the CreditNote. ex: "canceled", "created", "expired", "failed", "processing", "signed", "success"
     - transaction_ids [list of strings]: ledger transaction ids linked to this CreditNote. ex: ["19827356981273"]
     - workspace_id [string]: ID of the Workspace that generated this CreditNote. ex: "4545454545454545"
+    - tax_amount [integer]: tax amount included in the CreditNote. ex: 100
     - interest [float]: yearly effective interest rate of the credit note, in percentage. ex: 12.5
     - created [datetime.datetime]: creation datetime for the CreditNote. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the CreditNote. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, template_id, name, tax_id, nominal_amount, scheduled, invoices, payment, signers, external_id,
-                 payment_type=None, interest=None, rebate_amount=None, amount=None, expiration=None, document_id=None,
-                 status=None, transaction_ids=None, workspace_id=None, tags=None, created=None, updated=None, id=None):
+                 payment_type=None, interest=None, tax_amount=None, rebate_amount=None, amount=None, expiration=None,
+                 document_id=None, status=None, transaction_ids=None, workspace_id=None, tags=None, created=None,
+                 updated=None, id=None):
         Resource.__init__(self, id=id)
 
         self.template_id = template_id
@@ -58,6 +60,7 @@ class CreditNote(Resource):
         self.signers = _parse_signers(signers)
         self.external_id = external_id
         self.interest = interest
+        self.tax_amount = tax_amount
         self.rebate_amount = rebate_amount
         self.amount = amount
         self.expiration = expiration

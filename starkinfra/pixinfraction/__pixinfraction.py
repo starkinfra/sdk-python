@@ -5,7 +5,7 @@ from starkcore.utils.checks import check_datetime, check_date
 
 class PixInfraction(Resource):
     """# PixInfraction object
-    PixInfraction are used to report transactions that are suspected of
+    PixInfractions are used to report transactions that are suspected of
     fraud, to request a refund or to reverse a refund.
     When you initialize a PixInfraction, the entity will not be automatically
     created in the Stark Infra API. The 'create' function sends the objects
@@ -53,10 +53,10 @@ _resource = {"class": PixInfraction, "name": "PixInfraction"}
 
 
 def create(infractions, user=None):
-    """# Create a PixInfraction object
-    Create a PixInfraction in the Stark Infra API
+    """# Create PixInfraction objects
+    Create PixInfractions in the Stark Infra API
     ## Parameters (required):
-    - infractions [list of PixInfraction]: list of PixInfraction objects to be created in the API.
+    - infractions [list of PixInfractions]: list of PixInfraction objects to be created in the API.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
@@ -143,6 +143,7 @@ def update(id, result, analysis=None, user=None):
     - result [string]: result after the analysis of the PixInfraction. Options: "agreed", "disagreed"
     ## Parameters (optional):
     - analysis [string, default None]: analysis that led to the result.
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - PixInfraction with updated attributes
     """

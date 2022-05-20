@@ -823,7 +823,7 @@ for request in requests:
 
 ### Query PixRequests
 
-You can query multiple pix requests according to filters.
+You can query multiple Pix requests according to filters.
 
 ```python
 import starkinfra
@@ -844,7 +844,7 @@ for request in requests:
 
 ### Get a PixRequest
 
-After its creation, information on a pix request may be retrieved by its id. Its status indicates whether it has been paid.
+After its creation, information on a Pix request may be retrieved by its id. Its status indicates whether it has been paid.
 
 ```python
 import starkinfra
@@ -875,7 +875,7 @@ print(pix_request)
   
 ### Query PixRequest logs
 
-You can query pix request logs to better understand pix request life cycles. 
+You can query Pix request logs to better understand Pix request life cycles. 
 
 ```python
 import starkinfra
@@ -1165,7 +1165,7 @@ print(key)
 
 ### Query PixKey logs
 
-You can query pix key logs to better understand a Pix key life cycle. 
+You can query Pix key logs to better understand a Pix key life cycle. 
 
 ```python
 import starkinfra
@@ -1242,7 +1242,7 @@ for claim in claims:
 
 ### Get a PixClaim
 
-After its creation, information on a pix claim may be retrieved by its id.
+After its creation, information on a Pix claim may be retrieved by its id.
 
 ```python
 import starkinfra
@@ -1313,11 +1313,11 @@ director = starkinfra.pixdirector.create(
     starkinfra.PixDirector(
         name="Edward Stark",
         tax_id="03.300.300/0001-00",
-        phone="+55-11999999999",
+        phone="+5511999999999",
         email="ned.stark@company.com",
         password="12345678",
         team_email="pix.team@company.com",
-        team_phones=["+55-11988889999", "+55-11988889998"],
+        team_phones=["+5511988889999", "+5511988889998"],
     )
 )
 
@@ -1332,7 +1332,7 @@ reverse a refund. Infraction reports can be created by either participant of a t
 ```python
 import starkinfra
 
-infraction = starkinfra.pixinfraction.create(
+infractions = starkinfra.pixinfraction.create(
     infractions=[
         starkinfra.PixInfraction(
             reference_id="E20018183202201201450u34sDGd19lz",
@@ -1341,7 +1341,8 @@ infraction = starkinfra.pixinfraction.create(
     ]
 )
 
-print(infraction)
+for infraction in infractions:
+    print(infraction)
 ```
 
 ### Query PixInfractions
@@ -1363,9 +1364,9 @@ for infraction in infractions:
     print(infraction)
 ```
 
-### Get an PixInfraction
+### Get a PixInfraction
 
-After its creation, information on an Pix Infraction may be retrieved by its id.
+After its creation, information on a Pix Infraction may be retrieved by its id.
 
 ```python
 import starkinfra
@@ -1375,7 +1376,7 @@ infraction = starkinfra.pixinfraction.get("5155165527080960")
 print(infraction)
 ```
 
-### Patch an PixInfraction
+### Patch a PixInfraction
 
 A received Pix Infraction can be confirmed or declined by patching its status.
 After a Pix Infraction is patched, its status changes to closed.
@@ -1391,7 +1392,7 @@ infraction = starkinfra.pixinfraction.update(
 print(infraction)
 ```
 
-### Cancel an PixInfraction
+### Cancel a PixInfraction
 
 Cancel a specific Pix Infraction using its id.
 
@@ -1423,7 +1424,7 @@ for log in logs:
     print(log)
 ```
 
-### Get an PixInfraction log
+### Get a PixInfraction log
 
 You can also get a specific log by its id.
 
@@ -1459,7 +1460,7 @@ for chargeback in chargebacks:
 
 ### Query PixChargebacks
 
-You can query multiple pix chargebacks according to filters.
+You can query multiple Pix chargebacks according to filters.
 
 ```python
 import starkinfra
@@ -1519,7 +1520,7 @@ print(chargeback)
 
 ### Query PixChargeback logs
 
-You can query pix chargeback logs to better understand pix chargeback life cycles. 
+You can query Pix chargeback logs to better understand Pix chargeback life cycles. 
 
 ```python
 import starkinfra
@@ -1551,7 +1552,8 @@ print(log)
 
 ### Query PixDomains
 
-You can query for domains of registered SPI participants able to issue dynamic QR Codes.
+Here you can list all Pix Domains registered at the Brazilian Central Bank. The Pix Domain object displays the domain 
+name and the QR Code domain certificates of registered Pix participants able to issue dynamic QR Codes.
 
 ```python
 import starkinfra
@@ -1743,7 +1745,7 @@ webhook = starkinfra.webhook.create(
     subscriptions=[
         "contract", "credit-note", "signer",
         "issuing-card", "issuing-invoice", "issuing-purchase",
-        "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out"
+        "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out", "pix-claim", "pix-key", "pix-chargeback", "pix-infraction",
     ],
 )
 

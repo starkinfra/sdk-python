@@ -17,9 +17,8 @@ class Invoice(Resource):
     - expiration [integer or datetime.timedelta, default 5097600 (59 days)]: time interval in seconds between due date and expiration date. ex 123456789
     - fine [float, default 2.0]: Invoice fine for overdue payment in %. ex: 2.5
     - interest [float, default 1.0]: Invoice monthly interest for overdue payment in %. ex: 5.2
-    - discounts [list of creditnote.invoice.Discount objects or dictionaries, default None]: list of Discount objects ordictionaries with "percentage":float and "due":datetime.datetime or string pairs
     - tags [list of strings, default None]: list of strings for tagging
-    - descriptions [list of creditnote.invoice.Description objects or dictionaries, default None]: list Description objects or dictionaries with "key": string and (optional) "value":string pairs
+    - descriptions [list of creditnote.invoice.Description objects or dictionaries, default None]: list Description objects
     ## Attributes (return-only):
     - name [string]: payer name. ex: "Iron Bank S.A."
     - tax_id [string]: payer tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
@@ -29,6 +28,7 @@ class Invoice(Resource):
     - fine_amount [integer]: Invoice fine value calculated over nominal_amount. ex: 20000
     - interest_amount [integer]: Invoice interest value calculated over nominal_amount. ex: 10000
     - discount_amount [integer]: Invoice discount value calculated over nominal_amount. ex: 3000
+    - discounts [list of creditnote.invoice.Discount objects, default None]: list of Discount objects
     - id [string]: unique id returned when Invoice is created. ex: "5656565656565656"
     - brcode [string]: BR Code for the Invoice payment. ex: "00020101021226800014br.gov.bcb.pix2558invoice.starkbank.com/f5333103-3279-4db2-8389-5efe335ba93d5204000053039865802BR5913Arya Stark6009Sao Paulo6220051656565656565656566304A9A0"
     - status [string]: current Invoice status. ex: "registered" or "paid"
@@ -38,28 +38,28 @@ class Invoice(Resource):
     - updated [datetime.datetime]: latest update datetime for the Invoice. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, amount, tax_id=None, name=None, due=None, expiration=None, fine=None, interest=None, discounts=None,
+    def __init__(self, amount, tax_id=None, name=None, due=None, expiration=None, fine=None, interest=None,
                  tags=None, descriptions=None, pdf=None, link=None, nominal_amount=None, fine_amount=None,
-                 interest_amount=None, discount_amount=None, id=None, brcode=None, status=None, fee=None,
-                 transaction_ids=None, created=None, updated=None):
+                 interest_amount=None, discount_amount=None, discounts=None, id=None, brcode=None, status=None,
+                 fee=None, transaction_ids=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.amount = amount
-        self.nominal_amount = nominal_amount
-        self.fine_amount = fine_amount
-        self.interest_amount = interest_amount
-        self.discount_amount = discount_amount
         self.due = check_datetime_or_date(due)
         self.tax_id = tax_id
         self.name = name
         self.expiration = check_timedelta(expiration)
         self.fine = fine
         self.interest = interest
-        self.discounts = discounts
         self.tags = tags
         self.pdf = pdf
         self.link = link
-        self.descriptions = descriptions
+        self.nominal_amount = nominal_amount
+        self.fine_amount = fine_amount
+        self.interest_amount = interest_amount
+        self.discount_amount = discount_amount
+        self.discounts = parse_discounts(discounts)
+        self.descriptions = parse_descriptions(descriptions)
         self.brcode = brcode
         self.status = status
         self.fee = fee

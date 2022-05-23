@@ -6,7 +6,7 @@ from .names.names import get_full_name
 from .taxIdGenerator import TaxIdGenerator
 from .date import randomDatetimeBetween, randomFutureDatetime
 from starkinfra import CreditNote
-from starkinfra.creditnote import Invoice, Transfer, Signer
+from starkinfra.creditnote import Invoice, Transfer, Signer, Discount, Description
 
 
 def _generateCreditNote():
@@ -96,6 +96,8 @@ def generateExampleInvoiceJson(n=1, note_nominal_amount=0, note_scheduled=dateti
             amount=randint(note_nominal_amount, note_nominal_amount + 100000),
             fine=randint(0, 20),
             interest=randint(0, 20),
+            discounts=[Discount(percentage=12, due="2023-03-25")],
+            descriptions=[Description(key="taxes", value="RS1000")],
         ))
 
     return invoices

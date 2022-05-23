@@ -1,4 +1,9 @@
+from starkcore.utils.api import from_api_json
 from starkcore.utils.resource import Resource
+from .__discount import Discount
+from .__discount import resource as _discount_resource
+from .__description import Description
+from .__description import resource as _description_resource
 from starkcore.utils.checks import check_datetime, check_datetime_or_date, check_timedelta
 
 
@@ -12,9 +17,9 @@ class Invoice(Resource):
     - expiration [integer or datetime.timedelta, default 5097600 (59 days)]: time interval in seconds between due date and expiration date. ex 123456789
     - fine [float, default 2.0]: Invoice fine for overdue payment in %. ex: 2.5
     - interest [float, default 1.0]: Invoice monthly interest for overdue payment in %. ex: 5.2
-    - discounts [list of dictionaries, default None]: list of dictionaries with "percentage":float and "due":datetime.datetime or string pairs
+    - discounts [list of creditnote.invoice.Discount objects or dictionaries, default None]: list of Discount objects ordictionaries with "percentage":float and "due":datetime.datetime or string pairs
     - tags [list of strings, default None]: list of strings for tagging
-    - descriptions [list of dictionaries, default None]: list of dictionaries with "key":string and (optional) "value":string pairs
+    - descriptions [list of creditnote.invoice.Description objects or dictionaries, default None]: list Description objects or dictionaries with "key": string and (optional) "value":string pairs
     ## Attributes (return-only):
     - name [string]: payer name. ex: "Iron Bank S.A."
     - tax_id [string]: payer tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
@@ -61,6 +66,30 @@ class Invoice(Resource):
         self.transaction_ids = transaction_ids
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
+
+
+def parse_discounts(discounts):
+    parsed_discounts = []
+    if discounts is None:
+        return discounts
+    for discount in discounts:
+        if isinstance(discount, Discount):
+            parsed_discounts.append(discount)
+            continue
+        parsed_discounts.append(from_api_json(_discount_resource, discount))
+    return parsed_discounts
+
+
+def parse_descriptions(descriptions):
+    parsed_descriptions = []
+    if descriptions is None:
+        return descriptions
+    for description in descriptions:
+        if isinstance(description, Description):
+            parsed_descriptions.append(description)
+            continue
+        parsed_descriptions.append(from_api_json(_description_resource, description))
+    return parsed_descriptions
 
 
 _resource = {"class": Invoice, "name": "Invoice"}

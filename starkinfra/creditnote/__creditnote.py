@@ -1,8 +1,8 @@
 from .__signer import Signer
-from .__invoice import Invoice
+from .invoice.__invoice import Invoice
+from .invoice.__invoice import _resource as _invoice_resource
 from .__transfer import Transfer
 from .__signer import _resource as _signer_resource
-from .__invoice import _resource as _invoice_resource
 from .__transfer import _resource as _transfer_resource
 from ..utils import rest
 from starkcore.utils.api import from_api_json

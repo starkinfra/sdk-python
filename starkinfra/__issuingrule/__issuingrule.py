@@ -1,3 +1,4 @@
+from starkcore.utils.api import from_api_json
 from starkcore.utils.resource import Resource
 
 
@@ -35,3 +36,19 @@ class IssuingRule(Resource):
         self.categories = categories
         self.countries = countries
         self.methods = methods
+
+
+_resource = {"class": IssuingRule, "name": "IssuingRule"}
+
+
+def parse_rules(rules):
+    parsed_rules = []
+    if rules is None:
+        return rules
+    for rule in rules:
+        if isinstance(rule, IssuingRule):
+            parsed_rules.append(rule)
+            continue
+        parsed_rules.append(from_api_json(_resource, rule))
+    return parsed_rules
+

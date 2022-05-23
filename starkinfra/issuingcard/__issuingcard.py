@@ -1,6 +1,7 @@
 from ..utils import rest
 from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_datetime
+from ..__issuingrule import parse_rules
 
 
 class IssuingCard(Resource):
@@ -47,7 +48,7 @@ class IssuingCard(Resource):
         self.type = type
         self.display_name = display_name
         self.status = status
-        self.rules = rules
+        self.rules = parse_rules(rules)
         self.bin_id = bin_id
         self.street_line_1 = street_line_1
         self.street_line_2 = street_line_2

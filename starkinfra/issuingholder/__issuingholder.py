@@ -1,6 +1,7 @@
 from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_datetime
 from ..utils import rest
+from ..__issuingrule import parse_rules
 
 
 class IssuingHolder(Resource):
@@ -26,7 +27,7 @@ class IssuingHolder(Resource):
         self.tax_id = tax_id
         self.external_id = external_id
         self.status = status
-        self.rules = rules
+        self.rules = parse_rules(rules)
         self.tags = tags
         self.updated = check_datetime(updated)
         self.created = check_datetime(created)

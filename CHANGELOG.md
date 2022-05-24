@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.0.7] - 2022-05-23
 ### Added
 - CreditNote.Signer sub-resource
 - CreditNote.Invoice sub-resource

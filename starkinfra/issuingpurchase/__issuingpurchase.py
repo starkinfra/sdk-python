@@ -29,7 +29,7 @@ class IssuingPurchase(Resource):
     - method_code [string]: method code. ex: "chip", "token", "server", "manual", "magstripe" or "contactless"
     - score [float]: internal score calculated for the authenticity of the purchase. None in case of insufficient data. ex: 7.6
     - issuing_transaction_ids [string]: ledger transaction ids linked to this Purchase
-    - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
+    - end_to_end_id [string]: Unique id used to identify the transaction through all of its life cycle, even before the purchase is denied or accepted and gets its usual id. Example: endToEndId="679cd385-642b-49d0-96b7-89491e1249a5"
     - status [string]: current IssuingCard status. ex: "approved", "canceled", "denied", "confirmed", "voided"
     - tags [string]: list of strings for tagging returned by the sub-issuer during the authorization. ex: ["travel", "food"]
     - updated [datetime.datetime]: latest update datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)

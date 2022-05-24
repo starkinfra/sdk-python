@@ -21,6 +21,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - Webhook resource to receive Events
 - merchant_fee atribute to IssuingPurchase
 ### Changed
+- rules parameter from IssuingCard and IssuingHolder objects returned from the 
+  API changed from a list of dictionaries to a list of IssuingHolder objects
 - CreditNote.transfer parameter to payment and payment_type
 - BrcodeCertificate resource name to PixDomain
 - InfractionReport resource name to PixInfraction

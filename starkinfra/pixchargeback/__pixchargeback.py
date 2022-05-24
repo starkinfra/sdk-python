@@ -56,8 +56,8 @@ _resource = {"class": PixChargeback, "name": "PixChargeback"}
 
 
 def create(chargebacks, user=None):
-    """# Create a PixChargeback object
-    Create a PixChargeback in the Stark Infra API
+    """# Create PixChargeback objects
+    Create PixChargebacks in the Stark Infra API
     ## Parameters (optional):
     - chargebacks [list of PixChargeback]: list of PixChargeback objects to be created in the API.
     ## Parameters (optional):

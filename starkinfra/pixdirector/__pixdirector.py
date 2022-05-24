@@ -11,11 +11,11 @@ class PixDirector(Resource):
     ## Parameters (required):
     - name [string]: name of the PixDirector. ex: "Edward Stark".
     - tax_id [string]: tax ID (CPF) of the PixDirector. ex: "012.345.678-90"
-    - phone [string]: phone of the PixDirector. ex: "+55-1198989898"
+    - phone [string]: phone of the PixDirector. ex: "+551198989898"
     - email [string]: email of the PixDirector. ex: "ned.stark@starkbank.com"
     - password [string]: password of the PixDirector. ex: "12345678"
     - team_email [string]: team email. ex: "pix.team@company.com"
-    - team_phones [list of strings]: list of phones of the team. ex: ["+55-11988889999", "+55-11988889998"]
+    - team_phones [list of strings]: list of phones of the team. ex: ["+5511988889999", "+5511988889998"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixDirector is created. ex: "5656565656565656"
     - status [string]: current PixDirector status. ex: "success"

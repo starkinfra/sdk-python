@@ -29,19 +29,19 @@ class PixInfraction(Resource):
     - updated [datetime.datetime]: latest update datetime for the PixInfraction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self,  reference_id, type, description=None, credited_bank_code=None, agent=None, analysis=None,
-                 bacen_id=None, debited_bank_code=None, id=None, reported_by=None, result=None, status=None,
-                 created=None, updated=None):
+    def __init__(self,  reference_id, type, description=None, id=None, credited_bank_code=None, debited_bank_code=None,
+                 agent=None, analysis=None, bacen_id=None, reported_by=None, result=None, status=None, created=None,
+                 updated=None):
         Resource.__init__(self, id=id)
 
         self.reference_id = reference_id
         self.type = type
         self.description = description
         self.credited_bank_code = credited_bank_code
+        self.debited_bank_code = debited_bank_code
         self.agent = agent
         self.analysis = analysis
         self.bacen_id = bacen_id
-        self.debited_bank_code = debited_bank_code
         self.reported_by = reported_by
         self.result = result
         self.status = status
@@ -82,7 +82,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
     """# Retrieve PixInfractions
     Receive a generator of PixInfractions objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "closed", "canceled"]

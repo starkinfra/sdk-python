@@ -24,11 +24,11 @@ class PixDirector(Resource):
     def __init__(self, name, tax_id, phone, email, password, team_email, team_phones, id=None, status=None):
         Resource.__init__(self, id=id)
 
-        self.email = email
         self.name = name
-        self.password = password
-        self.phone = phone
         self.tax_id = tax_id
+        self.phone = phone
+        self.email = email
+        self.password = password
         self.team_email = team_email
         self.team_phones = team_phones
         self.status = status
@@ -39,12 +39,12 @@ _resource = {"class": PixDirector, "name": "PixDirector"}
 
 def create(director, user=None):
     """# Create a PixDirector Object
-    Send a PixDirector object for creation in the Stark Infra API
+    Send a PixDirector object for creation at the Stark Infra API
     ## Parameters (required):
     - director [list of PixDirector Object]: list of PixDirector objects to be created in the API
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - PixDirector objects with updated attributes
+    - PixDirector object with updated attributes
     """
     return rest.post_single(resource=_resource, entity=director, user=user)

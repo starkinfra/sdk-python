@@ -1,5 +1,5 @@
 from starkcore.utils.resource import Resource
-from starkcore.utils.checks import check_datetime
+from starkcore.utils.checks import check_datetime, check_date
 from ..utils import rest
 
 
@@ -16,8 +16,9 @@ class IssuingTransaction(Resource):
     - created [datetime.datetime]: creation datetime for the IssuingTransaction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, id, amount, balance, created, description, source, tags):
+    def __init__(self, id, amount, balance, description, source, tags, created):
         Resource.__init__(self, id=id)
+
         self.amount = amount
         self.balance = balance
         self.description = description
@@ -31,7 +32,7 @@ _resource = {"class": IssuingTransaction, "name": "IssuingTransaction"}
 
 def get(id, user=None):
     """# Retrieve a specific IssuingTransaction
-    Receive a single IssuingTransaction object previously created in the Stark Bank API by its id
+    Receive a single IssuingTransaction object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
@@ -53,7 +54,7 @@ def query(source=None, tags=None, external_ids=None, after=None, before=None,
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - status [string, default None]: filter for status of retrieved objects. ex: "approved", "canceled", "denied", "confirmed" or "voided"
     - ids [list of strings, default [], default None]: purchase IDs
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of IssuingTransaction objects with updated attributes
@@ -63,8 +64,8 @@ def query(source=None, tags=None, external_ids=None, after=None, before=None,
         source=source,
         tags=tags,
         external_ids=external_ids,
-        after=check_datetime(after),
-        before=check_datetime(before),
+        after=check_date(after),
+        before=check_date(before),
         ids=ids,
         limit=limit,
         user=user,
@@ -94,8 +95,8 @@ def page(source=None, tags=None, external_ids=None, after=None, before=None,
         source=source,
         tags=tags,
         external_ids=external_ids,
-        after=check_datetime(after),
-        before=check_datetime(before),
+        after=check_date(after),
+        before=check_date(before),
         ids=ids,
         limit=limit,
         cursor=cursor,

@@ -17,6 +17,7 @@ class IssuingBalance(Resource):
 
     def __init__(self, id, amount, currency, updated):
         Resource.__init__(self, id=id)
+
         self.amount = amount
         self.currency = currency
         self.updated = updated
@@ -27,7 +28,7 @@ _resource = {"class": IssuingBalance, "name": "IssuingBalance"}
 
 def get(user=None):
     """# Retrieve the IssuingBalance object
-    Receive the IssuingBalance object linked to your Workspace in the Stark Bank API
+    Receive the IssuingBalance object linked to your Workspace in the Stark Infra API
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:

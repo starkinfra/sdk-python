@@ -33,7 +33,7 @@ _resource = {"class": Log, "name": "CreditNoteLog"}
 
 def get(id, user=None):
     """# Retrieve a specific creditnote.Log
-    Receive a single creditnote.Log object previously created by the Stark Bank API by its id
+    Receive a single creditnote.Log object previously created by the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
@@ -46,9 +46,9 @@ def get(id, user=None):
 
 def query(limit=None, after=None, before=None, types=None, note_ids=None, user=None):
     """# Retrieve creditnote.Logs
-    Receive a generator of creditnote.Log objects previously created in the Stark Bank API
+    Receive a generator of creditnote.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter for log event types. ex: ["canceled", "created", "expired", "failed", "refunded", "registered", "sending", "sent", "signed", "success"]
@@ -70,7 +70,7 @@ def query(limit=None, after=None, before=None, types=None, note_ids=None, user=N
 
 def page(cursor=None, limit=None, after=None, before=None, types=None, note_ids=None, user=None):
     """# Retrieve paged creditnote.Logs
-    Receive a list of up to 100 creditnote.Log objects previously created in the Stark Bank API and the cursor to the next page.
+    Receive a list of up to 100 creditnote.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call

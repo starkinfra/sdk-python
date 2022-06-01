@@ -1,4 +1,5 @@
 from uuid import uuid4
+from copy import deepcopy
 from random import randint, choice
 from datetime import timedelta, datetime
 from .user import template_id
@@ -6,7 +7,7 @@ from .names.names import get_full_name
 from .taxIdGenerator import TaxIdGenerator
 from .date import randomDatetimeBetween, randomFutureDatetime
 from starkinfra import CreditNote
-from starkinfra.creditnote import Invoice, Transfer, Signer, Discount, Description
+from starkinfra.creditnote import Invoice, Transfer, Signer, Description
 
 
 def _generateCreditNote():
@@ -56,7 +57,7 @@ def _generateTransfer():
 def generateExampleCreditNoteJson(n=1, nominal_amount=None):
     credit_notes = []
     for _ in range(n):
-        note = _generateCreditNote()
+        note = deepcopy(_generateCreditNote())
 
         note.name = get_full_name()
         note.tax_id = TaxIdGenerator.taxId()

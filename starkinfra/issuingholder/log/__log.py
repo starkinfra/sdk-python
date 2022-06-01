@@ -18,11 +18,11 @@ class Log(Resource):
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, id, created, type, holder):
+    def __init__(self, id, holder, type, created):
         Resource.__init__(self, id=id)
 
-        self.type = type
         self.holder = from_api_json(_issuing_holder_resource, holder)
+        self.type = type
         self.created = check_datetime(created)
 
 
@@ -46,7 +46,7 @@ def query(ids=None, limit=None, after=None, before=None, types=None, holder_ids=
     """# Retrieve issuingholder.Log
     Receive a generator of issuingholder.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)

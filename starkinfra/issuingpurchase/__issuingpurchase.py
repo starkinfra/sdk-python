@@ -1,5 +1,5 @@
 from starkcore.utils.resource import Resource
-from starkcore.utils.checks import check_datetime
+from starkcore.utils.checks import check_datetime, check_date
 from ..utils import rest
 
 
@@ -41,6 +41,7 @@ class IssuingPurchase(Resource):
                  merchant_category_code, merchant_country_code, acquirer_id, merchant_id, merchant_name, merchant_fee,
                  wallet_id, method_code, score, issuing_transaction_ids, end_to_end_id, status, tags, created, updated):
         Resource.__init__(self, id=id)
+
         self.holder_name = holder_name
         self.card_id = card_id
         self.card_ending = card_ending
@@ -74,7 +75,7 @@ _resource = {"class": IssuingPurchase, "name": "IssuingPurchase"}
 
 def get(id, user=None):
     """# Retrieve a specific IssuingPurchase
-    Receive a single IssuingPurchase object previously created in the Stark Bank API by its id
+    Receive a single IssuingPurchase object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
@@ -91,7 +92,7 @@ def query(ids=None, limit=None, after=None, before=None, end_to_end_ids=None, ho
     Receive a generator of IssuingPurchases objects previously created in the Stark Infra API
     ## Parameters (optional):
     - ids [list of strings, default [], default None]: purchase IDs
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - end_to_end_ids [list of strings, default []]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
@@ -106,8 +107,8 @@ def query(ids=None, limit=None, after=None, before=None, end_to_end_ids=None, ho
         resource=_resource,
         ids=ids,
         limit=limit,
-        after=check_datetime(after),
-        before=check_datetime(before),
+        after=check_date(after),
+        before=check_date(before),
         end_to_end_ids=end_to_end_ids,
         holder_ids=holder_ids,
         card_ids=card_ids,
@@ -140,8 +141,8 @@ def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after
         cursor=cursor,
         ids=ids,
         limit=limit,
-        after=check_datetime(after),
-        before=check_datetime(before),
+        after=check_date(after),
+        before=check_date(before),
         end_to_end_ids=end_to_end_ids,
         holder_ids=holder_ids,
         card_ids=card_ids,

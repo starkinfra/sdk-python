@@ -1,5 +1,6 @@
 import starkinfra
 from unittest import TestCase, main
+from datetime import date, timedelta
 from starkinfra import IssuingInvoice
 from tests.utils.user import exampleProject
 from tests.utils.issuingInvoice import generateExampleInvoicesJson
@@ -10,7 +11,10 @@ starkinfra.user = exampleProject
 class TestIssuingInvoiceQuery(TestCase):
 
     def test_success(self):
-        invoices = starkinfra.issuinginvoice.query()
+        invoices = starkinfra.issuinginvoice.query(
+            after=date.today() - timedelta(days=100),
+            before=date.today(),
+        )
         for invoice in invoices:
             self.assertEqual(invoice.id, str(invoice.id))
 

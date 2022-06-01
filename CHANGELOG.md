@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Fixed
+- after and before parameter types on query and page methods
 
 ## [0.0.7] - 2022-05-23
 ### Added

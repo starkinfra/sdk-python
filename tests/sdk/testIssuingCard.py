@@ -1,5 +1,6 @@
 import starkinfra
 from unittest import TestCase, main
+from datetime import date, timedelta
 from tests.utils.user import exampleProject
 from tests.utils.card import generateExampleCardsJson
 
@@ -9,7 +10,11 @@ starkinfra.user = exampleProject
 class TestIssuingCardQuery(TestCase):
 
     def test_success(self):
-        cards = starkinfra.issuingcard.query(limit=10)
+        cards = starkinfra.issuingcard.query(
+            limit=10,
+            after=date.today() - timedelta(days=100),
+            before=date.today()
+        )
         for card in cards:
             self.assertEqual(card.id, str(card.id))
 
@@ -20,7 +25,12 @@ class TestIssuingCardPage(TestCase):
         cursor = None
         ids = []
         for _ in range(2):
-            cards, cursor = starkinfra.issuingcard.page(limit=2, cursor=cursor)
+            cards, cursor = starkinfra.issuingcard.page(
+                limit=2,
+                after=date.today() - timedelta(days=100),
+                before=date.today(),
+                cursor=cursor
+            )
             for card in cards:
                 self.assertFalse(card.id in ids)
                 ids.append(card.id)

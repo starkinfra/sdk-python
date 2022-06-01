@@ -16,7 +16,7 @@ class PixBalance(Resource):
     - updated [datetime.datetime]: latest update datetime for the balance. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, amount=None, currency=None, updated=None, id=None):
+    def __init__(self, id=None, amount=None, currency=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.amount = amount

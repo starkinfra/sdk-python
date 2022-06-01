@@ -21,11 +21,11 @@ class CreditNote(Resource):
     - name [string]: credit receiver's full name. ex: name="Edward Stark"
     - tax_id [string]: credit receiver's tax ID (CPF or CNPJ). ex: "20.018.183/0001-80"
     - nominal_amount [integer]: amount in cents transferred to the credit receiver, before deductions. ex: nominal_amount=11234 (= R$ 112.34)
-    - scheduled [datetime.date, datetime.datetime or string, default now]: date of transfer execution. ex: scheduled=datetime(2020, 3, 10)
+    - scheduled [datetime.date, datetime.datetime or string]: date of transfer execution. ex: scheduled=datetime(2020, 3, 10)
     - invoices [list of Invoice objects]: list of Invoice objects to be created and sent to the credit receiver. ex: invoices=[Invoice(), Invoice()]
     - payment [creditnote.Transfer]: payment entity to be created and sent to the credit receiver. ex: payment=creditnote.Transfer()
     - signers [list of creditnote.Signer objects]: signer's name, contact and delivery method for the signature request. ex: signers=[creditnote.Signer(), creditnote.Signer()]
-    - externalId [string]: a string that must be unique among all your CreditNotes, used to avoid resource duplication. ex: "my-internal-id-123456"
+    - external_id [string]: a string that must be unique among all your CreditNotes, used to avoid resource duplication. ex: "my-internal-id-123456"
     ## Parameters (conditionally required):
     - payment_type [string]: payment type, inferred from the payment parameter if it is not a dictionary. ex: "transfer"
     Parameters (optional):
@@ -46,9 +46,9 @@ class CreditNote(Resource):
     """
 
     def __init__(self, template_id, name, tax_id, nominal_amount, scheduled, invoices, payment, signers, external_id,
-                 payment_type=None, interest=None, tax_amount=None, rebate_amount=None, amount=None, expiration=None,
-                 document_id=None, status=None, transaction_ids=None, workspace_id=None, tags=None, created=None,
-                 updated=None, id=None):
+                 payment_type=None, rebate_amount=None, tags=None, id=None, amount=None, expiration=None,
+                 document_id=None, status=None, transaction_ids=None, workspace_id=None, tax_amount=None,
+                 interest=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.template_id = template_id
@@ -59,16 +59,16 @@ class CreditNote(Resource):
         self.invoices = _parse_invoices(invoices)
         self.signers = _parse_signers(signers)
         self.external_id = external_id
-        self.interest = interest
-        self.tax_amount = tax_amount
         self.rebate_amount = rebate_amount
+        self.tags = tags
         self.amount = amount
         self.expiration = expiration
         self.document_id = document_id
         self.status = status
         self.transaction_ids = transaction_ids
         self.workspace_id = workspace_id
-        self.tags = tags
+        self.tax_amount = tax_amount
+        self.interest = interest
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
 
@@ -123,7 +123,7 @@ def _parse_payment(payment, payment_type):
 
 def create(notes, user=None):
     """# Create CreditNotes
-    Send a list of CreditNote objects for creation in the Stark Bank API
+    Send a list of CreditNote objects for creation at the Stark Infra API
     ## Parameters (required):
     - notes [list of CreditNote objects]: list of CreditNote objects to be created in the API
     ## Parameters (optional):
@@ -136,7 +136,7 @@ def create(notes, user=None):
 
 def get(id, user=None):
     """# Retrieve a specific CreditNote
-    Receive a single CreditNote object previously created in the Stark Bank API by its id
+    Receive a single CreditNote object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
@@ -149,9 +149,9 @@ def get(id, user=None):
 
 def query(limit=None, status=None, tags=None, ids=None, after=None, before=None, user=None):
     """# Retrieve CreditNotes
-    Receive a generator of CreditNote objects previously created in the Stark Bank API
+    Receive a generator of CreditNote objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["canceled", "created", "expired", "failed", "processing", "signed", "success"]
@@ -175,7 +175,7 @@ def query(limit=None, status=None, tags=None, ids=None, after=None, before=None,
 
 def page(cursor=None, limit=None, status=None, tags=None, ids=None, after=None, before=None, user=None):
     """# Retrieve paged CreditNotes
-    Receive a list of up to 100 CreditNote objects previously created in the Stark Bank API and the cursor to the next page.
+    Receive a list of up to 100 CreditNote objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call

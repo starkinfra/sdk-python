@@ -1,5 +1,5 @@
 from starkcore.utils.resource import Resource
-from starkcore.utils.checks import check_datetime
+from starkcore.utils.checks import check_datetime, check_date
 from ..utils import rest
 from ..__issuingrule import parse_rules
 
@@ -21,14 +21,15 @@ class IssuingHolder(Resource):
     - created [datetime.datetime]: creation datetime for the IssuingHolder. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, name, tax_id, external_id, id=None,  rules=None, status=None, tags=None, updated=None, created=None):
+    def __init__(self, name, tax_id, external_id, rules=None, tags=None, id=None, status=None, updated=None, created=None):
         Resource.__init__(self, id=id)
+
         self.name = name
         self.tax_id = tax_id
         self.external_id = external_id
-        self.status = status
         self.rules = parse_rules(rules)
         self.tags = tags
+        self.status = status
         self.updated = check_datetime(updated)
         self.created = check_datetime(created)
 
@@ -38,7 +39,7 @@ _resource = {"class": IssuingHolder, "name": "IssuingHolder"}
 
 def create(holders, user=None):
     """# Create IssuingHolder
-    Send a list of IssuingHolder objects for creation in the Stark Infra API
+    Send a list of IssuingHolder objects for creation at the Stark Infra API
     ## Parameters (required):
     - holders [list of IssuingHolder objects]: list of IssuingHolder objects to be created in the API
     ## Parameters (optional):
@@ -67,7 +68,7 @@ def query(limit=None, ids=None, after=None, before=None, status=None, tags=None,
     """# Retrieve IssuingHolders
     Receive a generator of IssuingHolder objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
@@ -82,8 +83,8 @@ def query(limit=None, ids=None, after=None, before=None, status=None, tags=None,
         resource=_resource,
         limit=limit,
         ids=ids,
-        after=check_datetime(after),
-        before=check_datetime(before),
+        after=check_date(after),
+        before=check_date(before),
         status=status,
         tags=tags,
         expand=expand,
@@ -113,8 +114,8 @@ def page(cursor=None, limit=None, ids=None, after=None, before=None, status=None
         cursor=cursor,
         limit=limit,
         ids=ids,
-        after=check_datetime(after),
-        before=check_datetime(before),
+        after=check_date(after),
+        before=check_date(before),
         status=status,
         tags=tags,
         expand=expand,

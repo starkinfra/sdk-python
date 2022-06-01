@@ -18,7 +18,7 @@ class PixRequest(Resource):
     - sender_tax_id [string]: sender's tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
     - sender_branch_code [string]: sender's bank account branch code. Use '-' in case there is a verifier digit. ex: "1357-9"
     - sender_account_number [string]: sender's bank account number. Use '-' before the verifier digit. ex: "876543-2"
-    - sender_account_type [string, default "checking"]: sender's bank account type. ex: "checking", "savings", "salary" or "payment"
+    - sender_account_type [string]: sender's bank account type. ex: "checking", "savings", "salary" or "payment"
     - receiver_name [string]: receiver's full name. ex: "Edward Stark"
     - receiver_tax_id [string]: receiver's tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
     - receiver_bank_code [string]: receiver's bank institution code in Brazil. ex: "20018183"
@@ -35,7 +35,7 @@ class PixRequest(Resource):
     - cashier_bank_code [string, default None]: Cashier's bank code. ex: "00000000"
     - cashier_type [string, default None]: Cashier's type. ex: [merchant, other, participant]
     - tags [list of strings, default None]: list of strings for reference when searching for PixRequests. ex: ["employees", "monthly"]
-    - method [string, default None]: execution  method for thr creation of the PIX. ex: "manual", "payerQrcode", "dynamicQrcode".
+    - method [string, default None]: execution  method for thr creation of the Pix. ex: "manual", "payerQrcode", "dynamicQrcode".
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixRequest is created. ex: "5656565656565656"
     - fee [integer]: fee charged when PixRequest is paid. ex: 200 (= R$ 2.00)
@@ -90,7 +90,7 @@ _resource = {"class": PixRequest, "name": "PixRequest"}
 
 def create(requests, user=None):
     """# Create PixRequests
-    Send a list of PixRequest objects for creation in the Stark Infra API
+    Send a list of PixRequest objects for creation at the Stark Infra API
     ## Parameters (required):
     - requests [list of PixRequest objects]: list of PixRequest objects to be created in the API
     ## Parameters (optional):
@@ -119,7 +119,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     """# Retrieve PixRequests
     Receive a generator of PixRequest objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "processing", "success", "failed"]

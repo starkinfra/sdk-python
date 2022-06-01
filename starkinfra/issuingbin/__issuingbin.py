@@ -4,7 +4,7 @@ from ..utils import rest
 
 class IssuingBin(Resource):
     """# IssuingBin object
-    The IssuingBin object displays the informations of BINs registered to your Workspace.
+    The IssuingBin object displays information of registered BINs to your Workspace.
     They represent a group of cards that begin with the same numbers (BIN) and offer the same product to end customers.
     ## Attributes (return-only):
     - id [string]: unique BIN number registered within the card network. ex: "53810200"
@@ -18,6 +18,7 @@ class IssuingBin(Resource):
 
     def __init__(self, id=None, updated=None, created=None, network=None, settlement=None, category=None, client=None):
         Resource.__init__(self, id=id)
+
         self.network = network
         self.settlement = settlement
         self.category = category
@@ -31,9 +32,9 @@ _resource = {"class": IssuingBin, "name": "IssuingBin"}
 
 def query(limit=None, user=None):
     """# Retrieve IssuingBins
-    Receive a generator of IssuingBin objects previously registered in the Stark Bank API
+    Receive a generator of IssuingBin objects previously registered in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of IssuingBin objects with updated attributes
@@ -47,7 +48,7 @@ def query(limit=None, user=None):
 
 def page(limit=None, cursor=None, user=None):
     """# Retrieve paged IssuingBins
-    Receive a list of up to 100 IssuingBin objects previously registered in the Stark Bank API and the cursor to the next page.
+    Receive a list of up to 100 IssuingBin objects previously registered in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35

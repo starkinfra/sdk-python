@@ -1,9 +1,9 @@
 from json import dumps
-from starkcore.utils.resource import Resource
+from starkcore.utils.resource import SubResource
 from starkinfra.utils.parse import parse_and_verify
 
 
-class IssuingAuthorization(Resource):
+class IssuingAuthorization(SubResource):
     """# IssuingAuthorization object
     An IssuingAuthorization presents purchase data to be analysed and answered with an approval or a declination.
     ## Attributes:
@@ -33,8 +33,7 @@ class IssuingAuthorization(Resource):
     def __init__(self, end_to_end_id, amount, tax, card_id, issuer_amount, issuer_currency_code, merchant_amount,
                  merchant_currency_code, merchant_category_code, merchant_country_code, acquirer_id, merchant_id,
                  merchant_name, merchant_fee, wallet_id, method_code, score, is_partial_allowed, purpose, card_tags,
-                 holder_tags, id):
-        Resource.__init__(self, id=id)
+                 holder_tags):
         self.end_to_end_id = end_to_end_id
         self.amount = amount
         self.tax = tax

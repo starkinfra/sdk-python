@@ -1,5 +1,6 @@
 import starkinfra
 from unittest import TestCase, main
+from datetime import date, timedelta
 from tests.utils.user import exampleProject
 from tests.utils.holder import generateExampleHoldersJson
 
@@ -9,7 +10,12 @@ starkinfra.user = exampleProject
 class TestIssuingHolderQuery(TestCase):
 
     def test_success(self):
-        holders = starkinfra.issuingholder.query(limit=10, expand=["rules"])
+        holders = starkinfra.issuingholder.query(
+            limit=10,
+            expand=["rules"],
+            after=date.today() - timedelta(days=100),
+            before=date.today(),
+        )
         for holder in holders:
             self.assertEqual(holder.id, str(holder.id))
 
@@ -20,7 +26,12 @@ class TestIssuingHolderPage(TestCase):
         cursor = None
         ids = []
         for _ in range(2):
-            holders, cursor = starkinfra.issuingholder.page(limit=2, cursor=cursor)
+            holders, cursor = starkinfra.issuingholder.page(
+                limit=2,
+                after=date.today() - timedelta(days=100),
+                before=date.today(),
+                cursor=cursor
+            )
             for holder in holders:
                 self.assertFalse(holder.id in ids)
                 ids.append(holder.id)

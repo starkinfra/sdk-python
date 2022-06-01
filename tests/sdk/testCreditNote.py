@@ -11,6 +11,8 @@ class TestCreditNotePost(TestCase):
 
     def test_success(self):
         notes = generateExampleCreditNoteJson(n=1)
+        for note in notes:
+            print(note)
         notes = starkinfra.creditnote.create(notes)
         for note in notes:
             self.assertIsNotNone(note.id)

@@ -1,15 +1,15 @@
 from starkcore.utils.api import from_api_json
 from starkcore.utils.resource import Resource
+from starkcore.utils.checks import check_datetime, check_datetime_or_date, check_timedelta
 from .__discount import Discount
 from .__discount import resource as _discount_resource
 from .__description import Description
 from .__description import resource as _description_resource
-from starkcore.utils.checks import check_datetime, check_datetime_or_date, check_timedelta
 
 
 class Invoice(Resource):
     """# creditnote.Invoice object
-    Invoice object to be issued after contract signature and paid by the credit receiver.
+    Invoice issued after the contract is signed, to be paid by the credit receiver.
     ## Parameters (required):
     - amount [integer]: Invoice value in cents. Minimum = 1 (any value will be accepted). ex: 1234 (= R$ 12.34)
     ## Parameters (optional):
@@ -20,6 +20,7 @@ class Invoice(Resource):
     - tags [list of strings, default None]: list of strings for tagging
     - descriptions [list of creditnote.invoice.Description objects or dictionaries, default None]: list Description objects
     ## Attributes (return-only):
+    - id [string]: unique id returned when Invoice is created. ex: "5656565656565656"
     - name [string]: payer name. ex: "Iron Bank S.A."
     - tax_id [string]: payer tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
     - pdf [string]: public Invoice PDF URL. ex: "https://invoice.starkbank.com/pdf/d454fa4e524441c1b0c1a729457ed9d8"
@@ -28,8 +29,7 @@ class Invoice(Resource):
     - fine_amount [integer]: Invoice fine value calculated over nominal_amount. ex: 20000
     - interest_amount [integer]: Invoice interest value calculated over nominal_amount. ex: 10000
     - discount_amount [integer]: Invoice discount value calculated over nominal_amount. ex: 3000
-    - discounts [list of creditnote.invoice.Discount objects, default None]: list of Discount objects
-    - id [string]: unique id returned when Invoice is created. ex: "5656565656565656"
+    - discounts [list of creditnote.invoice.Discount objects]: list of Discount objects. ex: [Discount()]
     - brcode [string]: BR Code for the Invoice payment. ex: "00020101021226800014br.gov.bcb.pix2558invoice.starkbank.com/f5333103-3279-4db2-8389-5efe335ba93d5204000053039865802BR5913Arya Stark6009Sao Paulo6220051656565656565656566304A9A0"
     - status [string]: current Invoice status. ex: "registered" or "paid"
     - fee [integer]: fee charged by this Invoice. ex: 200 (= R$ 2.00)
@@ -38,20 +38,21 @@ class Invoice(Resource):
     - updated [datetime.datetime]: latest update datetime for the Invoice. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, amount, tax_id=None, name=None, due=None, expiration=None, fine=None, interest=None,
-                 tags=None, descriptions=None, pdf=None, link=None, nominal_amount=None, fine_amount=None,
-                 interest_amount=None, discount_amount=None, discounts=None, id=None, brcode=None, status=None,
-                 fee=None, transaction_ids=None, created=None, updated=None):
+    def __init__(self, amount, due=None, expiration=None, fine=None, interest=None, tags=None, descriptions=None,
+                 id=None, name=None, tax_id=None, pdf=None, link=None, nominal_amount=None, fine_amount=None,
+                 interest_amount=None, discount_amount=None, discounts=None, brcode=None, status=None, fee=None,
+                 transaction_ids=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.amount = amount
         self.due = check_datetime_or_date(due)
-        self.tax_id = tax_id
-        self.name = name
         self.expiration = check_timedelta(expiration)
         self.fine = fine
         self.interest = interest
         self.tags = tags
+        self.descriptions = parse_descriptions(descriptions)
+        self.name = name
+        self.tax_id = tax_id
         self.pdf = pdf
         self.link = link
         self.nominal_amount = nominal_amount
@@ -59,7 +60,6 @@ class Invoice(Resource):
         self.interest_amount = interest_amount
         self.discount_amount = discount_amount
         self.discounts = parse_discounts(discounts)
-        self.descriptions = parse_descriptions(descriptions)
         self.brcode = brcode
         self.status = status
         self.fee = fee

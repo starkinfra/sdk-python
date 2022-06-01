@@ -25,7 +25,7 @@ _resource = {"class": Webhook, "name": "Webhook"}
 
 def create(url, subscriptions, user=None):
     """# Create Webhook subscription
-    Send a single Webhook subscription for creation in the Stark Bank API
+    Send a single Webhook subscription for creation at the Stark Infra API
     ## Parameters (required):
     - url [string]: url to which notification events will be sent to. ex: "https://webhook.site/60e9c18e-4b5c-4369-bda1-ab5fcd8e1b29"
     - subscriptions [list of strings]: list of any non-empty combination of the available services. ex: ["contract", "credit-note", "signer"]
@@ -39,7 +39,7 @@ def create(url, subscriptions, user=None):
 
 def get(id, user=None):
     """# Retrieve a specific Webhook subscription
-    Receive a single Webhook subscription object previously created in the Stark Bank API by its id
+    Receive a single Webhook subscription object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
@@ -52,7 +52,7 @@ def get(id, user=None):
 
 def query(limit=None, user=None):
     """# Retrieve Webhook subcriptions
-    Receive a generator of Webhook subcription objects previously created in the Stark Bank API
+    Receive a generator of Webhook subcription objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
@@ -64,7 +64,7 @@ def query(limit=None, user=None):
 
 def page(cursor=None, limit=None, user=None):
     """# Retrieve paged Webhooks
-    Receive a list of up to 100 Webhook objects previously created in the Stark Bank API and the cursor to the next page.
+    Receive a list of up to 100 Webhook objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
@@ -84,7 +84,7 @@ def page(cursor=None, limit=None, user=None):
 
 def delete(id, user=None):
     """# Delete a Webhook subscription entity
-    Delete a Webhook subscription entity previously created in the Stark Bank API
+    Delete a Webhook subscription entity previously created in the Stark Infra API
     ## Parameters (required):
     - id [string]: Webhook unique id. ex: "5656565656565656"
     ## Parameters (optional):

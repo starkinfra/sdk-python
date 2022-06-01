@@ -285,11 +285,11 @@ To simplify the following SDK examples, we will only use the `query` function, b
 # Testing in Sandbox
 
 Your initial balance is zero. For many operations in Stark Infra, you'll need funds
-in your account, which can be added to your balance by creating a Pix Request. 
+in your account, which can be added to your balance by creating a starkbank.Invoice. 
 
-In the Sandbox environment, most of the created Pix Requests will be automatically paid,
+In the Sandbox environment, most of the created starkbank.Invoices will be automatically paid,
 so there's nothing else you need to do to add funds to your account. Just create
-a few Pix Request and wait around a bit.
+a few starkbank.Invoice and wait around a bit.
 
 In Production, you (or one of your clients) will need to actually pay this Pix Request
 for the value to be credited to your account.
@@ -425,12 +425,12 @@ cards = starkinfra.issuingcard.create([
         holder_name="Developers",
         holder_tax_id="012.345.678-90",
         holder_external_id="1234",
-        rules=starkinfra.IssuingRule(
+        rules=[starkinfra.IssuingRule(
             name="general",
             interval="week",
             amount=50000,
             currency_code="USD"
-        )
+        )]
     )
 ])
 
@@ -666,7 +666,7 @@ for log in logs:
     print(log)
 ```
 
-### Get a IssuingInvoice log
+### Get an IssuingInvoice log
 
 You can also get a specific log by its id.
 
@@ -713,7 +713,7 @@ print(invoice)
 
 ### Query IssuingWithdrawals
 
-You can get a list of created invoices given some filters.
+You can get a list of created withdrawals given some filters.
 
 ```python
 import starkinfra
@@ -1772,7 +1772,7 @@ You can get a specific webhook by its id.
 ```python
 import starkinfra
 
-webhook = starkinfra.webhook.get("10827361982368179")
+webhook = starkinfra.webhook.get("1082736198236817")
 
 print(webhook)
 ```
@@ -1784,7 +1784,7 @@ You can also delete a specific webhook by its id.
 ```python
 import starkinfra
 
-webhook = starkinfra.webhook.delete("10827361982368179")
+webhook = starkinfra.webhook.delete("1082736198236817")
 
 print(webhook)
 ```
@@ -1845,7 +1845,7 @@ You can get a specific webhook event by its id.
 ```python
 import starkinfra
 
-event = starkinfra.event.get("10827361982368179")
+event = starkinfra.event.get("1082736198236817")
 
 print(event)
 ```
@@ -1871,7 +1871,7 @@ With this function, you can manually set events retrieved from the API as
 ```python
 import starkinfra
 
-event = starkinfra.event.update(id="129837198237192", is_delivered=True)
+event = starkinfra.event.update(id="1298371982371921", is_delivered=True)
 
 print(event)
 ```
@@ -1919,7 +1919,7 @@ try:
         starkinfra.PixReversal(
             amount=100,
             end_to_end_id="E00000000202201060100rzsJzG9PzMg",
-            external_id="17238435823958934",
+            external_id="1723843582395893",
             reason="bankError",
         )
     ])

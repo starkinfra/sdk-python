@@ -75,7 +75,7 @@ class TestPixInfractionInfoGet(TestCase):
 class TestPixInfractionInfoDelete(TestCase):
 
     def test_success(self):
-        infraction_report = starkinfra.pixinfraction.create(generateExamplePixInfractionsJson())
+        infraction_report = starkinfra.pixinfraction.create(generateExamplePixInfractionsJson())[0]
         deleted_infraction_report = starkinfra.pixinfraction.cancel(infraction_report.id)
         self.assertIsNotNone(deleted_infraction_report.id)
         self.assertEqual(deleted_infraction_report.id, infraction_report.id)

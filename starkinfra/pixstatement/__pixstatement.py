@@ -13,8 +13,8 @@ class PixStatement(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the created object.
     ## Parameters (required):
-    - after [datetime.date]: transactions that happened at this date are stored in the PixStatement, must be the same as before. ex: (2022-01-01)
-    - before [datetime.date]: transactions that happened at this date are stored in the PixStatement, must be the same as after. ex: (2022-01-01)
+    - after [datetime.date]: transactions that happened at this date are stored in the PixStatement, must be the same as before. ex: datetime.date(2020, 3, 10)
+    - before [datetime.date]: transactions that happened at this date are stored in the PixStatement, must be the same as after. ex: datetime.date(2020, 3, 10)
     - type [string]: types of entities to include in statement. Options: ["interchange", "interchangeTotal", "transaction"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixStatement is created. ex: "5656565656565656"
@@ -24,8 +24,7 @@ class PixStatement(Resource):
     - updated [datetime.datetime]: latest update datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, after, before, type, id=None, status=None, transaction_count=None, created=None,
-                 updated=None):
+    def __init__(self, after, before, type, id=None, status=None, transaction_count=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.after = check_date(after)
@@ -70,7 +69,7 @@ def query(limit=None, ids=None, user=None):
     """# Retrieve PixStatements
     Receive a generator of PixStatements objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:

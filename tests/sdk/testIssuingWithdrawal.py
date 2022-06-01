@@ -1,5 +1,6 @@
 import starkinfra
 from unittest import TestCase, main
+from datetime import date, timedelta
 from starkinfra import IssuingWithdrawal
 from tests.utils.user import exampleProject
 from tests.utils.withdrawal import generateExampleWithdrawalJson
@@ -10,7 +11,11 @@ starkinfra.user = exampleProject
 class TestIssuingWithdrawalQuery(TestCase):
 
     def test_success(self):
-        withdrawals = starkinfra.issuingwithdrawal.query(limit=10)
+        withdrawals = starkinfra.issuingwithdrawal.query(
+            limit=10,
+            after=date.today() - timedelta(days=100),
+            before=date.today(),
+        )
         for withdrawal in withdrawals:
             self.assertEqual(withdrawal.id, str(withdrawal.id))
 

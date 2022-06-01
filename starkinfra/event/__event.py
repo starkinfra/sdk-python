@@ -77,7 +77,7 @@ def query(limit=None, after=None, before=None, is_delivered=None, user=None):
     """# Retrieve notification Events
     Receive a generator of notification Event objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - is_delivered [bool, default None]: bool to filter successfully delivered events. ex: True or False
@@ -146,7 +146,10 @@ def update(id, is_delivered, user=None):
     ## Return:
     - target Event with updated attributes
     """
-    return rest.patch_id(resource=_resource, id=id, user=user, is_delivered=is_delivered)
+    payload = {
+        "is_delivered": is_delivered
+    }
+    return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)
 
 
 def parse(content, signature, user=None):

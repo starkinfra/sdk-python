@@ -5,7 +5,7 @@ from starkcore.utils.checks import check_date
 
 class PixChargeback(Resource):
     """# PixChargeback object
-    A pix chargeback can be created when fraud is detected on a transaction or a system malfunction
+    A Pix chargeback can be created when fraud is detected on a transaction or a system malfunction
     results in an erroneous transaction.
     It notifies another participant of your request to reverse the payment they have received.
     When you initialize a PixChargeback, the entity will not be automatically
@@ -18,21 +18,21 @@ class PixChargeback(Resource):
     ## Parameters (optional):
     - description [string, default None]: description for the PixChargeback.
     ## Attributes (return-only):
+    - id [string]: unique id returned when the PixChargeback is created. ex: "5656565656565656"
     - analysis [string]: analysis that led to the result.
     - bacen_id [string]: central bank's unique UUID that identifies the PixChargeback.
     - sender_bank_code [string]: bank_code of the Pix participant that created the PixChargeback. ex: "20018183"
     - receiver_bank_code [string]: bank_code of the Pix participant that received the PixChargeback. ex: "20018183"
-    - rejection_reason [string]: reason for the rejection of the pix chargeback. Options: "noBalance", "accountClosed", "unableToReverse"
+    - rejection_reason [string]: reason for the rejection of the Pix chargeback. Options: "noBalance", "accountClosed", "unableToReverse"
     - reversal_reference_id [string]: return id of the reversal transaction. ex: "D20018183202202030109X3OoBHG74wo".
-    - id [string]: unique id returned when the PixChargeback is created. ex: "5656565656565656"
     - result [string]: result after the analysis of the PixChargeback by the receiving party. Options: "rejected", "accepted", "partiallyAccepted"
     - status [string]: current PixChargeback status. Options: "created", "failed", "delivered", "closed", "canceled".
     - created [datetime.datetime]: creation datetime for the PixChargeback. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the PixChargeback. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self,  amount, reference_id, reason, description=None, analysis=None, bacen_id=None,
-                 sender_bank_code=None, receiver_bank_code=None, rejection_reason=None, reversal_reference_id=None, id=None,
+    def __init__(self,  amount, reference_id, reason, description=None, id=None, analysis=None, bacen_id=None,
+                 sender_bank_code=None, receiver_bank_code=None, rejection_reason=None, reversal_reference_id=None,
                  result=None, status=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
@@ -86,7 +86,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, user=None)
     """# Retrieve PixChargebacks
     Receive a generator of PixChargebacks objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "closed", "canceled"]

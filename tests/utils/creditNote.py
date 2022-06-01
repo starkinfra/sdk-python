@@ -1,3 +1,4 @@
+# coding=utf-8
 from uuid import uuid4
 from copy import deepcopy
 from random import randint, choice
@@ -35,6 +36,12 @@ def _generateCreditNote():
             )
         ],
         external_id="1234",
+        street_line_1="Rua ABC",
+        street_line_2="Ap 123",
+        district="Jardim Paulista",
+        city="São Paulo",
+        state_code="SP",
+        zip_code="01234-567",
     )
 
 

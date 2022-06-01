@@ -26,6 +26,12 @@ class CreditNote(Resource):
     - payment [creditnote.Transfer]: payment entity to be created and sent to the credit receiver. ex: payment=creditnote.Transfer()
     - signers [list of creditnote.Signer objects]: signer's name, contact and delivery method for the signature request. ex: signers=[creditnote.Signer(), creditnote.Signer()]
     - external_id [string]: a string that must be unique among all your CreditNotes, used to avoid resource duplication. ex: "my-internal-id-123456"
+    - street_line_1 [string]: credit receiver main address. ex: "Av. Paulista, 200"
+    - street_line_2 [string]: credit receiver address complement. ex: "Apto. 123"
+    - district [string]: credit receiver address district / neighbourhood. ex: "Bela Vista"
+    - city [string]: credit receiver address city. ex: "Rio de Janeiro"
+    - state_code [string]: credit receiver address state. ex: "GO"
+    - zip_code [string]: credit receiver address zip code. ex: "01311-200"
     ## Parameters (conditionally required):
     - payment_type [string]: payment type, inferred from the payment parameter if it is not a dictionary. ex: "transfer"
     Parameters (optional):
@@ -46,9 +52,9 @@ class CreditNote(Resource):
     """
 
     def __init__(self, template_id, name, tax_id, nominal_amount, scheduled, invoices, payment, signers, external_id,
-                 payment_type=None, rebate_amount=None, tags=None, id=None, amount=None, expiration=None,
-                 document_id=None, status=None, transaction_ids=None, workspace_id=None, tax_amount=None,
-                 interest=None, created=None, updated=None):
+                 street_line_1, street_line_2, district, city, state_code, zip_code, payment_type=None,
+                 rebate_amount=None, tags=None, id=None, amount=None, expiration=None, document_id=None, status=None,
+                 transaction_ids=None, workspace_id=None, tax_amount=None, interest=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.template_id = template_id
@@ -59,6 +65,12 @@ class CreditNote(Resource):
         self.invoices = _parse_invoices(invoices)
         self.signers = _parse_signers(signers)
         self.external_id = external_id
+        self.street_line_1 = street_line_1
+        self.street_line_2 = street_line_2
+        self.district = district
+        self.city = city
+        self.state_code = state_code
+        self.zip_code = zip_code
         self.rebate_amount = rebate_amount
         self.tags = tags
         self.amount = amount

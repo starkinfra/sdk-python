@@ -1604,51 +1604,13 @@ notes = starkinfra.creditnote.create([
                 method="link"
             )
         ],
-        external_id="1234"
-    ),
-    starkinfra.CreditNote(
-        template_id="5656565656565656",
-        name="Jamie Lannister",
-        tax_id="012.345.678-90",
-        nominal_amount=240000,
-        scheduled="2022-04-28",
-        invoices=[
-            starkinfra.creditnote.Invoice(
-                due="2023-06-25",
-                amount=100000,
-                fine=10,
-                interest=2
-            ),
-            starkinfra.creditnote.Invoice(
-                due="2023-08-25",
-                amount=100000,
-                fine=11,
-                interest=2.1
-            ),
-            starkinfra.creditnote.Invoice(
-                due="2023-10-25",
-                amount=100000,
-                fine=12.5,
-                interest=2.2
-            )
-        ],
-        tags=["test", "testing"],
-        payment=starkinfra.creditnote.Transfer(
-            bank_code="00000000",
-            branch_code="1234",
-            account_number="129340-1",
-            name="Jamie Lannister",
-            tax_id="012.345.678-90",
-        ),
-        payment_type="transfer",
-        signers=[
-            starkinfra.creditnote.Signer(
-                name="Jamie Lannister",
-                contact="jamie.lannister@gmail.com",
-                method="link"
-            )
-        ],
-        external_id="1234"
+        external_id="1234",
+        street_line_1="Av. Paulista, 200",
+        street_line_2="10 andar",
+        district="Bela Vista",
+        city="Sao Paulo",
+        state_code="SP",
+        zip_code="01310-000",
     )
 ])
 

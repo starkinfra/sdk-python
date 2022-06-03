@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- credit receiver's billing address on CreditNote
 ### Fixed
 - after and before parameter types on query and page methods
 

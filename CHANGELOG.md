@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Fixed
+- expiration parser for masked datetimes
 
 ## [0.1.0] - 2022-06-03
 ### Added

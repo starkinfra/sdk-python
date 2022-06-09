@@ -60,9 +60,15 @@ class IssuingCard(Resource):
         self.status = status
         self.number = number
         self.security_code = security_code
-        self.expiration = check_datetime(expiration)
+        self.expiration = parse_expiration(expiration)
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
+
+
+def parse_expiration(expiration):
+    if expiration is None or "*" in expiration:
+        return None
+    return check_datetime(expiration)
 
 
 _resource = {"class": IssuingCard, "name": "IssuingCard"}

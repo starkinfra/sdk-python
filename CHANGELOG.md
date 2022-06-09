@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.1.1] - 2022-06-09
 ### Fixed
 - validation for masked dates and datetimes
 

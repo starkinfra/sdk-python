@@ -15,8 +15,6 @@ class Invoice(Resource):
     ## Parameters (optional):
     - due [datetime.datetime or datetime.date or string, default now + 2 days]: Invoice due date in UTC ISO format. ex: "2020-10-28T17:59:26.249976+00:00" for immediate invoices and "2020-10-28" for scheduled invoices
     - expiration [integer or datetime.timedelta, default 5097600 (59 days)]: time interval in seconds between due date and expiration date. ex 123456789
-    - fine [float, default 2.0]: Invoice fine for overdue payment in %. ex: 2.5
-    - interest [float, default 1.0]: Invoice monthly interest for overdue payment in %. ex: 5.2
     - tags [list of strings, default None]: list of strings for tagging
     - descriptions [list of creditnote.invoice.Description objects or dictionaries, default None]: list Description objects
     ## Attributes (return-only):
@@ -25,6 +23,8 @@ class Invoice(Resource):
     - tax_id [string]: payer tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
     - pdf [string]: public Invoice PDF URL. ex: "https://invoice.starkbank.com/pdf/d454fa4e524441c1b0c1a729457ed9d8"
     - link [string]: public Invoice webpage URL. ex: "https://my-workspace.sandbox.starkbank.com/invoicelink/d454fa4e524441c1b0c1a729457ed9d8"
+    - fine [float]: Invoice fine for overdue payment in %. ex: 2.5
+    - interest [float]: Invoice monthly interest for overdue payment in %. ex: 5.2
     - nominal_amount [integer]: Invoice emission value in cents (will change if invoice is updated, but not if it's paid). ex: 400000
     - fine_amount [integer]: Invoice fine value calculated over nominal_amount. ex: 20000
     - interest_amount [integer]: Invoice interest value calculated over nominal_amount. ex: 10000
@@ -38,8 +38,8 @@ class Invoice(Resource):
     - updated [datetime.datetime]: latest update datetime for the Invoice. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, amount, due=None, expiration=None, fine=None, interest=None, tags=None, descriptions=None,
-                 id=None, name=None, tax_id=None, pdf=None, link=None, nominal_amount=None, fine_amount=None,
+    def __init__(self, amount, due=None, expiration=None, tags=None, descriptions=None, id=None, name=None, tax_id=None,
+                 pdf=None, link=None, fine=None, interest=None, nominal_amount=None, fine_amount=None,
                  interest_amount=None, discount_amount=None, discounts=None, brcode=None, status=None, fee=None,
                  transaction_ids=None, created=None, updated=None):
         Resource.__init__(self, id=id)

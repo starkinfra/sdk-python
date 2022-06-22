@@ -13,6 +13,12 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- CreditNotePreview sub-resource
+### Removed
+- updated attribute from IssuingBin resource
+### Changed
+- fine and interest attributes to return only on CreditNote.Invoice sub-resource
 
 ## [0.1.1] - 2022-06-09
 ### Fixed

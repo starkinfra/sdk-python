@@ -12,18 +12,16 @@ class IssuingBin(Resource):
     - settlement [string]: settlement type. ex: "credit"
     - category [string]: purchase category. ex: "prepaid"
     - client [string]: client type. ex: "business"
-    - updated [datetime.datetime]: latest update datetime for the Bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the Bin. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, id=None, updated=None, created=None, network=None, settlement=None, category=None, client=None):
+    def __init__(self, id=None, created=None, network=None, settlement=None, category=None, client=None):
         Resource.__init__(self, id=id)
 
         self.network = network
         self.settlement = settlement
         self.category = category
         self.client = client
-        self.updated = updated
         self.created = created
 
 

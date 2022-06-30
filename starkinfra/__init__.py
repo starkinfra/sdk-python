@@ -38,9 +38,6 @@ from .pixinfraction.__pixinfraction import PixInfraction
 from . import pixchargeback
 from .pixchargeback.__pixchargeback import PixChargeback
 
-from . import issuingauthorization
-from .issuingauthorization.__issuingauthorization import IssuingAuthorization
-
 from . import issuingbalance
 from .issuingbalance.__issuingbalance import IssuingBalance
 

@@ -101,5 +101,21 @@ class TesteEventProcess(TestCase):
             )
 
 
+class TestPixRequestResponse(TestCase):
+
+    def test_approved(self):
+        response = starkinfra.pixrequest.response(
+            status="approved",
+        )
+        print(response)
+
+    def test_denied(self):
+        response = starkinfra.pixrequest.response(
+            status="denied",
+            reason="taxIdMismatch",
+        )
+        print(response)
+
+
 if __name__ == '__main__':
     main()

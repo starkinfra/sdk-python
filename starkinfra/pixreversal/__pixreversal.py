@@ -1,3 +1,4 @@
+from json import dumps
 from ..utils import rest
 from ..utils.parse import parse_and_verify
 from starkcore.utils.resource import Resource
@@ -156,5 +157,24 @@ def parse(content, signature, user=None):
     ## Return:
     - Parsed PixReversal object
     """
+    return parse_and_verify(
+        content=content,
+        signature=signature,
+        user=user,
+        resource=_resource
+    )
 
-    return parse_and_verify(content=content, signature=signature, user=user, resource=_resource)
+
+def response(status, reason=None):
+    """# Helps you respond PixReversal requests
+    ## Parameters (required):
+    - status [string]: response to the authorization. ex: "approved" or "denied"
+    ## Parameters (conditionally required):
+    - reason [string]: denial reason. Options: "invalidAccountNumber", "blockedAccount", "accountClosed", "invalidAccountType", "invalidTransactionType", "taxIdMismatch", "invalidTaxId", "orderRejected", "reversalTimeExpired", "settlementFailed"
+    ## Return:
+    - Dumped JSON string that must be returned to us on the PixReversal requests
+    """
+    return dumps({"authorization": {
+        "status": status,
+        "reason": reason or "",
+    }})

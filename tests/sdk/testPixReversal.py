@@ -1,4 +1,5 @@
 import starkinfra
+from json import dumps, loads
 from unittest import TestCase, main
 from datetime import timedelta, date
 from starkcore.error import InvalidSignatureError
@@ -87,12 +88,12 @@ class TesteEventProcess(TestCase):
         )
         print(reversal)
 
-    # def test_normalized_success(self):
-    #     reversal = starkinfra.pixreversal.parse(
-    #         content=dumps(loads(self.content), sort_keys=False, indent=4),
-    #         signature=self.valid_signature
-    #     )
-    #     print(reversal)
+    def test_normalized_success(self):
+        reversal = starkinfra.pixreversal.parse(
+            content=dumps(loads(self.content), sort_keys=False, indent=4),
+            signature=self.valid_signature
+        )
+        print(reversal)
 
     def test_invalid_signature(self):
         with self.assertRaises(InvalidSignatureError):
@@ -107,6 +108,22 @@ class TesteEventProcess(TestCase):
                 content=self.content,
                 signature=self.malformed_signature,
             )
+
+
+class TestPixRequestResponse(TestCase):
+
+    def test_approved(self):
+        response = starkinfra.pixreversal.response(
+            status="approved",
+        )
+        print(response)
+
+    def test_denied(self):
+        response = starkinfra.pixreversal.response(
+            status="denied",
+            reason="taxIdMismatch",
+        )
+        print(response)
 
 
 if __name__ == '__main__':

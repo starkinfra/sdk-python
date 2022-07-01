@@ -520,6 +520,7 @@ print(log)
 ### Process Purchase authorizations
 
 It's easy to process purchase authorizations delivered to your endpoint.
+Remember to pass the signature header so the SDK can make sure it's StarkInfra that sent you the event.
 If you do not approve or decline the authorization within 2 seconds, the authorization will be denied.
 
 ```python
@@ -527,14 +528,14 @@ import starkinfra
 
 request = listen()  # this is the method you made to get the events posted to your webhook endpoint
 
-authorization = starkinfra.issuingauthorization.parse(
+authorization = starkinfra.issuingpurchase.parse(
     content=request.data.decode("utf-8"),
     signature=request.headers["Digital-Signature"],
 )
 
 sendResponse(  # you should also implement this method
-    starkinfra.issuingauthorization.response(  # this optional method just helps you build the response JSON
-        status="accepted",
+    starkinfra.issuingpurchase.response(  # this optional method just helps you build the response JSON
+        status="approved",
         amount=authorization.amount,
         tags=["my-purchase-id/123"],
     )
@@ -543,7 +544,7 @@ sendResponse(  # you should also implement this method
 # or 
 
 sendResponse(
-    starkinfra.issuingauthorization.response(
+    starkinfra.issuingpurchase.response(
         status="denied",
         reason="other",
         tags=["other-id/456"],
@@ -872,6 +873,21 @@ pix_request = starkinfra.pixrequest.parse(
 )
 
 print(pix_request)
+
+sendResponse(  # you should also implement this method
+    starkinfra.pixrequest.response(  # this optional method just helps you build the response JSON
+        status="approved",
+    )
+)
+
+# or 
+
+sendResponse(
+    starkinfra.pixrequest.response(
+        status="denied",
+        reason="orderRejected",
+    )
+)
 ```
   
 ### Query PixRequest logs
@@ -973,6 +989,21 @@ reversal = starkinfra.pixreversal.parse(
 )
 
 print(reversal)
+
+sendResponse(  # you should also implement this method
+    starkinfra.pixreversal.response(  # this optional method just helps you build the response JSON
+        status="approved",
+    )
+)
+
+# or 
+
+sendResponse(
+    starkinfra.pixreversal.response(
+        status="denied",
+        reason="orderRejected",
+    )
+)
 ```
 
 ### Query PixReversal logs

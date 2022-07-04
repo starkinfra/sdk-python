@@ -1,7 +1,7 @@
 from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_datetime, check_date
 from ..utils import rest
-from ..__issuingrule import parse_rules
+from ..issuingrule import parse_rules
 
 
 class IssuingHolder(Resource):

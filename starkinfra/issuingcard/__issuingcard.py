@@ -1,7 +1,7 @@
 from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_date, check_datetime
 from ..utils import rest
-from ..__issuingrule import parse_rules
+from ..issuingrule import parse_rules
 
 
 class IssuingCard(Resource):
@@ -16,7 +16,7 @@ class IssuingCard(Resource):
     ## Parameters (optional):
     - display_name [string, default None]: card displayed name. ex: "ANTHONY STARK"
     - rules [list of IssuingRule, default []]: [EXPANDABLE] list of card spending rules.
-    - bin_id [string, default None]: BIN ID to which the card is bound. ex: "53810200"
+    - product_id [string, default None]: card product ID to which the card is bound. ex: "53810200"
     - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
     - street_line_1 [string, default sub-issuer street line 1]: card holder main address. ex: "Av. Paulista, 200"
     - street_line_2 [string, default sub-issuer street line 2]: card holder address complement. ex: "Apto. 123"
@@ -36,7 +36,7 @@ class IssuingCard(Resource):
     - created [datetime.datetime]: creation datetime for the IssuingCard. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, holder_name, holder_tax_id, holder_external_id, display_name=None, rules=None, bin_id=None,
+    def __init__(self, holder_name, holder_tax_id, holder_external_id, display_name=None, rules=None, product_id=None,
                  tags=None, street_line_1=None, street_line_2=None, district=None, city=None, state_code=None,
                  zip_code=None, id=None, holder_id=None, type=None, status=None, number=None, security_code=None,
                  expiration=None, created=None, updated=None):
@@ -47,7 +47,7 @@ class IssuingCard(Resource):
         self.holder_external_id = holder_external_id
         self.display_name = display_name
         self.rules = parse_rules(rules)
-        self.bin_id = bin_id
+        self.product_id = product_id
         self.tags = tags
         self.street_line_1 = street_line_1
         self.street_line_2 = street_line_2

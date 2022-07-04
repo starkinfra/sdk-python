@@ -22,7 +22,6 @@ class PixReversal(Resource):
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixReversal is created. ex: "5656565656565656".
     - return_id [string]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo".
-    - bank_code [string]: code of the bank institution in Brazil. ex: "20018183"
     - fee [string]: fee charged by this PixReversal. ex: 200 (= R$ 2.00)
     - status [string]: current PixReversal status. ex: "created", "processing", "success", "failed"
     - flow [string]: direction of money flow. ex: "in" or "out"
@@ -30,7 +29,7 @@ class PixReversal(Resource):
     - updated [datetime.datetime]: latest update datetime for the PixReversal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, amount, external_id, end_to_end_id, reason, tags=None, id=None, return_id=None, bank_code=None,
+    def __init__(self, amount, external_id, end_to_end_id, reason, tags=None, id=None, return_id=None,
                  fee=None, status=None, flow=None, created=None, updated=None):
         Resource.__init__(self, id=id)
         
@@ -40,7 +39,6 @@ class PixReversal(Resource):
         self.reason = reason
         self.tags = tags
         self.return_id = return_id
-        self.bank_code = bank_code
         self.fee = fee
         self.status = status
         self.flow = flow

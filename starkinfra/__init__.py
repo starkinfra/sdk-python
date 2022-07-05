@@ -65,11 +65,20 @@ from .issuinginvoice.__issuinginvoice import IssuingInvoice
 from . import issuingwithdrawal
 from .issuingwithdrawal.__issuingwithdrawal import IssuingWithdrawal
 
-from . import issuingbin
-from .issuingbin.__issuingbin import IssuingBin
+from . import issuingproduct
+from .issuingproduct.__issuingproduct import IssuingProduct
 
-from . import __issuingrule
-from .__issuingrule.__issuingrule import IssuingRule
+from . import issuingrule
+from .issuingrule.__issuingrule import IssuingRule
+
+from . import merchantcategory
+from .merchantcategory.__merchantcategory import MerchantCategory
+
+from . import merchantcountry
+from .merchantcountry.__merchantcountry import MerchantCountry
+
+from . import cardmethod
+from .cardmethod.__cardmethod import CardMethod
 
 from . import webhook
 from .webhook.__webhook import Webhook

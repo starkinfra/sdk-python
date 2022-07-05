@@ -22,7 +22,7 @@ This SDK version is compatible with the Stark Infra API v2.
 - [Testing in Sandbox](#testing-in-sandbox) 
 - [Usage](#usage)
     - [Issuing](#issuing)
-        - [BINs](#query-issuingbins): View available sub-issuer BINs (a.k.a. card number ranges)
+        - [Products](#query-issuingproducts): View available sub-issuer card products (a.k.a. card number ranges or BINs)
         - [Holders](#create-issuingholders): Manage card holders
         - [Cards](#create-issuingcards): Create virtual and/or physical cards
         - [Purchases](#process-purchase-authorizations): Authorize and view your past purchases
@@ -30,6 +30,7 @@ This SDK version is compatible with the Stark Infra API v2.
         - [Withdrawals](#create-issuingwithdrawals): Send money back to your Workspace from your issuing balance
         - [Balance](#get-your-issuingbalance): View your issuing balance
         - [Transactions](#query-issuingtransactions): View the transactions that have affected your issuing balance
+        - [Enums](#issuing-enums): Query enums related to the issuing purchases, such as merchant categories, countries and card purchase methods
     - [Pix](#pix)
         - [PixRequests](#create-pixrequests): Create Pix transactions
         - [PixReversals](#create-pixreversals): Reverse Pix transactions
@@ -304,17 +305,17 @@ Here are a few examples on how to use the SDK. If you have any doubts, use the b
 
 ## Issuing
 
-### Query IssuingBins
+### Query IssuingProducts
 
-To take a look at the sub-issuer BINs available to you, just run the following:
+To take a look at the sub-issuer card products available to you, just run the following:
 
 ```python
 import starkinfra
 
-bins = starkinfra.issuingbin.query()
+products = starkinfra.issuingproduct.query()
 
-for bin in bins:
-    print(bin)
+for product in products:
+    print(product)
 ```
 
 This will tell which card products and card number prefixes you have at your disposal.
@@ -340,7 +341,25 @@ holders = starkinfra.issuingholder.create([
                 "name": "General USD",
                 "interval": "day",
                 "amount": 100000,
-                "currencyCode": "USD"
+                "currencyCode": "USD",
+                "categories": [
+                    {
+                        "type": "services"
+                    },
+                    {
+                        "code": "fastFoodRestaurants"
+                    }
+                ],
+                "countries": [
+                    {
+                        "code": "USA"
+                    }
+                ],
+                "methods": [
+                    {
+                        "code": "token"
+                    }
+                ]
             }
         ]
     )
@@ -430,7 +449,17 @@ cards = starkinfra.issuingcard.create([
             name="general",
             interval="week",
             amount=50000,
-            currency_code="USD"
+            currency_code="USD",
+            categories=[
+                starkinfra.MerchantCategory(type="services"),  # Covers all service-related MCCs
+                starkinfra.MerchantCategory(code="fastFoodRestaurants")  # Covers a specific MCC
+            ],
+            countries=[
+                starkinfra.MerchantCountry(code="BRA")
+            ],
+            methods=[
+                starkinfra.CardMethod(code="token")
+            ]
         )]
     )
 ])
@@ -769,6 +798,57 @@ import starkinfra
 transaction = starkinfra.issuingtransaction.get("5155165527080960")
 
 print(transaction)
+```
+
+### Issuing Enums
+
+#### Query MerchantCategories
+
+You can query any merchant categories using this resource.
+You may also use MerchantCategories to define specific category filters in IssuingRules.
+Either codes (which represents specific MCCs) or types (code groups) will be accepted as filters.
+
+```python
+import starkinfra
+
+categories = starkinfra.merchantcategory.query(
+    search="food",
+)
+
+for category in categories:
+    print(category)
+```
+
+#### Query MerchantCountries
+
+You can query any merchant countries using this resource.
+You may also use MerchantCountries to define specific country filters in IssuingRules.
+
+```python
+import starkinfra
+
+countries = starkinfra.merchantcountry.query(
+    search="brazil",
+)
+
+for country in countries:
+    print(country)
+```
+
+#### Query CardMethods
+
+You can query available card methods using this resource.
+You may also use CardMethods to define specific purchase method filters in IssuingRules.
+
+```python
+import starkinfra
+
+methods = starkinfra.cardmethod.query(
+    search="token",
+)
+
+for method in methods:
+    print(method)
 ```
 
 ## Pix

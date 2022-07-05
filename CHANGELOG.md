@@ -15,12 +15,16 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ## [Unreleased]
 ### Added
 - CreditNotePreview sub-resource
-- response method to PixRequest, PixReversal and IssuingPurchase resources
+- IssuingRule.Method sub-resources
+- IssuingRule.Country sub-resources
+- IssuingRule.Category sub-resources
 - parse method to IssuingPurchase resource
+- response method to PixRequest, PixReversal and IssuingPurchase resources
 ### Removed
-- updated attribute from IssuingBin resource
 - IssuingAuthorization resource
+- bank_code attribute from PixReversal resource
 ### Changed
+- IssuingBin resource to IssuingProduct
 - fine and interest attributes to return only on CreditNote.Invoice sub-resource
 
 ## [0.1.1] - 2022-06-09

@@ -24,5 +24,4 @@ def generateExampleHoldersJson(n=1):
         example_holder.tax_id = TaxIdGenerator.taxId()
         example_holder.rules = generateExampleRuleJson()
         holders.append(deepcopy(example_holder))
-    print(holders[0])
     return holders

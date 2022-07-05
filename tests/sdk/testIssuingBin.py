@@ -6,24 +6,24 @@ from tests.utils.user import exampleProject
 starkinfra.user = exampleProject
 
 
-class TestIssuingBinQuery(TestCase):
+class TestIssuingProductQuery(TestCase):
 
     def test_success(self):
-        bins = starkinfra.issuingbin.query()
-        for bin in bins:
-            self.assertEqual(bin.id, str(bin.id))
+        products = starkinfra.issuingproduct.query()
+        for product in products:
+            self.assertEqual(product.id, str(product.id))
 
 
-class TestIssuingBinPage(TestCase):
+class TestIssuingProductPage(TestCase):
 
     def test_success(self):
         cursor = None
         ids = []
         for _ in range(2):
-            bins, cursor = starkinfra.issuingbin.page(limit=2, cursor=cursor)
-            for bin in bins:
-                self.assertFalse(bin.id in ids)
-                ids.append(bin.id)
+            products, cursor = starkinfra.issuingproduct.page(limit=2, cursor=cursor)
+            for product in products:
+                self.assertFalse(product.id in ids)
+                ids.append(product.id)
             if cursor is None:
                 break
 

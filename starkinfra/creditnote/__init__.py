@@ -1,6 +1,5 @@
 from . import log
 from .log.__log import Log
-from .__signer import Signer
 from .invoice.__invoice import Invoice
 from .__transfer import Transfer
 from . import invoice

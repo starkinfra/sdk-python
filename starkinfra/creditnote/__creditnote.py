@@ -1,8 +1,8 @@
-from .__signer import Signer
 from .invoice.__invoice import Invoice
 from .invoice.__invoice import _resource as _invoice_resource
+from ..creditsigner.__creditsigner import CreditSigner
+from ..creditsigner.__creditsigner import _resource as _creditsigner_resource
 from .__transfer import Transfer
-from .__signer import _resource as _signer_resource
 from .__transfer import _resource as _transfer_resource
 from ..utils import rest
 from starkcore.utils.api import from_api_json
@@ -24,7 +24,7 @@ class CreditNote(Resource):
     - scheduled [datetime.date, datetime.datetime or string]: date of transfer execution. ex: scheduled=datetime(2020, 3, 10)
     - invoices [list of Invoice objects]: list of Invoice objects to be created and sent to the credit receiver. ex: invoices=[Invoice(), Invoice()]
     - payment [creditnote.Transfer]: payment entity to be created and sent to the credit receiver. ex: payment=creditnote.Transfer()
-    - signers [list of creditnote.Signer objects]: signer's name, contact and delivery method for the signature request. ex: signers=[creditnote.Signer(), creditnote.Signer()]
+    - signers [list of CreditSigner objects]: signer's name, contact and delivery method for the signature request. ex: signers=[CreditSigner(), CreditSigner()]
     - external_id [string]: a string that must be unique among all your CreditNotes, used to avoid resource duplication. ex: "my-internal-id-123456"
     - street_line_1 [string]: credit receiver main address. ex: "Av. Paulista, 200"
     - street_line_2 [string]: credit receiver address complement. ex: "Apto. 123"
@@ -95,10 +95,10 @@ _resource = {"class": CreditNote, "name": "CreditNote"}
 def _parse_signers(signers):
     parsed_signers = []
     for signer in signers:
-        if isinstance(signer, Signer):
+        if isinstance(signer, CreditSigner):
             parsed_signers.append(signer)
             continue
-        parsed_signers.append(from_api_json(_signer_resource, signer))
+        parsed_signers.append(from_api_json(_creditsigner_resource, signer))
     return parsed_signers
 
 

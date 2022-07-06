@@ -17,7 +17,7 @@ class StaticBrcode(Resource):
     - amount [integer, default 0]: positive integer that represents the amount in cents of the resulting Pix transaction. ex: 1234 (= R$ 12.34)
     - reconciliation_id [string, default None]: id to be used for conciliation of the resulting Pix transaction. ex: "123"
     ## Attributes (return-only):
-    - id [string]: id returned on creation, this is the BR code's QR code. ex: "00020126360014br.gov.bcb.pix0114+552840092118152040000530398654040.095802BR5915Jamie Lannister6009Sao Paulo620705038566304FC6C"
+    - id [string]: id returned on creation, this is the BR code. ex: "00020126360014br.gov.bcb.pix0114+552840092118152040000530398654040.095802BR5915Jamie Lannister6009Sao Paulo620705038566304FC6C"
     - uuid [string]: unique uuid returned when a StaticBrcode is created. ex: "97756273400d42ce9086404fe10ea0d6"
     - url [string]: url link to the BR code image. ex: "https://brcode-h.development.starkinfra.com/static-qrcode/97756273400d42ce9086404fe10ea0d6.png"
     - updated [datetime.datetime]: latest update datetime for the StaticBrcode. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)

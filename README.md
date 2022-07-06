@@ -1915,7 +1915,7 @@ notes = starkinfra.creditnote.create([
         ),
         payment_type="transfer",
         signers=[
-            starkinfra.creditnote.Signer(
+            starkinfra.creditsigner.CreditSigner(
                 name="Jamie Lannister",
                 contact="jamie.lannister@gmail.com",
                 method="link"
@@ -2092,7 +2092,7 @@ import starkinfra
 webhook = starkinfra.webhook.create(
     url="https://webhook.site/dd784f26-1d6a-4ca6-81cb-fda0267761ec",
     subscriptions=[
-        "contract", "credit-note", "signer",
+        "credit-note",
         "issuing-card", "issuing-invoice", "issuing-purchase",
         "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out", "pix-claim", "pix-key", "pix-chargeback", "pix-infraction",
     ],

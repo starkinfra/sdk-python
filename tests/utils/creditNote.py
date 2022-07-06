@@ -8,7 +8,8 @@ from .names.names import get_full_name
 from .taxIdGenerator import TaxIdGenerator
 from .date import randomDatetimeBetween, randomFutureDatetime
 from starkinfra import CreditNote
-from starkinfra.creditnote import Invoice, Transfer, Signer, Description
+from starkinfra.creditsigner import CreditSigner
+from starkinfra.creditnote import Invoice, Transfer, Description
 
 
 def _generateCreditNote():
@@ -22,14 +23,12 @@ def _generateCreditNote():
             Invoice(
                 due="2023-06-25",
                 amount=120000,
-                fine=10,
-                interest=2,
             )
         ],
         tags=["test", "testing"],
         payment=_generate_payment(),
         signers=[
-            Signer(
+            CreditSigner(
                 name="Jamie Lannister",
                 contact="jamie.lannister@gmail.com",
                 method="link"
@@ -102,8 +101,6 @@ def generateExampleInvoiceJson(n=1, note_nominal_amount=0, note_scheduled=dateti
         invoices.append(Invoice(
             due=randomDatetimeBetween(note_scheduled + timedelta(days=500), note_scheduled + timedelta(days=1000)),
             amount=randint(note_nominal_amount, note_nominal_amount + 100000),
-            fine=randint(0, 20),
-            interest=randint(0, 20),
             descriptions=[Description(key="taxes", value="RS1000")],
         ))
 
@@ -115,7 +112,7 @@ def generateExampleSignersJson(n=1):
 
     for _ in range(n):
         name = get_full_name()
-        signers.append(Signer(
+        signers.append(CreditSigner(
             name=get_full_name(),
             contact="{name}.{lastName}.{uuid}@invaliddomain.com".format(
                 name=name.split(" ")[0].lower(),

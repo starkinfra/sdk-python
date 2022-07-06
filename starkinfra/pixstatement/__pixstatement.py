@@ -67,7 +67,7 @@ def get(id, user=None):
 
 def query(limit=None, ids=None, user=None):
     """# Retrieve PixStatements
-    Receive a generator of PixStatements objects previously created in the Stark Infra API
+    Receive a generator of PixStatement objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
@@ -86,7 +86,7 @@ def query(limit=None, ids=None, user=None):
 
 def page(cursor=None, limit=None, ids=None, user=None):
     """# Retrieve paged PixStatements
-    Receive a list of up to 100 PixStatements objects previously created in the Stark Infra API
+    Receive a list of up to 100 PixStatement objects previously created in the Stark Infra API
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35

@@ -83,7 +83,7 @@ def get(id, user=None):
 
 def query(limit=None, after=None, before=None, status=None, ids=None, type=None, agent=None, key_type=None, key_id=None, user=None):
     """# Retrieve PixClaims
-    Receive a generator of PixClaims objects previously created in the Stark Infra API
+    Receive a generator of PixClaim objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
@@ -116,7 +116,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, type=None, agent=None, key_type=None, key_id=None, user=None):
     """# Retrieve paged PixClaims
-    Receive a list of up to 100 PixClaims objects previously created in the Stark Infra API and the cursor to the next page.
+    Receive a list of up to 100 PixClaim objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call.

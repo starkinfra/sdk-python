@@ -1,6 +1,7 @@
 from json import dumps
 from ..utils import rest
 from ..utils.parse import parse_and_verify
+from starkcore.utils.api import api_json
 from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_datetime, check_date
 
@@ -27,14 +28,15 @@ class PixRequest(Resource):
     - receiver_branch_code [string]: receiver's bank account branch code. Use '-' in case there is a verifier digit. ex: "1357-9"
     - receiver_account_type [string]: receiver's bank account type. ex: "checking", "savings", "salary" or "payment"
     - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
+    ## Parameters (conditionally-required):
+    - cashier_type [string]: Cashier's type. Required if the cash_amount is different from 0. Options: "merchant", "participant" and "other"
+    - cashier_bank_code [string]: Cashier's bank code. Required if the cash_amount is different from 0. ex: "20018183"
     ## Parameters (optional):
+    - cash_amount [integer]: Amount to be withdrawn from the cashier in cents. ex: 1000 (= R$ 10.00)
     - receiver_key_id [string, default None]: receiver's dict key. ex: "20.018.183/0001-80"
     - description [string, default None]: optional description to override default description to be shown in the bank statement. ex: "Payment for service #1234"
     - reconciliation_id [string, default None]: Reconciliation ID linked to this payment. ex: "b77f5236-7ab9-4487-9f95-66ee6eaf1781"
     - initiator_tax_id [string, default None]: Payment initiator's tax id (CPF/CNPJ). ex: "01234567890" or "20.018.183/0001-80"
-    - cash_amount [integer, default None]: Amount to be withdrawal from the cashier in cents. ex: 1000 (= R$ 10.00)
-    - cashier_bank_code [string, default None]: Cashier's bank code. ex: "00000000"
-    - cashier_type [string, default None]: Cashier's type. ex: [merchant, other, participant]
     - tags [list of strings, default None]: list of strings for reference when searching for PixRequests. ex: ["employees", "monthly"]
     - method [string, default None]: execution  method for thr creation of the Pix. ex: "manual", "payerQrcode", "dynamicQrcode".
     ## Attributes (return-only):
@@ -203,15 +205,16 @@ def parse(content, signature, user=None):
 
 
 def response(status, reason=None):
-    """# Helps you respond PixRequests
+    """# Helps you respond to a PixRequest authorization
     ## Parameters (required):
     - status [string]: response to the authorization. ex: "approved" or "denied"
     ## Parameters (conditionally required):
-    - reason [string]: denial reason. Options: "invalidAccountNumber", "blockedAccount", "accountClosed", "invalidAccountType", "invalidTransactionType", "taxIdMismatch", "invalidTaxId", "orderRejected", "reversalTimeExpired", "settlementFailed"
+    - reason [string, default None]: denial reason. Options: "invalidAccountNumber", "blockedAccount", "accountClosed", "invalidAccountType", "invalidTransactionType", "taxIdMismatch", "invalidTaxId", "orderRejected", "reversalTimeExpired", "settlementFailed"
     ## Return:
-    - Dumped JSON string that must be returned to us on the PixRequest
+    - Dumped JSON string that must be returned to us
     """
-    return dumps({"authorization": {
+    params = {
         "status": status,
-        "reason": reason or "",
-    }})
+        "reason": reason,
+    }
+    return dumps(api_json(params))

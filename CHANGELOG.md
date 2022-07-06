@@ -14,18 +14,22 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- StaticBrcode resource
+- DynamicBrcode resource
 - CreditNotePreview sub-resource
 - IssuingRule.Method sub-resources
 - IssuingRule.Country sub-resources
 - IssuingRule.Category sub-resources
 - parse method to IssuingPurchase resource
 - response method to PixRequest, PixReversal and IssuingPurchase resources
+- nominalInterest attribute for CreditNote resource
 ### Removed
 - IssuingAuthorization resource
 - bank_code attribute from PixReversal resource
 ### Changed
 - IssuingBin resource to IssuingProduct
 - fine and interest attributes to return only on CreditNote.Invoice sub-resource
+- expiration in the CreditNote resource from returned-only to optional parameter
 
 ## [0.1.1] - 2022-06-09
 ### Fixed

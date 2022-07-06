@@ -17,7 +17,7 @@ class CreditNote(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
-    - template_id [string]: ID of the contract template on which the credit note will be based. ex: template_id="0123456789101112"
+    - template_id [string]: ID of the contract template on which the CreditNote will be based. ex: template_id="0123456789101112"
     - name [string]: credit receiver's full name. ex: name="Edward Stark"
     - tax_id [string]: credit receiver's tax ID (CPF or CNPJ). ex: "20.018.183/0001-80"
     - nominal_amount [integer]: amount in cents transferred to the credit receiver, before deductions. ex: nominal_amount=11234 (= R$ 112.34)
@@ -35,26 +35,27 @@ class CreditNote(Resource):
     ## Parameters (conditionally required):
     - payment_type [string]: payment type, inferred from the payment parameter if it is not a dictionary. ex: "transfer"
     Parameters (optional):
-    - rebate_amount [integer, default None]: credit analysis fee deducted from lent amount. ex: rebate_amount=11234 (= R$ 112.34)
-    - tags [list of strings, default None]: list of strings for reference when searching for CreditNotes. ex: tags=["employees", "monthly"]
+    - rebate_amount [integer, default 0]: credit analysis fee deducted from lent amount. ex: rebate_amount=11234 (= R$ 112.34)
+    - tags [list of strings, default []]: list of strings for reference when searching for CreditNotes. ex: tags=["employees", "monthly"]
+    - expiration [integer or datetime.timedelta, default 604800 (7 days)]: time interval in seconds between scheduled date and expiration date. ex 123456789
     Attributes (return-only):
     - id [string]: unique id returned when the CreditNote is created. ex: "5656565656565656"
     - amount [integer]: CreditNote value in cents. ex: 1234 (= R$ 12.34)
-    - expiration [integer or datetime.timedelta]: time interval in seconds between due date and expiration date. ex 123456789
     - document_id [string]: ID of the signed document to execute this CreditNote. ex: "4545454545454545"
     - status [string]: current status of the CreditNote. ex: "canceled", "created", "expired", "failed", "processing", "signed", "success"
     - transaction_ids [list of strings]: ledger transaction ids linked to this CreditNote. ex: ["19827356981273"]
     - workspace_id [string]: ID of the Workspace that generated this CreditNote. ex: "4545454545454545"
     - tax_amount [integer]: tax amount included in the CreditNote. ex: 100
-    - interest [float]: yearly effective interest rate of the credit note, in percentage. ex: 12.5
+    - nominal_interest [float]: yearly nominal interest rate of the CreditNote, in percentage. ex: 11.5
+    - interest [float]: yearly effective interest rate of the CreditNote, in percentage. ex: 12.5
     - created [datetime.datetime]: creation datetime for the CreditNote. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the CreditNote. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, template_id, name, tax_id, nominal_amount, scheduled, invoices, payment, signers, external_id,
                  street_line_1, street_line_2, district, city, state_code, zip_code, payment_type=None,
-                 rebate_amount=None, tags=None, id=None, amount=None, expiration=None, document_id=None, status=None,
-                 transaction_ids=None, workspace_id=None, tax_amount=None, interest=None, created=None, updated=None):
+                 rebate_amount=None, tags=None, expiration=None, id=None, amount=None, document_id=None, status=None,
+                 transaction_ids=None, workspace_id=None, tax_amount=None, nominal_interest=None, interest=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.template_id = template_id
@@ -73,13 +74,14 @@ class CreditNote(Resource):
         self.zip_code = zip_code
         self.rebate_amount = rebate_amount
         self.tags = tags
-        self.amount = amount
         self.expiration = expiration
+        self.amount = amount
         self.document_id = document_id
         self.status = status
         self.transaction_ids = transaction_ids
         self.workspace_id = workspace_id
         self.tax_amount = tax_amount
+        self.nominal_interest = nominal_interest
         self.interest = interest
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
@@ -216,13 +218,13 @@ def page(cursor=None, limit=None, status=None, tags=None, ids=None, after=None, 
 
 
 def cancel(id, user=None):
-    """# Cancel a Credit Note entity
-    Cancel a Credit Note entity previously created in the Stark Infra API
+    """# Cancel a CreditNote entity
+    Cancel a CreditNote entity previously created in the Stark Infra API
     ## Parameters (required):
-    - id [string]: Credit Note unique id. ex: "6306109539221504"
+    - id [string]: CreditNote unique id. ex: "6306109539221504"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - canceled Credit Note object
+    - canceled CreditNote object
     """
     return rest.delete_id(resource=_resource, id=id, user=user)

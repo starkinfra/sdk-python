@@ -47,6 +47,12 @@ from .creditnote.__creditnote import CreditNote
 from . import creditnotepreview
 from .creditnotepreview.__creditnotepreview import CreditNotePreview
 
+from . import dynamicbrcode
+from .dynamicbrcode.__dynamicbrcode import DynamicBrcode
+
+from . import staticbrcode
+from .staticbrcode.__staticbrcode import StaticBrcode
+
 from . import issuingtransaction
 from .issuingtransaction.__issuingtransaction import IssuingTransaction
 

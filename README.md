@@ -42,6 +42,8 @@ This SDK version is compatible with the Stark Infra API v2.
         - [PixInfraction](#create-pixinfractions): Create Pix Infraction reports
         - [PixChargeback](#create-pixchargebacks): Create Pix Chargeback requests
         - [PixDomain](#query-pixdomains): View registered SPI participants certificates
+        - [StaticBrcode](#create-staticbrcodes): Create static Pix BR codes
+        - [DynamicBrcode](#create-dynamicbrcodes): Create dynamic Pix BR codes
     - [Credit Note](#credit-note)
         - [CreditNote](#create-creditnotes): Create credit notes
         - [CreditNotePreview](#preview-creditnotes): Preview credit notes
@@ -1673,6 +1675,209 @@ import starkinfra
 domains = starkinfra.pixdomain.query()
 for domain in domains:
     print(domain)
+```
+
+### Create StaticBrcodes
+
+StaticBrcodes store account information via a BR code or an image (QR code)
+that represents a PixKey and a few extra fixed parameters, such as an amount 
+and a reconciliation ID. They can easily be used to receive Pix transactions.
+
+```python
+import starkinfra
+
+brcodes = starkinfra.staticbrcode.create([
+    starkinfra.StaticBrcode(
+        name="Jamie Lannister",
+        key_id="+5511988887777",
+        amount=100,
+        reconciliation_id="123",
+        city="Rio de Janeiro"
+    )
+])
+
+for brcode in brcodes:
+    print(brcode)
+```
+
+### Query StaticBrcodes
+
+You can query multiple StaticBrcodes according to filters.
+
+```python
+import starkinfra
+
+brcodes = starkinfra.staticbrcode.query(
+    limit=1,
+    after="2022-06-01",
+    before="2022-06-30",
+    uuids=["5ddde28043a245c2848b08cf315effa2"]
+)
+
+for brcode in brcodes:
+    print(brcode)
+```
+
+### Get a StaticBrcodes
+
+After its creation, information on a StaticBrcode may be retrieved by its UUID.
+
+```python
+import starkinfra
+
+brcode = starkinfra.staticbrcode.get("5ddde28043a245c2848b08cf315effa2")
+
+print(brcode)
+```
+
+### Create DynamicBrcodes
+
+BR codes store information represented by Pix QR Codes, which are used to send 
+or receive Pix transactions in a convenient way.
+DynamicBrcodes represent charges with information that can change at any time,
+since all data needed for the payment is requested dynamically to an URL stored
+in the BR Code. Stark Infra will receive the GET request and forward it to your
+registered endpoint with a GET request containing the UUID of the BR code for
+identification.
+
+```python
+import starkinfra
+
+brcodes = starkinfra.dynamicbrcode.create([
+    starkinfra.DynamicBrcode(
+        name="Jamie Lannister",
+        city="Rio de Janeiro",
+        external_id="my_unique_id_01",
+        type="instant"
+    )
+])
+
+for brcode in brcodes:
+    print(brcode)
+```
+
+### Query DynamicBrcodes
+
+You can query multiple DynamicBrcodes according to filters.
+
+```python
+import starkinfra
+
+brcodes = starkinfra.dynamicbrcode.query(
+    limit=1,
+    after="2022-06-01",
+    before="2022-06-30",
+    uuids=["ac7caa14e601461dbd6b12bf7e4cc48e"]
+)
+
+for brcode in brcodes:
+    print(brcode)
+```
+
+### Get a DynamicBrcode
+
+After its creation, information on a DynamicBrcode may be retrieved by its UUID.
+
+```python
+import starkinfra
+
+brcode = starkinfra.dynamicbrcode.get("ac7caa14e601461dbd6b12bf7e4cc48e")
+
+print(brcode)
+```
+
+### Verify a DynamicBrcode read
+
+When a DynamicBrcode is read by your user, a GET request will be made to the your regitered URL to 
+retrieve additional information needed to complete the transaction.
+Use this method to verify the authenticity of a GET request received at your registered endpoint.
+If the provided digital signature does not check out with the StarkInfra public key, a stark.exception.InvalidSignatureException will be raised.
+
+```python
+import starkinfra
+
+request = listen()  # this is the method you made to get the read requests posted to your registered endpoint
+
+uuid = starkinfra.dynamicbrcode.verify(
+    uuid=request.url.get_parameter("uuid"),
+    signature=request.headers["Digital-Signature"],
+)
+```
+
+### Answer to a Due DynamicBrcode read
+
+When a Due DynamicBrcode is read by your user, a GET request containing 
+the BR code UUID will be made to your registered URL to retrieve additional 
+information needed to complete the transaction.
+
+The GET request must be answered in the following format within 5 seconds 
+and with an HTTP status code 200.
+
+```python
+import starkinfra
+
+request = listen()  # this is the method you made to get the read requests posted to your registered endpoint
+
+uuid = starkinfra.dynamicbrcode.verify(
+    uuid=request.url.get_parameter("uuid"),
+    signature=request.headers["Digital-Signature"],
+)
+
+invoice = get_my_invoice(uuid) # you should implement this method to get the information of the BR code from its uuid
+
+send_response(  # you should also implement this method to respond the read request
+    starkinfra.dynamicbrcode.response_due(
+        version=invoice.version,
+        created=invoice.created,
+        due=invoice.due,
+        key_id=invoice.key_id,
+        status=invoice.status,
+        reconciliation_id=invoice.reconciliation_id,
+        amount=invoice.amount,
+        sender_name=invoice.sender_name,
+        receiver_name=invoice.receiver_name,
+        receiver_street_line=invoice.receiver_street_line,
+        receiver_city=invoice.receiver_city,
+        receiver_state_code=invoice.receiver_state_code,
+        receiver_zip_code=invoice.receiver_zip_code
+    )
+)
+```
+
+### Answer to an Instant DynamicBrcode read
+
+When an Instant DynamicBrcode is read by your user, a GET request 
+containing the BR code UUID will be made to your registered URL to retrieve 
+additional information needed to complete the transaction.
+
+The get request must be answered in the following format 
+within 5 seconds and with an HTTP status code 200.
+
+```python
+import starkinfra
+
+request = listen()  # this is the method you made to get the read requests posted to your registered endpoint
+
+uuid = starkinfra.dynamicbrcode.verify(
+    uuid=request.url.get_parameter("uuid"),
+    signature=request.headers["Digital-Signature"],
+)
+
+invoice = get_my_invoice(uuid) # you should implement this method to get the information of the BR code from its uuid
+
+send_response(  # you should also implement this method to respond the read request
+    starkinfra.issuingpurchase.response_instant(
+        version=invoice.version,
+        created=invoice.created,
+        key_id=invoice.key_id,
+        status=invoice.status,
+        reconciliation_id=invoice.reconciliation_id,
+        amount=invoice.amount,
+        cashier_type=invoice.cashier_type,
+        cashier_bank_code=invoice.cashier_bank_code,
+        cash_amount=invoice.cash_amount
+    )
+)
 ```
 
 ## Credit Note

@@ -90,7 +90,7 @@ def query(external_ids=None, after=None, before=None, limit=None, tags=None, use
 
 def page(external_ids=None, after=None, before=None, limit=None, tags=None, cursor=None, user=None):
     """# Retrieve paged IssuingWithdrawals
-    Receive a list of IssuingWithdrawals objects previously created in the Stark Infra API and the cursor to the next page.
+    Receive a list of IssuingWithdrawal objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35

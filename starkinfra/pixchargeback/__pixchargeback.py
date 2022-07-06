@@ -84,7 +84,7 @@ def get(id, user=None):
 
 def query(limit=None, after=None, before=None, status=None, ids=None, user=None):
     """# Retrieve PixChargebacks
-    Receive a generator of PixChargebacks objects previously created in the Stark Infra API
+    Receive a generator of PixChargeback objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
@@ -109,7 +109,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, user=None)
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, user=None):
     """# Retrieve PixChargebacks
-    Receive a generator of PixChargebacks objects previously created in the Stark Infra API
+    Receive a generator of PixChargeback objects previously created in the Stark Infra API
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call.
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35

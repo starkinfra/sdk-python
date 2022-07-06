@@ -85,7 +85,7 @@ def create(cards, expand=None, user=None):
 def query(limit=None, ids=None, after=None, before=None, status=None, types=None, holder_ids=None, tags=None,
           expand=None, user=None):
     """# Retrieve IssuingCards
-    Receive a generator of IssuingCards objects previously created in the Stark Infra API
+    Receive a generator of IssuingCard objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
@@ -98,7 +98,7 @@ def query(limit=None, ids=None, after=None, before=None, status=None, types=None
     - expand [list of strings, default []]: fields to expand information. ex: ["rules", "security_code", "number", "expiration"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - generator of IssuingCards objects with updated attributes
+    - generator of IssuingCard objects with updated attributes
     """
     return rest.get_stream(
         resource=_resource,
@@ -118,10 +118,10 @@ def query(limit=None, ids=None, after=None, before=None, status=None, types=None
 def page(cursor=None, limit=None, ids=None, after=None, before=None, status=None, types=None, holder_ids=None,
          tags=None, expand=None, user=None):
     """# Retrieve paged IssuingCards
-    Receive a list of IssuingCards objects previously created in the Stark Infra API and the cursor to the next page.
+    Receive a list of IssuingCard objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
@@ -132,8 +132,8 @@ def page(cursor=None, limit=None, ids=None, after=None, before=None, status=None
     - expand [list of strings, default []]: fields to expand information. ex: ["rules", "security_code", "number", "expiration"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - list of IssuingCards objects with updated attributes
-    - cursor to retrieve the next page of IssuingCards objects
+    - list of IssuingCard objects with updated attributes
+    - cursor to retrieve the next page of IssuingCard objects
     """
     return rest.get_page(
         resource=_resource,

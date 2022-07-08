@@ -9,7 +9,7 @@ with open('starkinfra/__init__.py') as f:
 
 setup(
     name="starkinfra",
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests"]),
     include_package_data=True,
     description="SDK to facilitate Python integrations with Stark Infra",
     long_description=README,

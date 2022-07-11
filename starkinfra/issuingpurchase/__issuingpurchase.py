@@ -48,7 +48,8 @@ class IssuingPurchase(Resource):
     def __init__(self, id, holder_name, card_id, card_ending, purpose, amount, tax, issuer_amount, issuer_currency_code,
                  issuer_currency_symbol, merchant_amount, merchant_currency_code, merchant_currency_symbol,
                  merchant_category_code, merchant_country_code, acquirer_id, merchant_id, merchant_name, merchant_fee,
-                 wallet_id, method_code, score, end_to_end_id, tags, issuing_transaction_ids, status, updated, created):
+                 wallet_id, method_code, score, end_to_end_id, tags, issuing_transaction_ids, status, updated, created,
+                 is_partial_allowed, card_tags, holder_tags):
         Resource.__init__(self, id=id)
 
         self.holder_name = holder_name
@@ -78,6 +79,9 @@ class IssuingPurchase(Resource):
         self.status = status
         self.updated = check_datetime(updated)
         self.created = check_datetime(created)
+        self.is_partial_allowed = is_partial_allowed
+        self.card_tags = card_tags
+        self.holder_tags = holder_tags
 
 
 _resource = {"class": IssuingPurchase, "name": "IssuingPurchase"}

@@ -30,13 +30,13 @@ class IssuingPurchase(Resource):
     - merchant_name [string]: merchant name. ex: "Google Cloud Platform"
     - merchant_fee [integer]: fee charged by the merchant to cover specific costs, such as ATM withdrawal logistics, etc. ex: 200 (= R$ 2.00)
     - wallet_id [string]: virtual wallet ID. ex: "5656565656565656"
-    - method_code [string]: method code. ex: "chip", "token", "server", "manual", "magstripe" or "contactless"
+    - method_code [string]: method code. Options: "chip", "token", "server", "manual", "magstripe" or "contactless"
     - score [float]: internal score calculated for the authenticity of the purchase. None in case of insufficient data. ex: 7.6
-    - end_to_end_id [string]: Unique id used to identify the transaction through all of its life cycle, even before the purchase is denied or accepted and gets its usual id. Example: endToEndId="679cd385-642b-49d0-96b7-89491e1249a5"
+    - end_to_end_id [string]: Unique id used to identify the transaction through all of its life cycle, even before the purchase is denied or accepted and gets its usual id. ex: "679cd385-642b-49d0-96b7-89491e1249a5"
     - tags [string]: list of strings for tagging returned by the sub-issuer during the authorization. ex: ["travel", "food"]
     ## Attributes (IssuingPurchase only):
     - issuing_transaction_ids [string]: ledger transaction ids linked to this Purchase
-    - status [string]: current IssuingCard status. ex: "approved", "canceled", "denied", "confirmed", "voided"
+    - status [string]: current IssuingCard status. Options: "approved", "canceled", "denied", "confirmed", "voided"
     - updated [datetime.datetime]: latest update datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     ## Attributes (authorization request only):
@@ -54,8 +54,8 @@ class IssuingPurchase(Resource):
 
         self.holder_name = holder_name
         self.card_id = card_id
-        self.purpose = purpose
         self.card_ending = card_ending
+        self.purpose = purpose
         self.amount = amount
         self.tax = tax
         self.issuer_amount = issuer_amount
@@ -73,9 +73,9 @@ class IssuingPurchase(Resource):
         self.wallet_id = wallet_id
         self.method_code = method_code
         self.score = score
+        self.end_to_end_id = end_to_end_id
         self.tags = tags
         self.issuing_transaction_ids = issuing_transaction_ids
-        self.end_to_end_id = end_to_end_id
         self.status = status
         self.updated = check_datetime(updated)
         self.created = check_datetime(created)

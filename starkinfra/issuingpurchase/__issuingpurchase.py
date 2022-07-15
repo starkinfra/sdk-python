@@ -138,7 +138,7 @@ def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - ids [list of strings, default [], default None]: purchase IDs
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - end_to_end_ids [list of strings, default []]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"

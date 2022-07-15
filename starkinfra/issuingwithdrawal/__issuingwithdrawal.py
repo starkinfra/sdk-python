@@ -93,7 +93,7 @@ def page(external_ids=None, after=None, before=None, limit=None, tags=None, curs
     Receive a list of IssuingWithdrawal objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - external_ids [list of strings, default []]: external IDs. ex: ["5656565656565656", "4545454545454545"]
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)

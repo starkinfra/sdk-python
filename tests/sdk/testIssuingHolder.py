@@ -50,7 +50,7 @@ class TestIssuingHolderGet(TestCase):
 class TestIssuingHolderPostPatchAndDelete(TestCase):
 
     def test_success(self):
-        holders = starkinfra.issuingholder.create(generateExampleHoldersJson(n=1))
+        holders = starkinfra.issuingholder.create(generateExampleHoldersJson(n=1), expand=["rules"])
         holder_id = holders[0].id
         holder = starkinfra.issuingholder.update(id=holder_id, name="Updated Name")
         self.assertEqual("Updated Name", holder.name)

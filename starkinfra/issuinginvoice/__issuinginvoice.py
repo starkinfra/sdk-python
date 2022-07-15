@@ -92,7 +92,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
     Receive a list of IssuingInvoice objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "expired", "overdue", "paid"]

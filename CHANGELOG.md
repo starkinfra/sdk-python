@@ -15,6 +15,13 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ## [Unreleased]
 ### Fixed
 - IssuingPurchase missing parameters
+- IssuingProduct changed settlement parameter to fundingType
+- IssuingProduct changed client parameter to customerType
+### Added
+- IssuingProduct code parameter
+- IssuingHolder expand parameter to create method
+### Removed
+- IssuingProduct category parameter
 
 ## [0.2.0] - 2022-07-07
 ### Added

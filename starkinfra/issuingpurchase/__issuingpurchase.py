@@ -166,7 +166,7 @@ def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after
 
 
 def parse(content, signature, user=None):
-    """# Create single verified IssuingPurchase authorization request from a content string
+    """# Create a single verified IssuingPurchase authorization request from a content string
     Use this method to parse and verify the authenticity of the authorization request received at the informed endpoint.
     Authorization requests are posted to your registered endpoint whenever IssuingPurchases are received.
     They present IssuingPurchase data that must be analyzed and answered with approval or declination.

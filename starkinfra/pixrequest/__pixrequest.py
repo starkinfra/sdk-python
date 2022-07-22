@@ -184,7 +184,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
 
 
 def parse(content, signature, user=None):
-    """# Create single verified PixRequest object from a content string
+    """# Create a single verified PixRequest object from a content string
     Create a single PixRequest object from a content string received from a handler listening at the request url.
     If the provided digital signature does not check out with the StarkInfra public key, a
     starkinfra.error.InvalidSignatureError will be raised.

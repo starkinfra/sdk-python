@@ -153,7 +153,7 @@ def update(id, is_delivered, user=None):
 
 
 def parse(content, signature, user=None):
-    """# Create single notification Event from a content string
+    """# Create a single notification Event from a content string
     Create a single Event object received from Event listening at subscribed user endpoint.
     If the provided digital signature does not check out with the StarkInfra public key, a
     starkinfra.error.InvalidSignatureError will be raised.

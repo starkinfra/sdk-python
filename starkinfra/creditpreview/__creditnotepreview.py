@@ -31,7 +31,7 @@ class CreditNotePreview(SubResource):
     """
 
     def __init__(self, type, nominal_amount, scheduled, tax_id, invoices=None, nominal_interest=None,
-                 initial_due=None, count=None, initial_amount=None, interval=None, rebate_amount=None, 
+                 initial_due=None, count=None, initial_amount=None, interval=None, rebate_amount=None,
                  amount=None, interest=None, tax_amount=None):
         SubResource.__init__(self)
 
@@ -51,7 +51,7 @@ class CreditNotePreview(SubResource):
         self.interval = interval
 
 
-_resource = {"class": CreditNotePreview, "name": "CreditNotePreview"}
+_sub_resource = {"class": CreditNotePreview, "name": "CreditNotePreview"}
 
 
 def _parse_optional_invoices(invoices):
@@ -77,4 +77,4 @@ def create(previews, user=None):
     ## Return:
     - list of CreditNotePreview objects with updated attributes
     """
-    return rest.post_multi(resource=_resource, entities=previews, user=user)
+    return rest.post_multi(resource=_sub_resource, entities=previews, user=user)

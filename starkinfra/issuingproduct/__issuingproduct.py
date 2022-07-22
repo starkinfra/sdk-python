@@ -9,18 +9,18 @@ class IssuingProduct(Resource):
     ## Attributes (return-only):
     - id [string]: unique card product number (BIN) registered within the card network. ex: "53810200"
     - network [string]: card network flag. ex: "mastercard"
-    - fundingType [string]: type of funding used for payment. ex: "credit", "debit
-    - customerType [string]: customer type. ex: "business"
+    - funding_type [string]: type of funding used for payment. ex: "credit", "debit
+    - customer_type [string]: customer type. ex: "business"
     - code [string]: internal code from card flag informing the product. ex: "MRW", "MCO", "MWB", "MCS"
     - created [datetime.datetime]: creation datetime for the IssuingProduct. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, id=None, network=None, fundingType=None, customerType=None, code=None, created=None):
+    def __init__(self, id=None, network=None, funding_type=None, customer_type=None, code=None, created=None):
         Resource.__init__(self, id=id)
 
         self.network = network
-        self.fundingType = fundingType
-        self.customerType = customerType
+        self.funding_type = funding_type
+        self.customer_type = customer_type
         self.code = code
         self.created = created
 

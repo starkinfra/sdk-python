@@ -26,17 +26,17 @@ class IssuingRule(Resource):
     """
 
     def __init__(self, name, amount, id=None, interval=None, currency_code=None, categories=None, countries=None,
-                 methods=None, counter_amount=None, currency_name=None, currency_symbol=None):
+                 methods=None, counter_amount=None, currency_symbol=None, currency_name=None):
         Resource.__init__(self, id=id)
 
         self.name = name
         self.amount = amount
         self.interval = interval
-        self.counter_amount = counter_amount
+        self.currency_code = currency_code
         self.categories = _parse_categories(categories)
         self.countries = _parse_countries(countries)
         self.methods = _parse_methods(methods)
-        self.currency_code = currency_code
+        self.counter_amount = counter_amount
         self.currency_symbol = currency_symbol
         self.currency_name = currency_name
 

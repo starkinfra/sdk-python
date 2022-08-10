@@ -32,7 +32,7 @@ class IssuingPurchase(Resource):
     - wallet_id [string]: virtual wallet ID. ex: "5656565656565656"
     - method_code [string]: method code. Options: "chip", "token", "server", "manual", "magstripe" or "contactless"
     - score [float]: internal score calculated for the authenticity of the purchase. None in case of insufficient data. ex: 7.6
-    - end_to_end_id [string]: Unique id used to identify the transaction through all of its life cycle, even before the purchase is denied or accepted and gets its usual id. ex: "679cd385-642b-49d0-96b7-89491e1249a5"
+    - end_to_end_id [string]: Unique id used to identify the transaction through all of its life cycle, even before the purchase is denied or approved and gets its usual id. ex: "679cd385-642b-49d0-96b7-89491e1249a5"
     - tags [string]: list of strings for tagging returned by the sub-issuer during the authorization. ex: ["travel", "food"]
     ## Attributes (IssuingPurchase only):
     - issuing_transaction_ids [string]: ledger transaction ids linked to this Purchase
@@ -138,7 +138,7 @@ def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - ids [list of strings, default [], default None]: purchase IDs
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - end_to_end_ids [list of strings, default []]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
@@ -166,7 +166,7 @@ def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after
 
 
 def parse(content, signature, user=None):
-    """# Create single verified IssuingPurchase authorization request from a content string
+    """# Create a single verified IssuingPurchase authorization request from a content string
     Use this method to parse and verify the authenticity of the authorization request received at the informed endpoint.
     Authorization requests are posted to your registered endpoint whenever IssuingPurchases are received.
     They present IssuingPurchase data that must be analyzed and answered with approval or declination.

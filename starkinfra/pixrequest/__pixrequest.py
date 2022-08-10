@@ -52,8 +52,8 @@ class PixRequest(Resource):
     def __init__(self, amount, external_id, sender_name, sender_tax_id, sender_branch_code,
                  sender_account_number, sender_account_type, receiver_name, receiver_tax_id, receiver_bank_code,
                  receiver_account_number, receiver_branch_code, receiver_account_type, end_to_end_id,
-                 receiver_key_id=None, description=None, reconciliation_id=None, initiator_tax_id=None,
-                 cash_amount=None, cashier_bank_code=None, cashier_type=None, tags=None, method=None, id=None, fee=None,
+                 cashier_type=None, cashier_bank_code=None, cash_amount=None, receiver_key_id=None, description=None, 
+                 reconciliation_id=None, initiator_tax_id=None, tags=None, method=None, id=None, fee=None,
                  status=None, flow=None, sender_bank_code=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
@@ -71,13 +71,13 @@ class PixRequest(Resource):
         self.receiver_branch_code = receiver_branch_code
         self.receiver_account_type = receiver_account_type
         self.end_to_end_id = end_to_end_id
+        self.cashier_type = cashier_type
+        self.cashier_bank_code = cashier_bank_code
+        self.cash_amount = cash_amount
         self.receiver_key_id = receiver_key_id
         self.description = description
         self.reconciliation_id = reconciliation_id
         self.initiator_tax_id = initiator_tax_id
-        self.cash_amount = cash_amount
-        self.cashier_bank_code = cashier_bank_code
-        self.cashier_type = cashier_type
         self.tags = tags
         self.method = method
         self.fee = fee
@@ -184,7 +184,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
 
 
 def parse(content, signature, user=None):
-    """# Create single verified PixRequest object from a content string
+    """# Create a single verified PixRequest object from a content string
     Create a single PixRequest object from a content string received from a handler listening at the request url.
     If the provided digital signature does not check out with the StarkInfra public key, a
     starkinfra.error.InvalidSignatureError will be raised.
@@ -196,12 +196,19 @@ def parse(content, signature, user=None):
     ## Return:
     - Parsed PixRequest object
     """
-    return parse_and_verify(
+    request = parse_and_verify(
         content=content,
         signature=signature,
         user=user,
         resource=_resource
     )
+
+    request.fee = request.fee or 0
+    request.tags = request.tags or []
+    request.external_id = request.external_id or ""
+    request.description = request.description or ""
+    
+    return request
 
 
 def response(status, reason=None):
@@ -214,7 +221,9 @@ def response(status, reason=None):
     - Dumped JSON string that must be returned to us
     """
     params = {
-        "status": status,
-        "reason": reason,
+        "authorization": {
+            "status": status,
+            "reason": reason,
+        }
     }
     return dumps(api_json(params))

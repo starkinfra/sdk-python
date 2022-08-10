@@ -46,10 +46,10 @@ This SDK version is compatible with the Stark Infra API v2.
         - [DynamicBrcode](#create-dynamicbrcodes): Create dynamic Pix BR codes
     - [Credit Note](#credit-note)
         - [CreditNote](#create-creditnotes): Create credit notes
-        - [CreditNotePreview](#preview-creditnotes): Preview credit notes
+    - [CreditPreview](#credit-preview)
+        - [CreditPreview](#create-a-creditnotepreview): Create credit note previews
     - [Webhook](#webhook):
         - [Webhook](#create-a-webhook-subscription): Configure your webhook endpoints and subscriptions
-    - [Webhook Events](#webhook-events):
         - [WebhookEvents](#process-webhook-events): Manage Webhook events
         - [WebhookEventAttempts](#query-failed-webhook-event-delivery-attempts-information): Query failed webhook event deliveries
 - [Handling errors](#handling-errors)
@@ -2010,67 +2010,85 @@ log = starkinfra.creditnote.log.get("5155165527080960")
 print(log)
 ```
 
-### Preview CreditNotes
+## Credit Preview
+You can preview different types of credits before creating them (Currently we only have CreditNote previews):
+
+### Create a CreditNotePreview
 You can preview a Credit Note before creation of the CCB contract:
 
 ```python
 import starkinfra
 
-previews = starkinfra.creditnotepreview.create([
-    starkinfra.CreditNotePreview(
-        initial_amount= 2478,
-        initial_due= "2022-07-22",
-        nominal_amount= 90583,
-        nominal_interest= 3.7,
-        rebate_amount= 23,
-        scheduled= "2022-06-28",
-        tax_id= "477.954.506-44",
-        type= "sac"
+previews = starkinfra.creditpreview.create([
+    starkinfra.CreditPreview(
+        type="credit-note"
+        credit=starkinfra.creditpreview.CreditNotePreview(
+            initial_amount=2478,
+            initial_due="2022-07-22",
+            nominal_amount=90583,
+            nominal_interest=3.7,
+            rebate_amount=23,
+            scheduled="2022-06-28",
+            tax_id="477.954.506-44",
+            type="sac"
+        )
     ),
-    starkinfra.CreditNotePreview(
-        initial_amount= 4449,
-        initial_due= "2022-07-16",
-        interval= "year",
-        nominal_amount= 96084,
-        nominal_interest= 3.1,
-        rebate_amount= 239,
-        scheduled= "2022-07-02",
-        tax_id= "81.882.684/0001-02",
-        type= "price"
+    starkinfra.CreditPreview(
+        type="credit-note"
+        credit=starkinfra.creditpreview.CreditNotePreview(
+            initial_amount=4449,
+            initial_due="2022-07-16",
+            interval="year",
+            nominal_amount=96084,
+            nominal_interest=3.1,
+            rebate_amount=239,
+            scheduled="2022-07-02",
+            tax_id="81.882.684/0001-02",
+            type="price"
+        )
     ),
-    starkinfra.CreditNotePreview(
-        count= 8,
-        initial_due= "2022-07-18",
-        nominal_amount= 6161,
-        nominal_interest= 3.2,
-        scheduled= "2022-07-03",
-        tax_id= "59.352.830/0001-20",
-        type= "american"
+    starkinfra.CreditPreview(
+        type="credit-note"
+        credit=starkinfra.creditpreview.CreditNotePreview(
+            count=8,
+            initial_due="2022-07-18",
+            nominal_amount=6161,
+            nominal_interest=3.2,
+            scheduled="2022-07-03",
+            tax_id="59.352.830/0001-20",
+            type="american"
+        )
     ),
-    starkinfra.CreditNotePreview(
-        initial_due= "2022-07-13",
-        nominal_amount= 86237,
-        nominal_interest= 2.6,
-        scheduled= "2022-07-03",
-        tax_id= "37.293.955/0001-94",
-        type= "bullet"
+    starkinfra.CreditPreview(
+        type="credit-note"
+        credit=starkinfra.creditpreview.CreditNotePreview(
+            initial_due="2022-07-13",
+            nominal_amount=86237,
+            nominal_interest=2.6,
+            scheduled="2022-07-03",
+            tax_id="37.293.955/0001-94",
+            type="bullet"
+        )
     ),
-    starkinfra.CreditNotePreview(
-        invoices=[
-            starkinfra.creditnote.Invoice(
-                amount=14500,
-                due="2022-08-19"
-            ),
-            starkinfra.creditnote.Invoice(
-                amount=14500,
-                due="2022-09-25"
-            )
-        ],
-        nominal_amount= 29000,
-        rebate_amount= 900,
-        scheduled= "2022-07-31",
-        tax_id= "36.084.400/0001-70",
-        type= "custom"
+    starkinfra.CreditPreview(
+        type="credit-note"
+        credit=starkinfra.creditpreview.CreditNotePreview(
+            invoices=[
+                starkinfra.creditnote.Invoice(
+                    amount=14500,
+                    due="2022-08-19"
+                ),
+                starkinfra.creditnote.Invoice(
+                    amount=14500,
+                    due="2022-09-25"
+                )
+            ],
+            nominal_amount=29000,
+            rebate_amount=900,
+            scheduled="2022-07-31",
+            tax_id="36.084.400/0001-70",
+            type="custom"
+        )
     )
 ])
 
@@ -2078,7 +2096,7 @@ for preview in previews:
     print(preview)
 ```
 
-**Note**: Instead of using CreditNotePreviews objects, you can also pass each element in dictionary format
+**Note**: Instead of using CreditPreview objects, you can also pass each element in dictionary format
 
 ## Webhook
 
@@ -2137,8 +2155,6 @@ webhook = starkinfra.webhook.delete("1082736198236817")
 
 print(webhook)
 ```
-
-## Webhook Events
 
 ### Process webhook events
 

@@ -1,6 +1,5 @@
 from starkcore.utils.api import from_api_json
 from starkcore.utils.subresource import SubResource
-from ..utils import rest
 from ..creditnote.invoice.__invoice import Invoice, _resource as _invoice_resource
 
 
@@ -31,10 +30,8 @@ class CreditNotePreview(SubResource):
     """
 
     def __init__(self, type, nominal_amount, scheduled, tax_id, invoices=None, nominal_interest=None,
-                 initial_due=None, count=None, initial_amount=None, interval=None, rebate_amount=None, 
+                 initial_due=None, count=None, initial_amount=None, interval=None, rebate_amount=None,
                  amount=None, interest=None, tax_amount=None):
-        SubResource.__init__(self)
-
         self.type = type
         self.nominal_amount = nominal_amount
         self.scheduled = scheduled
@@ -43,15 +40,15 @@ class CreditNotePreview(SubResource):
         self.nominal_interest = nominal_interest
         self.initial_due = initial_due
         self.count = count
+        self.initial_amount = initial_amount
+        self.interval = interval
         self.rebate_amount = rebate_amount
         self.amount = amount
-        self.initial_amount = initial_amount
         self.interest = interest
         self.tax_amount = tax_amount
-        self.interval = interval
 
 
-_resource = {"class": CreditNotePreview, "name": "CreditNotePreview"}
+_sub_resource = {"class": CreditNotePreview, "name": "CreditNotePreview"}
 
 
 def _parse_optional_invoices(invoices):
@@ -65,16 +62,3 @@ def _parse_optional_invoices(invoices):
             continue
         parsed_invoices.append(from_api_json(_invoice_resource, invoice))
     return parsed_invoices
-
-
-def create(previews, user=None):
-    """# Create CreditNotePreview
-    Send a list of CreditNotePreview objects for creation at the Stark Infra API
-    ## Parameters (required):
-    - previews [list of CreditNotePreview objects]: list of CreditNotePreview objects to be created in the API
-    ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
-    ## Return:
-    - list of CreditNotePreview objects with updated attributes
-    """
-    return rest.post_multi(resource=_resource, entities=previews, user=user)

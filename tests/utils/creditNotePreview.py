@@ -1,7 +1,7 @@
 from random import randint, choice, uniform, random
 from .taxIdGenerator import TaxIdGenerator
 from .date import randomFutureDatetime, futureDate
-from starkinfra import CreditNotePreview
+from starkinfra.creditpreview import CreditNotePreview
 from starkinfra.creditnote import Invoice
 
 
@@ -107,9 +107,9 @@ _generatorsByType = {
 }
 
 
-def getPreviewExample(type="sac"):
+def getCreditNotePreviewExample(type="sac"):
     return _generatorsByType[type]()
 
 
-def getPreviewExamples(n=10, type="sac"):
+def getCreditNotePreviewExamples(n=10, type="sac"):
     return [_generatorsByType[type]() for _ in range(n)]

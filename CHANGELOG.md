@@ -13,8 +13,22 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Changed
+- amount to nominal_amount, fine_amount to fine, interest_amount to interest, and discount_amount to discounts on response_due method of DynamicBrcode resource
+- settlement parameter to funding_type of Issuing Product resource
+- client parameter to holder_type of Issuing Product resource
+- CreditNotePreview sub-resource to CreditPreview.CreditNotePreview sub-resource
 ### Fixed
 - IssuingPurchase missing parameters
+- JSON body returned from response method of PixRequest resource
+- JSON body returned from response method of PixReversal resource
+### Added
+- code attribute for IssuingProduct resource
+- expand parameter to create method of IssuingHolder resource
+- CreditPreview sub-resource
+- default to fee, externalId and tags on PixRequest and PixReversal parse method
+### Removed
+- IssuingProduct category parameter
 
 ## [0.2.0] - 2022-07-07
 ### Added

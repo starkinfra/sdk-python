@@ -126,10 +126,10 @@ def page(cursor=None, limit=None, after=None, before=None, external_id=None, uui
     )
 
 
-def response_due(version, created, due, key_id, status, reconciliation_id, amount, sender_name, receiver_name,
-                receiver_street_line, receiver_city, receiver_state_code, receiver_zip_code, expiration=None, 
-                sender_tax_id=None, receiver_tax_id=None, fine_amount=None, interest_amount=None, discount_amount=None, 
-                description=None):
+def response_due(version, created, due, key_id, status, reconciliation_id, nominal_amount, sender_name, receiver_name,
+                 receiver_street_line, receiver_city, receiver_state_code, receiver_zip_code, expiration=None,
+                 sender_tax_id=None, receiver_tax_id=None, fine=None, interest=None, discounts=None,
+                 description=None):
     """# Helps you respond to a due DynamicBrcode Read
     When a Due DynamicBrcode is read by your user, a GET request containing the Brcode's 
     UUID will be made to your registered URL to retrieve additional information needed 
@@ -143,7 +143,7 @@ def response_due(version, created, due, key_id, status, reconciliation_id, amoun
     - key_id [string]: receiver's PixKey id. Can be a tax_id (CPF/CNPJ), a phone number, an email or an alphanumeric sequence (EVP). ex: "+5511989898989"
     - status [string]: BR code status. Options: "created", "overdue", "paid", "canceled" or "expired"
     - reconciliation_id [string]: id to be used for conciliation of the resulting Pix transaction. ex: "cd65c78aeb6543eaaa0170f68bd741ee"
-    - amount [integer]: positive integer that represents the amount in cents of the resulting Pix transaction. ex: 1234 (= R$ 12.34)
+    - nominal_amount [integer]: positive integer that represents the amount in cents of the resulting Pix transaction. ex: 1234 (= R$ 12.34)
     - sender_name [string]: sender's full name. ex: "Anthony Edward Stark"
     - receiver_name [string]: receiver's full name. ex: "Jamie Lannister"
     - receiver_street_line [string]: receiver's main address. ex: "Av. Paulista, 200"
@@ -154,9 +154,9 @@ def response_due(version, created, due, key_id, status, reconciliation_id, amoun
     - expiration [datime.timedelta or integer, default 86400 (1 day)]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR code cannot be paid anymore.
     - sender_tax_id [string, default None]: sender's CPF (11 digits formatted or unformatted) or CNPJ (14 digits formatted or unformatted). ex: "01.001.001/0001-01"
     - receiver_tax_id [string, default None]: receiver's CPF (11 digits formatted or unformatted) or CNPJ (14 digits formatted or unformatted). ex: "012.345.678-90"
-    - fine_amount [integer, default 0]: amount charged if the sender pays after the due datetime.
-    - interest_amount [integer, default 0]: interest amount charged if the sender pays after the due datetime calculated from a percent interest.
-    - discount_amount [integer, default 0]: discount amount applied if the sender pays at a specific datetime before the due datetime.
+    - fine [float, default 2.0]: Percentage charged if the sender pays after the due datetime.
+    - interest [float, default 1.0]: Interest percentage charged if the sender pays after the due datetime.
+    - discounts [list of dictionaries, default None]: list of dictionaries with "percentage":float and "due":date.datetime or string pairs.
     - description [string, default None]: additional information to be shown to the sender at the moment of payment.
     ## Return:
     - Dumped JSON string that must be returned to us
@@ -168,7 +168,7 @@ def response_due(version, created, due, key_id, status, reconciliation_id, amoun
         "keyId": key_id,
         "status": status,
         "reconciliationId": reconciliation_id,
-        "amount": amount,
+        "nominalAmount": nominal_amount,
         "senderName": sender_name,
         "receiverName": receiver_name,
         "receiverStreetLine": receiver_street_line,
@@ -178,10 +178,10 @@ def response_due(version, created, due, key_id, status, reconciliation_id, amoun
         "expiration": expiration,
         "senderTaxId": sender_tax_id,
         "receiverTaxId": receiver_tax_id,
-        "fineAmount": fine_amount,
-        "interestAmount": interest_amount,
-        "discountAmount": discount_amount,
-        "description": description
+        "fine": fine,
+        "interest": interest,
+        "discounts": discounts,
+        "description": description,
     }
     return dumps(api_json(params))
 

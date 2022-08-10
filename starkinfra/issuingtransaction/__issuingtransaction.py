@@ -83,7 +83,7 @@ def page(source=None, tags=None, external_ids=None, after=None, before=None,
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - status [string, default None]: filter for status of retrieved objects. ex: "approved", "canceled", "denied", "confirmed" or "voided"
     - ids [list of strings, default [], default None]: purchase IDs
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - cursor [string, default None]: cursor returned on the previous page function call
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:

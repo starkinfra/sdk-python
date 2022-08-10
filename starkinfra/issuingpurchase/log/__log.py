@@ -79,7 +79,7 @@ def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None,
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - ids [list of strings, default None]: list of IssuingPurchase ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter for log event types. ex: ["approved", "canceled", "confirmed", "denied", "reversed", "voided"]

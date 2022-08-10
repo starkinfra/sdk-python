@@ -1,4 +1,5 @@
 import starkinfra
+from random import random, uniform
 from unittest import TestCase, main
 from datetime import date, timedelta, datetime
 from tests.utils.user import exampleProject
@@ -85,19 +86,33 @@ class TestDynamicBrcodeResponse(TestCase):
     def test_due(self):
         response = starkinfra.dynamicbrcode.response_due(
             version=1,
-            created=datetime.datetime(2022, 3, 10, 10, 30, 0, 0),
+            created=datetime(2022, 3, 10, 10, 30, 0, 0),
             due="2022-07-15",
             expiration=timedelta(seconds=100000),
             key_id="+5511989898989",
             status="paid",
             reconciliation_id="b77f5236-7ab9-4487-9f95-66ee6eaf1781",
-            amount=100,
+            nominal_amount=100,
             sender_name="Anthony Edward Stark",
+            sender_tax_id="012.345.678-90",
             receiver_name="Jamie Lannister",
             receiver_street_line="Av. Paulista, 200",
             receiver_city="Sao Paulo",
             receiver_state_code="SP",
             receiver_zip_code="01234-567",
+            receiver_tax_id="20.018.183/0001-8",
+            fine=uniform(0, 100),
+            interest=uniform(0, 1),
+            discounts=[
+                {
+                    "percentage": 5,
+                    "due": datetime(2022, 3, 10, 10, 30, 0, 0),
+                },{
+                    "percentage": 1,
+                    "due": datetime(2022, 3, 10, 10, 30, 0, 0),
+                }
+            ],
+            description="teste Python",
         )
         print(response)
 

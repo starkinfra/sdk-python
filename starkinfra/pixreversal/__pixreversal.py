@@ -144,7 +144,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
 
 
 def parse(content, signature, user=None):
-    """# Create single verified PixReversal object from a content string
+    """# Create a single verified PixReversal object from a content string
     Create a single PixReversal object from a content string received from a handler listening at the reversal url.
     If the provided digital signature does not check out with the StarkInfra public key, a
     starkinfra.error.InvalidSignatureError will be raised.
@@ -156,12 +156,19 @@ def parse(content, signature, user=None):
     ## Return:
     - Parsed PixReversal object
     """
-    return parse_and_verify(
+    request = parse_and_verify(
         content=content,
         signature=signature,
         user=user,
         resource=_resource
     )
+
+    request.fee = request.fee or 0
+    request.tags = request.tags or []
+    request.external_id = request.external_id or ""
+    request.description = request.description or ""
+    
+    return request
 
 
 def response(status, reason=None):
@@ -174,7 +181,9 @@ def response(status, reason=None):
     - Dumped JSON string that must be returned to us
     """
     params = {
-        "status": status,
-        "reason": reason,
+        "authorization": {
+            "status": status,
+            "reason": reason,
+        }
     }
     return dumps(api_json(params))

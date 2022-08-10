@@ -41,7 +41,7 @@ class Event(Resource):
     - log [Log]: a Log object from one of the subscribed services (PixRequestLog, PixReversalLog)
     - created [datetime.datetime]: creation datetime for the notification Event. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - is_delivered [bool]: true if the Event has been successfully delivered to the user url. ex: False
-    - subscription [string]: service that triggered this Event. ex: "pix-request.in", "pix-request.out"
+    - subscription [string]: service that triggered this Event. Options: "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out", "pix-key", "pix-claim", "pix-infraction", "pix-chargeback", "issuing-card", "issuing-invoice", "issuing-purchase", "credit-note"
     - workspace_id [string]: ID of the Workspace that generated this Event. Mostly used when multiple Workspaces have Webhooks registered to the same endpoint. ex: "4545454545454545"
     """
 
@@ -153,7 +153,7 @@ def update(id, is_delivered, user=None):
 
 
 def parse(content, signature, user=None):
-    """# Create single notification Event from a content string
+    """# Create a single notification Event from a content string
     Create a single Event object received from Event listening at subscribed user endpoint.
     If the provided digital signature does not check out with the StarkInfra public key, a
     starkinfra.error.InvalidSignatureError will be raised.

@@ -37,17 +37,18 @@ class IssuingHolder(Resource):
 _resource = {"class": IssuingHolder, "name": "IssuingHolder"}
 
 
-def create(holders, user=None):
+def create(holders, expand=None, user=None):
     """# Create IssuingHolder
     Send a list of IssuingHolder objects for creation at the Stark Infra API
     ## Parameters (required):
     - holders [list of IssuingHolder objects]: list of IssuingHolder objects to be created in the API
     ## Parameters (optional):
+    - expand [list of strings, default []]: fields to expand information. Options: ["rules"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of IssuingHolder objects with updated attributes
     """
-    return rest.post_multi(resource=_resource, entities=holders, user=user)
+    return rest.post_multi(resource=_resource, entities=holders, expand=expand, user=user)
 
 
 def get(id, expand=None, user=None):
@@ -56,7 +57,7 @@ def get(id, expand=None, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - expand [list of strings, default None]: fields to expand information. ex: ["rules"]
+    - expand [list of strings, default None]: fields to expand information. Options: ["rules"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - IssuingHolder object with updated attributes
@@ -74,7 +75,7 @@ def query(limit=None, ids=None, after=None, before=None, status=None, tags=None,
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["active", "blocked", "canceled"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - expand [string, default None]: fields to expand information. ex: ["rules"]
+    - expand [string, default None]: fields to expand information. Options: ["rules"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of IssuingHolder objects with updated attributes
@@ -97,13 +98,13 @@ def page(cursor=None, limit=None, ids=None, after=None, before=None, status=None
     Receive a list of IssuingHolder objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["active", "blocked", "canceled"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - expand [string, default None]: fields to expand information. ex: ["rules"]
+    - expand [string, default None]: fields to expand information. Options: ["rules"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of IssuingHolder objects with updated attributes

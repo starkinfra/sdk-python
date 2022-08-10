@@ -9,19 +9,19 @@ class IssuingProduct(Resource):
     ## Attributes (return-only):
     - id [string]: unique card product number (BIN) registered within the card network. ex: "53810200"
     - network [string]: card network flag. ex: "mastercard"
-    - settlement [string]: settlement type. ex: "credit"
-    - category [string]: purchase category. ex: "prepaid"
-    - client [string]: client type. ex: "business"
+    - funding_type [string]: type of funding used for payment. ex: "credit", "debit"
+    - holder_type [string]: holder type. ex: "business", "individual"
+    - code [string]: internal code from card flag informing the product. ex: "MRW", "MCO", "MWB", "MCS"
     - created [datetime.datetime]: creation datetime for the IssuingProduct. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, id=None, created=None, network=None, settlement=None, category=None, client=None):
+    def __init__(self, id=None, network=None, funding_type=None, holder_type=None, code=None, created=None):
         Resource.__init__(self, id=id)
 
         self.network = network
-        self.settlement = settlement
-        self.category = category
-        self.client = client
+        self.funding_type = funding_type
+        self.holder_type = holder_type
+        self.code = code
         self.created = created
 
 
@@ -49,7 +49,7 @@ def page(limit=None, cursor=None, user=None):
     Receive a list of up to 100 IssuingProduct objects previously registered in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
-    - limit [integer, default 100]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of IssuingProduct objects with updated attributes

@@ -44,8 +44,8 @@ from .issuingbalance.__issuingbalance import IssuingBalance
 from . import creditnote
 from .creditnote.__creditnote import CreditNote
 
-from . import creditnotepreview
-from .creditnotepreview.__creditnotepreview import CreditNotePreview
+from . import creditpreview
+from .creditpreview.__creditpreview import CreditPreview
 
 from . import dynamicbrcode
 from .dynamicbrcode.__dynamicbrcode import DynamicBrcode

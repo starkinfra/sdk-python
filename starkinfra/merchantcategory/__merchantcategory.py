@@ -28,12 +28,12 @@ _resource = {"class": MerchantCategory, "name": "MerchantCategory"}
 
 def query(search=None, user=None):
     """# Retrieve MerchantCategories
-    Receive a generator of MerchantCategories objects previously created in the Stark Infra API
+    Receive a generator of MerchantCategory objects previously created in the Stark Infra API
     ## Parameters (optional):
     - search [string, default None]: keyword to search for code, type, name or number
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - generator of MerchantCategories objects with updated attributes
+    - generator of MerchantCategory objects with updated attributes
     """
     return rest.get_stream(
         resource=_resource,

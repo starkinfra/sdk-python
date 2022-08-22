@@ -16,7 +16,7 @@ class IssuingCard(Resource):
     - display_name [string, default None]: card displayed name. ex: "ANTHONY STARK"
     - rules [list of IssuingRule, default []]: [EXPANDABLE] list of card spending rules.
     - product_id [string, default None]: card product ID to which the card is bound. ex: "53810200"
-    - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
+    - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     - street_line_1 [string, default sub-issuer street line 1]: card holder main address. ex: "Av. Paulista, 200"
     - street_line_2 [string, default sub-issuer street line 2]: card holder address complement. ex: "Apto. 123"
     - district [string, default sub-issuer district]: card holder address district / neighbourhood. ex: "Bela Vista"

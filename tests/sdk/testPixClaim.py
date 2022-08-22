@@ -33,9 +33,9 @@ class TestPixClaimQuery(TestCase):
             status="failed",
             ids=["1", "2", "3"],
             type="ownership",
-            agent="claimer",
+            flow="out",
             key_type="cpf",
-            key_id="1",
+            key_id="123.456.789-09",
         )
         self.assertEqual(len(list(pix_claims)), 0)
 
@@ -46,7 +46,7 @@ class TestPixClaimPage(TestCase):
         cursor = None
         ids = []
         for _ in range(2):
-            pix_claims, cursor = starkinfra.pixclaim.page(limit=2, cursor=cursor)
+            pix_claims, cursor = starkinfra.pixclaim.page(limit=2, cursor=cursor, flow="out")
             for pix_claim in pix_claims:
                 print(pix_claim)
                 self.assertFalse(pix_claim.id in ids)

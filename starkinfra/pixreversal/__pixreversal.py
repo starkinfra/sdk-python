@@ -19,7 +19,7 @@ class PixReversal(Resource):
     - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     - reason [string]: reason why the PixRequest is being reversed. Options are "bankError", "fraud", "chashierError", "customerRequest"
     ## Parameters (optional):
-    - tags [list of strings, default None]: list of strings for reference when searching for PixReversals. ex: ["employees", "monthly"]
+    - tags [list of strings, default []]: list of strings for reference when searching for PixReversals. ex: ["employees", "monthly"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixReversal is created. ex: "5656565656565656".
     - return_id [string]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo".
@@ -76,8 +76,8 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, return_ids=None,
-          external_ids=None, user=None):
+def query(limit=None, after=None, before=None, status=None, ids=None, return_ids=None,
+          external_ids=None, tags=None, user=None):
     """# Retrieve PixReversals
     Receive a generator of PixReversal objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -85,10 +85,10 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "processing", "success", "failed"]
-    - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - return_ids [list of strings, default None]: central bank's unique reversal transaction IDs. ex: ["D20018183202202030109X3OoBHG74wo", "D20018183202202030109X3OoBHG72rd"].
     - external_ids [list of strings, default None]: url safe strings that must be unique among all your PixReversals. Duplicated external IDs will cause failures. By default, this parameter will block any PixReversal that repeats amount and receiver information on the same date. ex: ["my-internal-id-123456", "my-internal-id-654321"]
+    - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixReversal objects with updated attributes
@@ -100,16 +100,16 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
         after=check_date(after),
         before=check_date(before),
         status=status,
-        tags=tags,
         ids=ids,
         return_ids=return_ids,
         external_ids=external_ids,
+        tags=tags,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, status=None, tags=None, ids=None,
-         return_ids=None, external_ids=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None,
+         return_ids=None, external_ids=None, tags=None, user=None):
     """# Retrieve paged PixReversals
     Receive a list of up to 100 PixReversal objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your reversals.
@@ -119,10 +119,10 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
     - after [datetime.date or string, default None]: date filter for objects created after a specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "processing", "success", "failed"]
-    - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - return_ids [list of strings, default None]: central bank's unique reversal transaction ID. ex: ["D20018183202202030109X3OoBHG74wo", "D20018183202202030109X3OoBHG72rd"].
     - external_ids [list of strings, default None]: url safe string that must be unique among all your PixReversals. Duplicated external IDs will cause failures. By default, this parameter will block any PixReversal that repeats amount and receiver information on the same date. ex: ["my-internal-id-123456", "my-internal-id-654321"]
+    - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of PixReversal objects with updated attributes
@@ -135,10 +135,10 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
         after=check_date(after),
         before=check_date(before),
         status=status,
-        tags=tags,
         ids=ids,
         return_ids=return_ids,
         external_ids=external_ids,
+        tags=tags,
         user=user,
     )
 

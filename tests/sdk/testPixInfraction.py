@@ -32,6 +32,7 @@ class TestPixInfractionQuery(TestCase):
             status="failed",
             ids=["1", "2"],
             type="fraud",
+            flow="in"
         )
         self.assertEqual(len(list(infraction_reports)), 0)
 
@@ -42,7 +43,7 @@ class TestPixInfractionPage(TestCase):
         cursor = None
         ids = []
         for _ in range(2):
-            infraction_reports, cursor = starkinfra.pixinfraction.page(limit=2, cursor=cursor)
+            infraction_reports, cursor = starkinfra.pixinfraction.page(limit=2, cursor=cursor, flow="out")
             for infraction_report in infraction_reports:
                 print(infraction_report)
                 self.assertFalse(infraction_report.id in ids)

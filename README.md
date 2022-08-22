@@ -44,10 +44,11 @@ This SDK version is compatible with the Stark Infra API v2.
         - [PixDomain](#query-pixdomains): View registered SPI participants certificates
         - [StaticBrcode](#create-staticbrcodes): Create static Pix BR codes
         - [DynamicBrcode](#create-dynamicbrcodes): Create dynamic Pix BR codes
+        - [BrcodePreview](#create-a-brcodepreview): Read data from BR Codes before paying them
     - [Credit Note](#credit-note)
         - [CreditNote](#create-creditnotes): Create credit notes
-    - [CreditPreview](#credit-preview)
-        - [CreditPreview](#create-a-creditnotepreview): Create credit note previews
+    - [Credit Preview](#credit-preview)
+        - [CreditNotePreview](#create-a-creditnotepreview): Create a credit note preview
     - [Webhook](#webhook):
         - [Webhook](#create-a-webhook-subscription): Configure your webhook endpoints and subscriptions
         - [WebhookEvents](#process-webhook-events): Manage Webhook events
@@ -1249,7 +1250,7 @@ key = starkinfra.pixkey.get(
 print(key)
 ```
 
-### Patch a PixKey
+### Update a PixKey
 
 Update the account information linked to a Pix Key.
 
@@ -1345,7 +1346,7 @@ claims = starkinfra.pixclaim.query(
     status="registered",
     ids=["5729405850615808"],
     type="ownership",
-    agent="claimed",
+    flow="out",
     key_type="phone",
     key_id="+5511989898989"
 )
@@ -1366,7 +1367,7 @@ claim = starkinfra.pixclaim.get("5155165527080960")
 print(claim)
 ```
 
-### Patch a PixClaim
+### Update a PixClaim
 
 A Pix Claim can be confirmed or canceled by patching its status.
 A received Pix Claim must be confirmed by the donor to be completed.
@@ -1490,7 +1491,7 @@ infraction = starkinfra.pixinfraction.get("5155165527080960")
 print(infraction)
 ```
 
-### Patch a PixInfraction
+### Update a PixInfraction
 
 A received Pix Infraction can be confirmed or declined by patching its status.
 After a Pix Infraction is patched, its status changes to closed.
@@ -1603,7 +1604,7 @@ chargeback = starkinfra.pixchargeback.get("5155165527080960")
 print(chargeback)
 ```
 
-### Patch a PixChargeback
+### Update a PixChargeback
 
 A received Pix Chargeback can be accepted or rejected by patching its status.
 After a Pix Chargeback is patched, its status changes to closed.
@@ -1878,6 +1879,25 @@ send_response(  # you should also implement this method to respond the read requ
         cash_amount=invoice.cash_amount
     )
 )
+```
+
+## Create a BrcodePreview
+You can create BrcodePreviews to preview BR Codes before paying them.
+
+```python
+import starkinfra
+
+previews = starkinfra.brcodepreview.create([
+    starkinfra.BrcodePreview(
+        id="00020126420014br.gov.bcb.pix0120nedstark@hotmail.com52040000530398654075000.005802BR5909Ned Stark6014Rio de Janeiro621605126674869738606304FF71"
+    ),
+    starkinfra.BrcodePreview(
+        id="00020126430014br.gov.bcb.pix0121aryastark@hotmail.com5204000053039865406100.005802BR5910Arya Stark6014Rio de Janeiro6216051262678188104863042BA4"
+    ),
+])
+
+for preview in previews:
+    print(preview)
 ```
 
 ## Credit Note

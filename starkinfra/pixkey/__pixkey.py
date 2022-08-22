@@ -19,7 +19,7 @@ class PixKey(Resource):
     - tax_id [string]: holder's taxId (CPF/CNPJ) of the linked account. ex: "012.345.678-90".
     ## Parameters (optional):
     - id [string, default None]: id of the registered PixKey. Allowed types are: CPF, CNPJ, phone number or email. If this parameter is not passed, an EVP will be created. ex: "+5511989898989";
-    - tags [list of strings, default None]: list of strings for reference when searching for PixKeys. ex: ["employees", "monthly"]
+    - tags [list of strings, default []]: list of strings for reference when searching for PixKeys. ex: ["employees", "monthly"]
     ## Attributes (return-only):
     - owned [datetime.datetime]: datetime when the key was owned by the holder. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - owner_type [string]: type of the owner of the PixKey. Options: "business" or "individual".

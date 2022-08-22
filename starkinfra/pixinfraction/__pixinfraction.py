@@ -15,13 +15,13 @@ class PixInfraction(Resource):
     - type [string]: type of infraction report. Options: "fraud", "reversal", "reversalChargeback"
     ## Parameters (optional):
     - description [string, default None]: description for any details that can help with the infraction investigation.
+    - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixInfraction is created. ex: "5656565656565656"
     - credited_bank_code [string]: bank_code of the credited Pix participant in the reported transaction. ex: "20018183"
     - debited_bank_code [string]: bank_code of the debited Pix participant in the reported transaction. ex: "20018183"
-    - agent [string]: Options: "reporter" if you created the PixInfraction, "reported" if you received the PixInfraction.
+    - flow [string]: direction of the PixInfraction flow. Options: "out" if you created the PixInfraction, "in" if you received the PixInfraction.
     - analysis [string]: analysis that led to the result.
-    - bacen_id [string]: central bank's unique UUID that identifies the infraction report.
     - reported_by [string]: agent that reported the PixInfraction. Options: "debited", "credited".
     - result [string]: result after the analysis of the PixInfraction by the receiving party. Options: "agreed", "disagreed"
     - status [string]: current PixInfraction status. Options: "created", "failed", "delivered", "closed", "canceled".
@@ -29,19 +29,19 @@ class PixInfraction(Resource):
     - updated [datetime.datetime]: latest update datetime for the PixInfraction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self,  reference_id, type, description=None, id=None, credited_bank_code=None, debited_bank_code=None,
-                 agent=None, analysis=None, bacen_id=None, reported_by=None, result=None, status=None, created=None,
+    def __init__(self,  reference_id, type, description=None, tags=None, id=None, credited_bank_code=None, debited_bank_code=None,
+                 flow=None, analysis=None, reported_by=None, result=None, status=None, created=None,
                  updated=None):
         Resource.__init__(self, id=id)
 
         self.reference_id = reference_id
         self.type = type
         self.description = description
+        self.tags = tags
         self.credited_bank_code = credited_bank_code
         self.debited_bank_code = debited_bank_code
-        self.agent = agent
+        self.flow = flow
         self.analysis = analysis
-        self.bacen_id = bacen_id
         self.reported_by = reported_by
         self.result = result
         self.status = status
@@ -78,7 +78,7 @@ def get(id, user=None):
     return rest.get_id(id=id, resource=_resource, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, ids=None, type=None, user=None):
+def query(limit=None, after=None, before=None, status=None, ids=None, type=None, flow=None, tags=None, user=None):
     """# Retrieve PixInfractions
     Receive a generator of PixInfraction objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -88,6 +88,8 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "closed", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - type [list of strings, default None]: filter for the type of retrieved PixInfractions. Options: "fraud", "reversal", "reversalChargeback"
+    - flow [string, default None]: direction of the PixInfraction flow. Options: "out" if you created the PixInfraction, "in" if you received the PixInfraction.
+    - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixInfraction objects with updated attributes
@@ -101,11 +103,13 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
         status=status,
         ids=ids,
         type=type,
+        flow=flow,
+        tags=tags,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, type=None,
+def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, type=None, flow=None, tags=None,
          user=None):
     """# Retrieve paged PixInfractions
     Receive a list of up to 100 PixInfraction objects previously created in the Stark Infra API and the cursor to the next page.
@@ -118,6 +122,8 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "closed", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - type [list of strings, default None]: filter for the type of retrieved PixInfractions. Options: "fraud", "reversal", "reversalChargeback"
+    - flow [string, default None]: direction of the PixInfraction flow. Options: "out" if you created the PixInfraction, "in" if you received the PixInfraction.
+    - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of PixInfraction objects with updated attributes and cursor to retrieve the next page of PixInfraction objects
@@ -131,6 +137,8 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
         status=status,
         ids=ids,
         type=type,
+        flow=flow,
+        tags=tags,
         user=user,
     )
 

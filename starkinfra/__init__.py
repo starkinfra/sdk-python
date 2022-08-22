@@ -8,6 +8,9 @@ from starkcore import Project, Organization, key, error
 from . import event
 from .event.__event import Event
 
+from . import brcodepreview
+from .brcodepreview.__brcodepreview import BrcodePreview
+
 from . import pixrequest
 from .pixrequest.__pixrequest import PixRequest
 

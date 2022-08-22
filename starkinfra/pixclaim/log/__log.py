@@ -14,17 +14,16 @@ class Log(Resource):
     - claim [PixClaim]: PixClaim entity to which the log refers to.
     - type [string]: type of the PixClaim event which triggered the log creation. ex: "created", "failed", "delivering", "delivered", "confirming", "confirmed", "success", "canceling", "canceled"
     - errors [list of strings]: list of errors linked to this PixClaim event
-    - agent [string]: agent that modified the PixClaim resulting in the Log. Options: "claimer", "claimed".
     - reason [string]: reason why the PixClaim was modified, resulting in the Log. Options: "fraud", "userRequested", "accountClosure", "defaultOperation", "reconciliation"
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
-    def __init__(self, id, claim, type, errors, agent, reason, created):
+    
+    def __init__(self, id, claim, type, errors, reason, created):
         Resource.__init__(self, id=id)
 
         self.claim = from_api_json(_pixclaim_resource, claim)
         self.type = type
         self.errors = errors
-        self.agent = agent
         self.reason = reason
         self.created = check_datetime(created)
 

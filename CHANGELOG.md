@@ -18,8 +18,12 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - settlement parameter to funding_type of Issuing Product resource
 - client parameter to holder_type of Issuing Product resource
 - CreditNotePreview sub-resource to CreditPreview.CreditNotePreview sub-resource
+- agent parameter to flow in PixInfraction and PixChargeback resources
+- bank_code parameter to claimer_bank_code in PixClaim resource
+- agent parameter to flow on query and page methods in PixInfraction and PixChargeback
 ### Fixed
 - IssuingPurchase missing parameters
+- IssuingInvoice missing parameters
 - JSON body returned from response method of PixRequest resource
 - JSON body returned from response method of PixReversal resource
 ### Added
@@ -27,8 +31,16 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - expand parameter to create method of IssuingHolder resource
 - CreditPreview sub-resource
 - default to fee, externalId and tags on PixRequest and PixReversal parse method
+- BrcodePreview resource
+- tags parameter to PixClaim, PixInfraction, Pix Chargeback, DynamicBrcode and StaticBrcode resources
+- flow parameter to PixClaim resource
+- flow parameter to query and page methods in PixClaim
+- tags parameter to query and page methods in PixChargeback, PixClaim and PixInfraction
+- zip_code parameter to IssuingPurchase resource
 ### Removed
 - IssuingProduct category parameter
+- bacen_id parameter from PixChargeback and PixInfraction resources
+- agent parameter from PixClaim.Log resource
 
 ## [0.2.0] - 2022-07-07
 ### Added

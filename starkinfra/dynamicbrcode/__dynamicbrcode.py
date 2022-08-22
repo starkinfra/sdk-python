@@ -24,6 +24,7 @@ class DynamicBrcode(Resource):
     - external_id [string]: string that must be unique among all your DynamicBrcodes. Duplicated external ids will cause failures. ex: "my-internal-id-123456"
     ## Parameters (optional):
     - type [string, default "instant"]: type of the DynamicBrcode. Options: "instant", "due"
+    - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: id returned on creation, this is the BR code. ex: "00020126360014br.gov.bcb.pix0114+552840092118152040000530398654040.095802BR5915Jamie Lannister6009Sao Paulo620705038566304FC6C"
     - uuid [string]: unique uuid returned when the DynamicBrcode is created. ex: "4e2eab725ddd495f9c98ffd97440702d"
@@ -32,7 +33,7 @@ class DynamicBrcode(Resource):
     - created [datetime.datetime]: creation datetime for the DynamicBrcode. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, name, city, external_id, id=None, type=None, url=None, uuid=None,
+    def __init__(self, name, city, external_id, id=None, type=None, tags=None, uuid=None, url=None, 
                     updated=None, created=None):
         Resource.__init__(self, id=id)
 
@@ -40,6 +41,7 @@ class DynamicBrcode(Resource):
         self.city = city
         self.external_id = external_id
         self.type = type
+        self.tags = tags
         self.uuid = uuid
         self.url = url
         self.updated = check_datetime(updated)
@@ -75,7 +77,7 @@ def get(uuid, user=None):
     return rest.get_id(resource=_resource, id=uuid, user=user)
 
 
-def query(limit=None, after=None, before=None, external_id=None, uuids=None, user=None):
+def query(limit=None, after=None, before=None, external_id=None, uuids=None, tags=None, user=None):
     """# Retrieve DynamicBrcodes
     Receive a generator of DynamicBrcode objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -84,6 +86,7 @@ def query(limit=None, after=None, before=None, external_id=None, uuids=None, use
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - external_ids [list of strings, default None]: list of external_ids to filter retrieved objects. ex: ["my_external_id1", "my_external_id2"]
     - uuids [list of strings, default None]: list of uuids to filter retrieved objects. ex: ["901e71f2447c43c886f58366a5432c4b", "4e2eab725ddd495f9c98ffd97440702d"]
+    - tags [list of strings, default None]: list of tags to filter retrieved objects. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of DynamicBrcode objects with updated attributes
@@ -95,11 +98,12 @@ def query(limit=None, after=None, before=None, external_id=None, uuids=None, use
         before=check_date(before),
         external_id=external_id,
         uuids=uuids,
+        tags=tags,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, external_id=None, uuids=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, external_id=None, uuids=None, tags=None, user=None):
     """# Retrieve DynamicBrcodes
     Receive a list of DynamicBrcode objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
@@ -109,6 +113,7 @@ def page(cursor=None, limit=None, after=None, before=None, external_id=None, uui
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - external_ids [list of strings, default None]: list of external_ids to filter retrieved objects. ex: ["my_external_id1", "my_external_id2"]
     - uuids [list of strings, default None]: list of uuids to filter retrieved objects. ex: ["901e71f2447c43c886f58366a5432c4b", "4e2eab725ddd495f9c98ffd97440702d"]
+    - tags [list of strings, default None]: list of tags to filter retrieved objects. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of DynamicBrcode objects with updated attributes
@@ -122,6 +127,7 @@ def page(cursor=None, limit=None, after=None, before=None, external_id=None, uui
         before=check_date(before),
         external_id=external_id,
         uuids=uuids,
+        tags=tags,
         user=user,
     )
 
@@ -142,7 +148,7 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
     - due [datetime.datetime or string]: requested payment due datetime in ISO format. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - key_id [string]: receiver's PixKey id. Can be a tax_id (CPF/CNPJ), a phone number, an email or an alphanumeric sequence (EVP). ex: "+5511989898989"
     - status [string]: BR code status. Options: "created", "overdue", "paid", "canceled" or "expired"
-    - reconciliation_id [string]: id to be used for conciliation of the resulting Pix transaction. ex: "cd65c78aeb6543eaaa0170f68bd741ee"
+    - reconciliation_id [string]: id to be used for conciliation of the resulting Pix transaction. This id must have from to 26 to 35 alphanumeric characters ex: "cd65c78aeb6543eaaa0170f68bd741ee"
     - nominal_amount [integer]: positive integer that represents the amount in cents of the resulting Pix transaction. ex: 1234 (= R$ 12.34)
     - sender_name [string]: sender's full name. ex: "Anthony Edward Stark"
     - receiver_name [string]: receiver's full name. ex: "Jamie Lannister"

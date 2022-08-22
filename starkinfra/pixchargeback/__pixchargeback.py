@@ -17,36 +17,38 @@ class PixChargeback(Resource):
     - reason [string]: reason why the reversal was requested. Options: "fraud", "flaw", "reversalChargeback"
     ## Parameters (optional):
     - description [string, default None]: description for the PixChargeback.
+    - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixChargeback is created. ex: "5656565656565656"
     - analysis [string]: analysis that led to the result.
-    - bacen_id [string]: central bank's unique UUID that identifies the PixChargeback.
     - sender_bank_code [string]: bank_code of the Pix participant that created the PixChargeback. ex: "20018183"
     - receiver_bank_code [string]: bank_code of the Pix participant that received the PixChargeback. ex: "20018183"
     - rejection_reason [string]: reason for the rejection of the Pix chargeback. Options: "noBalance", "accountClosed", "unableToReverse"
     - reversal_reference_id [string]: return id of the reversal transaction. ex: "D20018183202202030109X3OoBHG74wo".
     - result [string]: result after the analysis of the PixChargeback by the receiving party. Options: "rejected", "accepted", "partiallyAccepted"
+    - flow [string]: direction of the Pix Chargeback. Options: "in" for received chargebacks, "out" for chargebacks you requested
     - status [string]: current PixChargeback status. Options: "created", "failed", "delivered", "closed", "canceled".
     - created [datetime.datetime]: creation datetime for the PixChargeback. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the PixChargeback. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self,  amount, reference_id, reason, description=None, id=None, analysis=None, bacen_id=None,
+    def __init__(self,  amount, reference_id, reason, description=None, tags=None, id=None, analysis=None,
                  sender_bank_code=None, receiver_bank_code=None, rejection_reason=None, reversal_reference_id=None,
-                 result=None, status=None, created=None, updated=None):
+                 result=None, flow=None, status=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.amount = amount
         self.reference_id = reference_id
         self.reason = reason
         self.description = description
+        self.tags = tags
         self.analysis = analysis
-        self.bacen_id = bacen_id
         self.sender_bank_code = sender_bank_code
         self.receiver_bank_code = receiver_bank_code
         self.rejection_reason = rejection_reason
         self.reversal_reference_id = reversal_reference_id
         self.result = result
+        self.flow = flow
         self.status = status
         self.created = created
         self.updated = updated
@@ -82,7 +84,7 @@ def get(id, user=None):
     return rest.get_id(id=id, resource=_resource, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, ids=None, user=None):
+def query(limit=None, after=None, before=None, status=None, ids=None, flow=None, tags=None, user=None):
     """# Retrieve PixChargebacks
     Receive a generator of PixChargeback objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -91,6 +93,8 @@ def query(limit=None, after=None, before=None, status=None, ids=None, user=None)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "closed", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - flow [string, default None]: direction of the Pix Chargeback. Options: "in" for received chargebacks, "out" for chargebacks you requested
+    - tags [list of strings, default None]: filter for tags of retrieved objects. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixChargeback objects with updated attributes
@@ -103,11 +107,13 @@ def query(limit=None, after=None, before=None, status=None, ids=None, user=None)
         before=check_date(before),
         status=status,
         ids=ids,
+        flow=flow,
+        tags=tags,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, flow=None, tags=None, user=None):
     """# Retrieve PixChargebacks
     Receive a generator of PixChargeback objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -117,6 +123,8 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "closed", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - flow [string, default None]: direction of the Pix Chargeback. Options: "in" for received chargebacks, "out" for chargebacks you requested
+    - tags [list of strings, default None]: filter for tags of retrieved objects. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - cursor to retrieve the next page of PixChargeback objects
@@ -130,6 +138,8 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
         before=check_date(before),
         status=status,
         ids=ids,
+        flow=flow,
+        tags=tags,
         user=user,
     )
 

@@ -34,22 +34,24 @@ class IssuingPurchase(Resource):
     - score [float]: internal score calculated for the authenticity of the purchase. None in case of insufficient data. ex: 7.6
     - end_to_end_id [string]: Unique id used to identify the transaction through all of its life cycle, even before the purchase is denied or approved and gets its usual id. ex: "679cd385-642b-49d0-96b7-89491e1249a5"
     - tags [string]: list of strings for tagging returned by the sub-issuer during the authorization. ex: ["travel", "food"]
+    - zip_code [string]: zip code of the merchant location. ex: "02101234"
     ## Attributes (IssuingPurchase only):
     - issuing_transaction_ids [string]: ledger transaction ids linked to this Purchase
     - status [string]: current IssuingCard status. Options: "approved", "canceled", "denied", "confirmed", "voided"
     - updated [datetime.datetime]: latest update datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     ## Attributes (authorization request only):
-    - is_partial_allowed [bool]: true if the the merchant allows partial purchases. ex: False
+    - is_partial_allowed [bool]: true if the merchant allows partial purchases. ex: False
     - card_tags [list of strings]: tags of the IssuingCard responsible for this purchase. ex: ["travel", "food"]
     - holder_tags [list of strings]: tags of the IssuingHolder responsible for this purchase. ex: ["technology", "john snow"]
     """
 
-    def __init__(self, id, holder_name, card_id, card_ending, purpose, amount, tax, issuer_amount, issuer_currency_code,
-                 issuer_currency_symbol, merchant_amount, merchant_currency_code, merchant_currency_symbol,
-                 merchant_category_code, merchant_country_code, acquirer_id, merchant_id, merchant_name, merchant_fee,
-                 wallet_id, method_code, score, end_to_end_id, tags, issuing_transaction_ids, status, updated, created,
-                 is_partial_allowed, card_tags, holder_tags):
+    def __init__(self, id=None, holder_name=None, card_id=None, card_ending=None, purpose=None, amount=None, tax=None, 
+                issuer_amount=None, issuer_currency_code=None, issuer_currency_symbol=None, merchant_amount=None, 
+                merchant_currency_code=None, merchant_currency_symbol=None, merchant_category_code=None, merchant_country_code=None, 
+                acquirer_id=None, merchant_id=None, merchant_name=None, merchant_fee=None, wallet_id=None, method_code=None, 
+                score=None, end_to_end_id=None, tags=None, zip_code=None, issuing_transaction_ids=None, status=None, updated=None, 
+                created=None, is_partial_allowed=None, card_tags=None, holder_tags=None):
         Resource.__init__(self, id=id)
 
         self.holder_name = holder_name
@@ -75,6 +77,7 @@ class IssuingPurchase(Resource):
         self.score = score
         self.end_to_end_id = end_to_end_id
         self.tags = tags
+        self.zip_code = zip_code
         self.issuing_transaction_ids = issuing_transaction_ids
         self.status = status
         self.updated = check_datetime(updated)
@@ -197,7 +200,7 @@ def response(status, amount=None, reason=None, tags=None):
     - reason [string]: denial reason. Options: "other", "blocked", "lostCard", "stolenCard", "invalidPin", "invalidCard", "cardExpired", "issuerError", "concurrency", "standInDenial", "subIssuerError", "invalidPurpose", "invalidZipCode", "invalidWalletId", "inconsistentCard", "settlementFailed", "cardRuleMismatch", "invalidExpiration", "prepaidInstallment", "holderRuleMismatch", "insufficientBalance", "tooManyTransactions", "invalidSecurityCode", "invalidPaymentMethod", "confirmationDeadline", "withdrawalAmountLimit", "insufficientCardLimit", "insufficientHolderLimit"
     ## Parameters (optional):
     - amount [integer, default None]: amount in cents that was authorized. ex: 1234 (= R$ 12.34)
-    - tags [list of strings, default None]: tags to filter retrieved object. ex: ["tony", "stark"]
+    - tags [list of strings, default []]: tags to filter retrieved object. ex: ["tony", "stark"]
     ## Return:
     - Dumped JSON string that must be returned to us on the IssuingPurchase request
     """

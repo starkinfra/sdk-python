@@ -17,20 +17,22 @@ class PixClaim(Resource):
     - name [string]: holder's name of the account claiming the PixKey. ex: "Jamie Lannister".
     - tax_id [string]: holder's taxId of the account claiming the PixKey (CPF/CNPJ). ex: "012.345.678-90".
     - key_id [string]: id of the registered Pix Key to be claimed. Allowed keyTypes are CPF, CNPJ, phone number or email. ex: "+5511989898989".
+    # Parameters (Options):
+    - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixClaim is created. ex: "5656565656565656"
     - status [string]: current PixClaim status. Options: "created", "failed", "delivered", "confirmed", "success", "canceled"
     - type [string]: type of Pix Claim. Options: "ownership", "portability".
     - key_type [string]: keyType of the claimed PixKey. Options: "CPF", "CNPJ", "phone" or "email"
-    - agent [string]: Options: "claimer" if you requested the PixClaim or "claimed" if you received a PixClaim request.
-    - bank_code [string]: bank_code of the account linked to the PixKey being claimed. ex: "20018183".
+    - flow [string]: direction of the Pix Claim. Options: "in" if you received the PixClaim or "out" if you created the PixClaim.
+    - claimer_bank_code [string]: bank_code of the Pix participant that created the PixClaim. ex: "20018183".
     - claimed_bank_code [string]: bank_code of the account donating the PixKey. ex: "20018183".
     - created [datetime.datetime]: creation datetime for the PixClaim. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: update datetime for the PixClaim. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, account_created, account_number, account_type, branch_code, name, tax_id, key_id, id=None,
-                 status=None, type=None, key_type=None, agent=None, bank_code=None, claimed_bank_code=None, created=None,
+    def __init__(self, account_created, account_number, account_type, branch_code, name, tax_id, key_id, tags=None, id=None,
+                 status=None, type=None, key_type=None, flow=None, claimer_bank_code=None, claimed_bank_code=None, created=None,
                  updated=None):
         Resource.__init__(self, id=id)
 
@@ -41,11 +43,12 @@ class PixClaim(Resource):
         self.name = name
         self.tax_id = tax_id
         self.key_id = key_id
+        self.tags = tags
         self.status = status
         self.type = type
         self.key_type = key_type
-        self.agent = agent
-        self.bank_code = bank_code
+        self.flow = flow
+        self.claimer_bank_code = claimer_bank_code
         self.claimed_bank_code = claimed_bank_code
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
@@ -81,7 +84,7 @@ def get(id, user=None):
     return rest.get_id(id=id, resource=_resource, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, ids=None, type=None, agent=None, key_type=None, key_id=None, user=None):
+def query(limit=None, after=None, before=None, status=None, ids=None, type=None, key_type=None, key_id=None, flow=None, tags=None, user=None):
     """# Retrieve PixClaims
     Receive a generator of PixClaim objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -90,10 +93,11 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "confirmed", "success", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - type [strings, default None]: filter for the type of retrieved PixClaims. Options: "ownership" or "portability".
-    - agent [string, default None]: filter for the agent of retrieved PixClaims. Options: "claimer" or "claimed".
+    - type [string, default None]: filter for the type of retrieved PixClaims. Options: "ownership" or "portability".
     - key_type [string, default None]: filter for the PixKey type of retrieved PixClaims. Options: "cpf", "cnpj", "phone", "email" and "evp",
-    - key_id [string, default None]: filter PixClaims linked to a specific PixKey id. Example: "+5511989898989".
+    - key_id [string, default None]: filter PixClaims linked to a specific PixKey id. ex: "+5511989898989".
+    - flow [string, default None]: direction of the Pix Claim. Options: "in" if you received the PixClaim or "out" if you created the PixClaim.
+    - tags [list of strings, default None]: list of strings to filter retrieved objects. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of PixClaim objects with updated attributes
@@ -107,14 +111,15 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
         status=status,
         ids=ids,
         type=type,
-        agent=agent,
         key_type=key_type,
         key_id=key_id,
+        flow=flow,
+        tags=tags,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, type=None, agent=None, key_type=None, key_id=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, type=None, key_type=None, key_id=None, flow=None, tags=None, user=None):
     """# Retrieve paged PixClaims
     Receive a list of up to 100 PixClaim objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
@@ -125,10 +130,11 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "confirmed", "success", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - type [strings, default None]: filter for the type of retrieved PixClaims. Options: "ownership" or "portability".
-    - agent [string, default None]: filter for the agent of retrieved PixClaims. Options: "claimer" or "claimed".
+    - type [string, default None]: filter for the type of retrieved PixClaims. Options: "ownership" or "portability".
     - key_type [string, default None]: filter for the PixKey type of retrieved PixClaims. Options: "cpf", "cnpj", "phone", "email" and "evp",
     - key_id [string, default None]: filter PixClaims linked to a specific PixKey id. Example: "+5511989898989".
+    - flow [string, default None]: direction of the Pix Claim. Options: "in" if you received the PixClaim or "out" if you created the PixClaim.
+    - tags [list of strings, default None]: list of strings to filter retrieved objects. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of PixClaim objects with updated attributes and cursor to retrieve the next page of PixClaim objects
@@ -142,9 +148,10 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
         status=status,
         ids=ids,
         type=type,
-        agent=agent,
         key_type=key_type,
         key_id=key_id,
+        flow=flow,
+        tags=tags,
         user=user,
     )
 

@@ -7,8 +7,8 @@ template_id = os.environ["SANDBOX_TEMPLATE_ID"]
 
 exampleProject = starkinfra.Project(
     environment="sandbox",
-    id=os.environ["SANDBOX_ID"],
-    private_key=os.environ["SANDBOX_PRIVATE_KEY"],
+    id=os.environ["SANDBOX_INFRA_ID"],
+    private_key=os.environ["SANDBOX_INFRA_PRIVATE_KEY"],
 )
 
 exampleOrganization = starkinfra.Organization(

@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.3.0] - 2022-09-26
 ### Changed
 - amount to nominal_amount, fine_amount to fine, interest_amount to interest, and discount_amount to discounts on response_due method of DynamicBrcode resource
 - settlement parameter to funding_type of Issuing Product resource

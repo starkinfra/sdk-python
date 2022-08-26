@@ -20,25 +20,25 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - CreditNotePreview sub-resource to CreditPreview.CreditNotePreview sub-resource
 - agent parameter to flow in PixInfraction and PixChargeback resources
 - bank_code parameter to claimer_bank_code in PixClaim resource
-- agent parameter to flow on query and page methods in PixInfraction and PixChargeback
+- agent parameter to flow on query and page methods in PixInfraction and PixChargeback resources
 ### Fixed
-- IssuingPurchase missing parameters
-- IssuingInvoice missing parameters
 - JSON body returned from response method of PixRequest resource
 - JSON body returned from response method of PixReversal resource
 ### Added
-- code attribute for IssuingProduct resource
+- key_id, cash_amount, cashier_bank_code and cashier_type attributes to BrcodePreview resource 
+- code attribute to IssuingProduct resource
 - expand parameter to create method of IssuingHolder resource
 - CreditPreview sub-resource
-- default to fee, externalId and tags on PixRequest and PixReversal parse method
+- default to fee, external_id and tags on PixRequest and PixReversal parse method
 - BrcodePreview resource
 - tags parameter to PixClaim, PixInfraction, Pix Chargeback, DynamicBrcode and StaticBrcode resources
 - flow parameter to PixClaim resource
-- flow parameter to query and page methods in PixClaim
-- tags parameter to query and page methods in PixChargeback, PixClaim and PixInfraction
-- zip_code parameter to IssuingPurchase resource
+- flow parameter to query and page methods to PixClaim
+- tags parameter to query and page methods to PixChargeback, PixClaim and PixInfraction resources
+- zip_code, purchase, is_partial_allowed, card_tags and holder_tags attributes to IssuingPurchase resource
+- brcode, link and due attributes to IssuingInvoice resource
 ### Removed
-- IssuingProduct category parameter
+- category parameter to IssuingProduct resource
 - bacen_id parameter from PixChargeback and PixInfraction resources
 - agent parameter from PixClaim.Log resource
 
@@ -52,7 +52,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - IssuingRule.Category sub-resources
 - parse method to IssuingPurchase resource
 - response method to PixRequest, PixReversal and IssuingPurchase resources
-- nominalInterest attribute for CreditNote resource
+- nominal_interest attribute to CreditNote resource
 ### Removed
 - IssuingAuthorization resource
 - bank_code attribute from PixReversal resource

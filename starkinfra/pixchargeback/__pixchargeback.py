@@ -24,10 +24,10 @@ class PixChargeback(Resource):
     - sender_bank_code [string]: bank_code of the Pix participant that created the PixChargeback. ex: "20018183"
     - receiver_bank_code [string]: bank_code of the Pix participant that received the PixChargeback. ex: "20018183"
     - rejection_reason [string]: reason for the rejection of the Pix chargeback. Options: "noBalance", "accountClosed", "unableToReverse"
-    - reversal_reference_id [string]: return id of the reversal transaction. ex: "D20018183202202030109X3OoBHG74wo".
+    - reversal_reference_id [string]: return_id or end_to_end_id of the reversal transaction. ex: "D20018183202202030109X3OoBHG74wo"
     - result [string]: result after the analysis of the PixChargeback by the receiving party. Options: "rejected", "accepted", "partiallyAccepted"
     - flow [string]: direction of the Pix Chargeback. Options: "in" for received chargebacks, "out" for chargebacks you requested
-    - status [string]: current PixChargeback status. Options: "created", "failed", "delivered", "closed", "canceled".
+    - status [string]: current PixChargeback status. Options: "created", "failed", "delivered", "closed", "canceled"
     - created [datetime.datetime]: creation datetime for the PixChargeback. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the PixChargeback. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -63,7 +63,7 @@ def create(chargebacks, user=None):
     ## Parameters (optional):
     - chargebacks [list of PixChargeback]: list of PixChargeback objects to be created in the API.
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of PixChargeback objects with updated attributes
     """
@@ -74,9 +74,9 @@ def get(id, user=None):
     """# Retrieve a PixChargeback object
     Retrieve the PixChargeback object linked to your Workspace in the Stark Infra API using its id.
     ## Parameters (required):
-    - id [string]: object unique id. ex: "5656565656565656".
+    - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixChargeback object that corresponds to the given id.
     """
@@ -95,7 +95,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, flow=None,
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - flow [string, default None]: direction of the Pix Chargeback. Options: "in" for received chargebacks, "out" for chargebacks you requested
     - tags [list of strings, default None]: filter for tags of retrieved objects. ex: ["travel", "food"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of PixChargeback objects with updated attributes
     """
@@ -125,7 +125,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - flow [string, default None]: direction of the Pix Chargeback. Options: "in" for received chargebacks, "out" for chargebacks you requested
     - tags [list of strings, default None]: filter for tags of retrieved objects. ex: ["travel", "food"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - cursor to retrieve the next page of PixChargeback objects
     - generator of PixChargeback objects with updated attributes
@@ -149,7 +149,7 @@ def update(id, result, rejection_reason=None, reversal_reference_id=None, analys
     Respond to a received PixChargeback.
     ## Parameters (required):
     - id [string]: PixChargeback id. ex: '5656565656565656'
-    - result [string]: result after the analysis of the PixChargeback. Options: "rejected", "accepted", "partiallyAccepted".
+    - result [string]: result after the analysis of the PixChargeback. Options: "rejected", "accepted", "partiallyAccepted"
     ## Parameters (conditionally required):
     - rejection_reason [string, default None]: if the PixChargeback is rejected a reason is required. Options: "noBalance", "accountClosed", "unableToReverse",
     - reversal_reference_id [string, default None]: return_id of the reversal transaction. ex: "D20018183202201201450u34sDGd19lz"
@@ -173,7 +173,7 @@ def cancel(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - canceled PixChargeback object
     """

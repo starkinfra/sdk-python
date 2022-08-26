@@ -36,7 +36,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - IssuingTransaction object with updated attributes
     """
@@ -55,7 +55,7 @@ def query(source=None, tags=None, external_ids=None, after=None, before=None,
     - status [string, default None]: filter for status of retrieved objects. ex: "approved", "canceled", "denied", "confirmed" or "voided"
     - ids [list of strings, default [], default None]: purchase IDs
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of IssuingTransaction objects with updated attributes
     """
@@ -85,7 +85,7 @@ def page(source=None, tags=None, external_ids=None, after=None, before=None,
     - ids [list of strings, default [], default None]: purchase IDs
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - cursor [string, default None]: cursor returned on the previous page function call
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of IssuingTransaction objects with updated attributes
     - cursor to retrieve the next page of IssuingPurchase objects

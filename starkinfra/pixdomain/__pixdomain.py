@@ -29,7 +29,7 @@ def query(user=None):
     """# Retrieve PixDomains
     Receive a generator of PixDomain objects.
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of PixDomain objects with updated attributes
     """

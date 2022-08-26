@@ -49,7 +49,7 @@ def create(invoice, user=None):
     ## Parameters (required):
     - invoice [IssuingInvoice object]: IssuingInvoice object to be created in the API.
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - IssuingInvoice object with updated attributes
     """
@@ -62,7 +62,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - IssuingInvoice object with updated attributes
     """
@@ -78,7 +78,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, user=None
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "expired", "overdue", "paid"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of IssuingInvoice objects with updated attributes
     """
@@ -103,7 +103,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "expired", "overdue", "paid"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of IssuingInvoice objects with updated attributes
     - cursor to retrieve the next page of IssuingInvoice objects

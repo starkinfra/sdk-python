@@ -14,7 +14,7 @@ class Log(Resource):
     ## Attributes:
     - id [string]: unique id returned when the log is created. ex: "5656565656565656"
     - invoice [IssuingInvoice]: IssuingInvoice entity to which the log refers to.
-    - type [string]: type of the IssuingInvoice event which triggered the log creation. ex: "created", "credited", "expired", "overdue", "paid".
+    - type [string]: type of the IssuingInvoice event which triggered the log creation. ex: "created", "credited", "expired", "overdue", "paid"
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
@@ -35,7 +35,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - issuinginvoice.Log object with updated attributes
     """

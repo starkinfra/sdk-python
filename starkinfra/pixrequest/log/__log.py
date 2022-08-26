@@ -34,7 +34,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixRequest.Log object with updated attributes
     """
@@ -51,7 +51,7 @@ def query(limit=None, after=None, before=None, types=None, request_ids=None, rec
     - types [list of strings, default None]: filter retrieved objects by types. Options: ["sent", "denied", "failed", "created", "success", "approved", "credited", "refunded", "processing"]
     - request_ids [list of strings, default None]: list of PixRequest ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - reconciliation_id [string, default None]: PixRequest reconciliation id to filter retrieved objects. ex: "b77f5236-7ab9-4487-9f95-66ee6eaf1781"
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of PixRequest.Log objects with updated attributes
     """
@@ -79,7 +79,7 @@ def page(cursor=None, limit=None, after=None, before=None, types=None, request_i
     - types [list of strings, default None]: filter retrieved objects by types. Options: ["sent", "denied", "failed", "created", "success", "approved", "credited", "refunded", "processing"]
     - request_ids [list of strings, default None]: list of PixRequest IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - reconciliation_id [string]: PixRequest reconciliation id to filter retrieved objects. ex: "b77f5236-7ab9-4487-9f95-66ee6eaf1781"
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of PixRequest.Log objects with updated attributes
     - cursor to retrieve the next page of PixRequest.Log objects

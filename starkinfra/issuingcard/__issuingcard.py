@@ -27,10 +27,10 @@ class IssuingCard(Resource):
     - id [string]: unique id returned when IssuingCard is created. ex: "5656565656565656"
     - holder_id [string]: card holder unique id. ex: "5656565656565656"
     - type [string]: card type. ex: "virtual"
-    - status [string]: current IssuingCard status. ex: "active", "blocked", "canceled", "expired".
-    - number [string]: [EXPANDABLE] masked card number. Expand to unmask the value. ex: "123".
-    - security_code [string]: [EXPANDABLE] masked card verification value (cvv). Expand to unmask the value. ex: "123".
-    - expiration [datetime.datetime]: [EXPANDABLE] masked card expiration datetime. Expand to unmask the value. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0).
+    - status [string]: current IssuingCard status. ex: "active", "blocked", "canceled", "expired"
+    - number [string]: [EXPANDABLE] masked card number. Expand to unmask the value. ex: "123"
+    - security_code [string]: [EXPANDABLE] masked card verification value (cvv). Expand to unmask the value. ex: "123"
+    - expiration [datetime.datetime]: [EXPANDABLE] masked card expiration datetime. Expand to unmask the value. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the IssuingCard. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingCard. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -74,7 +74,7 @@ def create(cards, expand=None, user=None):
     - cards [list of IssuingCard objects]: list of IssuingCard objects to be created in the API
     ## Parameters (optional):
     - expand [list of strings, default []]: fields to expand information. ex: ["rules", "security_code", "number", "expiration"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of IssuingCard objects with updated attributes
     """
@@ -95,7 +95,7 @@ def query(limit=None, ids=None, after=None, before=None, status=None, types=None
     - holder_ids [list of strings]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - expand [list of strings, default []]: fields to expand information. ex: ["rules", "security_code", "number", "expiration"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of IssuingCard objects with updated attributes
     """
@@ -129,7 +129,7 @@ def page(cursor=None, limit=None, ids=None, after=None, before=None, status=None
     - holder_ids [list of strings]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - expand [list of strings, default []]: fields to expand information. ex: ["rules", "security_code", "number", "expiration"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of IssuingCard objects with updated attributes
     - cursor to retrieve the next page of IssuingCard objects
@@ -157,7 +157,7 @@ def get(id, expand=None, user=None):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - expand [list of strings, default None]: fields to expand information. ex: ["rules", "security_code", "number", "expiration"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - IssuingCards object with updated attributes
     """
@@ -174,7 +174,7 @@ def update(id, status=None, display_name=None, rules=None, tags=None, user=None)
     - display_name [string, default None]: card displayed name
     - rules [list of dictionaries, default None]: list of dictionaries with "amount": int, "currencyCode": string, "id": string, "interval": string, "name": string pairs.
     - tags [list of strings]: list of strings for tagging
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - target IssuingCard with updated attributes
     """
@@ -193,7 +193,7 @@ def cancel(id, user=None):
     ## Parameters (required):
     - id [string]: IssuingCard unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - canceled IssuingCard object
     """

@@ -5,7 +5,7 @@ from starkcore.utils.checks import check_datetime_or_date
 
 class BrcodePreview(Resource):
     """# BrcodePreview object
-    A BrcodePreview is used to get information from a BR Code you received to check the information before paying it.
+    The BrcodePreview object is used to preview information from a BR Code before paying it.
     ## Parameters (required):
     - id [string]: BR Code from a Pix payment. This is also de information directly encoded in a QR Code. ex: "00020126580014br.gov.bcb.pix0136a629532e-7693-4846-852d-1bbff817b5a8520400005303986540510.005802BR5908T'Challa6009Sao Paulo62090505123456304B14A"
     ## Attributes (return-only):
@@ -15,22 +15,26 @@ class BrcodePreview(Resource):
     - amount_type [string]: amount type of the Brcode. If the amount type is "custom" the Brcode's amount can be changed by the sender at the moment of payment. Options: "fixed" or "custom"
     - bank_code [string]: Payment receiver bank code. ex: "20018183"
     - branch_code [string]: Payment receiver branch code. ex: "0001"
+    - cash_amount [integer]: Amount to be withdrawn from the cashier in cents. ex: 1000 (= R$ 10.00)
+    - cashier_bank_code [string]: Cashier's bank code. ex: "20018183"
+    - cashier_type [string]: Cashier's type. Options: "merchant", "participant" and "other"
     - discount_amount [integer]: Discount value calculated over nominal_amount. ex: 3000
     - fine_amount [integer]: Fine value calculated over nominal_amount. ex: 20000
     - interest_amount [integer]: Interest value calculated over nominal_amount. ex: 10000
+    - key_id [string]: Receiver's PixKey id. ex: "+5511989898989"
     - name [string]: Payment receiver name. ex: "Tony Stark"
     - nominal_amount [integer]: Brcode emission amount, without fines, fees and discounts. ex: 1234 (= R$ 12.34)
     - reconciliation_id [string]: Reconciliation ID linked to this payment. If the brcode is dynamic, the reconciliation_id will have from 26 to 35 alphanumeric characters, ex: "cd65c78aeb6543eaaa0170f68bd741ee". If the brcode is static, the reconciliation_id will have up to 25 alphanumeric characters "ah27s53agj6493hjds6836v49"
     - reduction_amount [integer]: Reduction value to discount from nominal_amount. ex: 1000
-    - scheduled [datetime.date, datetime.datetime or string]: date of payment execution. ex: datetime(2020, 3, 10)
+    - scheduled [datetime.datetime]: date of payment execution. ex: datetime(2020, 3, 10)
     - status [string]: Payment status. ex: "active", "paid", "canceled" or "unknown"
     - tax_id [string]: Payment receiver tax ID. ex: "012.345.678-90"
     """
 
     def __init__(self, id, account_number=None, account_type=None, amount=None, amount_type=None, bank_code=None,
-                 branch_code=None, discount_amount=None, fine_amount=None, interest_amount=None, name=None,
-                 nominal_amount=None, reconciliation_id=None, reduction_amount=None, scheduled=None, status=None,
-                 tax_id=None):
+                 branch_code=None, cash_amount=None, cashier_bank_code=None, cashier_type=None, discount_amount=None,
+                 fine_amount=None, interest_amount=None, key_id=None, name=None, nominal_amount=None,
+                 reconciliation_id=None, reduction_amount=None, scheduled=None, status=None, tax_id=None):
         Resource.__init__(self, id=id)
         
         self.account_number = account_number
@@ -39,9 +43,13 @@ class BrcodePreview(Resource):
         self.amount_type = amount_type
         self.bank_code = bank_code
         self.branch_code = branch_code
+        self.cash_amount = cash_amount
+        self.cashier_bank_code = cashier_bank_code
+        self.cashier_type = cashier_type
         self.discount_amount = discount_amount
         self.fine_amount = fine_amount
         self.interest_amount = interest_amount
+        self.key_id = key_id
         self.name = name
         self.nominal_amount = nominal_amount
         self.reconciliation_id = reconciliation_id
@@ -60,7 +68,7 @@ def create(previews, user=None):
     ## Parameters (required):
     - previews [list of BrcodePreview objects]: List of BrcodePreview objects to preview. ex: [starkinfra.BrcodePreview("00020126580014br.gov.bcb.pix0136a629532e-7693-4846-852d-1bbff817b5a8520400005303986540510.005802BR5908T'Challa6009Sao Paulo62090505123456304B14A")]
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of BrcodePreview objects with updated attributes
     """

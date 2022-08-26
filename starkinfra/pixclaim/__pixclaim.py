@@ -10,23 +10,23 @@ class PixClaim(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the created object.
     ## Parameters (required):
-    - account_created [datetime.date, datetime.datetime or string]: opening Date or DateTime for the account claiming the PixKey. ex: "2022-01-01".
-    - account_number [string]: number of the account claiming the PixKey. ex: "76543".
-    - account_type [string]: type of the account claiming the PixKey. Options: "checking", "savings", "salary" or "payment".
-    - branch_code [string]: branch code of the account claiming the PixKey. ex: 1234".
-    - name [string]: holder's name of the account claiming the PixKey. ex: "Jamie Lannister".
-    - tax_id [string]: holder's taxId of the account claiming the PixKey (CPF/CNPJ). ex: "012.345.678-90".
-    - key_id [string]: id of the registered Pix Key to be claimed. Allowed keyTypes are CPF, CNPJ, phone number or email. ex: "+5511989898989".
+    - account_created [datetime.date, datetime.datetime or string]: opening Date or DateTime for the account claiming the PixKey. ex: "2022-01-01"
+    - account_number [string]: number of the account claiming the PixKey. ex: "76543"
+    - account_type [string]: type of the account claiming the PixKey. Options: "checking", "savings", "salary" or "payment"
+    - branch_code [string]: branch code of the account claiming the PixKey. ex: "1234"
+    - name [string]: holder's name of the account claiming the PixKey. ex: "Jamie Lannister"
+    - tax_id [string]: holder's taxId of the account claiming the PixKey (CPF/CNPJ). ex: "012.345.678-90"
+    - key_id [string]: id of the registered Pix Key to be claimed. Allowed keyTypes are CPF, CNPJ, phone number or email. ex: "+5511989898989"
     # Parameters (Options):
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixClaim is created. ex: "5656565656565656"
     - status [string]: current PixClaim status. Options: "created", "failed", "delivered", "confirmed", "success", "canceled"
-    - type [string]: type of Pix Claim. Options: "ownership", "portability".
+    - type [string]: type of Pix Claim. Options: "ownership", "portability"
     - key_type [string]: keyType of the claimed PixKey. Options: "CPF", "CNPJ", "phone" or "email"
     - flow [string]: direction of the Pix Claim. Options: "in" if you received the PixClaim or "out" if you created the PixClaim.
-    - claimer_bank_code [string]: bank_code of the Pix participant that created the PixClaim. ex: "20018183".
-    - claimed_bank_code [string]: bank_code of the account donating the PixKey. ex: "20018183".
+    - claimer_bank_code [string]: bank_code of the Pix participant that created the PixClaim. ex: "20018183"
+    - claimed_bank_code [string]: bank_code of the account donating the PixKey. ex: "20018183"
     - created [datetime.datetime]: creation datetime for the PixClaim. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: update datetime for the PixClaim. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -64,7 +64,7 @@ def create(claim, user=None):
     ## Parameters (required):
     - claim [PixClaim object]: PixClaim object to be created in the API.
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixClaim object with updated attributes.
     """
@@ -77,7 +77,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixClaim object that corresponds to the given id.
     """
@@ -93,12 +93,12 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "confirmed", "success", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - type [string, default None]: filter for the type of retrieved PixClaims. Options: "ownership" or "portability".
-    - key_type [string, default None]: filter for the PixKey type of retrieved PixClaims. Options: "cpf", "cnpj", "phone", "email" and "evp",
-    - key_id [string, default None]: filter PixClaims linked to a specific PixKey id. ex: "+5511989898989".
+    - type [string, default None]: filter for the type of retrieved PixClaims. Options: "ownership" or "portability"
+    - key_type [string, default None]: filter for the PixKey type of retrieved PixClaims. Options: "cpf", "cnpj", "phone", "email" and "evp"
+    - key_id [string, default None]: filter PixClaims linked to a specific PixKey id. ex: "+5511989898989"
     - flow [string, default None]: direction of the Pix Claim. Options: "in" if you received the PixClaim or "out" if you created the PixClaim.
     - tags [list of strings, default None]: list of strings to filter retrieved objects. ex: ["travel", "food"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of PixClaim objects with updated attributes
     """
@@ -130,12 +130,12 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "confirmed", "success", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - type [string, default None]: filter for the type of retrieved PixClaims. Options: "ownership" or "portability".
-    - key_type [string, default None]: filter for the PixKey type of retrieved PixClaims. Options: "cpf", "cnpj", "phone", "email" and "evp",
-    - key_id [string, default None]: filter PixClaims linked to a specific PixKey id. Example: "+5511989898989".
+    - type [string, default None]: filter for the type of retrieved PixClaims. Options: "ownership" or "portability"
+    - key_type [string, default None]: filter for the PixKey type of retrieved PixClaims. Options: "cpf", "cnpj", "phone", "email" and "evp"
+    - key_id [string, default None]: filter PixClaims linked to a specific PixKey id. Example: "+5511989898989"
     - flow [string, default None]: direction of the Pix Claim. Options: "in" if you received the PixClaim or "out" if you created the PixClaim.
     - tags [list of strings, default None]: list of strings to filter retrieved objects. ex: ["travel", "food"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of PixClaim objects with updated attributes and cursor to retrieve the next page of PixClaim objects
     """
@@ -160,11 +160,11 @@ def update(id, status, reason=None, user=None):
     """# Update PixClaim entity
     Update a PixClaim parameters by passing id.
     ## Parameters (required):
-    - id [string]: PixClaim id. ex: '5656565656565656'
+    - id [string]: PixClaim id. ex: "5656565656565656"
     - status [string]: patched status for Pix Claim. Options: "confirmed" and "canceled"
     ## Parameters (optional):
-    - reason [string, default: "userRequested"]: reason why the PixClaim is being patched. Options: "fraud", "userRequested", "accountClosure".
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - reason [string, default: "userRequested"]: reason why the PixClaim is being patched. Options: "fraud", "userRequested", "accountClosure"
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixClaim with updated attributes
     """

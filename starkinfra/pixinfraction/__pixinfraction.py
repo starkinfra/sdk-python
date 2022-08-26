@@ -22,9 +22,9 @@ class PixInfraction(Resource):
     - debited_bank_code [string]: bank_code of the debited Pix participant in the reported transaction. ex: "20018183"
     - flow [string]: direction of the PixInfraction flow. Options: "out" if you created the PixInfraction, "in" if you received the PixInfraction.
     - analysis [string]: analysis that led to the result.
-    - reported_by [string]: agent that reported the PixInfraction. Options: "debited", "credited".
+    - reported_by [string]: agent that reported the PixInfraction. Options: "debited", "credited"
     - result [string]: result after the analysis of the PixInfraction by the receiving party. Options: "agreed", "disagreed"
-    - status [string]: current PixInfraction status. Options: "created", "failed", "delivered", "closed", "canceled".
+    - status [string]: current PixInfraction status. Options: "created", "failed", "delivered", "closed", "canceled"
     - created [datetime.datetime]: creation datetime for the PixInfraction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the PixInfraction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -58,7 +58,7 @@ def create(infractions, user=None):
     ## Parameters (required):
     - infractions [list of PixInfractions]: list of PixInfraction objects to be created in the API.
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of PixInfraction objects with updated attributes
     """
@@ -69,9 +69,9 @@ def get(id, user=None):
     """# Retrieve a PixInfraction object
     Retrieve the PixInfraction object linked to your Workspace in the Stark Infra API using its id.
     ## Parameters (required):
-    - id [string]: object unique id. ex: "5656565656565656".
+    - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixInfraction object that corresponds to the given id.
     """
@@ -90,7 +90,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
     - type [list of strings, default None]: filter for the type of retrieved PixInfractions. Options: "fraud", "reversal", "reversalChargeback"
     - flow [string, default None]: direction of the PixInfraction flow. Options: "out" if you created the PixInfraction, "in" if you received the PixInfraction.
     - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of PixInfraction objects with updated attributes
     """
@@ -124,7 +124,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - type [list of strings, default None]: filter for the type of retrieved PixInfractions. Options: "fraud", "reversal", "reversalChargeback"
     - flow [string, default None]: direction of the PixInfraction flow. Options: "out" if you created the PixInfraction, "in" if you received the PixInfraction.
     - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of PixInfraction objects with updated attributes and cursor to retrieve the next page of PixInfraction objects
     """
@@ -151,7 +151,7 @@ def update(id, result, analysis=None, user=None):
     - result [string]: result after the analysis of the PixInfraction. Options: "agreed", "disagreed"
     ## Parameters (optional):
     - analysis [string, default None]: analysis that led to the result.
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixInfraction with updated attributes
     """
@@ -168,7 +168,7 @@ def cancel(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - canceled PixInfraction object
     """

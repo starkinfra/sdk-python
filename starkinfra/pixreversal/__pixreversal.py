@@ -21,8 +21,8 @@ class PixReversal(Resource):
     ## Parameters (optional):
     - tags [list of strings, default []]: list of strings for reference when searching for PixReversals. ex: ["employees", "monthly"]
     ## Attributes (return-only):
-    - id [string]: unique id returned when the PixReversal is created. ex: "5656565656565656".
-    - return_id [string]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo".
+    - id [string]: unique id returned when the PixReversal is created. ex: "5656565656565656"
+    - return_id [string]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo"
     - fee [string]: fee charged by this PixReversal. ex: 200 (= R$ 2.00)
     - status [string]: current PixReversal status. ex: "created", "processing", "success", "failed"
     - flow [string]: direction of money flow. ex: "in" or "out"
@@ -56,7 +56,7 @@ def create(reversals, user=None):
     ## Parameters (required):
     - reversals [list of PixReversal objects]: list of PixReversal objects to be created in the API
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of PixReversal objects with updated attributes
     """
@@ -69,7 +69,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixReversal object with updated attributes
     """
@@ -89,7 +89,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, return_ids
     - return_ids [list of strings, default None]: central bank's unique reversal transaction IDs. ex: ["D20018183202202030109X3OoBHG74wo", "D20018183202202030109X3OoBHG72rd"].
     - external_ids [list of strings, default None]: url safe strings that must be unique among all your PixReversals. Duplicated external IDs will cause failures. By default, this parameter will block any PixReversal that repeats amount and receiver information on the same date. ex: ["my-internal-id-123456", "my-internal-id-654321"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of PixReversal objects with updated attributes
     """

@@ -35,7 +35,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - event.Attempt object with updated attributes
     """
@@ -51,7 +51,7 @@ def query(limit=None, after=None, before=None, event_ids=None, webhook_ids=None,
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - event_ids [list of strings, default None]: list of Event ids to filter attempts. ex: ["5656565656565656", "4545454545454545"]
     - webhook_ids [list of strings, default None]: list of Webhook ids to filter attempts. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of event.Attempt objects with updated attributes
     """
@@ -77,7 +77,7 @@ def page(cursor=None, limit=None, after=None, before=None, event_ids=None, webho
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - event_ids [list of strings, default None]: list of Event ids to filter attempts. ex: ["5656565656565656", "4545454545454545"]
     - webhook_ids [list of strings, default None]: list of Webhook ids to filter attempts. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of event.Attempt objects with updated attributes
     - cursor to retrieve the next page of event.Attempt objects

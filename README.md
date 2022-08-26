@@ -44,7 +44,7 @@ This SDK version is compatible with the Stark Infra API v2.
         - [PixDomain](#query-pixdomains): View registered SPI participants certificates
         - [StaticBrcode](#create-staticbrcodes): Create static Pix BR codes
         - [DynamicBrcode](#create-dynamicbrcodes): Create dynamic Pix BR codes
-        - [BrcodePreview](#create-a-brcodepreview): Read data from BR Codes before paying them
+        - [BrcodePreview](#create-brcodepreviews): Read data from BR Codes before paying them
     - [Credit Note](#credit-note)
         - [CreditNote](#create-creditnotes): Create credit notes
     - [Credit Preview](#credit-preview)
@@ -1881,7 +1881,7 @@ send_response(  # you should also implement this method to respond the read requ
 )
 ```
 
-## Create a BrcodePreview
+## Create BrcodePreviews
 You can create BrcodePreviews to preview BR Codes before paying them.
 
 ```python
@@ -2034,7 +2034,7 @@ print(log)
 You can preview different types of credits before creating them (Currently we only have CreditNote previews):
 
 ### Create a CreditNotePreview
-You can preview a Credit Note before creation of the CCB contract:
+You can preview a Credit Note before the creation of the CCB contract:
 
 ```python
 import starkinfra

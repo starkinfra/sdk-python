@@ -45,7 +45,7 @@ def create(statement, user=None):
     ## Parameters (optional):
     - statement [PixStatement object]: PixStatement object to be created in the API.
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixStatement object with updated attributes.
     """
@@ -58,7 +58,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixStatement object that corresponds to the given id.
     """
@@ -71,7 +71,7 @@ def query(limit=None, ids=None, user=None):
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of PixStatement objects with updated attributes
     """
@@ -91,7 +91,7 @@ def page(cursor=None, limit=None, ids=None, user=None):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of PixStatement objects with updated attributes
     - cursor to retrieve the next page of PixStatement objects
@@ -111,7 +111,7 @@ def csv(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - .zip file containing a PixStatement in .csv format
     """

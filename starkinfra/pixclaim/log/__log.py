@@ -37,7 +37,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixClaim.Log object with updated attributes
     """
@@ -54,7 +54,7 @@ def query(ids=None, limit=None, after=None, before=None, types=None, claim_ids=N
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter retrieved objects by types. ex: ["created", "failed", "delivering", "delivered", "confirming", "confirmed", "success", "canceling", "canceled"]
     - claim_ids [list of strings, default None]: list of PixClaim ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of PixClaim.Log objects with updated attributes
     """
@@ -82,7 +82,7 @@ def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None,
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter retrieved objects by types. ex: ["created", "failed", "delivering", "delivered", "confirming", "confirmed", "success", "canceling", "canceled"]
     - claim_ids [list of strings, default None]: list of PixClaim IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of PixClaim.Log objects with updated attributes
     - cursor to retrieve the next page of PixClaim.Log objects

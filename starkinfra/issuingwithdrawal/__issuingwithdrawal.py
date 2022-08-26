@@ -44,7 +44,7 @@ def create(withdrawal, user=None):
     ## Parameters (required):
     - withdrawal [IssuingWithdrawal object]: IssuingWithdrawal object to be created in the API.
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - IssuingWithdrawal object with updated attributes
     """
@@ -57,7 +57,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - IssuingWithdrawal object with updated attributes
     """
@@ -73,7 +73,7 @@ def query(external_ids=None, after=None, before=None, limit=None, tags=None, use
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of IssuingWithdrawal objects with updated attributes
     """
@@ -98,7 +98,7 @@ def page(external_ids=None, after=None, before=None, limit=None, tags=None, curs
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of IssuingWithdrawal objects with updated attributes
     - cursor to retrieve the next page of IssuingWithdrawal objects

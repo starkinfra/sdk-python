@@ -35,7 +35,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - issuingholder.Log object with updated attributes
     """
@@ -52,7 +52,7 @@ def query(ids=None, limit=None, after=None, before=None, types=None, holder_ids=
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter for log event types. ex: ["created", "blocked"]
     - holder_ids [list of strings, default None]: list of IssuingHolder ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of issuingholder.Log objects with updated attributes
     """
@@ -80,7 +80,7 @@ def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None,
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter for log event types. ex: ["created", "blocked"]
     - holder_ids [list of strings, default None]: list of IssuingHolder ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of issuingholder.Log objects with updated attributes
     - cursor to retrieve the next page of issuingholder.Log objects

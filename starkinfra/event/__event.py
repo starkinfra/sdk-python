@@ -66,7 +66,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - Event object with updated attributes
     """
@@ -81,7 +81,7 @@ def query(limit=None, after=None, before=None, is_delivered=None, user=None):
     - after [datetime.date or string, default None]: date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - is_delivered [bool, default None]: bool to filter successfully delivered events. ex: True or False
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of Event objects with updated attributes
     """
@@ -105,7 +105,7 @@ def page(cursor=None, limit=None, after=None, before=None, is_delivered=None, us
     - after [datetime.date or string, default None]: date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - is_delivered [bool, default None]: bool to filter successfully delivered events. ex: True or False
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of Event objects with updated attributes
     - cursor to retrieve the next page of Event objects
@@ -127,7 +127,7 @@ def delete(id, user=None):
     ## Parameters (required):
     - id [string]: Event unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - deleted Event object
     """
@@ -142,7 +142,7 @@ def update(id, is_delivered, user=None):
     - id [list of strings]: Event unique ids. ex: "5656565656565656"
     - is_delivered [bool]: If True and event hasn't been delivered already, event will be set as delivered. ex: True
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - target Event with updated attributes
     """
@@ -161,7 +161,7 @@ def parse(content, signature, user=None):
     - content [string]: response content from request received at user endpoint (not parsed)
     - signature [string]: base-64 digital signature received at response header "Digital-Signature"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - Parsed Event object
     """

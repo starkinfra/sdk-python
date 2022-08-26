@@ -38,7 +38,7 @@ class PixRequest(Resource):
     - reconciliation_id [string, default None]: Reconciliation ID linked to this payment. ex: "b77f5236-7ab9-4487-9f95-66ee6eaf1781"
     - initiator_tax_id [string, default None]: Payment initiator's tax id (CPF/CNPJ). ex: "01234567890" or "20.018.183/0001-80"
     - tags [list of strings, default []]: list of strings for reference when searching for PixRequests. ex: ["employees", "monthly"]
-    - method [string, default None]: execution  method for thr creation of the Pix. ex: "manual", "payerQrcode", "dynamicQrcode".
+    - method [string, default None]: execution  method for thr creation of the Pix. ex: "manual", "payerQrcode", "dynamicQrcode"
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixRequest is created. ex: "5656565656565656"
     - fee [integer]: fee charged when PixRequest is paid. ex: 200 (= R$ 2.00)
@@ -97,7 +97,7 @@ def create(requests, user=None):
     ## Parameters (required):
     - requests [list of PixRequest objects]: list of PixRequest objects to be created in the API
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of PixRequest objects with updated attributes
     """
@@ -110,7 +110,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixRequest object with updated attributes
     """
@@ -130,7 +130,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, end_to_end
     - end_to_end_ids [list of strings, default None]: central bank's unique transaction IDs. ex: ["E79457883202101262140HHX553UPqeq", "E79457883202101262140HHX553UPxzx"]
     - external_ids [list of strings, default None]: url safe strings that must be unique among all your PixRequests. Duplicated external IDs will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: ["my-internal-id-123456", "my-internal-id-654321"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of PixRequest objects with updated attributes
     """
@@ -163,7 +163,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - end_to_end_ids [list of strings, default None]: central bank's unique transaction IDs. ex: ["E79457883202101262140HHX553UPqeq", "E79457883202101262140HHX553UPxzx"]
     - external_ids [list of strings, default None]: url safe strings that must be unique among all your PixRequests. Duplicated external IDs will cause failures. By default, this parameter will block any PixRequests that repeats amount and receiver information on the same date. ex: ["my-internal-id-123456", "my-internal-id-654321"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of PixRequest objects with updated attributes
     - cursor to retrieve the next page of PixRequest objects
@@ -192,7 +192,7 @@ def parse(content, signature, user=None):
     - content [string]: response content from request received at user endpoint (not parsed)
     - signature [string]: base-64 digital signature received at response header "Digital-Signature"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - Parsed PixRequest object
     """

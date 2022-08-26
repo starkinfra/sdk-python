@@ -34,7 +34,7 @@ def get(id, user=None):
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixReversal.Log object with updated attributes
     """
@@ -50,7 +50,7 @@ def query(limit=None, after=None, before=None, types=None, reversal_ids=None, us
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter retrieved objects by types. Options: ["sent", "denied", "failed", "created", "success", "approved", "credited", "refunded", "processing"]
     - reversal_ids [list of strings, default None]: list of PixReversal IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of PixReversal.Log objects with updated attributes
     """
@@ -76,7 +76,7 @@ def page(cursor=None, limit=None, after=None, before=None, types=None, reversal_
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter retrieved objects by types. Options: ["sent", "denied", "failed", "created", "success", "approved", "credited", "refunded", "processing"]
     - reversal_ids [list of strings, default None]: list of PixReversal IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of PixReversal.Log objects with updated attributes
     - cursor to retrieve the next page of PixRequest.Log objects

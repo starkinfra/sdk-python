@@ -31,7 +31,7 @@ def get(user=None):
     """# Retrieve the PixBalance object
     Receive the Balance object linked to your Workspace in the Stark Infra API
     ## Parameters (optional):
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixBalance object with updated attributes
     """

@@ -15,8 +15,8 @@ class Log(Resource):
     - id [string]: unique id returned when the log is created. ex: "5656565656565656"
     - purchase [IssuingPurchase]: IssuingPurchase entity to which the log refers to.
     - issuing_transaction_id [string]: transaction ID related to the IssuingCard.
-    - errors [list of strings]: list of errors linked to this IssuingPurchase event
-    - type [string]: type of the IssuingPurchase event which triggered the log creation. ex: "approved", "canceled", "confirmed", "denied", "reversed", "voided".
+    - errors [list of strings]: list of errors linked to this IssuingPurchase event.
+    - type [string]: type of the IssuingPurchase event which triggered the log creation. ex: "approved", "canceled", "confirmed", "denied", "reversed", "voided"
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 

@@ -1,5 +1,4 @@
-from .invoice.__invoice import Invoice
-from .invoice.__invoice import _resource as _invoice_resource
+from .invoice.__invoice import parse_invoices
 from ..creditsigner.__creditsigner import CreditSigner
 from ..creditsigner.__creditsigner import _resource as _creditsigner_resource
 from .__transfer import Transfer
@@ -55,7 +54,8 @@ class CreditNote(Resource):
     def __init__(self, template_id, name, tax_id, nominal_amount, scheduled, invoices, payment, signers, external_id,
                  street_line_1, street_line_2, district, city, state_code, zip_code, payment_type=None,
                  rebate_amount=None, tags=None, expiration=None, id=None, amount=None, document_id=None, status=None,
-                 transaction_ids=None, workspace_id=None, tax_amount=None, nominal_interest=None, interest=None, created=None, updated=None):
+                 transaction_ids=None, workspace_id=None, tax_amount=None, nominal_interest=None, interest=None,
+                 created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.template_id = template_id
@@ -63,7 +63,7 @@ class CreditNote(Resource):
         self.tax_id = tax_id
         self.nominal_amount = nominal_amount
         self.scheduled = scheduled
-        self.invoices = _parse_invoices(invoices)
+        self.invoices = parse_invoices(invoices)
         self.signers = _parse_signers(signers)
         self.external_id = external_id
         self.street_line_1 = street_line_1
@@ -100,16 +100,6 @@ def _parse_signers(signers):
             continue
         parsed_signers.append(from_api_json(_creditsigner_resource, signer))
     return parsed_signers
-
-
-def _parse_invoices(invoices):
-    parsed_invoices = []
-    for invoice in invoices:
-        if isinstance(invoice, Invoice):
-            parsed_invoices.append(invoice)
-            continue
-        parsed_invoices.append(from_api_json(_invoice_resource, invoice))
-    return parsed_invoices
 
 
 def _parse_payment(payment, payment_type):

@@ -48,7 +48,7 @@ This SDK version is compatible with the Stark Infra API v2.
     - [Credit Note](#credit-note)
         - [CreditNote](#create-creditnotes): Create credit notes
     - [Credit Preview](#credit-preview)
-        - [CreditNotePreview](#create-a-creditnotepreview): Create a credit note preview
+        - [CreditNotePreview](#create-creditnotepreviews): Create credit note previews
     - [Webhook](#webhook):
         - [Webhook](#create-a-webhook-subscription): Configure your webhook endpoints and subscriptions
         - [WebhookEvents](#process-webhook-events): Manage Webhook events
@@ -2033,8 +2033,8 @@ print(log)
 ## Credit Preview
 You can preview different types of credits before creating them (Currently we only have CreditNote previews):
 
-### Create a CreditNotePreview
-You can preview a Credit Note before the creation of the CCB contract:
+### Create CreditNotePreviews
+You can preview Credit Notes before the creation CCB contracts:
 
 ```python
 import starkinfra

@@ -16,31 +16,31 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [0.3.0] - 2022-09-26
 ### Changed
-- amount to nominal_amount, fine_amount to fine, interest_amount to interest, and discount_amount to discounts on response_due method of DynamicBrcode resource
-- settlement parameter to funding_type of Issuing Product resource
-- client parameter to holder_type of Issuing Product resource
 - CreditNotePreview sub-resource to CreditPreview.CreditNotePreview sub-resource
+- amount to nominal_amount, fine_amount to fine, interest_amount to interest, and discount_amount to discounts in response_due method of DynamicBrcode resource
+- settlement parameter to funding_type in IssuingProduct resource
+- client parameter to holder_type in IssuingProduct resource
 - agent parameter to flow in PixInfraction and PixChargeback resources
+- agent parameter to flow in query and page methods of PixInfraction and PixChargeback resources
 - bank_code parameter to claimer_bank_code in PixClaim resource
-- agent parameter to flow on query and page methods in PixInfraction and PixChargeback resources
 ### Fixed
 - JSON body returned from response method of PixRequest resource
 - JSON body returned from response method of PixReversal resource
 ### Added
+- BrcodePreview resource
+- CreditPreview sub-resource
 - key_id, cash_amount, cashier_bank_code and cashier_type attributes to BrcodePreview resource 
 - code attribute to IssuingProduct resource
 - expand parameter to create method of IssuingHolder resource
-- CreditPreview sub-resource
-- default to fee, external_id and tags on PixRequest and PixReversal parse method
-- BrcodePreview resource
+- default to fee, external_id and tags in parse method of PixRequest and PixReversal resources
 - tags parameter to PixClaim, PixInfraction, Pix Chargeback, DynamicBrcode and StaticBrcode resources
+- tags parameter to query and page methods in PixChargeback, PixClaim and PixInfraction resources
 - flow parameter to PixClaim resource
-- flow parameter to query and page methods to PixClaim
-- tags parameter to query and page methods to PixChargeback, PixClaim and PixInfraction resources
+- flow parameter to query and page methods of PixClaim
 - zip_code, purchase, is_partial_allowed, card_tags and holder_tags attributes to IssuingPurchase resource
 - brcode, link and due attributes to IssuingInvoice resource
 ### Removed
-- category parameter to IssuingProduct resource
+- category parameter from IssuingProduct resource
 - bacen_id parameter from PixChargeback and PixInfraction resources
 - agent parameter from PixClaim.Log resource
 
@@ -60,8 +60,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - bank_code attribute from PixReversal resource
 ### Changed
 - IssuingBin resource to IssuingProduct
-- fine and interest attributes to return only on CreditNote.Invoice sub-resource
-- expiration in the CreditNote resource from returned-only to optional parameter
+- fine and interest attributes to return only in CreditNote.Invoice sub-resource
+- expiration from returned-only to optional parameter in the CreditNote resource 
 - Creditnote.Signer sub-resource to CreditSigner resource
 
 ## [0.1.1] - 2022-06-09
@@ -70,22 +70,22 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [0.1.0] - 2022-06-03
 ### Added
-- credit receiver's billing address on CreditNote
+- credit receiver's billing address in CreditNote
 ### Fixed
-- after and before parameter types on query and page methods
+- after and before parameter types in query and page methods
 
 ## [0.0.7] - 2022-05-23
 ### Added
 - CreditNote.Signer sub-resource
 - CreditNote.Invoice sub-resource
 - CreditNote.Transfer sub-resource
-- issuinginvoice.log.get() function
-- Webhook resource to receive Events
-- merchant_fee atribute to IssuingPurchase
+- get method to issuinginvoice.Log resource
+- Webhook resource
+- merchant_fee attribute to IssuingPurchase
 ### Changed
-- rules parameter from IssuingCard and IssuingHolder objects returned from the 
-  API changed from a list of dictionaries to a list of IssuingHolder objects
-- CreditNote.transfer parameter to payment and payment_type
+- rules parameter from a list of dictionaries to a list of IssuingRule objects 
+  in IssuingCard and IssuingHolder resources
+- transfer parameter to payment and payment_type in CreditNote resource
 - BrcodeCertificate resource name to PixDomain
 - InfractionReport resource name to PixInfraction
 - ReversalRequest resource name to PixChargeback
@@ -102,12 +102,12 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [0.0.4] - 2022-05-01
 ### Added
-- expand parameter to issuingholder.get()
+- expand parameter to get method in IssuingHolder resource
 - PixClaim resource for Indirect and Direct Participants
 - PixKey resource for Indirect and Direct Participants
 - InfractionReport resource for Indirect and Direct Participants
 - ReversalRequest resource for Indirect and Direct Participants
-- event.get(), event.query(), event.page(), event.delete() and event.update() functions
+- get, query, page, delete and update methods to Event resource
 - Event.Attempt sub-resource to allow retrieval of information on failed webhook event delivery attempts
 
 ## [0.0.3] - 2022-04-22

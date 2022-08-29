@@ -10,7 +10,7 @@ class IssuingBalance(Resource):
     can be retrieved to see the available information.
     ## Attributes (return-only):
     - id [string]: unique id returned when IssuingBalance is created. ex: "5656565656565656"
-    - amount [integer]: current balance amount of the Workspace in cents. ex: 200 (= R$ 2.00)
+    - amount [integer]: current issuing balance amount of the Workspace in cents. ex: 200 (= R$ 2.00)
     - currency [string]: currency of the current Workspace. Expect others to be added eventually. ex: "BRL"
     - updated [datetime.datetime]: latest update datetime for the IssuingBalance. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """

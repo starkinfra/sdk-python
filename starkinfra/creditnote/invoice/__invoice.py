@@ -68,6 +68,19 @@ class Invoice(Resource):
         self.updated = check_datetime(updated)
 
 
+def parse_invoices(invoices):
+    if invoices is None:
+        return None
+
+    parsed_invoices = []
+    for invoice in invoices:
+        if isinstance(invoice, Invoice):
+            parsed_invoices.append(invoice)
+            continue
+        parsed_invoices.append(from_api_json(_resource, invoice))
+    return parsed_invoices
+
+
 def parse_discounts(discounts):
     parsed_discounts = []
     if discounts is None:

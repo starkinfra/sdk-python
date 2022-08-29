@@ -4,7 +4,7 @@ from starkinfra.utils import rest
 
 class MerchantCountry(SubResource):
     """# MerchantCountry object
-    MerchantCountry's codes are used to define countries filters in IssuingRules.
+    MerchantCountry's codes are used to define country filters in IssuingRules.
     ## Parameters (required):
     - code [string]: country's code. ex: "BRA"
     ## Attributes (return-only):
@@ -25,7 +25,7 @@ _resource = {"class": MerchantCountry, "name": "MerchantCountry"}
 
 def query(search=None, user=None):
     """# Retrieve MerchantCountries
-    Receive a generator of MerchantCountry objects previously created in the Stark Infra API
+    Receive a generator of MerchantCountry objects available in the Stark Infra API
     ## Parameters (optional):
     - search [string, default None]: keyword to search for code, name, number or short_code
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call

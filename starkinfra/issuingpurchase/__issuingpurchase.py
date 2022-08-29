@@ -46,12 +46,13 @@ class IssuingPurchase(Resource):
     - holder_tags [list of strings]: tags of the IssuingHolder responsible for this purchase. ex: ["technology", "john snow"]
     """
 
-    def __init__(self, id=None, holder_name=None, card_id=None, card_ending=None, purpose=None, amount=None, tax=None, 
-                issuer_amount=None, issuer_currency_code=None, issuer_currency_symbol=None, merchant_amount=None, 
-                merchant_currency_code=None, merchant_currency_symbol=None, merchant_category_code=None, merchant_country_code=None, 
-                acquirer_id=None, merchant_id=None, merchant_name=None, merchant_fee=None, wallet_id=None, method_code=None, 
-                score=None, end_to_end_id=None, tags=None, zip_code=None, issuing_transaction_ids=None, status=None, updated=None, 
-                created=None, is_partial_allowed=None, card_tags=None, holder_tags=None):
+    def __init__(self, id=None, holder_name=None, card_id=None, card_ending=None, purpose=None, amount=None, tax=None,
+                 issuer_amount=None, issuer_currency_code=None, issuer_currency_symbol=None, merchant_amount=None,
+                 merchant_currency_code=None, merchant_currency_symbol=None, merchant_category_code=None,
+                 merchant_country_code=None, acquirer_id=None, merchant_id=None, merchant_name=None, merchant_fee=None,
+                 wallet_id=None, method_code=None, score=None, end_to_end_id=None, tags=None, zip_code=None,
+                 issuing_transaction_ids=None, status=None, updated=None, created=None, is_partial_allowed=None,
+                 card_tags=None, holder_tags=None):
         Resource.__init__(self, id=id)
 
         self.holder_name = holder_name

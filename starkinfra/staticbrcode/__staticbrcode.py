@@ -14,8 +14,8 @@ class StaticBrcode(Resource):
     - key_id [string]: receiver's Pixkey id. ex: "+5541999999999"
     - city [string, default São Paulo]: receiver's city name. ex: "Rio de Janeiro"
     ## Parameters (optional):
-    - amount [integer, default 0]: positive integer that represents the amount in cents of the resulting Pix transaction. ex: 1234 (= R$ 12.34)
-    - reconciliation_id [string, default None]: id to be used for conciliation of the resulting Pix transaction. This id must have up to 25 alphanumeric characters ex: "ah27s53agj6493hjds6836v49"
+    - amount [integer, default 0]: positive integer that represents the amount in cents of the resulting Pix transaction. If the amount is zero it can be ex: 1234 (= R$ 12.34)
+    - reconciliation_id [string, default ""]: id to be used for conciliation of the resulting Pix transaction. This id must have up to 25 alphanumeric digits ex: "ah27s53agj6493hjds6836v49"
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: id returned on creation, this is the BR code. ex: "00020126360014br.gov.bcb.pix0114+552840092118152040000530398654040.095802BR5915Jamie Lannister6009Sao Paulo620705038566304FC6C"

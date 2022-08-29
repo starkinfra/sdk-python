@@ -8,12 +8,12 @@ from starkcore.utils.checks import check_datetime, check_date
 
 class DynamicBrcode(Resource):
     """# DynamicBrcode object
-    BR codes store information represented by Pix QR Codes, which are used to
+    BR Codes store information represented by Pix QR Codes, which are used to
     send or receive Pix transactions in a convenient way.
     DynamicBrcodes represent charges with information that can change at any time,
     since all data needed for the payment is requested dynamically to an URL stored
     in the BR Code. Stark Infra will receive the GET request and forward it to your
-    registered endpoint with a GET request containing the UUID of the BR code for
+    registered endpoint with a GET request containing the UUID of the BR Code for
     identification.
     When you initialize a DynamicBrcode, the entity will not be automatically
     created in the Stark Infra API. The 'create' function sends the objects
@@ -26,9 +26,9 @@ class DynamicBrcode(Resource):
     - type [string, default "instant"]: type of the DynamicBrcode. Options: "instant", "due"
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
-    - id [string]: id returned on creation, this is the BR code. ex: "00020126360014br.gov.bcb.pix0114+552840092118152040000530398654040.095802BR5915Jamie Lannister6009Sao Paulo620705038566304FC6C"
+    - id [string]: id returned on creation, this is the BR Code. ex: "00020126360014br.gov.bcb.pix0114+552840092118152040000530398654040.095802BR5915Jamie Lannister6009Sao Paulo620705038566304FC6C"
     - uuid [string]: unique uuid returned when the DynamicBrcode is created. ex: "4e2eab725ddd495f9c98ffd97440702d"
-    - url [string]: url link to the BR code image. ex: "https://brcode-h.development.starkinfra.com/dynamic-qrcode/901e71f2447c43c886f58366a5432c4b.png"
+    - url [string]: url link to the BR Code image. ex: "https://brcode-h.development.starkinfra.com/dynamic-qrcode/901e71f2447c43c886f58366a5432c4b.png"
     - updated [datetime.datetime]: latest update datetime for the DynamicBrcode. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the DynamicBrcode. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -143,11 +143,11 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
     The get request must be answered in the following format, within 5 seconds, and with 
     an HTTP status code 200.
     ## Parameters (required):
-    - version [integer]: integer that represents how many times the BR code was updated.
+    - version [integer]: integer that represents how many times the BR Code was updated.
     - created [datetime.datetime or string]: creation datetime in ISO format of the DynamicBrcode. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - due [datetime.datetime or string]: requested payment due datetime in ISO format. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - key_id [string]: receiver's PixKey id. Can be a tax_id (CPF/CNPJ), a phone number, an email or an alphanumeric sequence (EVP). ex: "+5511989898989"
-    - status [string]: BR code status. Options: "created", "overdue", "paid", "canceled" or "expired"
+    - status [string]: BR Code status. Options: "created", "overdue", "paid", "canceled" or "expired"
     - reconciliation_id [string]: id to be used for conciliation of the resulting Pix transaction. This id must have from to 26 to 35 alphanumeric characters ex: "cd65c78aeb6543eaaa0170f68bd741ee"
     - nominal_amount [integer]: positive integer that represents the amount in cents of the resulting Pix transaction. ex: 1234 (= R$ 12.34)
     - sender_name [string]: sender's full name. ex: "Anthony Edward Stark"
@@ -157,7 +157,7 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
     - receiver_state_code [string]: receiver's address state code. ex: "SP"
     - receiver_zip_code [string]: receiver's address zip code. ex: "01234-567"
     ## Parameters (optional):
-    - expiration [datime.timedelta or integer, default 86400 (1 day)]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR code cannot be paid anymore.
+    - expiration [datime.timedelta or integer, default 86400 (1 day)]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR Code cannot be paid anymore.
     - sender_tax_id [string, default None]: sender's CPF (11 digits formatted or unformatted) or CNPJ (14 digits formatted or unformatted). ex: "01.001.001/0001-01"
     - receiver_tax_id [string, default None]: receiver's CPF (11 digits formatted or unformatted) or CNPJ (14 digits formatted or unformatted). ex: "012.345.678-90"
     - fine [float, default 2.0]: Percentage charged if the sender pays after the due datetime.
@@ -195,14 +195,14 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
 def response_instant(version, created, key_id, status, reconciliation_id, amount, expiration=None, sender_name=None, sender_tax_id=None,
                     description=None, amount_type=None, cash_amount=None, cashier_type=None, cashier_bank_code=None):
     """# Helps you respond to an instant DynamicBrcode Read
-    When an instant DynamicBrcode is read by your user, a GET request containing the BR code's UUID will be made
+    When an instant DynamicBrcode is read by your user, a GET request containing the BR Code's UUID will be made
     to your registered URL to retrieve additional information needed to complete the transaction.
     The get request must be answered in the following format within 5 seconds and with an HTTP status code 200.
     ## Parameters (required):
-    - version [integer]: integer that represents how many times the BR code was updated.
-    - created [datetime.datetime or string]: creation datetime of the DynamicBrcode. ex: "2022-05-17"
+    - version [integer]: integer that represents how many times the BR Code was updated.
+    - created [datetime.datetime or string]: creation datetime of the DynamicBrcode. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - key_id [string]: receiver's PixKey id. Can be a tax_id (CPF/CNPJ), a phone number, an email or an alphanumeric sequence (EVP). ex: "+5511989898989"
-    - status [string]: BR code status. Options: "created", "overdue", "paid", "canceled" or "expired"
+    - status [string]: BR Code's status. Options: "created", "overdue", "paid", "canceled" or "expired"
     - reconciliation_id [string]: id to be used for conciliation of the resulting Pix transaction. ex: "cd65c78aeb6543eaaa0170f68bd741ee"
     - amount [integer]: positive integer that represents the amount in cents of the resulting Pix transaction. ex: 1234 (= R$ 12.34)
     ## Parameters (conditionally-required):
@@ -210,7 +210,7 @@ def response_instant(version, created, key_id, status, reconciliation_id, amount
     - cashier_bank_code [string, default None]: cashier's bank code. Required if the cashAmount is different from 0. ex: "20018183"
     ## Parameters (optional):
     - cash_amount [integer, default 0]: amount to be withdrawn from the cashier in cents. ex: 1000 (= R$ 10.00)
-    - expiration [datetime.timedelta or integer, default 86400 (1 day)]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR code cannot be paid anymore. Default value: 86400 (1 day)
+    - expiration [datetime.timedelta or integer, default 86400 (1 day)]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR Code cannot be paid anymore. Default value: 86400 (1 day)
     - sender_name [string, default None]: sender's full name. ex: "Anthony Edward Stark"
     - sender_tax_id [string, default None]: sender's CPF (11 digits formatted or unformatted) or CNPJ (14 digits formatted or unformatted). ex: "01.001.001/0001-01"
     - amount_type [string, default "fixed"]: amount type of the Brcode. If the amount type is "custom" the Brcode's amount can be changed by the sender at the moment of payment. Options: "fixed"or "custom"
@@ -238,14 +238,14 @@ def response_instant(version, created, key_id, status, reconciliation_id, amount
 
 
 def verify(uuid, signature, user=None):
-    """# Verify a DynamicBrcode Read 
+    """# Verify a DynamicBrcode Read
     When a DynamicBrcode is read by your user, a GET request will be made to your registered URL to
     retrieve additional information needed to complete the transaction.
     Use this method to verify the authenticity of a GET request received at your registered endpoint.
     If the provided digital signature does not check out with the StarkInfra public key,
     a stark.exception.InvalidSignatureException will be raised.
     ## Parameters (required):
-    - uuid [string]: unique uuid returned when a DynamicBrcode is created. ex: "4e2eab725ddd495f9c98ffd97440702d"
+    - uuid [string]: unique uuid of the DynamicBrcode, passed as a path variable in the DynamicBrcode Read request. ex: "4e2eab725ddd495f9c98ffd97440702d"
     - signature [string]: base-64 digital signature received at response header "Digital-Signature"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call

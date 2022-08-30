@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Changed
+- PixDirector from resource to sub-resource
 
 ## [0.3.1] - 2022-10-08
 ### Fixed

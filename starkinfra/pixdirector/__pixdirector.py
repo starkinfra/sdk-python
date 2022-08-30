@@ -1,8 +1,8 @@
 from ..utils import rest
-from starkcore.utils.resource import Resource
+from starkcore.utils.resource import SubResource
 
 
-class PixDirector(Resource):
+class PixDirector(SubResource):
     """# PixDirector object
     Mandatory data that must be registered within the Central Bank for emergency contact purposes.
     When you initialize a PixDirector, the entity will not be automatically
@@ -17,12 +17,10 @@ class PixDirector(Resource):
     - team_email [string]: team email. ex: "pix.team@company.com"
     - team_phones [list of strings]: list of phones of the team. ex: ["+5511988889999", "+5511988889998"]
     ## Attributes (return-only):
-    - id [string]: unique id returned when the PixDirector is created. ex: "5656565656565656"
     - status [string]: current PixDirector status. ex: "success"
     """
 
-    def __init__(self, name, tax_id, phone, email, password, team_email, team_phones, id=None, status=None):
-        Resource.__init__(self, id=id)
+    def __init__(self, name, tax_id, phone, email, password, team_email, team_phones, status=None):
 
         self.name = name
         self.tax_id = tax_id

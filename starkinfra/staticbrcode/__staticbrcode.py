@@ -14,7 +14,7 @@ class StaticBrcode(Resource):
     - key_id [string]: receiver's Pixkey id. ex: "+5541999999999"
     - city [string, default São Paulo]: receiver's city name. ex: "Rio de Janeiro"
     ## Parameters (optional):
-    - amount [integer, default 0]: positive integer that represents the amount in cents of the resulting Pix transaction. If the amount is zero it can be ex: 1234 (= R$ 12.34)
+    - amount [integer, default 0]: positive integer that represents the amount in cents of the resulting Pix transaction. If the amount is zero, the sender can choose any amount in the moment of payment. ex: 1234 (= R$ 12.34)
     - reconciliation_id [string, default ""]: id to be used for conciliation of the resulting Pix transaction. This id must have up to 25 alphanumeric digits ex: "ah27s53agj6493hjds6836v49"
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
@@ -26,7 +26,7 @@ class StaticBrcode(Resource):
     """
 
     def __init__(self, name, key_id, city, amount=None, reconciliation_id=None, tags=None, id=None, uuid=None, url=None,
-                    updated=None, created=None):
+                 updated=None, created=None):
         Resource.__init__(self, id=id)
 
         self.name = name

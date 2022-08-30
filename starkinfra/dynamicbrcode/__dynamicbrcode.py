@@ -34,7 +34,7 @@ class DynamicBrcode(Resource):
     """
 
     def __init__(self, name, city, external_id, id=None, type=None, tags=None, uuid=None, url=None, 
-                    updated=None, created=None):
+                 updated=None, created=None):
         Resource.__init__(self, id=id)
 
         self.name = name
@@ -134,8 +134,7 @@ def page(cursor=None, limit=None, after=None, before=None, external_id=None, uui
 
 def response_due(version, created, due, key_id, status, reconciliation_id, nominal_amount, sender_name, receiver_name,
                  receiver_street_line, receiver_city, receiver_state_code, receiver_zip_code, expiration=None,
-                 sender_tax_id=None, receiver_tax_id=None, fine=None, interest=None, discounts=None,
-                 description=None):
+                 sender_tax_id=None, receiver_tax_id=None, fine=None, interest=None, discounts=None, description=None):
     """# Helps you respond to a due DynamicBrcode Read
     When a Due DynamicBrcode is read by your user, a GET request containing the Brcode's 
     UUID will be made to your registered URL to retrieve additional information needed 
@@ -193,7 +192,7 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
 
 
 def response_instant(version, created, key_id, status, reconciliation_id, amount, expiration=None, sender_name=None, sender_tax_id=None,
-                    description=None, amount_type=None, cash_amount=None, cashier_type=None, cashier_bank_code=None):
+                     description=None, amount_type=None, cash_amount=None, cashier_type=None, cashier_bank_code=None):
     """# Helps you respond to an instant DynamicBrcode Read
     When an instant DynamicBrcode is read by your user, a GET request containing the BR Code's UUID will be made
     to your registered URL to retrieve additional information needed to complete the transaction.

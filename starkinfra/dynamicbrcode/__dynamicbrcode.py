@@ -132,8 +132,8 @@ def page(cursor=None, limit=None, after=None, before=None, external_id=None, uui
     )
 
 
-def response_due(version, created, due, key_id, status, reconciliation_id, nominal_amount, sender_name, receiver_name,
-                 receiver_street_line, receiver_city, receiver_state_code, receiver_zip_code, expiration=None,
+def response_due(version, created, due, expiration, key_id, status, reconciliation_id, nominal_amount, sender_name,
+                 receiver_name, receiver_street_line, receiver_city, receiver_state_code, receiver_zip_code,
                  sender_tax_id=None, receiver_tax_id=None, fine=None, interest=None, discounts=None, description=None):
     """# Helps you respond to a due DynamicBrcode Read
     When a Due DynamicBrcode is read by your user, a GET request containing the Brcode's 
@@ -145,6 +145,7 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
     - version [integer]: integer that represents how many times the BR Code was updated.
     - created [datetime.datetime or string]: creation datetime in ISO format of the DynamicBrcode. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - due [datetime.datetime or string]: requested payment due datetime in ISO format. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - expiration [integer]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR Code cannot be paid anymore.
     - key_id [string]: receiver's PixKey id. Can be a tax_id (CPF/CNPJ), a phone number, an email or an alphanumeric sequence (EVP). ex: "+5511989898989"
     - status [string]: BR Code status. Options: "created", "overdue", "paid", "canceled" or "expired"
     - reconciliation_id [string]: id to be used for conciliation of the resulting Pix transaction. This id must have from to 26 to 35 alphanumeric characters ex: "cd65c78aeb6543eaaa0170f68bd741ee"
@@ -156,7 +157,6 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
     - receiver_state_code [string]: receiver's address state code. ex: "SP"
     - receiver_zip_code [string]: receiver's address zip code. ex: "01234-567"
     ## Parameters (optional):
-    - expiration [datime.timedelta or integer, default 86400 (1 day)]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR Code cannot be paid anymore.
     - sender_tax_id [string, default None]: sender's CPF (11 digits formatted or unformatted) or CNPJ (14 digits formatted or unformatted). ex: "01.001.001/0001-01"
     - receiver_tax_id [string, default None]: receiver's CPF (11 digits formatted or unformatted) or CNPJ (14 digits formatted or unformatted). ex: "012.345.678-90"
     - fine [float, default 2.0]: Percentage charged if the sender pays after the due datetime.
@@ -170,6 +170,7 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
         "version": version,
         "created": created,
         "due": due,
+        "expiration": expiration,
         "keyId": key_id,
         "status": status,
         "reconciliationId": reconciliation_id,
@@ -180,7 +181,6 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
         "receiverCity": receiver_city,
         "receiverStateCode": receiver_state_code,
         "receiverZipCode": receiver_zip_code,
-        "expiration": expiration,
         "senderTaxId": sender_tax_id,
         "receiverTaxId": receiver_tax_id,
         "fine": fine,

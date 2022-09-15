@@ -72,7 +72,7 @@ def create(chargebacks, user=None):
 
 def get(id, user=None):
     """# Retrieve a PixChargeback object
-    Retrieve the PixChargeback object linked to your Workspace in the Stark Infra API using its id.
+    Retrieve a PixChargeback object linked to your Workspace in the Stark Infra API using its id.
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):

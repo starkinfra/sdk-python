@@ -194,7 +194,7 @@ def parse(content, signature, user=None):
 
 
 def response(status, amount=None, reason=None, tags=None):
-    """# Helps you respond IssuingPurchase requests
+    """# Helps you respond to a IssuingPurchase authorization request
     ## Parameters (required):
     - status [string]: sub-issuer response to the authorization. ex: "approved" or "denied"
     ## Parameters (conditionally required):

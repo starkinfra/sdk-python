@@ -88,8 +88,8 @@ class TestPixInfractionInfoPatch(TestCase):
     def test_success_cancel(self):
         infraction_report = getPixInfractionToPatch()
         self.assertIsNotNone(infraction_report.id)
-        self.assertEqual(infraction_report.status, "created")
-        print(infraction_report)
+        self.assertEqual(infraction_report.status, "delivered")
+
         updated_infraction_report = starkinfra.pixinfraction.update(
             id=infraction_report.id,
             result="agreed",

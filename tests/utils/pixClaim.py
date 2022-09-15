@@ -32,9 +32,9 @@ def getPixClaimToPatch():
     pix_claims = []
     cursor = None
     while len(pix_claims) < 1:
-        claims, cursor = pixclaim.page(status="delivered", limit=5, cursor=cursor)
+        claims, cursor = pixclaim.page(status="delivered", limit=20, cursor=cursor)
         for claim in claims:
-            if claim.agent == "claimer":
+            if claim.flow == "out":
                 pix_claims.append(claim)
         if cursor is None:
             break

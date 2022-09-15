@@ -1,4 +1,5 @@
 import starkinfra
+from random import shuffle
 from unittest import TestCase, main
 from tests.utils.user import exampleProject
 
@@ -8,9 +9,11 @@ starkinfra.user = exampleProject
 
 class TestBrcodePreview(TestCase):
     def test_success(self):
-        static_brcodes = list(starkinfra.staticbrcode.query(limit=2))
+        static_brcodes = list(starkinfra.staticbrcode.query(limit=10))
+        shuffle(static_brcodes)
 
-        dynamic_brcodes = list(starkinfra.dynamicbrcode.query(limit=2))
+        dynamic_brcodes = list(starkinfra.dynamicbrcode.query(limit=10))
+        shuffle(dynamic_brcodes)
 
         brcodes = static_brcodes + dynamic_brcodes
 
@@ -21,15 +24,9 @@ class TestBrcodePreview(TestCase):
             starkinfra.BrcodePreview(
                 id=brcodes[1].id
             ),
-            starkinfra.BrcodePreview(
-                id=brcodes[2].id
-            ),
-            starkinfra.BrcodePreview(
-                id=brcodes[3].id
-            )
         ])
 
-        self.assertTrue(len(previews) == 4)
+        self.assertTrue(len(previews) == 2)
 
         index = 0
         for preview in previews:

@@ -70,7 +70,7 @@ def get(id, payer_id, end_to_end_id=None, user=None):
     """# Retrieve a PixKey object
     Retrieve the PixKey object linked to your Workspace in the Stark Infra API by its id.
     ## Parameters (required):
-    - id [string]: object unique id. ex: "5656565656565656"
+    - id [string]: object unique id. ex: "+5511989898989"
     - payer_id [string]: tax id (CPF/CNPJ) of the individual or business requesting the PixKey information. This id is used by the Central Bank to limit request rates. ex: "20.018.183/0001-80"
     ## Parameters (optional):
     - end_to_end_id [string, default None]: central bank's unique transaction id. If the request results in the creation of a PixRequest, the same endToEndId should be used. If this parameter is not passed, one endToEndId will be automatically created. Example: "E00002649202201172211u34srod19le"
@@ -91,7 +91,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "registered", "canceled", "failed"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["+5511989898989", "+5511779898989"]
     - type [string, default None]: filter for the type of retrieved PixKeys. Options: "cpf", "cnpj", "phone", "email" and "evp"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -122,7 +122,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "registered", "canceled", "failed"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["+5511989898989", "+5511779898989"]
     - type [string, default None]: filter for the type of retrieved PixKeys. Options: "cpf", "cnpj", "phone", "email" and "evp"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -148,7 +148,7 @@ def update(id, reason, account_created=None, account_number=None, account_type=N
     """# Update PixKey entity
     Update a PixKey parameters by passing id.
     ## Parameters (required):
-    - id [string]: PixKey id. ex: "5656565656565656"
+    - id [string]: PixKey id. ex: "+5511989898989"
     - reason [string]: reason why the PixKey is being patched. Options: "branchTransfer", "reconciliation" or "userRequested"
     ## Parameters (optional):
     - account_created [datetime.date, datetime.datetime or string, default None]: opening Date or DateTime for the account to be linked. ex: "2022-01-01"
@@ -174,7 +174,7 @@ def cancel(id, user=None):
     """# Cancel a pixKey entity
     Cancel a pixKey entity previously created in the Stark Infra API
     ## Parameters (required):
-    - id [string]: object unique id. ex: "5656565656565656"
+    - id [string]: object unique id. ex: "+5511989898989"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

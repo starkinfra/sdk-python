@@ -9,7 +9,7 @@ class CreditPreview(SubResource):
     A CreditPreview is used to get information from a credit before taking it.
     This resource can be used to preview credit notes
     ## Parameters (required):
-    - credit [CreditNotePreview object]: CreditNotePreview object containing credit information.
+    - credit [CreditNotePreview object or dictionary]: CreditNotePreview object or dictionary containing credit information.
     ## Parameters (conditionally required):
     - type [string]: Credit type, inferred from the payment parameter if it is not a dictionary. ex: "credit-note"
     """

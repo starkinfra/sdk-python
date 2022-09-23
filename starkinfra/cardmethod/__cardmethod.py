@@ -23,7 +23,7 @@ _resource = {"class": CardMethod, "name": "CardMethod"}
 
 def query(search=None, user=None):
     """# Retrieve CardMethods
-    Receive a generator of CardMethod objects \ in the Stark Infra API
+    Receive a generator of CardMethod objects available in the Stark Infra API
     ## Parameters (optional):
     - search [string, default None]: keyword to search for code, name, number or short_code
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call

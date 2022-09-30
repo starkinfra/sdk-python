@@ -64,21 +64,21 @@ def create(reversals, user=None):
 
 
 def get(id, user=None):
-    """# Retrieve a specific PixReversal
+    """# Retrieve a specific PixReversal by its id
     Receive a single PixReversal object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - PixReversal object with updated attributes
+    - PixReversal object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(limit=None, after=None, before=None, status=None, ids=None, return_ids=None,
           external_ids=None, tags=None, user=None):
-    """# Retrieve PixReversals
+    """# Retrieve PixReversal objects
     Receive a generator of PixReversal objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -110,7 +110,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, return_ids
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None,
          return_ids=None, external_ids=None, tags=None, user=None):
-    """# Retrieve paged PixReversals
+    """# Retrieve paged PixReversal objects
     Receive a list of up to 100 PixReversal objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your reversals.
     ## Parameters (optional):

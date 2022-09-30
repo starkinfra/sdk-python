@@ -72,8 +72,4 @@ def create(previews, user=None):
     ## Return:
     - list of BrcodePreview objects with updated attributes
     """
-    return rest.post_multi(
-        resource=_resource,
-        entities=previews,
-        user=user,
-    )
+    return rest.post_multi(resource=_resource, entities=previews, user=user)

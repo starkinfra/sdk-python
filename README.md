@@ -376,7 +376,7 @@ for holder in holders:
 
 ### Query IssuingHolders
 
-You can query multiple holders according to filters.
+You can query multiple IssuingHolders according to filters.
 
 ```python
 import starkinfra
@@ -389,7 +389,7 @@ for holder in holders:
 
 ### Cancel an IssuingHolder
 
-To cancel a single Issuing Holder by its id, run:
+To cancel a single IssuingHolder by its id, run:
 
 ```python
 import starkinfra
@@ -401,7 +401,7 @@ print(holder)
 
 ### Get an IssuingHolder
 
-To get a single Issuing Holder by its id, run:
+To get a single IssuingHolder by its id, run:
 
 ```python
 import starkinfra
@@ -413,7 +413,7 @@ print(holder)
 
 ### Query IssuingHolder logs
 
-You can query holder logs to better understand holder life cycles.
+You can query IssuingHolder logs to better understand IssuingHolder life cycles.
 
 ```python
 import starkinfra
@@ -426,7 +426,7 @@ for log in logs:
 
 ### Get an IssuingHolder log
 
-You can also get a specific log by its id.
+You can get a specific log by its id.
 
 ```python
 import starkinfra
@@ -473,7 +473,7 @@ for card in cards:
 
 ### Query IssuingCards
 
-You can get a list of created cards given some filters.
+You can query multiple IssuingCards according to filters.
 
 ```python
 import starkinfra
@@ -526,7 +526,7 @@ print(card)
 
 ### Query IssuingCard logs
 
-Logs are pretty important to understand the life cycle of a card.
+You can query IssuingCard logs to better understand IssuingCard life cycles.
 
 ```python
 import starkinfra
@@ -539,7 +539,7 @@ for log in logs:
 
 ### Get an IssuingCard log
 
-You can get a single log by its id.
+You can get a specific log by its id.
 
 ```python
 import starkinfra
@@ -586,7 +586,7 @@ sendResponse(
 
 ### Query IssuingPurchases
 
-You can get a list of created purchases given some filters.
+You can query multiple IssuingPurchases according to filters.
 
 ```python
 import starkinfra
@@ -615,7 +615,7 @@ print(purchase)
 
 ### Query IssuingPurchase logs
 
-Logs are pretty important to understand the life cycle of a purchase.
+You can query IssuingPurchase logs to better understand IssuingPurchase life cycles.
 
 ```python
 import starkinfra
@@ -628,7 +628,7 @@ for log in logs:
 
 ### Get an IssuingPurchase log
 
-You can get a single log by its id.
+You can get a specific log by its id.
 
 ```python
 import starkinfra
@@ -672,7 +672,7 @@ print(invoice)
 
 ### Query IssuingInvoices
 
-You can get a list of created invoices given some filters.
+You can query multiple IssuingInvoices according to filters.
 
 ```python
 import starkinfra
@@ -689,7 +689,7 @@ for invoice in invoices:
 
 ### Query IssuingInvoice logs
 
-Logs are pretty important to understand the life cycle of an invoice.
+You can query IssuingInvoice logs to better understand IssuingInvoice life cycles.
 
 ```python
 import starkinfra
@@ -702,7 +702,7 @@ for log in logs:
 
 ### Get an IssuingInvoice log
 
-You can also get a specific log by its id.
+You can get a specific log by its id.
 
 ```python
 import starkinfra
@@ -747,7 +747,7 @@ print(invoice)
 
 ### Query IssuingWithdrawals
 
-You can get a list of created withdrawals given some filters.
+You can query multiple IssuingWithdrawals according to filters.
 
 ```python
 import starkinfra
@@ -908,7 +908,7 @@ for request in requests:
 
 ### Query PixRequests
 
-You can query multiple Pix requests according to filters.
+You can query multiple PixRequests according to filters.
 
 ```python
 import starkinfra
@@ -929,7 +929,8 @@ for request in requests:
 
 ### Get a PixRequest
 
-After its creation, information on a Pix request may be retrieved by its id. Its status indicates whether it has been paid.
+After its creation, information on a Pix request may be retrieved by its id. 
+Its status indicates whether it has been paid.
 
 ```python
 import starkinfra
@@ -975,7 +976,7 @@ sendResponse(
   
 ### Query PixRequest logs
 
-You can query Pix request logs to better understand Pix request life cycles. 
+You can query PixRequest logs to better understand PixRequest life cycles. 
 
 ```python
 import starkinfra
@@ -992,7 +993,7 @@ for log in logs:
 
 ### Get a PixRequest log
 
-You can also get a specific log by its id.
+You can get a specific log by its id.
 
 ```python
 import starkinfra
@@ -1023,7 +1024,7 @@ print(reversal)
 
 ### Query PixReversals 
 
-You can query multiple Pix reversals according to filters. 
+You can query multiple PixReversals according to filters. 
 
 ```python
 import starkinfra
@@ -1091,7 +1092,7 @@ sendResponse(
 
 ### Query PixReversal logs
 
-You can query Pix reversal logs to better understand their life cycles. 
+You can query PixReversal logs to better understand PixReversal life cycles. 
 
 ```python
 import starkinfra
@@ -1108,7 +1109,7 @@ for log in logs:
 
 ### Get a PixReversal log
 
-You can also get a specific log by its id.
+You can get a specific log by its id.
 
 ```python
 import starkinfra
@@ -1151,7 +1152,7 @@ print(statement)
 
 ### Query PixStatements
 
-You can query multiple Pix statements according to filters. 
+You can query multiple PixStatements according to filters. 
 
 ```python
 import starkinfra
@@ -1213,7 +1214,7 @@ print(key)
 
 ### Query PixKeys
 
-You can query multiple Pix keys you own according to filters.
+You can query multiple PixKeys according to filters.
 
 ```python
 import starkinfra
@@ -1268,7 +1269,7 @@ print(key)
 
 ### Cancel a PixKey
 
-Cancel a specific Pix Key using its id.
+Cancel a specific Pix key using its id.
 
 ```python
 import starkinfra
@@ -1280,7 +1281,7 @@ print(key)
 
 ### Query PixKey logs
 
-You can query Pix key logs to better understand a Pix key life cycle. 
+You can query PixKey logs to better understand PixKey life cycles. 
 
 ```python
 import starkinfra
@@ -1300,7 +1301,7 @@ for log in logs:
 
 ### Get a PixKey log
 
-You can also get a specific log by its id.
+You can get a specific log by its id.
 
 ```python
 import starkinfra
@@ -1334,7 +1335,7 @@ print(claim)
 
 ### Query PixClaims
 
-You can query multiple Pix claims according to filters.
+You can query multiple PixClaims according to filters.
 
 ```python
 import starkinfra
@@ -1387,7 +1388,7 @@ print(claim)
 
 ### Query PixClaim logs
 
-You can query Pix claim logs to better understand Pix claim life cycles.
+You can query PixClaim logs to better understand PixClaim life cycles.
 
 ```python
 import starkinfra
@@ -1407,7 +1408,7 @@ for log in logs:
 
 ### Get a PixClaim log
 
-You can also get a specific log by its id.
+You can get a specific log by its id.
 
 ```python
 import starkinfra
@@ -1521,7 +1522,7 @@ print(infraction)
 
 ### Query PixInfraction logs
 
-You can query infraction report logs to better understand their life cycles. 
+You can query PixInfraction logs to better understand PixInfraction life cycles. 
 
 ```python
 import starkinfra
@@ -1541,7 +1542,7 @@ for log in logs:
 
 ### Get a PixInfraction log
 
-You can also get a specific log by its id.
+You can get a specific log by its id.
 
 ```python
 import starkinfra
@@ -1575,7 +1576,7 @@ for chargeback in chargebacks:
 
 ### Query PixChargebacks
 
-You can query multiple Pix chargebacks according to filters.
+You can query multiple PixChargebacks according to filters.
 
 ```python
 import starkinfra
@@ -1594,7 +1595,7 @@ for chargeback in chargebacks:
 
 ### Get a PixChargeback
 
-After its creation, information on a Pix Chargeback may be retrieved by its.
+After its creation, information on a Pix Chargeback may be retrieved by its id.
 
 ```python
 import starkinfra
@@ -1635,7 +1636,7 @@ print(chargeback)
 
 ### Query PixChargeback logs
 
-You can query Pix chargeback logs to better understand Pix chargeback life cycles. 
+You can query PixChargeback logs to better understand PixChargeback life cycles.  
 
 ```python
 import starkinfra
@@ -1655,7 +1656,7 @@ for log in logs:
 
 ### Get a PixChargeback log
 
-You can also get a specific log by its id.
+You can get a specific log by its id.
 
 ```python
 import starkinfra
@@ -1882,6 +1883,7 @@ send_response(  # you should also implement this method to respond the read requ
 ```
 
 ## Create BrcodePreviews
+
 You can create BrcodePreviews to preview BR Codes before paying them.
 
 ```python
@@ -1903,7 +1905,8 @@ for preview in previews:
 ## Credit Note
 
 ### Create CreditNotes
-You can create a CreditNote to generate a CCB contract:
+
+You can create CreditNotes to generate a CCB contract:
 
 ```python
 import starkinfra
@@ -1959,7 +1962,7 @@ for note in notes:
 
 ### Query CreditNotes
 
-You can query multiple credit notes according to filters.
+You can query multiple CreditNotes according to filters.
 
 ```python
 import starkinfra
@@ -2003,7 +2006,7 @@ print(note)
   
 ### Query CreditNote logs
 
-You can query credit note logs to better understand credit note life cycles. 
+You can query CreditNote logs to better understand CreditNote life cycles. 
 
 ```python
 import starkinfra
@@ -2020,7 +2023,7 @@ for log in logs:
 
 ### Get a CreditNote log
 
-You can also get a specific log by its id.
+You can get a specific log by its id.
 
 ```python
 import starkinfra
@@ -2031,10 +2034,12 @@ print(log)
 ```
 
 ## Credit Preview
+
 You can preview different types of credits before creating them (Currently we only have CreditNote previews):
 
 ### Create CreditNotePreviews
-You can preview Credit Notes before the creation CCB contracts:
+
+You can preview CreditNotes before the creation CCB contracts:
 
 ```python
 import starkinfra
@@ -2120,9 +2125,9 @@ for preview in previews:
 
 ## Webhook
 
-### Create a webhook subscription
+### Create a Webhook subscription
 
-To create a webhook subscription and be notified whenever an event occurs, run:
+To create a Webhook subscription and be notified whenever an event occurs, run:
 
 ```python
 import starkinfra
@@ -2139,9 +2144,9 @@ webhook = starkinfra.webhook.create(
 print(webhook)
 ```
 
-### Query webhooks
+### Query Webhooks
 
-To search for registered webhooks, run:
+You can query multiple Webhooks according to filters.
 
 ```python
 import starkinfra
@@ -2152,9 +2157,9 @@ for webhook in webhooks:
     print(webhook)
 ```
 
-### Get a webhook
+### Get a Webhook
 
-You can get a specific webhook by its id.
+You can get a specific Webhook by its id.
 
 ```python
 import starkinfra
@@ -2164,9 +2169,9 @@ webhook = starkinfra.webhook.get("1082736198236817")
 print(webhook)
 ```
 
-### Delete a webhook
+### Delete a Webhook
 
-You can also delete a specific webhook by its id.
+You can also delete a specific Webhook by its id.
 
 ```python
 import starkinfra
@@ -2176,7 +2181,7 @@ webhook = starkinfra.webhook.delete("1082736198236817")
 print(webhook)
 ```
 
-### Process webhook events
+### Process Webhook events
 
 It's easy to process events delivered to your Webhook endpoint.
 Remember to pass the signature header so the SDK can make sure it was StarkInfra that sent you the event.
@@ -2210,9 +2215,9 @@ elif "credit-note" in event.subscription:
     print(event.log.note)
 ```
 
-### Query webhook events
+### Query Webhook events
 
-To search for webhooks events, run:
+To search for Webhooks events, run:
 
 ```python
 import starkinfra
@@ -2223,7 +2228,7 @@ for event in events:
     print(event)
 ```
 
-### Get a webhook event
+### Get a Webhook event
 
 You can get a specific webhook event by its id.
 

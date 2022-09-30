@@ -29,20 +29,20 @@ _resource = {"class": Log, "name": "PixInfractionLog"}
 
 
 def get(id, user=None):
-    """# Retrieve a specific PixInfraction.Log
+    """# Retrieve a specific PixInfraction.Log by its id
     Receive a single PixInfraction.Log object previously created by the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - PixInfraction.Log object with updated attributes
+    - PixInfraction.Log object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(ids=None, limit=None, after=None, before=None, types=None, infraction_ids=None, user=None):
-    """# Retrieve PixInfraction.Logs
+    """# Retrieve PixInfraction.Log objects
     Receive a generator of PixInfraction.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
     - ids [list of strings, default None]: Log ids to filter PixInfraction Logs. ex: ["5656565656565656"]
@@ -68,7 +68,7 @@ def query(ids=None, limit=None, after=None, before=None, types=None, infraction_
 
 
 def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None, infraction_ids=None, user=None):
-    """# Retrieve paged PixInfraction.Logs
+    """# Retrieve paged PixInfraction.Log objects
     Receive a list of up to 100 PixInfraction.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your infractions.
     ## Parameters (optional):
@@ -81,8 +81,8 @@ def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None,
     - infraction_ids [list of strings, default None]: list of PixInfraction ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - list of PixInfraction.Log objects with updated attributes
-    - cursor to retrieve the next page of PixInfraction.Log objects
+    - list of pixinfraction.Log objects with updated attributes
+    - cursor to retrieve the next page of pixinfraction.Log objects
     """
     return rest.get_page(
         resource=_resource,

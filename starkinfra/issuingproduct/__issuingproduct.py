@@ -29,7 +29,7 @@ _resource = {"class": IssuingProduct, "name": "IssuingProduct"}
 
 
 def query(limit=None, user=None):
-    """# Retrieve IssuingProducts
+    """# Retrieve IssuingProduct objects
     Receive a generator of available IssuingProduct objects registered to your workspace.
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -45,8 +45,9 @@ def query(limit=None, user=None):
 
 
 def page(limit=None, cursor=None, user=None):
-    """# Retrieve paged IssuingProducts
-    Receive a list of up to 100 IssuingProduct objects previously registered in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged IssuingProduct objects
+    Receive a list of up to 100 IssuingProduct objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35

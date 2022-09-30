@@ -29,7 +29,7 @@ _resource = {"class": PixBalance, "name": "PixBalance"}
 
 def get(user=None):
     """# Retrieve the PixBalance object
-    Receive the Balance object linked to your Workspace in the Stark Infra API
+    Receive the PixBalance object linked to your Workspace in the Stark Infra API
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

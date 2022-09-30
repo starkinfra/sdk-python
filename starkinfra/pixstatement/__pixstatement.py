@@ -66,7 +66,7 @@ def get(id, user=None):
 
 
 def query(limit=None, ids=None, user=None):
-    """# Retrieve PixStatements
+    """# Retrieve PixStatement objects
     Receive a generator of PixStatement objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -85,8 +85,9 @@ def query(limit=None, ids=None, user=None):
 
 
 def page(cursor=None, limit=None, ids=None, user=None):
-    """# Retrieve paged PixStatements
-    Receive a list of up to 100 PixStatement objects previously created in the Stark Infra API
+    """# Retrieve paged PixStatement objects
+    Receive a list of up to 100 {nome do recurso} objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
@@ -106,7 +107,7 @@ def page(cursor=None, limit=None, ids=None, user=None):
 
 
 def csv(id, user=None):
-    """# Retrieve a .csv PixStatement
+    """# Retrieve a .csv PixStatement by its id
     Retrieve a specific PixStatement by its ID in a .csv file.
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"

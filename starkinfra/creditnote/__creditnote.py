@@ -139,20 +139,20 @@ def create(notes, user=None):
 
 
 def get(id, user=None):
-    """# Retrieve a specific CreditNote
+    """# Retrieve a specific CreditNote by its id
     Receive a single CreditNote object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - CreditNote object with updated attributes
+    - CreditNote object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(limit=None, status=None, tags=None, ids=None, after=None, before=None, user=None):
-    """# Retrieve CreditNotes
+    """# Retrieve CreditNote objects
     Receive a generator of CreditNote objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -178,7 +178,7 @@ def query(limit=None, status=None, tags=None, ids=None, after=None, before=None,
 
 
 def page(cursor=None, limit=None, status=None, tags=None, ids=None, after=None, before=None, user=None):
-    """# Retrieve paged CreditNotes
+    """# Retrieve paged CreditNote objects
     Receive a list of up to 100 CreditNote objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):

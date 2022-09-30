@@ -26,8 +26,8 @@ _resource = {"class": PixDomain, "name": "PixDomain"}
 
 
 def query(user=None):
-    """# Retrieve PixDomains
-    Receive a generator of PixDomain objects.
+    """# Retrieve PixDomain objects
+    Receive a generator of PixDomain objects of Pix participants able to issue BR Codes
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

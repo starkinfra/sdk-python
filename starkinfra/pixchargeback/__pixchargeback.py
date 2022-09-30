@@ -61,7 +61,7 @@ def create(chargebacks, user=None):
     """# Create PixChargeback objects
     Create PixChargebacks in the Stark Infra API
     ## Parameters (optional):
-    - chargebacks [list of PixChargeback]: list of PixChargeback objects to be created in the API.
+    - chargebacks [list of PixChargeback objects]: list of PixChargeback objects to be created in the API.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -85,7 +85,7 @@ def get(id, user=None):
 
 
 def query(limit=None, after=None, before=None, status=None, ids=None, flow=None, tags=None, user=None):
-    """# Retrieve PixChargebacks
+    """# Retrieve PixChargeback objects
     Receive a generator of PixChargeback objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -114,8 +114,9 @@ def query(limit=None, after=None, before=None, status=None, ids=None, flow=None,
 
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, flow=None, tags=None, user=None):
-    """# Retrieve PixChargebacks
-    Receive a generator of PixChargeback objects previously created in the Stark Infra API
+    """# Retrieve paged PixChargeback objects
+    Receive a list of up to 100 PixChargeback objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call.
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
@@ -127,8 +128,8 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - tags [list of strings, default None]: filter for tags of retrieved objects. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
+    - list of PixChargeback objects with updated attributes
     - cursor to retrieve the next page of PixChargeback objects
-    - generator of PixChargeback objects with updated attributes
     """
     return rest.get_page(
         resource=_resource,

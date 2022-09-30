@@ -38,7 +38,7 @@ class PixRequest(Resource):
     - reconciliation_id [string, default None]: Reconciliation ID linked to this payment. ex: "b77f5236-7ab9-4487-9f95-66ee6eaf1781"
     - initiator_tax_id [string, default None]: Payment initiator's tax id (CPF/CNPJ). ex: "01234567890" or "20.018.183/0001-80"
     - tags [list of strings, default []]: list of strings for reference when searching for PixRequests. ex: ["employees", "monthly"]
-    - method [string, default None]: execution  method for thr creation of the Pix. ex: "manual", "payerQrcode", "dynamicQrcode"
+    - method [string, default None]: execution method of creation of the Pix. ex: 'manual', 'payerQrcode', 'dynamicQrcode'.
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixRequest is created. ex: "5656565656565656"
     - fee [integer]: fee charged when PixRequest is paid. ex: 200 (= R$ 2.00)
@@ -105,21 +105,21 @@ def create(requests, user=None):
 
 
 def get(id, user=None):
-    """# Retrieve a specific PixRequest
+    """# Retrieve a specific PixRequest by its id
     Receive a single PixRequest object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - PixRequest object with updated attributes
+    - PixRequest object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(limit=None, after=None, before=None, status=None, ids=None, end_to_end_ids=None,
           external_ids=None, tags=None, user=None):
-    """# Retrieve PixRequests
+    """# Retrieve PixRequest objects
     Receive a generator of PixRequest objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -150,7 +150,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, end_to_end
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None,
          end_to_end_ids=None, external_ids=None, tags=None, user=None):
-    """# Retrieve paged PixRequests
+    """# Retrieve paged PixRequest objects
     Receive a list of up to 100 PixRequest objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
@@ -214,7 +214,7 @@ def parse(content, signature, user=None):
 def response(status, reason=None):
     """# Helps you respond to a PixRequest authorization
     ## Parameters (required):
-    - status [string]: response to the authorization. ex: "approved" or "denied"
+    - status [string]: response to the authorization. Options: "approved" or "denied"
     ## Parameters (conditionally required):
     - reason [string, default None]: denial reason. Options: "invalidAccountNumber", "blockedAccount", "accountClosed", "invalidAccountType", "invalidTransactionType", "taxIdMismatch", "invalidTaxId", "orderRejected", "reversalTimeExpired", "settlementFailed"
     ## Return:

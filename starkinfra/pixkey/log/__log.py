@@ -29,27 +29,27 @@ _resource = {"class": Log, "name": "PixKeyLog"}
 
 
 def get(id, user=None):
-    """# Retrieve a specific PixKey.Log
+    """# Retrieve a specific PixKey.Log by its id
     Receive a single PixKey.Log object previously created by the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - PixKey.Log object with updated attributes
+    - PixKey.Log object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(ids=None, limit=None, after=None, before=None, types=None, key_ids=None, user=None):
-    """# Retrieve PixKey.Logs
+    """# Retrieve PixKey.Log objects
     Receive a generator of PixKey.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
     - ids [list of strings, default None]: Log ids to filter PixKey Logs. ex: ["5656565656565656"]
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
-    - types [list of strings, default None]: filter retrieved objects by types. ex: ["created", "registered", "updated", "failed", "canceling", "canceled"]
+    - types [list of strings, default None]: filter retrieved objects by types. Options: "created", "registered", "updated", "failed", "canceling", "canceled"
     - key_ids [list of strings, default None]: list of PixKey IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -68,7 +68,7 @@ def query(ids=None, limit=None, after=None, before=None, types=None, key_ids=Non
 
 
 def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None, key_ids=None, user=None):
-    """# Retrieve paged PixKey.Logs
+    """# Retrieve paged PixKey.Log objects
     Receive a list of up to 100 PixKey.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your keys.
     ## Parameters (optional):
@@ -81,8 +81,8 @@ def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None,
     - key_ids [list of strings, default None]: list of PixKey IDs to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - list of PixKey.Log objects with updated attributes
-    - cursor to retrieve the next page of PixKey.Log objects
+    - list of pixkey.Log objects with updated attributes
+    - cursor to retrieve the next page of pixkey.Log objects
     """
     return rest.get_page(
         resource=_resource,

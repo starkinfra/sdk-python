@@ -86,7 +86,7 @@ def get(id, user=None):
 
 
 def query(limit=None, after=None, before=None, status=None, ids=None, type=None, key_type=None, key_id=None, flow=None, tags=None, user=None):
-    """# Retrieve PixClaims
+    """# Retrieve PixClaim objects
     Receive a generator of PixClaim objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -121,7 +121,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
 
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, type=None, key_type=None, key_id=None, flow=None, tags=None, user=None):
-    """# Retrieve paged PixClaims
+    """# Retrieve paged PixClaim objects
     Receive a list of up to 100 PixClaim objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
@@ -138,7 +138,8 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - tags [list of strings, default None]: list of strings to filter retrieved objects. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - list of PixClaim objects with updated attributes and cursor to retrieve the next page of PixClaim objects
+    - list of PixClaim objects with updated attributes
+    - cursor to retrieve the next page of PixClaim objects
     """
     return rest.get_page(
         resource=_resource,

@@ -58,20 +58,20 @@ def create(brcodes, user=None):
 
 
 def get(uuid, user=None):
-    """# Retrieve a specific StaticBrcode
+    """# Retrieve a specific StaticBrcode by its id
     Receive a single StaticBrcode object previously created in the Stark Infra API by its uuid
     ## Parameters (required):
     - uuid [string]: object's unique uuid. ex: "97756273400d42ce9086404fe10ea0d6"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - StaticBrcode object with updated attributes
+    - StaticBrcode object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=uuid, user=user)
 
 
 def query(limit=None, after=None, before=None, uuids=None, tags=None, user=None):
-    """# Retrieve StaticBrcodes
+    """# Retrieve StaticBrcode objects
     Receive a generator of StaticBrcode objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -95,8 +95,9 @@ def query(limit=None, after=None, before=None, uuids=None, tags=None, user=None)
 
 
 def page(cursor=None, limit=None, after=None, before=None, uuids=None, tags=None, user=None):
-    """# Retrieve StaticBrcodes
-    Receive a list of StaticBrcode objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged PixKey objects
+    Receive a list of up to 100 PixKey objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35

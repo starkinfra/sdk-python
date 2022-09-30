@@ -92,21 +92,21 @@ _resource = {"class": IssuingPurchase, "name": "IssuingPurchase"}
 
 
 def get(id, user=None):
-    """# Retrieve a specific IssuingPurchase
+    """# Retrieve a specific IssuingPurchase by its id
     Receive a single IssuingPurchase object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - IssuingPurchase object with updated attributes
+    - IssuingPurchase object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(ids=None, limit=None, after=None, before=None, end_to_end_ids=None, holder_ids=None, card_ids=None,
           status=None, user=None):
-    """# Retrieve IssuingPurchase
+    """# Retrieve IssuingPurchase objects
     Receive a generator of IssuingPurchase objects previously created in the Stark Infra API
     ## Parameters (optional):
     - ids [list of strings, default [], default None]: purchase IDs
@@ -137,8 +137,9 @@ def query(ids=None, limit=None, after=None, before=None, end_to_end_ids=None, ho
 
 def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after=None, before=None, ids=None,
         cursor=None, limit=None, user=None):
-    """# Retrieve paged IssuingPurchase
-    Receive a list of IssuingPurchase objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged IssuingPurchase objects
+    Receive a list of up to 100 IssuingPurchase objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - ids [list of strings, default [], default None]: purchase IDs

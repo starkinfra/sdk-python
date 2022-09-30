@@ -32,20 +32,20 @@ _resource = {"class": Log, "name": "CreditNoteLog"}
 
 
 def get(id, user=None):
-    """# Retrieve a specific creditnote.Log
+    """# Retrieve a specific creditnote.Log by its id
     Receive a single creditnote.Log object previously created by the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - creditnote.Log object with updated attributes
+    - creditnote.Log object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(limit=None, after=None, before=None, types=None, note_ids=None, user=None):
-    """# Retrieve creditnote.Logs
+    """# Retrieve creditnote.Log objects
     Receive a generator of creditnote.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -69,7 +69,7 @@ def query(limit=None, after=None, before=None, types=None, note_ids=None, user=N
 
 
 def page(cursor=None, limit=None, after=None, before=None, types=None, note_ids=None, user=None):
-    """# Retrieve paged creditnote.Logs
+    """# Retrieve paged creditnote.Log objects
     Receive a list of up to 100 creditnote.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):

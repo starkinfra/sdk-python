@@ -30,20 +30,20 @@ _resource = {"class": Log, "name": "IssuingInvoiceLog"}
 
 
 def get(id, user=None):
-    """# Retrieve a specific issuinginvoice.Log
+    """# Retrieve a specific issuinginvoice.Log by its id
     Receive a single issuinginvoice.Log object previously created by the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - issuinginvoice.Log object with updated attributes
+    - issuinginvoice.Log object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(ids=None, limit=None, after=None, before=None, types=None, user=None):
-    """# Retrieve issuinginvoice.Log
+    """# Retrieve issuinginvoice.Log objects
     Receive a generator of issuinginvoice.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
     - ids [list of strings, default None]: list of IssuingInvoice ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
@@ -67,7 +67,7 @@ def query(ids=None, limit=None, after=None, before=None, types=None, user=None):
 
 
 def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None, user=None):
-    """# Retrieve paged issuinginvoice.Log
+    """# Retrieve paged issuinginvoice.Log objects
     Receive a list of up to 100 issuinginvoice.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):

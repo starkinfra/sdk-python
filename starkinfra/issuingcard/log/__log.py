@@ -30,20 +30,20 @@ _resource = {"class": Log, "name": "IssuingCardLog"}
 
 
 def get(id, user=None):
-    """# Retrieve a specific issuingcard.Log
+    """# Retrieve a specific issuingcard.Log by its id
     Receive a single issuingcard.Log object previously created by the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - issuingcard.Log object with updated attributes
+    - issuingcard.Log object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(ids=None, card_ids=None, types=None, after=None, before=None, limit=None, user=None):
-    """# Retrieve issuingcard.Log
+    """# Retrieve issuingcard.Log objects
     Receive a generator of issuingcard.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
@@ -69,7 +69,7 @@ def query(ids=None, card_ids=None, types=None, after=None, before=None, limit=No
 
 
 def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None, card_ids=None, user=None):
-    """# Retrieve paged issuingcard.Log
+    """# Retrieve paged issuingcard.Log objects
     Receive a list of up to 100 issuingcard.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):

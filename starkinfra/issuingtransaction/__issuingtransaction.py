@@ -31,21 +31,21 @@ _resource = {"class": IssuingTransaction, "name": "IssuingTransaction"}
 
 
 def get(id, user=None):
-    """# Retrieve a specific IssuingTransaction
+    """# Retrieve a specific IssuingTransaction by its id
     Receive a single IssuingTransaction object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - IssuingTransaction object with updated attributes
+    - IssuingTransaction object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(source=None, tags=None, external_ids=None, after=None, before=None,
           ids=None, limit=None, user=None):
-    """# Retrieve IssuingTransaction
+    """# Retrieve IssuingTransaction objects
     Receive a generator of IssuingTransaction objects previously created in the Stark Infra API
     ## Parameters (optional):
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
@@ -74,8 +74,9 @@ def query(source=None, tags=None, external_ids=None, after=None, before=None,
 
 def page(source=None, tags=None, external_ids=None, after=None, before=None,
          ids=None, limit=None, cursor=None, user=None):
-    """# Retrieve paged IssuingTransaction
-    Receive a list of IssuingTransaction objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged IssuingTransaction objects
+    Receive a list of up to 100 IssuingTransaction objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - external_ids [list of strings, default []]: external IDs. ex: ["5656565656565656", "4545454545454545"]

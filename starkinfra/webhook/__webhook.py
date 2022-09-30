@@ -3,11 +3,11 @@ from starkcore.utils.resource import Resource
 
 
 class Webhook(Resource):
-    """# Webhook subscription object
+    """# Webhook object
     A Webhook is used to subscribe to notification events on a user-selected endpoint.
     Currently, available services for subscription are credit-note, issuing-card, issuing-invoice, issuing-purchase, pix-request.in, pix-request.out, pix-reversal.in, pix-reversal.out, pix-claim, pix-key, pix-chargeback, pix-infraction,
     ## Parameters (required):
-    - url [string]: Url that will be notified when an event occurs.
+    - url [string]: URL that will be notified when an event occurs.
     - subscriptions [list of strings]: list of any non-empty combination of the available services. ex: ["contract", "credit-note", "signer", "issuing-card", "issuing-invoice", "issuing-purchase", "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out", "pix-claim", "pix-key", "pix-chargeback", "pix-infraction"]
     ## Attributes:
     - id [string]: unique id returned when the webhook is created. ex: "5656565656565656"
@@ -24,8 +24,8 @@ _resource = {"class": Webhook, "name": "Webhook"}
 
 
 def create(url, subscriptions, user=None):
-    """# Create Webhook subscription
-    Send a single Webhook subscription for creation at the Stark Infra API
+    """# Create Webhook
+    Send a single Webhook for creation at the Stark Infra API
     ## Parameters (required):
     - url [string]: url to which notification events will be sent to. ex: "https://webhook.site/60e9c18e-4b5c-4369-bda1-ab5fcd8e1b29"
     - subscriptions [list of strings]: list of any non-empty combination of the available services. ex: ["contract", "credit-note", "signer"]
@@ -38,21 +38,21 @@ def create(url, subscriptions, user=None):
 
 
 def get(id, user=None):
-    """# Retrieve a specific Webhook subscription
-    Receive a single Webhook subscription object previously created in the Stark Infra API by its id
+    """# Retrieve a specific Webhook by its id
+    Receive a single Webhook object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - Webhook object with updated attributes
+    - Webhook object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(limit=None, user=None):
-    """# Retrieve Webhook subcriptions
-    Receive a generator of Webhook subcription objects previously created in the Stark Infra API
+    """# Retrieve Webhook objects
+    Receive a generator of Webhook objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
@@ -63,7 +63,7 @@ def query(limit=None, user=None):
 
 
 def page(cursor=None, limit=None, user=None):
-    """# Retrieve paged Webhooks
+    """# Retrieve paged Webhook objects
     Receive a list of up to 100 Webhook objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
@@ -83,8 +83,8 @@ def page(cursor=None, limit=None, user=None):
 
 
 def delete(id, user=None):
-    """# Delete a Webhook subscription entity
-    Delete a Webhook subscription entity previously created in the Stark Infra API
+    """# Delete a Webhook entity
+    Delete a Webhook entity previously created in the Stark Infra API
     ## Parameters (required):
     - id [string]: Webhook unique id. ex: "5656565656565656"
     ## Parameters (optional):

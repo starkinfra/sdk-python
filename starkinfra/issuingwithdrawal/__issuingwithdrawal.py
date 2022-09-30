@@ -17,7 +17,7 @@ class IssuingWithdrawal(Resource):
     - id [string]: unique id returned when IssuingWithdrawal is created. ex: "5656565656565656"
     - transaction_id [string]: Stark Bank ledger transaction ids linked to this IssuingWithdrawal
     - issuing_transaction_id [string]: issuing ledger transaction ids linked to this IssuingWithdrawal
-    - updated [datetime.datetime]: latest update datetime for the IssuingWithdrawal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - (updated [datetime.datetime]: latest update datetime for the IssuingWithdrawal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingWithdrawal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
@@ -52,20 +52,20 @@ def create(withdrawal, user=None):
 
 
 def get(id, user=None):
-    """# Retrieve a specific IssuingWithdrawal
+    """# Retrieve a specific IssuingWithdrawal by its id
     Receive a single IssuingWithdrawal object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - IssuingWithdrawal object with updated attributes
+    - IssuingWithdrawal object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(external_ids=None, after=None, before=None, limit=None, tags=None, user=None):
-    """# Retrieve IssuingWithdrawals
+    """# Retrieve IssuingWithdrawal objects
     Receive a generator of IssuingWithdrawal objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -89,8 +89,9 @@ def query(external_ids=None, after=None, before=None, limit=None, tags=None, use
 
 
 def page(external_ids=None, after=None, before=None, limit=None, tags=None, cursor=None, user=None):
-    """# Retrieve paged IssuingWithdrawals
-    Receive a list of IssuingWithdrawal objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged IssuingWithdrawal objects
+    Receive a list of up to 100 IssuingWithdrawal objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35

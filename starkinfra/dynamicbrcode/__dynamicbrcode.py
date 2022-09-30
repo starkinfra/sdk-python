@@ -65,20 +65,20 @@ def create(brcodes, user=None):
 
 
 def get(uuid, user=None):
-    """# Retrieve a specific DynamicBrcode
+    """# Retrieve a specific DynamicBrcode by its id
     Receive a single DynamicBrcode object previously created in the Stark Infra API by its uuid
     ## Parameters (required):
     - uuid [string]: object's unique uuid. ex: "901e71f2447c43c886f58366a5432c4b"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - DynamicBrcode object with updated attributes
+    - DynamicBrcode object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=uuid, user=user)
 
 
 def query(limit=None, after=None, before=None, external_id=None, uuids=None, tags=None, user=None):
-    """# Retrieve DynamicBrcodes
+    """# Retrieve DynamicBrcode objects
     Receive a generator of DynamicBrcode objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -104,8 +104,9 @@ def query(limit=None, after=None, before=None, external_id=None, uuids=None, tag
 
 
 def page(cursor=None, limit=None, after=None, before=None, external_id=None, uuids=None, tags=None, user=None):
-    """# Retrieve DynamicBrcodes
-    Receive a list of DynamicBrcode objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged DynamicBrcode objects
+    Receive a list of up to 100 DynamicBrcode objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35

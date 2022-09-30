@@ -83,7 +83,7 @@ def create(cards, expand=None, user=None):
 
 def query(limit=None, ids=None, after=None, before=None, status=None, types=None, holder_ids=None, tags=None,
           expand=None, user=None):
-    """# Retrieve IssuingCards
+    """# Retrieve IssuingCard objects
     Receive a generator of IssuingCard objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -116,8 +116,9 @@ def query(limit=None, ids=None, after=None, before=None, status=None, types=None
 
 def page(cursor=None, limit=None, ids=None, after=None, before=None, status=None, types=None, holder_ids=None,
          tags=None, expand=None, user=None):
-    """# Retrieve paged IssuingCards
-    Receive a list of IssuingCard objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged IssuingCard objects
+    Receive a list of up to 100 IssuingCard objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
@@ -151,15 +152,15 @@ def page(cursor=None, limit=None, ids=None, after=None, before=None, status=None
 
 
 def get(id, expand=None, user=None):
-    """# Retrieve a specific IssuingCards
-    Receive a single IssuingCards object previously created in the Stark Infra API by its id
+    """# Retrieve a specific IssuingCards by its id
+    Receive a single IssuingCard object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - expand [list of strings, default None]: fields to expand information. ex: ["rules", "security_code", "number", "expiration"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - IssuingCards object with updated attributes
+    - IssuingCards object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, expand=expand, user=user)
 
@@ -171,7 +172,7 @@ def update(id, status=None, display_name=None, rules=None, tags=None, user=None)
     - id [string]: IssuingCard id. ex: '5656565656565656'
     ## Parameters (optional):
     - status [string, default None]: You may block the IssuingCard by passing 'blocked' or activate by passing 'active' in the status
-    - display_name [string, default None]: card displayed name
+    - display_name [string, default None]: card displayed name. ex: "ANTHONY EDWARD"
     - rules [list of dictionaries, default None]: list of dictionaries with "amount": int, "currencyCode": string, "id": string, "interval": string, "name": string pairs.
     - tags [list of strings]: list of strings for tagging
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.

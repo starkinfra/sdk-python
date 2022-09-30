@@ -27,7 +27,7 @@ _resource = {"class": MerchantCategory, "name": "MerchantCategory"}
 
 
 def query(search=None, user=None):
-    """# Retrieve MerchantCategories
+    """# Retrieve MerchantCategory objects
     Receive a generator of MerchantCategory objects available in the Stark Infra API
     ## Parameters (optional):
     - search [string, default None]: keyword to search for code, type, name or number

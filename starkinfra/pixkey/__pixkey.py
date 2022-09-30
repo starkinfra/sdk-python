@@ -83,7 +83,7 @@ def get(id, payer_id, end_to_end_id=None, user=None):
 
 
 def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, type=None, user=None):
-    """# Retrieve PixKeys
+    """# Retrieve PixKey objects
     Receive a generator of PixKey objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -113,8 +113,9 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, tags=None, ids=None, type=None,
          user=None):
-    """# Retrieve PixKeys
-    Receive a generator of PixKey objects previously created in the Stark Infra API
+    """# Retrieve paged PixKey objects
+    Receive a list of up to 100 PixKey objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call.
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
@@ -126,8 +127,8 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
     - type [string, default None]: filter for the type of retrieved PixKeys. Options: "cpf", "cnpj", "phone", "email" and "evp"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
+    - list of PixKey objects with updated attributes
     - cursor to retrieve the next page of PixKey objects
-    - generator of PixKey objects with updated attributes
     """
     return rest.get_page(
         resource=_resource,
@@ -171,8 +172,8 @@ def update(id, reason, account_created=None, account_number=None, account_type=N
 
 
 def cancel(id, user=None):
-    """# Cancel a pixKey entity
-    Cancel a pixKey entity previously created in the Stark Infra API
+    """# Cancel a PixKey entity
+    Cancel a PixKey entity previously created in the Stark Infra API
     ## Parameters (required):
     - id [string]: object unique id. ex: "+5511989898989"
     ## Parameters (optional):

@@ -52,7 +52,7 @@ def create(holders, expand=None, user=None):
 
 
 def get(id, expand=None, user=None):
-    """# Retrieve a specific IssuingHolder
+    """# Retrieve a specific IssuingHolder by its id
     Receive a single IssuingHolder object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
@@ -60,13 +60,13 @@ def get(id, expand=None, user=None):
     - expand [list of strings, default None]: fields to expand information. Options: ["rules"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
-    - IssuingHolder object with updated attributes
+    - IssuingHolder object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, expand=expand, user=user)
 
 
 def query(limit=None, ids=None, after=None, before=None, status=None, tags=None, expand=None, user=None):
-    """# Retrieve IssuingHolders
+    """# Retrieve IssuingHolder objects
     Receive a generator of IssuingHolder objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -94,8 +94,9 @@ def query(limit=None, ids=None, after=None, before=None, status=None, tags=None,
 
 
 def page(cursor=None, limit=None, ids=None, after=None, before=None, status=None, tags=None, expand=None, user=None):
-    """# Retrieve IssuingHolders
-    Receive a list of IssuingHolder objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged IssuingHolder objects
+    Receive a list of up to 100 IssuingHolder objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35

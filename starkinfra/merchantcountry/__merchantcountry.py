@@ -24,7 +24,7 @@ _resource = {"class": MerchantCountry, "name": "MerchantCountry"}
 
 
 def query(search=None, user=None):
-    """# Retrieve MerchantCountries
+    """# Retrieve MerchantCountry objects
     Receive a generator of MerchantCountry objects available in the Stark Infra API
     ## Parameters (optional):
     - search [string, default None]: keyword to search for code, name, number or short_code

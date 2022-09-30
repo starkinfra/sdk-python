@@ -30,20 +30,20 @@ _resource = {"class": Attempt, "name": "EventAttempt"}
 
 
 def get(id, user=None):
-    """# Retrieve a specific event.Attempt
+    """# Retrieve a specific event.Attempt by its id
     Receive a single event.Attempt object previously created by the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - event.Attempt object with updated attributes
+    - event.Attempt object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(limit=None, after=None, before=None, event_ids=None, webhook_ids=None, user=None):
-    """# Retrieve event.Attempts
+    """# Retrieve event.Attempt objects
     Receive a generator of event.Attempt objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -67,7 +67,7 @@ def query(limit=None, after=None, before=None, event_ids=None, webhook_ids=None,
 
 
 def page(cursor=None, limit=None, after=None, before=None, event_ids=None, webhook_ids=None, user=None):
-    """# Retrieve paged event.Attempts
+    """# Retrieve paged event.Attempt objects
     Receive a list of up to 100 event.Attempt objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):

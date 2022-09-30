@@ -11,10 +11,9 @@ starkinfra.user = exampleProject
 class TestMerchantCategoryQuery(TestCase):
 
     def test_success(self):
-        categories = starkinfra.merchantcategory.query(
-            search="food"
-        )
+        categories = starkinfra.merchantcategory.query()
         for category in categories:
+            print(category)
             self.assertIsNotNone(category.type)
 
 

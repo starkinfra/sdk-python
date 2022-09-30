@@ -32,20 +32,20 @@ _resource = {"class": Log, "name": "PixClaimLog"}
 
 
 def get(id, user=None):
-    """# Retrieve a specific PixClaim.Log
+    """# Retrieve a specific PixClaim.Log by its id
     Receive a single PixClaim.Log object previously created by the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - PixClaim.Log object with updated attributes
+    - PixClaim.Log object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(ids=None, limit=None, after=None, before=None, types=None, claim_ids=None, user=None):
-    """# Retrieve PixClaim.Logs
+    """# Retrieve PixClaim.Log objects
     Receive a generator of PixClaim.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
     - ids [list of strings, default None]: Log ids to filter PixClaim Logs. ex: ["5656565656565656"]
@@ -71,7 +71,7 @@ def query(ids=None, limit=None, after=None, before=None, types=None, claim_ids=N
 
 
 def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None, claim_ids=None, user=None):
-    """# Retrieve paged PixClaim.Logs
+    """# Retrieve paged PixClaim.Log objects
     Receive a list of up to 100 PixClaim.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your claims.
     ## Parameters (optional):

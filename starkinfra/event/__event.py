@@ -61,20 +61,20 @@ _resource = {"class": Event, "name": "Event"}
 
 
 def get(id, user=None):
-    """# Retrieve a specific notification Event
+    """# Retrieve a specific notification Event by its id
     Receive a single notification Event object previously created in the Stark Infra API by its id
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - Event object with updated attributes
+    - Event object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
 def query(limit=None, after=None, before=None, is_delivered=None, user=None):
-    """# Retrieve notification Events
+    """# Retrieve notification Event objects
     Receive a generator of notification Event objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
@@ -96,7 +96,7 @@ def query(limit=None, after=None, before=None, is_delivered=None, user=None):
 
 
 def page(cursor=None, limit=None, after=None, before=None, is_delivered=None, user=None):
-    """# Retrieve paged Events
+    """# Retrieve paged Event objects
     Receive a list of up to 100 Event objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):

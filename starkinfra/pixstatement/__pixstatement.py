@@ -6,7 +6,7 @@ from starkcore.utils.checks import check_datetime, check_date
 class PixStatement(Resource):
     """# PixStatement object
     The PixStatement object stores information about all the transactions that
-    happened on a specific day at your settlment account according to the Central Bank.
+    happened on a specific day at your settlement account according to the Central Bank.
     It must be created by the user before it can be accessed.
     This feature is only available for direct participants.
     When you initialize a PixStatement, the entity will not be automatically
@@ -86,7 +86,7 @@ def query(limit=None, ids=None, user=None):
 
 def page(cursor=None, limit=None, ids=None, user=None):
     """# Retrieve paged PixStatement objects
-    Receive a list of up to 100 {nome do recurso} objects previously created in the Stark Infra API and the cursor to the next page.
+    Receive a list of up to 100 PixStatement objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
@@ -108,7 +108,7 @@ def page(cursor=None, limit=None, ids=None, user=None):
 
 def csv(id, user=None):
     """# Retrieve a .csv PixStatement by its id
-    Retrieve a specific PixStatement by its ID in a .csv file.
+    Retrieve a specific PixStatement by its id in a .csv file.
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):

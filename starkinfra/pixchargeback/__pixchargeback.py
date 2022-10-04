@@ -156,8 +156,9 @@ def update(id, result, rejection_reason=None, reversal_reference_id=None, analys
     - reversal_reference_id [string, default None]: return_id of the reversal transaction. ex: "D20018183202201201450u34sDGd19lz"
     ## Parameters (optional):
     - analysis [string, default None]: description of the analysis that led to the result.
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - PixChargeback with updated attributes
+    - PixChargeback object with updated attributes
     """
     payload = {
         "result": result,

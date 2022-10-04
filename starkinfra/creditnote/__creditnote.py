@@ -16,14 +16,14 @@ class CreditNote(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
-    - template_id [string]: ID of the contract template on which the CreditNote will be based. ex: template_id="0123456789101112"
+    - template_id [string]: ID of the contract template on which the CreditNote will be based. ex: "0123456789101112"
     - name [string]: credit receiver's full name. ex: name="Edward Stark"
     - tax_id [string]: credit receiver's tax ID (CPF or CNPJ). ex: "20.018.183/0001-80"
-    - nominal_amount [integer]: amount in cents transferred to the credit receiver, before deductions. ex: nominal_amount=11234 (= R$ 112.34)
-    - scheduled [datetime.date, datetime.datetime or string]: date of transfer execution. ex: scheduled=datetime(2020, 3, 10)
-    - invoices [list of Invoice objects]: list of Invoice objects to be created and sent to the credit receiver. ex: invoices=[Invoice(), Invoice()]
-    - payment [creditnote.Transfer]: payment entity to be created and sent to the credit receiver. ex: payment=creditnote.Transfer()
-    - signers [list of CreditSigner objects]: signer's name, contact and delivery method for the signature request. ex: signers=[CreditSigner(), CreditSigner()]
+    - nominal_amount [integer]: amount in cents transferred to the credit receiver, before deductions. ex: 11234 (= R$ 112.34)
+    - scheduled [datetime.date, datetime.datetime or string]: date of transfer execution. ex: datetime(2020, 3, 10)
+    - invoices [list of Invoice objects]: list of Invoice objects to be created and sent to the credit receiver. ex: [Invoice(), Invoice()]
+    - payment [creditnote.Transfer]: payment entity to be created and sent to the credit receiver. ex: creditnote.Transfer()
+    - signers [list of CreditSigner objects]: signer's name, contact and delivery method for the signature request. ex: [CreditSigner(), CreditSigner()]
     - external_id [string]: a string that must be unique among all your CreditNotes, used to avoid resource duplication. ex: "my-internal-id-123456"
     - street_line_1 [string]: credit receiver main address. ex: "Av. Paulista, 200"
     - street_line_2 [string]: credit receiver address complement. ex: "Apto. 123"
@@ -34,8 +34,8 @@ class CreditNote(Resource):
     ## Parameters (conditionally required):
     - payment_type [string]: payment type, inferred from the payment parameter if it is not a dictionary. ex: "transfer"
     Parameters (optional):
-    - rebate_amount [integer, default 0]: credit analysis fee deducted from lent amount. ex: rebate_amount=11234 (= R$ 112.34)
-    - tags [list of strings, default []]: list of strings for reference when searching for CreditNotes. ex: tags=["employees", "monthly"]
+    - rebate_amount [integer, default 0]: credit analysis fee deducted from lent amount. ex: 11234 (= R$ 112.34)
+    - tags [list of strings, default []]: list of strings for reference when searching for CreditNotes. ex: ["employees", "monthly"]
     - expiration [integer or datetime.timedelta, default 604800 (7 days)]: time interval in seconds between scheduled date and expiration date. ex 123456789
     Attributes (return-only):
     - id [string]: unique id returned when the CreditNote is created. ex: "5656565656565656"
@@ -158,7 +158,7 @@ def query(limit=None, status=None, tags=None, ids=None, after=None, before=None,
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["canceled", "created", "expired", "failed", "processing", "signed", "success"]
+    - status [list of strings, default None]: filter for status of retrieved objects. Options: ["canceled", "created", "expired", "failed", "processing", "signed", "success"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.

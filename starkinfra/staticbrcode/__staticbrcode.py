@@ -11,7 +11,7 @@ class StaticBrcode(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     ## Parameters (required):
     - name [string]: receiver's name. ex: "Tony Stark"
-    - key_id [string]: receiver's Pixkey id. ex: "+5541999999999"
+    - key_id [string]: receiver's Pix key id. ex: "+5541999999999"
     - city [string, default São Paulo]: receiver's city name. ex: "Rio de Janeiro"
     ## Parameters (optional):
     - amount [integer, default 0]: positive integer that represents the amount in cents of the resulting Pix transaction. If the amount is zero, the sender can choose any amount in the moment of payment. ex: 1234 (= R$ 12.34)
@@ -20,7 +20,7 @@ class StaticBrcode(Resource):
     ## Attributes (return-only):
     - id [string]: id returned on creation, this is the BR code. ex: "00020126360014br.gov.bcb.pix0114+552840092118152040000530398654040.095802BR5915Jamie Lannister6009Sao Paulo620705038566304FC6C"
     - uuid [string]: unique uuid returned when a StaticBrcode is created. ex: "97756273400d42ce9086404fe10ea0d6"
-    - url [string]: url link to the BR code image. ex: "https://brcode-h.development.starkinfra.com/static-qrcode/97756273400d42ce9086404fe10ea0d6.png"
+    - url [string]: url link to the BR Code image. ex: "https://brcode-h.development.starkinfra.com/static-qrcode/97756273400d42ce9086404fe10ea0d6.png"
     - updated [datetime.datetime]: latest update datetime for the StaticBrcode. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the StaticBrcode. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """

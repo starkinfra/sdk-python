@@ -8,9 +8,9 @@ class IssuingHolder(Resource):
     """# IssuingHolder object
     The IssuingHolder describes a card holder that may group several cards.
     ## Parameters (required):
-    - name [string]: card holder name.
-    - tax_id [string]: card holder tax ID
-    - external_id [string] card holder external ID
+    - name [string]: card holder's name. ex: Jannie Lanister
+    - tax_id [string]: card holder's tax ID. ex: "012.345.678-90"
+    - external_id [string]: card holder's external ID. "my_external_id1"
     ## Parameters (optional):
     - rules [list of IssuingRule, default []]: [EXPANDABLE] list of holder spending rules
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]

@@ -23,7 +23,7 @@ class BrcodePreview(Resource):
     - interest_amount [integer]: Interest value calculated over nominal_amount. ex: 10000
     - key_id [string]: Receiver's PixKey id. ex: "+5511989898989"
     - name [string]: Payment receiver name. ex: "Tony Stark"
-    - nominal_amount [integer]: Brcode emission amount, without fines, fees and discounts. ex: 1234 (= R$ 12.34)
+    - nominal_amount [integer]: BR C9ode emission amount, without fines, fees and discounts. ex: 1234 (= R$ 12.34)
     - reconciliation_id [string]: Reconciliation ID linked to this payment. If the brcode is dynamic, the reconciliation_id will have from 26 to 35 alphanumeric characters, ex: "cd65c78aeb6543eaaa0170f68bd741ee". If the brcode is static, the reconciliation_id will have up to 25 alphanumeric characters "ah27s53agj6493hjds6836v49"
     - reduction_amount [integer]: Reduction value to discount from nominal_amount. ex: 1000
     - scheduled [datetime.datetime]: date of payment execution. ex: datetime(2020, 3, 10)

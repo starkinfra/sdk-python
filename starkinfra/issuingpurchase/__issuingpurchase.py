@@ -109,7 +109,7 @@ def query(ids=None, limit=None, after=None, before=None, end_to_end_ids=None, ho
     """# Retrieve IssuingPurchase objects
     Receive a generator of IssuingPurchase objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - ids [list of strings, default [], default None]: purchase IDs
+    - ids [list of strings, default []]: purchase IDs
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
@@ -142,7 +142,7 @@ def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
-    - ids [list of strings, default [], default None]: purchase IDs
+    - ids [list of strings, default []]: purchase IDs
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)

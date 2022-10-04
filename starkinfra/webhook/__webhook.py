@@ -10,7 +10,7 @@ class Webhook(Resource):
     - url [string]: URL that will be notified when an event occurs.
     - subscriptions [list of strings]: list of any non-empty combination of the available services. ex: ["contract", "credit-note", "signer", "issuing-card", "issuing-invoice", "issuing-purchase", "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out", "pix-claim", "pix-key", "pix-chargeback", "pix-infraction"]
     ## Attributes:
-    - id [string]: unique id returned when the webhook is created. ex: "5656565656565656"
+    - id [string]: unique id returned when the Webhook is created. ex: "5656565656565656"
     """
 
     def __init__(self, url, subscriptions, id=None):
@@ -27,7 +27,7 @@ def create(url, subscriptions, user=None):
     """# Create Webhook
     Send a single Webhook for creation at the Stark Infra API
     ## Parameters (required):
-    - url [string]: url to which notification events will be sent to. ex: "https://webhook.site/60e9c18e-4b5c-4369-bda1-ab5fcd8e1b29"
+    - url [string]: URL to which notification events will be sent to. ex: "https://webhook.site/60e9c18e-4b5c-4369-bda1-ab5fcd8e1b29"
     - subscriptions [list of strings]: list of any non-empty combination of the available services. ex: ["contract", "credit-note", "signer"]
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
@@ -86,7 +86,7 @@ def delete(id, user=None):
     """# Delete a Webhook entity
     Delete a Webhook entity previously created in the Stark Infra API
     ## Parameters (required):
-    - id [string]: Webhook unique id. ex: "5656565656565656"
+    - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

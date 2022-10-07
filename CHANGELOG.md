@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Fixed
+- Fixed query() cursor and limit iteration
 
 ## [0.3.0] - 2022-09-26
 ### Changed

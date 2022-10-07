@@ -213,7 +213,7 @@ def response_instant(version, created, key_id, status, reconciliation_id, amount
     - expiration [datetime.timedelta or integer, default 86400 (1 day)]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR Code cannot be paid anymore. Default value: 86400 (1 day)
     - sender_name [string, default None]: sender's full name. ex: "Anthony Edward Stark"
     - sender_tax_id [string, default None]: sender's CPF (11 digits formatted or unformatted) or CNPJ (14 digits formatted or unformatted). ex: "01.001.001/0001-01"
-    - amount_type [string, default "fixed"]: amount type of the Brcode. If the amount type is "custom" the Brcode's amount can be changed by the sender at the moment of payment. Options: "fixed"or "custom"
+    - amount_type [string, default "fixed"]: amount type of the Brcode. If the amount type is "custom" the Brcode's amount can be changed by the sender at the moment of payment. Options: "fixed" or "custom"
     - description [string, default None]: additional information to be shown to the sender at the moment of payment.
     ## Return:
     - Dumped JSON string that must be returned to us

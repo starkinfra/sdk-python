@@ -1,10 +1,10 @@
 import starkinfra
-from random import random, uniform
+from random import uniform
 from unittest import TestCase, main
 from datetime import date, timedelta, datetime
 from tests.utils.user import exampleProject
-from starkcore.error import InvalidSignatureError
 from tests.utils.dynamicBrcode import generateExampleDynamicBrcodeJson
+from starkcore.error import InvalidSignatureError
 
 starkinfra.user = exampleProject
 

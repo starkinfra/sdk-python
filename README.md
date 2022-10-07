@@ -715,7 +715,7 @@ print(log)
 ### Create IssuingWithdrawals
 
 You can create withdrawals to send cash back from your Issuing balance to your Banking balance
-by using the Withdrawal resource.
+by using the IssuingWithdrawal resource.
 
 ```python
 import starkinfra
@@ -2146,7 +2146,7 @@ print(webhook)
 
 ### Query Webhooks
 
-You can query multiple Webhooks according to filters.
+To search for registered webhooks, run:
 
 ```python
 import starkinfra
@@ -2230,7 +2230,7 @@ for event in events:
 
 ### Get a Webhook event
 
-You can get a specific webhook event by its id.
+You can get a specific Webhook event by its id.
 
 ```python
 import starkinfra
@@ -2242,7 +2242,7 @@ print(event)
 
 ### Delete a webhook event
 
-You can also delete a specific webhook event by its id.
+You can also delete a specific Webhook event by its id.
 
 ```python
 import starkinfra

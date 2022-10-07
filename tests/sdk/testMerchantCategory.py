@@ -1,9 +1,6 @@
 import starkinfra
 from unittest import TestCase, main
-from datetime import date, timedelta
-from starkinfra import IssuingWithdrawal
 from tests.utils.user import exampleProject
-from tests.utils.withdrawal import generateExampleWithdrawalJson
 
 starkinfra.user = exampleProject
 

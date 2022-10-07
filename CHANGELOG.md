@@ -14,7 +14,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Changed
-- PixDirector from resource to sub-resource
+- Fixed query() cursor and limit iteration
 
 ## [0.3.0] - 2022-09-26
 ### Changed

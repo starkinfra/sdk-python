@@ -13,10 +13,12 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.3.1] - 2022-10-08
 ### Fixed
 - Fixed query() cursor and limit iteration
 
-## [0.3.0] - 2022-09-26
+## [0.3.0] - 2022-08-26
 ### Changed
 - amount to nominal_amount, fine_amount to fine, interest_amount to interest, and discount_amount to discounts on response_due method of DynamicBrcode resource
 - settlement parameter to funding_type of Issuing Product resource

@@ -4,7 +4,6 @@ import random
 from os.path import abspath, join, dirname
 
 __title__ = 'names'
-__version__ = '0.3.0'
 __author__ = 'Trey Hunner'
 __license__ = 'MIT'
 

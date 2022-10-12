@@ -36,7 +36,7 @@ class CreditNote(Resource):
     Parameters (optional):
     - rebate_amount [integer, default 0]: credit analysis fee deducted from lent amount. ex: 11234 (= R$ 112.34)
     - tags [list of strings, default []]: list of strings for reference when searching for CreditNotes. ex: ["employees", "monthly"]
-    - expiration [integer or datetime.timedelta, default 604800 (7 days)]: time interval in seconds between scheduled date and expiration date. ex 123456789
+    - expiration [integer, default 604800 (7 days)]: time interval in seconds between scheduled date and expiration date. ex 123456789
     Attributes (return-only):
     - id [string]: unique id returned when the CreditNote is created. ex: "5656565656565656"
     - amount [integer]: CreditNote value in cents. ex: 1234 (= R$ 12.34)

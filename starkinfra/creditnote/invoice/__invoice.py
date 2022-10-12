@@ -14,7 +14,7 @@ class Invoice(Resource):
     - amount [integer]: Invoice value in cents. Minimum = 1 (any value will be accepted). ex: 1234 (= R$ 12.34)
     ## Parameters (optional):
     - due [datetime.datetime or datetime.date or string, default now + 2 days]: Invoice due date in UTC ISO format. ex: "2020-10-28T17:59:26.249976+00:00" for immediate invoices and "2020-10-28" for scheduled invoices
-    - expiration [integer or datetime.timedelta, default 5097600 (59 days)]: time interval in seconds between due date and expiration date. ex 123456789
+    - expiration [integer, default 5097600 (59 days)]: time interval in seconds between due date and expiration date. ex 123456789
     - tags [list of strings, default []]: list of strings for tagging
     - descriptions [list of creditnote.invoice.Description objects or dictionaries, default None]: list Description objects
     ## Attributes (return-only):

@@ -210,7 +210,7 @@ def response_instant(version, created, key_id, status, reconciliation_id, amount
     - cashier_bank_code [string, default None]: cashier's bank code. Required if the cashAmount is different from 0. ex: "20018183"
     ## Parameters (optional):
     - cash_amount [integer, default 0]: amount to be withdrawn from the cashier in cents. ex: 1000 (= R$ 10.00)
-    - expiration [datetime.timedelta or integer, default 86400 (1 day)]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR Code cannot be paid anymore. Default value: 86400 (1 day)
+    - expiration [integer, default 86400 (1 day)]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR Code cannot be paid anymore. Default value: 86400 (1 day)
     - sender_name [string, default None]: sender's full name. ex: "Anthony Edward Stark"
     - sender_tax_id [string, default None]: sender's CPF (11 digits formatted or unformatted) or CNPJ (14 digits formatted or unformatted). ex: "01.001.001/0001-01"
     - amount_type [string, default "fixed"]: amount type of the Brcode. If the amount type is "custom" the Brcode's amount can be changed by the sender at the moment of payment. Options: "fixed" or "custom"

@@ -160,14 +160,14 @@ def get(id, expand=None, user=None):
     - expand [list of strings, default None]: fields to expand information. ex: ["rules", "security_code", "number", "expiration"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - IssuingCards object that corresponds to the given id.
+    - IssuingCard object that corresponds to the given id.
     """
     return rest.get_id(resource=_resource, id=id, expand=expand, user=user)
 
 
 def update(id, status=None, display_name=None, rules=None, tags=None, user=None):
     """# Update IssuingCard entity
-    Update an IssuingCard by passing id.
+    Update an IssuingCard by passing its id.
     ## Parameters (required):
     - id [string]: IssuingCard id. ex: '5656565656565656'
     ## Parameters (optional):

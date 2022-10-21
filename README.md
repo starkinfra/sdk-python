@@ -45,10 +45,12 @@ This SDK version is compatible with the Stark Infra API v2.
         - [StaticBrcode](#create-staticbrcodes): Create static Pix BR codes
         - [DynamicBrcode](#create-dynamicbrcodes): Create dynamic Pix BR codes
         - [BrcodePreview](#create-brcodepreviews): Read data from BR Codes before paying them
-    - [Credit Note](#credit-note)
+    - [Lending](#lending)
         - [CreditNote](#create-creditnotes): Create credit notes
-    - [Credit Preview](#credit-preview)
-        - [CreditNotePreview](#create-a-creditnotepreview): Create a credit note preview
+        - [CreditPreview](#create-creditpreviews): Create credit previews
+    - [Identity](#identity)
+        - [IndividualIdentity](#create-individualidentities): Create individual identities
+        - [IndividualDocument](#create-individualdocuments): Create individual documents
     - [Webhook](#webhook):
         - [Webhook](#create-a-webhook-subscription): Configure your webhook endpoints and subscriptions
         - [WebhookEvents](#process-webhook-events): Manage Webhook events
@@ -480,7 +482,7 @@ import starkinfra
 from datetime import datetime
 
 cards = starkinfra.issuingcard.query(
-    after=datetime(2020, 1, 1),
+    after="2020-01-01",
     before=datetime(2020, 3, 1)
 )
 
@@ -593,7 +595,7 @@ import starkinfra
 from datetime import datetime
 
 purchases = starkinfra.issuingpurchase.query(
-    after=datetime(2020, 1, 1),
+    after="2020-01-01",
     before=datetime(2020, 3, 1)
 )
 
@@ -679,7 +681,7 @@ import starkinfra
 from datetime import datetime
 
 invoices = starkinfra.issuinginvoice.query(
-    after=datetime(2020, 1, 1),
+    after="2020-01-01",
     before=datetime(2020, 3, 1)
 )
 
@@ -754,7 +756,7 @@ import starkinfra
 from datetime import datetime
 
 withdrawals = starkinfra.issuingwithdrawal.query(
-    after=datetime(2020, 1, 1),
+    after="2020-01-01",
     before=datetime(2020, 3, 1)
 )
 
@@ -916,8 +918,8 @@ from datetime import datetime
 
 requests = starkinfra.pixrequest.query(
     limit=10,
-    after=datetime(2020, 1, 1),
-    before=datetime(2020, 4, 1),
+    after="2020-01-01",
+    before="2020-04-01",
     status="success",
     tags=["iron", "suit"],
     end_to_end_ids=["E79457883202101262140HHX553UPqeq"],
@@ -1031,8 +1033,8 @@ from datetime import datetime
 
 reversals = starkinfra.pixreversal.query(
     limit=10,
-    after=datetime(2020, 1, 1),
-    before=datetime(2020, 4, 1),
+    after="2020-01-01",
+    before="2020-04-01",
     status="success",
     tags=["iron", "suit"],
     return_ids=["D20018183202202030109X3OoBHG74wo"],
@@ -1900,10 +1902,27 @@ for preview in previews:
     print(preview)
 ```
 
-## Credit Note
+## Lending
+If you want to establish a lending operation, you can use Stark Infra to
+create a CCB contract. This will enable your business to lend money without
+requiring a banking license, as long as you use a Credit Fund 
+or Securitization company.
+
+The required steps to initiate the operation are:
+ 1. Have funds in your Credit Fund or Securitization account
+ 2. Request the creation of an [Identity Check](#create-individualidentities)
+for the credit receiver (make sure you have their documents and express authorization)
+ 3. (Optional) Create a [Credit Simulation](#create-creditpreviews) 
+with the desired installment plan to display information for the credit receiver
+ 4. Create a [Credit Note](#create-creditnotes)
+with the desired installment plan
+
 
 ### Create CreditNotes
-You can create a CreditNote to generate a CCB contract:
+For lending operations, you can create a CreditNote to generate a CCB contract.
+
+Note that you must have recently created an identity check for that same Tax ID before
+being able to create a credit operation for them.
 
 ```python
 import starkinfra
@@ -1963,12 +1982,11 @@ You can query multiple credit notes according to filters.
 
 ```python
 import starkinfra
-from datetime import datetime
 
 notes = starkinfra.creditnote.query(
     limit=10,
-    after=datetime(2020, 1, 1),
-    before=datetime(2020, 4, 1),
+    after="2020-01-01",
+    before="2020-04-01",
     status="success",
     tags=["iron", "suit"],
 )
@@ -2030,18 +2048,15 @@ log = starkinfra.creditnote.log.get("5155165527080960")
 print(log)
 ```
 
-## Credit Preview
-You can preview different types of credits before creating them (Currently we only have CreditNote previews):
-
-### Create a CreditNotePreview
-You can preview a Credit Note before the creation of the CCB contract:
+### Create CreditPreviews
+You can preview a credit operation before creating them (Currently we only have CreditNote / CCB previews):
 
 ```python
 import starkinfra
 
 previews = starkinfra.creditpreview.create([
     starkinfra.CreditPreview(
-        type="credit-note"
+        type="credit-note",
         credit=starkinfra.creditpreview.CreditNotePreview(
             initial_amount=2478,
             initial_due="2022-07-22",
@@ -2054,7 +2069,7 @@ previews = starkinfra.creditpreview.create([
         )
     ),
     starkinfra.CreditPreview(
-        type="credit-note"
+        type="credit-note",
         credit=starkinfra.creditpreview.CreditNotePreview(
             initial_amount=4449,
             initial_due="2022-07-16",
@@ -2064,11 +2079,11 @@ previews = starkinfra.creditpreview.create([
             rebate_amount=239,
             scheduled="2022-07-02",
             tax_id="81.882.684/0001-02",
-            type="price"
+            type="price",
         )
     ),
     starkinfra.CreditPreview(
-        type="credit-note"
+        type="credit-note",
         credit=starkinfra.creditpreview.CreditNotePreview(
             count=8,
             initial_due="2022-07-18",
@@ -2080,7 +2095,7 @@ previews = starkinfra.creditpreview.create([
         )
     ),
     starkinfra.CreditPreview(
-        type="credit-note"
+        type="credit-note",
         credit=starkinfra.creditpreview.CreditNotePreview(
             initial_due="2022-07-13",
             nominal_amount=86237,
@@ -2091,7 +2106,7 @@ previews = starkinfra.creditpreview.create([
         )
     ),
     starkinfra.CreditPreview(
-        type="credit-note"
+        type="credit-note",
         credit=starkinfra.creditpreview.CreditNotePreview(
             invoices=[
                 starkinfra.creditnote.Invoice(
@@ -2108,8 +2123,8 @@ previews = starkinfra.creditpreview.create([
             scheduled="2022-07-31",
             tax_id="36.084.400/0001-70",
             type="custom"
-        )
-    )
+        ),
+    ),
 ])
 
 for preview in previews:
@@ -2117,6 +2132,219 @@ for preview in previews:
 ```
 
 **Note**: Instead of using CreditPreview objects, you can also pass each element in dictionary format
+
+## Identity
+Several operations, especially credit ones, require that the identity
+of a person or business is validated beforehand.
+
+Identities are validated according to the following sequence:
+1. The Identity resource is created for a specific Tax ID
+2. Documents are attached to the Identity resource
+3. The Identity resource is updated to indicate that all documents have been attached
+4. The Identity is sent for validation and returns a webhook notification to reflect
+the success or failure of the operation
+
+### Create IndividualIdentities
+You can create an IndividualIdentity to validate a document of a natural person
+
+```python
+import starkinfra
+
+identities = starkinfra.individualidentity.create([
+    starkinfra.IndividualIdentity(
+        name="Walter White",
+        tax_id="012.345.678-90",
+        tags=["breaking", "bad"]
+    )
+])
+
+for identity in identities:
+    print(identity)
+```
+
+**Note**: Instead of using IndividualIdentity objects, you can also pass each element in dictionary format
+
+### Query IndividualIdentity
+
+You can query multiple individual identities according to filters.
+
+```python
+import starkinfra
+
+identities = starkinfra.individualidentity.query(
+    limit=10,
+    after="2020-01-01",
+    before="2020-04-01",
+    status="success",
+    tags=["breaking", "bad"],
+)
+
+for identity in identities:
+    print(identity)
+```
+
+### Get an IndividualIdentity
+
+After its creation, information on an individual identity may be retrieved by its id.
+
+```python
+import starkinfra
+
+identity = starkinfra.individualidentity.get("5155165527080960")
+
+print(identity)
+```
+
+### Update an IndividualIdentity
+
+You can update a specific identity status to "processing" for send it to validation.
+
+```python
+import starkinfra
+
+identity = starkinfra.individualidentity.update("5155165527080960", status="processing")
+
+print(identity)
+```
+
+**Note**: Before sending your individual identity to validation by patching its status, you must send all the required documents using the create method of the CreditDocument resource. Note that you must reference the individual identity in the create method of the CreditDocument resource by its id.
+
+
+### Cancel an IndividualIdentity
+
+You can cancel an individual identity before updating its status to processing.
+
+
+```python
+import starkinfra
+
+identity = starkinfra.individualidentity.cancel("5155165527080960")
+
+print(identity)
+```
+  
+### Query IndividualIdentity logs
+
+You can query individual identity logs to better understand individual identity life cycles. 
+
+```python
+import starkinfra
+
+logs = starkinfra.individualidentity.log.query(
+    limit=50, 
+    after="2022-01-01",
+    before="2022-01-20",
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get an IndividualIdentity log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.individualidentity.log.get("5155165527080960")
+
+print(log)
+```
+
+### Create IndividualDocuments
+You can create an individual document to attach images of documents to a specific individual Identity.
+You must reference the desired individual identity by its id.
+
+```python
+import starkinfra
+
+documents = starkinfra.individualdocument.create([
+    starkinfra.IndividualDocument(
+        type="rg-front",
+        content="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...",
+        identity_id='5155165527080960',
+        tags=["breaking", "bad"]
+    ),
+    starkinfra.IndividualDocument(
+        type="rg-back",
+        content="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...",
+        identity_id='5155165527080960',
+        tags=["breaking", "bad"]
+    ),
+    starkinfra.IndividualDocument(
+        type="selfie",
+        content="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...",
+        identity_id='5155165527080960',
+        tags=["breaking", "bad"]
+    )
+])
+
+for document in documents:
+    print(document)
+```
+
+**Note**: Instead of using IndividualDocument objects, you can also pass each element in dictionary format
+
+### Query IndividualDocument
+
+You can query multiple individual documents according to filters.
+
+```python
+import starkinfra
+
+documents = starkinfra.individualidentity.query(
+    limit=10,
+    after="2020-01-01",
+    before="2020-04-01",
+    status="success",
+    tags=["breaking", "bad"],
+)
+
+for document in documents:
+    print(document)
+```
+
+### Get an IndividualDocument
+
+After its creation, information on an individual document may be retrieved by its id.
+
+```python
+import starkinfra
+
+document = starkinfra.individualdocument.get("5155165527080960")
+
+print(document)
+```
+  
+### Query IndividualDocument logs
+
+You can query individual document logs to better understand individual document life cycles. 
+
+```python
+import starkinfra
+
+logs = starkinfra.individualdocument.log.query(
+    limit=50, 
+    after="2022-01-01",
+    before="2022-01-20",
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get an IndividualDocument log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.individualdocument.log.get("5155165527080960")
+
+print(log)
+```
 
 ## Webhook
 

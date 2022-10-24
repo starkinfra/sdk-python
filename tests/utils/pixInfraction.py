@@ -2,33 +2,41 @@
 from copy import deepcopy
 from random import choice
 from ..utils.endToEndId import get_end_to_end_id
-from starkinfra import PixInfraction, pixinfraction
-
+from starkinfra import PixInfraction, pixinfraction, pixreversal, pixrequest
 
 example_pix_infraction = PixInfraction(
+    description="Client payed for an item and never received it.",
     reference_id=get_end_to_end_id()[0],
+    tags=["SDK tests", "python SDK"],
     type="fraud",
 )
 
 
-def generateExamplePixInfractionsJson(n=1):
-    pix_infractions = []
-    end_to_end_ids = get_end_to_end_id(n=n)
-    for id in end_to_end_ids:
+def generateExamplePixInfractionsJson(n=1, infractionType="fraud"):
+    infractions = []
+    requests = list(pixrequest.query(limit=n, status="success"))
+    referenceIds = [request.end_to_end_id for request in requests]
+
+    if infractionType == "reversalChargeback":
+        reversals = list(pixreversal.query(limit=n, status="success"))
+        referenceIds = [reversal.return_id for reversal in reversals]
+
+    for id in referenceIds:
         infraction = deepcopy(example_pix_infraction)
         infraction.reference_id = id
-        pix_infractions.append(infraction)
-    return pix_infractions
+        infraction.type = infractionType
+        infractions.append(infraction)
+    return infractions
 
 
 def getPixInfractionToPatch():
-    infraction_reports = []
+    incfractions = []
     cursor = None
-    while len(infraction_reports) < 1:
+    while len(incfractions) < 1:
         reports, cursor = pixinfraction.page(status="created", limit=5, cursor=cursor)
         for report in reports:
             if report.flow == "out":
-                infraction_reports.append(report)
+                incfractions.append(report)
         if cursor is None:
             break
-    return choice(infraction_reports)
+    return choice(incfractions)

@@ -11,12 +11,12 @@ starkinfra.user = exampleProject
 class TestPixClaimPost(TestCase):
     def test_success(self):
         pix_claims = []
-        for _ in range(2):
+        for _ in range(1):
             pix_claim = generateExamplePixClaimJson()
             pix_claim = starkinfra.pixclaim.create(pix_claim)
             print(pix_claim)
             pix_claims.append(pix_claim)
-        self.assertEqual(len(pix_claims), 2)
+        self.assertEqual(len(pix_claims), 1)
 
 
 class TestPixClaimQuery(TestCase):

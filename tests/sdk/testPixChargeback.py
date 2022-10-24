@@ -3,7 +3,7 @@ from ..utils.user import bank_code
 from unittest import TestCase, main
 from datetime import timedelta, date
 from tests.utils.user import exampleProject
-from tests.utils.pixChargeback import generateExamplePixChargebackJson, getPixChargebackToPatch
+from tests.utils.pixChargeback import generateExamplePixChargebacksJson, getPixChargebackToPatch
 
 
 starkinfra.user = exampleProject
@@ -11,7 +11,7 @@ starkinfra.user = exampleProject
 
 class TestPixChargebackPostAndDelete(TestCase):
     def test_success(self):
-        pix_chargebacks = generateExamplePixChargebackJson(n=2)
+        pix_chargebacks = generateExamplePixChargebacksJson(n=2)
         pix_chargebacks = starkinfra.pixchargeback.create(pix_chargebacks)
         self.assertIsNotNone(pix_chargebacks)
         for chargeback in pix_chargebacks:

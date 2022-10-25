@@ -22,6 +22,33 @@ idsNameByName = {
 }
 
 
+def poolEntitiesAndLogs(name, ids, entityStatuses, logTypes, poolRetries=10, sleepTime=1,
+                        entityPoolRetries=None, entitySleepTime=None, debug=False):
+    for newType in logTypes:
+        poolLogs(
+            name=name,
+            ids=ids,
+            newType=newType,
+            poolRetries=poolRetries,
+            sleepTime=sleepTime,
+            debug=debug
+        )
+    for newStatus in entityStatuses:
+        poolEntities(
+            name=name,
+            ids=ids,
+            newStatus=newStatus,
+            poolRetries=entityPoolRetries or entityPoolRetries,
+            sleepTime=entitySleepTime or entitySleepTime,
+            debug=debug
+        )
+
+
+def poolEntitiesByStatuses(name, ids, newStatuses, poolRetries=10, sleepTime=1, debug=False):
+    for newStatus in newStatuses:
+        poolEntities(name, ids, newStatus, poolRetries=poolRetries, sleepTime=sleepTime, debug=debug)
+
+
 def poolEntities(name, ids, newStatus, poolRetries=10, sleepTime=2, entityCount=None, debug=False):
     poolFunc = funcByName[name]
     if not entityCount:

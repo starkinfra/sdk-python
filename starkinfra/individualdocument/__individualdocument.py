@@ -14,7 +14,7 @@ class IndividualDocument(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
-    - type [string]: type of the IndividualDocument. Options: "cnh-front", "cnh-back", "rg-front", "rg-back" or "selfie"
+    - type [string]: type of the IndividualDocument. Options: "drivers-license-front", "drivers-license-back", "identity-front", "identity-back" or "selfie"
     - content [string]: Base64 data url of the picture. ex: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...
     - content_type [string]: content MIME type. This parameter is required as input only. ex: "image/png" or "image/jpeg"
     - identity_id [string]: Unique id of IndividualIdentity. ex: "5656565656565656"

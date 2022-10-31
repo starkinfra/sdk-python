@@ -1,8 +1,8 @@
 # coding=utf-8
 
 RgImages = {
-    "front": "../utils/identity/rg-front-face.png",
-    "back": "../utils/identity/rg-back-face.png",
+    "front": "../utils/identity/identity-front-face.png",
+    "back": "../utils/identity/identity-back-face.png",
     "selfie": "../utils/identity/walter-white.png"
 }
 

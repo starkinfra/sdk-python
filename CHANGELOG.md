@@ -17,6 +17,9 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - IndividualIdentity resource
 - IndividualDocument resource
 
+### Fixed
+- IndividualDocument type values
+
 ## [0.3.1] - 2022-10-08
 ### Fixed
 - Fixed query() cursor and limit iteration

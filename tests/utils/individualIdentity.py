@@ -19,7 +19,7 @@ def generateExampleIndividualIdentityJson(n=1):
         individual = deepcopy(_generateIndividualIdentity())
 
         individual.name = get_full_name()
-        individual.tax_id = TaxIdGenerator.taxId()
+        individual.tax_id = TaxIdGenerator.cpf()
 
         identities_identity.append(individual)
     return identities_identity

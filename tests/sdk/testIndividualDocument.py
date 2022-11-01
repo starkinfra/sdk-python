@@ -20,7 +20,7 @@ class TestIndividualDocumentPost(TestCase):
         documents = starkinfra.individualdocument.create([starkinfra.IndividualDocument(
             content=image,
             content_type="image/png",
-            type="rg-front",
+            type="identity-front",
             identity_id=identities[0].id,
         )])
         
@@ -30,7 +30,7 @@ class TestIndividualDocumentPost(TestCase):
         documents = starkinfra.individualdocument.create([starkinfra.IndividualDocument(
             content=image,
             content_type="image/png",
-            type="rg-back",
+            type="identity-back",
             identity_id=identities[0].id
         )])
         

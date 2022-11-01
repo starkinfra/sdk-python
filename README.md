@@ -2261,13 +2261,13 @@ import starkinfra
 
 documents = starkinfra.individualdocument.create([
     starkinfra.IndividualDocument(
-        type="rg-front",
+        type="identity-front",
         content="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...",
         identity_id='5155165527080960',
         tags=["breaking", "bad"]
     ),
     starkinfra.IndividualDocument(
-        type="rg-back",
+        type="identity-back",
         content="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...",
         identity_id='5155165527080960',
         tags=["breaking", "bad"]

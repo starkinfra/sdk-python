@@ -479,11 +479,11 @@ You can get a list of created cards given some filters.
 
 ```python
 import starkinfra
-from datetime import datetime
+from datetime import date
 
 cards = starkinfra.issuingcard.query(
-    after="2020-01-01",
-    before=datetime(2020, 3, 1)
+    after=date(2020, 1, 1),
+    before=date(2020, 3, 1)
 )
 
 for card in cards:
@@ -592,11 +592,11 @@ You can get a list of created purchases given some filters.
 
 ```python
 import starkinfra
-from datetime import datetime
+from datetime import date
 
 purchases = starkinfra.issuingpurchase.query(
-    after="2020-01-01",
-    before=datetime(2020, 3, 1)
+    after=date(2020, 1, 1),
+    before=date(2020, 3, 1)
 )
 
 for purchase in purchases:
@@ -678,11 +678,11 @@ You can get a list of created invoices given some filters.
 
 ```python
 import starkinfra
-from datetime import datetime
+from datetime import date
 
 invoices = starkinfra.issuinginvoice.query(
-    after="2020-01-01",
-    before=datetime(2020, 3, 1)
+    after=date(2020, 1, 1),
+    before=date(2020, 3, 1)
 )
 
 for invoice in invoices:
@@ -753,11 +753,11 @@ You can get a list of created withdrawals given some filters.
 
 ```python
 import starkinfra
-from datetime import datetime
+from datetime import date
 
 withdrawals = starkinfra.issuingwithdrawal.query(
-    after="2020-01-01",
-    before=datetime(2020, 3, 1)
+    after=date(2020, 1, 1),
+    before=date(2020, 3, 1)
 )
 
 for withdrawal in withdrawals:
@@ -784,10 +784,11 @@ you make purchases, withdrawals, receive issuing invoice payments, for example.
 
 ```python
 import starkinfra
+from datetime import date
 
 transactions = starkinfra.issuingtransaction.query(
-    after="2020-01-01",
-    before="2020-03-01"
+    after=date(2020, 1, 1),
+    before=date(2020, 3, 1)
 )
 for transaction in transactions:
     print(transaction)
@@ -914,12 +915,12 @@ You can query multiple Pix requests according to filters.
 
 ```python
 import starkinfra
-from datetime import datetime
+from datetime import date
 
 requests = starkinfra.pixrequest.query(
     limit=10,
-    after="2020-01-01",
-    before="2020-04-01",
+    after=date(2020, 1, 1),
+    before=date(2020, 4, 1),
     status="success",
     tags=["iron", "suit"],
     end_to_end_ids=["E79457883202101262140HHX553UPqeq"],
@@ -981,11 +982,12 @@ You can query Pix request logs to better understand Pix request life cycles.
 
 ```python
 import starkinfra
+from datetime import date
 
 logs = starkinfra.pixrequest.log.query(
     limit=50, 
-    after="2022-01-01",
-    before="2022-01-20",
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
 )
 
 for log in logs:
@@ -1029,12 +1031,12 @@ You can query multiple Pix reversals according to filters.
 
 ```python
 import starkinfra
-from datetime import datetime
+from datetime import date
 
 reversals = starkinfra.pixreversal.query(
     limit=10,
-    after="2020-01-01",
-    before="2020-04-01",
+    after=date(2020, 1, 1),
+    before=date(2020, 4, 1),
     status="success",
     tags=["iron", "suit"],
     return_ids=["D20018183202202030109X3OoBHG74wo"],
@@ -1097,11 +1099,12 @@ You can query Pix reversal logs to better understand their life cycles.
 
 ```python
 import starkinfra
+from datetime import date
 
 logs = starkinfra.pixreversal.log.query(
     limit=50, 
-    after="2022-01-01",
-    before="2022-01-20",
+    after=date(2020, 1, 1),
+    before=date(2020, 1, 20),
 )
 
 for log in logs:
@@ -1139,11 +1142,12 @@ To create a statement of all the transactions that happened on your account duri
 
 ```python
 import starkinfra
+from datetime import date
 
 statement = starkinfra.pixstatement.create(
     starkinfra.PixStatement(
-        after="2022-01-01", # This is the date that you want to create a statement.
-        before="2022-01-01", # After and before must be the same date.
+        after=date(2022, 1, 1), # This is the date that you want to create a statement.
+        before=date(2022, 1, 1), # After and before must be the same date.
         type="transaction" # Options are "interchange", "interchangeTotal", "transaction".
     )
 )
@@ -1197,10 +1201,11 @@ You can create a Pix Key to link a bank account information to a key id:
 
 ```python
 import starkinfra
+from datetime import datetime
 
 key = starkinfra.pixkey.create(
     starkinfra.PixKey(
-        account_created="2022-02-01T00:00:00.00",
+        account_created=datetime(2022, 2, 1, 0, 0, 0),
         account_number="00000",
         account_type="savings",
         branch_code="0000",
@@ -1219,11 +1224,12 @@ You can query multiple Pix keys you own according to filters.
 
 ```python
 import starkinfra
+from datetime import date
 
 keys = starkinfra.pixkey.query(
     limit=1,
-    after="2022-01-01",
-    before="2022-01-12",
+    after=date(2022, 1, 1),
+    before=date(2020, 1, 12),
     status="registered",
     tags=["iron", "bank"],
     ids=["+5511989898989"],
@@ -1286,12 +1292,13 @@ You can query Pix key logs to better understand a Pix key life cycle.
 
 ```python
 import starkinfra
+from datetime import date
 
 logs = starkinfra.pixkey.log.query(
     limit=50, 
     ids=["5729405850615808"],
-    after="2022-01-01",
-    before="2022-01-20",
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
     types=["created"],
     key_ids=["+5511989898989"]
 )
@@ -1318,10 +1325,11 @@ You can create a Pix claim to request the transfer of a Pix key from another ban
 
 ```python
 import starkinfra
+from datetime import datetime
 
 claim = starkinfra.pixclaim.create(
     starkinfra.PixClaim(
-        account_created="2022-02-01T00:00:00.00",
+        account_created=datetime(2022, 2, 1, 0, 0, 0),
         account_number="5692908409716736",
         account_type="checking",
         branch_code="0000",
@@ -1340,11 +1348,12 @@ You can query multiple Pix claims according to filters.
 
 ```python
 import starkinfra
+from datetime import date
 
 claims = starkinfra.pixclaim.query(
     limit=1,
-    after="2022-01-01",
-    before="2022-01-12",
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 12),
     status="registered",
     ids=["5729405850615808"],
     type="ownership",
@@ -1393,12 +1402,13 @@ You can query Pix claim logs to better understand Pix claim life cycles.
 
 ```python
 import starkinfra
+from datetime import date
 
 logs = starkinfra.pixclaim.log.query(
     limit=50, 
     ids=["5729405850615808"],
-    after="2022-01-01",
-    before="2022-01-20",
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
     types=["registered"],
     claim_ids=["5719405850615809"]
 )
@@ -1468,11 +1478,12 @@ You can query multiple infraction reports according to filters.
 
 ```python
 import starkinfra
+from datetime import date
 
 infractions = starkinfra.pixinfraction.query(
     limit=1,
-    after="2022-01-01",
-    before="2022-01-12",
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 12),
     status="delivered",
     ids=["5155165527080960"],
 )
@@ -1527,12 +1538,13 @@ You can query infraction report logs to better understand their life cycles.
 
 ```python
 import starkinfra
+from datetime import date
 
 logs = starkinfra.pixinfraction.log.query(
     limit=50, 
     ids=["5729405850615808"],
-    after="2022-01-01",
-    before="2022-01-20",
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
     types=["created"],
     infraction_ids=["5155165527080960"]
 )
@@ -1581,11 +1593,12 @@ You can query multiple Pix chargebacks according to filters.
 
 ```python
 import starkinfra
+from datetime import date
 
 chargebacks = starkinfra.pixchargeback.query(
     limit=1,
-    after="2022-01-01",
-    before="2022-01-12",
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 12),
     status="registered",
     ids=["5155165527080960"]
 )
@@ -1641,12 +1654,13 @@ You can query Pix chargeback logs to better understand Pix chargeback life cycle
 
 ```python
 import starkinfra
+from datetime import date
 
 logs = starkinfra.pixchargeback.log.query(
     limit=50, 
     ids=["5729405850615808"],
-    after="2022-01-01",
-    before="2022-01-20",
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
     types=["created"],
     chargeback_ids=["5155165527080960"]
 )
@@ -1709,11 +1723,12 @@ You can query multiple StaticBrcodes according to filters.
 
 ```python
 import starkinfra
+from datetime import date
 
 brcodes = starkinfra.staticbrcode.query(
     limit=1,
-    after="2022-06-01",
-    before="2022-06-30",
+    after=date(2022, 6, 1),
+    before=date(2022, 6, 30),
     uuids=["5ddde28043a245c2848b08cf315effa2"]
 )
 
@@ -1765,11 +1780,12 @@ You can query multiple DynamicBrcodes according to filters.
 
 ```python
 import starkinfra
+from datetime import date
 
 brcodes = starkinfra.dynamicbrcode.query(
     limit=1,
-    after="2022-06-01",
-    before="2022-06-30",
+    after=date(2022, 6, 1),
+    before=date(2022, 6, 30),
     uuids=["ac7caa14e601461dbd6b12bf7e4cc48e"]
 )
 
@@ -1926,6 +1942,7 @@ being able to create a credit operation for them.
 
 ```python
 import starkinfra
+from datetime import date 
 
 notes = starkinfra.creditnote.create([
     starkinfra.CreditNote(
@@ -1933,10 +1950,10 @@ notes = starkinfra.creditnote.create([
         name="Jamie Lannister",
         tax_id="012.345.678-90",
         nominal_amount=100000,
-        scheduled="2022-04-28",
+        scheduled=date(2022, 4, 28),
         invoices=[
             starkinfra.creditnote.Invoice(
-                due="2023-06-25",
+                due=date(2023, 6, 25),
                 amount=120000,
                 fine=10,
                 interest=2,
@@ -1982,11 +1999,12 @@ You can query multiple credit notes according to filters.
 
 ```python
 import starkinfra
+from datetime import date
 
 notes = starkinfra.creditnote.query(
     limit=10,
-    after="2020-01-01",
-    before="2020-04-01",
+    after=date(2020, 1, 1),
+    before=date(2020, 4, 1),
     status="success",
     tags=["iron", "suit"],
 )
@@ -2025,11 +2043,12 @@ You can query credit note logs to better understand credit note life cycles.
 
 ```python
 import starkinfra
+from datetime import date
 
 logs = starkinfra.creditnote.log.query(
     limit=50, 
-    after="2022-01-01",
-    before="2022-01-20",
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
 )
 
 for log in logs:
@@ -2053,17 +2072,18 @@ You can preview a credit operation before creating them (Currently we only have 
 
 ```python
 import starkinfra
+from datetime import date
 
 previews = starkinfra.creditpreview.create([
     starkinfra.CreditPreview(
         type="credit-note",
         credit=starkinfra.creditpreview.CreditNotePreview(
             initial_amount=2478,
-            initial_due="2022-07-22",
+            initial_due=date(2022, 7, 22),
             nominal_amount=90583,
             nominal_interest=3.7,
             rebate_amount=23,
-            scheduled="2022-06-28",
+            scheduled=date(2022, 6, 28),
             tax_id="477.954.506-44",
             type="sac"
         )
@@ -2072,12 +2092,12 @@ previews = starkinfra.creditpreview.create([
         type="credit-note",
         credit=starkinfra.creditpreview.CreditNotePreview(
             initial_amount=4449,
-            initial_due="2022-07-16",
+            initial_due=date(2022, 7, 16),
             interval="year",
             nominal_amount=96084,
             nominal_interest=3.1,
             rebate_amount=239,
-            scheduled="2022-07-02",
+            scheduled=date(2022, 7, 2),
             tax_id="81.882.684/0001-02",
             type="price",
         )
@@ -2086,10 +2106,10 @@ previews = starkinfra.creditpreview.create([
         type="credit-note",
         credit=starkinfra.creditpreview.CreditNotePreview(
             count=8,
-            initial_due="2022-07-18",
+            initial_due=date(2022, 7, 18),
             nominal_amount=6161,
             nominal_interest=3.2,
-            scheduled="2022-07-03",
+            scheduled=date(2022, 7, 3),
             tax_id="59.352.830/0001-20",
             type="american"
         )
@@ -2097,10 +2117,10 @@ previews = starkinfra.creditpreview.create([
     starkinfra.CreditPreview(
         type="credit-note",
         credit=starkinfra.creditpreview.CreditNotePreview(
-            initial_due="2022-07-13",
+            initial_due=date(2022, 7, 13),
             nominal_amount=86237,
             nominal_interest=2.6,
-            scheduled="2022-07-03",
+            scheduled=date(2022, 7, 3),
             tax_id="37.293.955/0001-94",
             type="bullet"
         )
@@ -2111,16 +2131,16 @@ previews = starkinfra.creditpreview.create([
             invoices=[
                 starkinfra.creditnote.Invoice(
                     amount=14500,
-                    due="2022-08-19"
+                    due=date(2022, 8, 19)
                 ),
                 starkinfra.creditnote.Invoice(
                     amount=14500,
-                    due="2022-09-25"
+                    due=date(2022, 9, 25)
                 )
             ],
             nominal_amount=29000,
             rebate_amount=900,
-            scheduled="2022-07-31",
+            scheduled=date(2022, 7, 31),
             tax_id="36.084.400/0001-70",
             type="custom"
         ),
@@ -2170,11 +2190,12 @@ You can query multiple individual identities according to filters.
 
 ```python
 import starkinfra
+from datetime import date
 
 identities = starkinfra.individualidentity.query(
     limit=10,
-    after="2020-01-01",
-    before="2020-04-01",
+    after=date(2020, 1, 1),
+    before=date(2020, 4, 1),
     status="success",
     tags=["breaking", "bad"],
 )
@@ -2229,11 +2250,12 @@ You can query individual identity logs to better understand individual identity 
 
 ```python
 import starkinfra
+from datetime import date
 
 logs = starkinfra.individualidentity.log.query(
     limit=50, 
-    after="2022-01-01",
-    before="2022-01-20",
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
 )
 
 for log in logs:
@@ -2292,11 +2314,12 @@ You can query multiple individual documents according to filters.
 
 ```python
 import starkinfra
+from datetime import date
 
 documents = starkinfra.individualidentity.query(
     limit=10,
-    after="2020-01-01",
-    before="2020-04-01",
+    after=date(2020, 1, 1),
+    before=date(2020, 4, 1),
     status="success",
     tags=["breaking", "bad"],
 )
@@ -2323,11 +2346,12 @@ You can query individual document logs to better understand individual document 
 
 ```python
 import starkinfra
+from datetime import date
 
 logs = starkinfra.individualdocument.log.query(
     limit=50, 
-    after="2022-01-01",
-    before="2022-01-20",
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
 )
 
 for log in logs:
@@ -2444,8 +2468,9 @@ To search for webhooks events, run:
 
 ```python
 import starkinfra
+from datetime import date
 
-events = starkinfra.event.query(after="2020-03-20", is_delivered=False)
+events = starkinfra.event.query(after=date(2020, 3, 20), is_delivered=False)
 
 for event in events:
     print(event)
@@ -2495,8 +2520,9 @@ You can also get information on failed webhook event delivery attempts.
 
 ```python
 import starkinfra
+from datetime import date
 
-attempts = starkinfra.event.attempt.query(after="2020-03-20")
+attempts = starkinfra.event.attempt.query(after=date(2020, 3, 20))
 
 for attempt in attempts:
     print(attempt.code)

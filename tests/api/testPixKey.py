@@ -1,7 +1,7 @@
 import starkinfra
 from time import sleep
 from unittest import TestCase, main
-from tests.utils.user import exampleProject, exampleReceiverProject
+from tests.utils.user import exampleProject
 from tests.utils.names.names import get_full_name
 from tests.utils.pixKey import generateExamplePixKeyJson
 from tests.utils.poolingEntities import poolEntities, poolLogs, poolLogsByTypes

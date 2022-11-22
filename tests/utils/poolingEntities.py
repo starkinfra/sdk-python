@@ -38,8 +38,8 @@ def poolEntitiesAndLogs(name, ids, entityStatuses, logTypes, poolRetries=10, sle
             name=name,
             ids=ids,
             newStatus=newStatus,
-            poolRetries=entityPoolRetries or entityPoolRetries,
-            sleepTime=entitySleepTime or entitySleepTime,
+            poolRetries=entityPoolRetries or poolRetries,
+            sleepTime=entitySleepTime or sleepTime,
             debug=debug
         )
 

@@ -11,6 +11,12 @@ exampleProject = starkinfra.Project(
     private_key=os.environ["SANDBOX_INFRA_PRIVATE_KEY"],
 )
 
+exampleReceiverProject = starkinfra.Project(
+    environment="sandbox",
+    id=os.environ["SANDBOX_INFRA_RECEIVER_ID"],
+    private_key=os.environ["SANDBOX_INFRA_RECEIVER_PRIVATE_KEY"],
+)
+
 exampleOrganization = starkinfra.Organization(
     environment="sandbox",
     id=os.environ["SANDBOX_ORGANIZATION_ID"],  # "8888888888888888"

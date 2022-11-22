@@ -111,9 +111,9 @@ class TestPixClaimPost(TestCase):
             ids=receiverClaimIds,
             entityStatuses=["confirmed", "success"],
             logTypes=["created", "delivering", "delivered", "confirming", "confirmed"],
-            entityPoolRetries=20,
-            entitySleepTime=1,
-            poolRetries=200,
+            entityPoolRetries=200,
+            entitySleepTime=3,
+            poolRetries=20,
             sleepTime=3,
             debug=debug,
         )
@@ -128,8 +128,8 @@ class TestPixClaimPost(TestCase):
             entityStatuses=["success"],
             logTypes=["confirming", "confirmed", "success"],
             debug=debug,
-            poolRetries=30,
-            sleepTime=1,
+            poolRetries=200,
+            sleepTime=5,
         )
 
         starkinfra.user = exampleReceiverProject
@@ -143,15 +143,15 @@ class TestPixClaimPost(TestCase):
             logTypes=["success"],
             entityPoolRetries=20,
             entitySleepTime=1,
-            poolRetries=200,
-            sleepTime=6,
+            poolRetries=50,
+            sleepTime=2,
             debug=debug,
         )
 
 
 class CancelRegisteredClaims(TestCase):
     def test_cancel(self):
-        claimType = "portability"
+        claimType = "ownership"
         limit = 100
 
         claims = list(starkinfra.pixclaim.query(

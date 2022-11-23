@@ -25,6 +25,10 @@ This SDK version is compatible with the Stark Infra API v2.
         - [Products](#query-issuingproducts): View available sub-issuer card products (a.k.a. card number ranges or BINs)
         - [Holders](#create-issuingholders): Manage card holders
         - [Cards](#create-issuingcards): Create virtual and/or physical cards
+        - [Design](#query-issuingdesigns): View your current card or package designs
+        - [Stock](#query-issuingstocks): View your current stock of a certain IssuingDesign linked to an Embosser on the workspace
+        - [Restock](#create-issuingrestocks): Create restock orders of a specific IssuingStock object
+        - [EmbossingRequest](#create-issuingembossingrequests): Create embossing requests
         - [Purchases](#process-purchase-authorizations): Authorize and view your past purchases
         - [Invoices](#create-issuinginvoices): Add money to your issuing balance
         - [Withdrawals](#create-issuingwithdrawals): Send money back to your Workspace from your issuing balance
@@ -547,6 +551,244 @@ You can get a single log by its id.
 import starkinfra
 
 log = starkinfra.issuingcard.log.get("5155165527080960")
+
+print(log)
+```
+
+### Query IssuingDesigns
+
+You can get a list of available designs given some filters.
+
+```python
+import starkinfra
+from datetime import date
+
+designs = starkinfra.issuingdesign.query(
+    limit=1
+)
+
+for design in designs:
+    print(design)
+```
+
+### Get an IssuingDesign
+
+Information on a design may be retrieved by its id.
+
+```python
+import starkinfra
+
+design = starkinfra.issuingdesign.get("5747368922185728")
+
+print(design)
+```
+
+### Query IssuingStocks
+
+You can get a list of available stocks given some filters.
+
+```python
+import starkinfra
+from datetime import date
+
+stocks = starkinfra.issuingstock.query(
+    after=date(2020, 1, 1),
+    before=date(2020, 3, 1)
+)
+
+for stock in stocks:
+    print(stock)
+```
+
+### Get an IssuingStock
+
+Information on a stock may be retrieved by its id.
+
+```python
+import starkinfra
+
+stock = starkinfra.issuingstock.get("5792731695677440")
+
+print(stock)
+```
+
+### Query IssuingStock logs
+
+Logs are pretty important to understand the life cycle of a stock.
+
+```python
+import starkinfra
+
+logs = starkinfra.issuingstock.log.query(limit=150)
+
+for log in logs:
+    print(log)
+```
+
+### Get an IssuingStock log
+
+You can get a single log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.issuingstock.log.get("5809977331548160")
+
+print(log)
+```
+
+### Create IssuingRestocks
+
+You can order restocks for a specific IssuingStock.
+
+```python
+import starkinfra
+
+restocks = starkinfra.issuingrestock.create([
+    starkinfra.IssuingRestock(
+        count=100,
+        stock_id="5136459887542272"
+    )
+])
+
+for restock in restocks:
+    print(restock)
+```
+
+### Query IssuingRestocks
+
+You can get a list of created restocks given some filters.
+
+```python
+import starkinfra
+from datetime import date
+
+restocks = starkinfra.issuingrestock.query(
+    after=date(2022, 11, 1),
+    before=date(2022, 12, 1)
+)
+
+for restock in restocks:
+    print(restock)
+```
+
+### Get an IssuingRestock
+
+After its creation, information on a restock may be retrieved by its id.
+
+```python
+import starkinfra
+
+restock = starkinfra.issuingrestock.get("5664445921492992")
+
+print(restock)
+```
+
+### Query IssuingRestock logs
+
+Logs are pretty important to understand the life cycle of a restock.
+
+```python
+import starkinfra
+
+logs = starkinfra.issuingrestock.log.query(limit=150)
+
+for log in logs:
+    print(log)
+```
+
+### Get an IssuingRestock log
+
+You can get a single log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.issuingrestock.log.get("6310318875607040")
+
+print(log)
+```
+
+### Create IssuingEmbossingRequests
+
+You can create a request to emboss a physical card.
+
+```python
+import starkinfra
+
+embossing_requests = starkinfra.issuingembossingrequest.create([
+    starkinfra.IssuingEmbossingRequest(
+        card_design_id="5648359658356736", 
+        envelope_design_id="5747368922185728", 
+        card_id="5714424132272128", 
+        display_name_1="Antonio Stark", 
+        shipping_city="Sao Paulo",
+        shipping_country_code="BRA",
+        shipping_district="Bela Vista",
+        shipping_service="loggi",
+        shipping_state_code="SP",
+        shipping_street_line_1="Av. Paulista, 200",
+        shipping_street_line_2="10 andar",
+        shipping_tracking_number="My_custom_tracking_number",
+        shipping_zip_code="12345-678",
+        embosser_id="5746980898734080"
+    )
+])
+
+for embossing_request in embossing_requests:
+    print(embossing_request)
+```
+
+### Query IssuingEmbossingRequests
+
+You can get a list of created embossing requests given some filters.
+
+```python
+import starkinfra
+from datetime import date
+
+embossing_requests = starkinfra.issuingembossingrequest.query(
+    after=date(2022, 11, 1),
+    before=date(2022, 12, 1)
+)
+
+for embossing_request in embossing_requests:
+    print(embossing_request)
+```
+
+### Get an IssuingEmbossingRequest
+
+After its creation, information on an embossing request may be retrieved by its id.
+
+```python
+import starkinfra
+
+embossing_request = starkinfra.issuingembossingrequest.get("5191752558313472")
+
+print(embossing_request)
+```
+
+### Query IssuingEmbossingRequest logs
+
+Logs are pretty important to understand the life cycle of an embossing request.
+
+```python
+import starkinfra
+
+logs = starkinfra.issuingembossingrequest.log.query(limit=150)
+
+for log in logs:
+    print(log)
+```
+
+### Get an IssuingEmbossingRequest log
+
+You can get a single log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.issuingembossingrequest.log.get("6724771005857792")
 
 print(log)
 ```

@@ -10,12 +10,16 @@ example_card = IssuingCard(
 )
 
 
-def generateExampleCardsJson(holder, n=1):
+def generateExampleCardsJson(holder, n=1, type=None, bin_id=None):
     cards = []
     for _ in range(n):
+        if bin_id:
+            example_card.bin_id = bin_id
         example_card.holder_name = holder.name
         example_card.holder_tax_id = holder.tax_id
         example_card.holder_external_id = holder.external_id
+        if type:
+            example_card.type = type
         example_card.rules = generateExampleRuleJson()
         cards.append(deepcopy(example_card))
     return cards

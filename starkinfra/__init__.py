@@ -89,6 +89,18 @@ from .issuingproduct.__issuingproduct import IssuingProduct
 from . import issuingrule
 from .issuingrule.__issuingrule import IssuingRule
 
+from . import issuingstock
+from .issuingstock.__issuingstock import IssuingStock
+
+from . import issuingrestock
+from .issuingrestock.__issuingrestock import IssuingRestock
+
+from . import issuingdesign
+from .issuingdesign.__issuingdesign import IssuingDesign
+
+from . import issuingembossingrequest
+from .issuingembossingrequest.__issuingembossingrequest import IssuingEmbossingRequest
+
 from . import merchantcategory
 from .merchantcategory.__merchantcategory import MerchantCategory
 

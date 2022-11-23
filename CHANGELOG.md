@@ -20,6 +20,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - IssuingStock resource
 - IssuingRestock resource
 - IssuingEmbossingRequest resource
+### Fixed
+- identity ids parameter on IndividualIdentityLog
 
 ## [0.4.0] - 2022-11-11
 ### Added

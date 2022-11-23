@@ -44,7 +44,7 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(limit=None, after=None, before=None, types=None, identities_ids=None, user=None):
+def query(limit=None, after=None, before=None, types=None, identity_ids=None, user=None):
     """# Retrieve individualidentity.Logs
     Receive a generator of individualidentity.Log objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -52,7 +52,7 @@ def query(limit=None, after=None, before=None, types=None, identities_ids=None, 
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter for log event types. ex: ["created", "canceled", "processing", "failed", "success"]
-    - identities_ids [list of strings, default None]: list of IndividualIdentity ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
+    - identity_ids [list of strings, default None]: list of IndividualIdentity ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of individualidentity.Log objects with updated attributes
@@ -63,12 +63,12 @@ def query(limit=None, after=None, before=None, types=None, identities_ids=None, 
         after=check_date(after),
         before=check_date(before),
         types=types,
-        identities_ids=identities_ids,
+        identity_ids=identity_ids,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, types=None, identities_ids=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, types=None, identity_ids=None, user=None):
     """# Retrieve paged individualidentity.Logs
     Receive a list of up to 100 individualidentity.Log objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
@@ -78,7 +78,7 @@ def page(cursor=None, limit=None, after=None, before=None, types=None, identitie
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - types [list of strings, default None]: filter for log event types. ex: ["created", "canceled", "processing", "failed", "success"]
-    - identities_ids [list of strings, default None]: list of IndividualIdentity ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
+    - identity_ids [list of strings, default None]: list of IndividualIdentity ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of individualidentity.Log objects with updated attributes
@@ -91,6 +91,6 @@ def page(cursor=None, limit=None, after=None, before=None, types=None, identitie
         after=check_date(after),
         before=check_date(before),
         types=types,
-        identities_ids=identities_ids,
+        identity_ids=identity_ids,
         user=user,
     )

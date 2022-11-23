@@ -3,6 +3,7 @@ from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_datetime, check_date
 from ...utils import rest
 from ..__issuingpurchase import _resource as _issuing_purchase_resource
+from starkcore.error import Error
 
 
 class Log(Resource):
@@ -15,7 +16,7 @@ class Log(Resource):
     - id [string]: unique id returned when the log is created. ex: "5656565656565656"
     - purchase [IssuingPurchase]: IssuingPurchase entity to which the log refers to.
     - issuing_transaction_id [string]: transaction ID related to the IssuingCard.
-    - errors [list of strings]: list of errors linked to this IssuingPurchase event.
+    - errors [list of StarkCore.Error]: list of errors linked to this IssuingPurchase event.
     - type [string]: type of the IssuingPurchase event which triggered the log creation. ex: "approved", "canceled", "confirmed", "denied", "reversed", "voided"
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -25,7 +26,7 @@ class Log(Resource):
 
         self.purchase = from_api_json(_issuing_purchase_resource, purchase)
         self.issuing_transaction_id = issuing_transaction_id
-        self.errors = errors
+        self.errors = _parse_errors(errors)
         self.type = type
         self.created = check_datetime(created)
 
@@ -100,3 +101,12 @@ def page(cursor=None, ids=None, limit=None, after=None, before=None, types=None,
         purchase_ids=purchase_ids,
         user=user,
     )
+
+def _parse_errors(errors):
+    parsed_errors = []
+    for error in errors:
+        if isinstance(error, Error):
+            parsed_errors.append(error)
+            continue
+        parsed_errors.append(Error(code=error['code'], message=error['message']))
+    return parsed_errors

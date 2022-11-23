@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.5.0] - 2022-11-23
 ### Changed
 - IssuingPurchase.Log errors field from JSON to StarkInfra.Error Object
 ### Added

@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- product_id attribute to IssuingPurchase resource
 
 ## [0.5.0] - 2022-11-23
 ### Changed

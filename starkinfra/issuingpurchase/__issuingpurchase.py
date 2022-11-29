@@ -12,6 +12,7 @@ class IssuingPurchase(Resource):
     ## Attributes (return-only):
     - id [string]: unique id returned when IssuingPurchase is created. ex: "5656565656565656"
     - holder_name [string]: card holder name. ex: "Tony Stark"
+    - product_id [string]: unique card product number (BIN) registered within the card network. ex: "53810200"
     - card_id [string]: unique id returned when IssuingCard is created. ex: "5656565656565656"
     - card_ending [string]: last 4 digits of the card number. ex: "1234"
     - purpose [string]: purchase purpose. ex: "purchase"
@@ -46,15 +47,17 @@ class IssuingPurchase(Resource):
     - holder_tags [list of strings]: tags of the IssuingHolder responsible for this purchase. ex: ["technology", "john snow"]
     """
 
-    def __init__(self, id=None, holder_name=None, card_id=None, card_ending=None, purpose=None, amount=None, tax=None, 
-                issuer_amount=None, issuer_currency_code=None, issuer_currency_symbol=None, merchant_amount=None, 
-                merchant_currency_code=None, merchant_currency_symbol=None, merchant_category_code=None, merchant_country_code=None, 
-                acquirer_id=None, merchant_id=None, merchant_name=None, merchant_fee=None, wallet_id=None, method_code=None, 
-                score=None, end_to_end_id=None, tags=None, zip_code=None, issuing_transaction_ids=None, status=None, updated=None, 
-                created=None, is_partial_allowed=None, card_tags=None, holder_tags=None):
+    def __init__(self, id=None, holder_name=None, product_id=None, card_id=None, card_ending=None, purpose=None,
+                amount=None, tax=None, issuer_amount=None, issuer_currency_code=None, issuer_currency_symbol=None,
+                merchant_amount=None, merchant_currency_code=None, merchant_currency_symbol=None,
+                merchant_category_code=None, merchant_country_code=None, acquirer_id=None, merchant_id=None,
+                merchant_name=None, merchant_fee=None, wallet_id=None, method_code=None, score=None, end_to_end_id=None,
+                tags=None, zip_code=None, issuing_transaction_ids=None, status=None, updated=None, created=None,
+                is_partial_allowed=None, card_tags=None, holder_tags=None):
         Resource.__init__(self, id=id)
 
         self.holder_name = holder_name
+        self.product_id = product_id
         self.card_id = card_id
         self.card_ending = card_ending
         self.purpose = purpose

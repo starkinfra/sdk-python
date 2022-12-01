@@ -8,17 +8,19 @@ class IssuingDesign(Resource):
     The IssuingDesign object displays information on the card and card package designs available to your Workspace.
     ## Attributes (return-only):
     - id [string]: unique id returned when IssuingDesign is created. ex: "5656565656565656"
-    - name [string]: card or package design name. ex: 'stark-plastic-dark-001'
+    - name [string]: card or package design name. ex: "stark-plastic-dark-001"
     - embosser_ids [list of strings]: list of embosser unique ids. ex: ["5136459887542272", "5136459887542273"]
+    - type [string]: card or package design type. Options: "card", "envelope"
     - updated [datetime.datetime]: latest update datetime for the IssuingDesign. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingDesign. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, id=None, name=None, embosser_ids=None, created=None, updated=None):
+    def __init__(self, id=None, name=None, embosser_ids=None, type=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.name = name
         self.embosser_ids = embosser_ids
+        self.type = type
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
 

@@ -25,7 +25,7 @@ def generateExampleEmbossingRequestsJson(n=1):
     requests = []
     holder = next(issuingholder.query(limit=1))
     for _ in range(n):
-        card = issuingcard.create(cards=generateExampleCardsJson(n=1, holder=holder, bin_id="52233227", type="physical"))[0]
+        card = issuingcard.create(cards=generateExampleCardsJson(n=1, holder=holder, product_id="52233227", type="physical"))[0]
         example_embossing_request.card_id = card.id
         requests.append(deepcopy(example_embossing_request))
     return requests

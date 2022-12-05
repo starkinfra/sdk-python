@@ -52,6 +52,7 @@ This SDK version is compatible with the Stark Infra API v2.
     - [Lending](#lending)
         - [CreditNote](#create-creditnotes): Create credit notes
         - [CreditPreview](#create-creditpreviews): Create credit previews
+        - [CreditHolmes](#create-creditholmes): Create credit holmes debt verification
     - [Identity](#identity)
         - [IndividualIdentity](#create-individualidentities): Create individual identities
         - [IndividualDocument](#create-individualdocuments): Create individual documents
@@ -2395,6 +2396,49 @@ for preview in previews:
 
 **Note**: Instead of using CreditPreview objects, you can also pass each element in dictionary format
 
+### Create CreditHolmes
+Before you request a credit operation, you may want to check previous credit operations
+the credit receiver has taken.
+
+For that, open up a CreditHolmes investigation to receive information on all debts and credit
+operations registered for that individual or company inside the Central Bank's SCR.
+
+```python
+### Add example here
+```
+
+### Query CreditHolmes
+
+You can query multiple credit holmes according to filters.
+
+```python
+### Add example here
+```
+
+### Get an CreditHolmes
+
+After its creation, information on a credit holmes may be retrieved by its id.
+
+```python
+### Add example here
+```
+
+### Query CreditHolmes logs
+
+You can query credit holmes logs to better understand their life cycles. 
+
+```python
+### Add example here
+```
+
+### Get an CreditHolmes log
+
+You can also get a specific log by its id.
+
+```python
+### Add example here
+```
+
 ## Identity
 Several operations, especially credit ones, require that the identity
 of a person or business is validated beforehand.
@@ -2485,7 +2529,7 @@ identity = starkinfra.individualidentity.cancel("5155165527080960")
 
 print(identity)
 ```
-  
+
 ### Query IndividualIdentity logs
 
 You can query individual identity logs to better understand individual identity life cycles. 

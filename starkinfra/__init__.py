@@ -53,6 +53,9 @@ from .creditsigner.__creditsigner import CreditSigner
 from . import creditpreview
 from .creditpreview.__creditpreview import CreditPreview
 
+from . import creditholmes
+from .creditholmes.__creditholmes import CreditHolmes
+
 from . import individualidentity
 from .individualidentity.__individualidentity import IndividualIdentity
 

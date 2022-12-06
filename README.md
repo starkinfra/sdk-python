@@ -2404,7 +2404,25 @@ For that, open up a CreditHolmes investigation to receive information on all deb
 operations registered for that individual or company inside the Central Bank's SCR.
 
 ```python
-### Add example here
+import starkinfra
+
+holmes = starkinfra.creditholmes.create([
+    starkinfra.CreditHolmes(
+        tax_id="123.456.789-00",
+        competence="2022-09-01"
+    ),
+    starkinfra.CreditHolmes(
+        tax_id="123.456.789-00",
+        competence="2022-08-01"
+    ),
+    starkinfra.CreditHolmes(
+        tax_id="123.456.789-00",
+        competence="2022-07-01"
+    )
+])
+
+for sherlock in holmes:
+    print(sherlock)
 ```
 
 ### Query CreditHolmes
@@ -2412,7 +2430,17 @@ operations registered for that individual or company inside the Central Bank's S
 You can query multiple credit holmes according to filters.
 
 ```python
-### Add example here
+import starkinfra
+from datetime import date
+
+holmes = starkinfra.creditholmes.query(
+    after=date(2022, 6, 1),
+    before=date(2022, 10, 30),
+    status="success"
+)
+
+for sherlock in holmes:
+    print(sherlock)
 ```
 
 ### Get an CreditHolmes
@@ -2420,7 +2448,11 @@ You can query multiple credit holmes according to filters.
 After its creation, information on a credit holmes may be retrieved by its id.
 
 ```python
-### Add example here
+import starkinfra
+
+holmes = starkinfra.creditholmes.get("5657818854064128")
+
+print(holmes)
 ```
 
 ### Query CreditHolmes logs
@@ -2428,7 +2460,19 @@ After its creation, information on a credit holmes may be retrieved by its id.
 You can query credit holmes logs to better understand their life cycles. 
 
 ```python
-### Add example here
+import starkinfra
+from datetime import date
+
+logs = starkinfra.creditholmes.log.query(
+    limit=50, 
+    ids=["5729405850615808"],
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
+    types=["created"]
+)
+
+for log in logs:
+    print(log)
 ```
 
 ### Get an CreditHolmes log
@@ -2436,7 +2480,11 @@ You can query credit holmes logs to better understand their life cycles.
 You can also get a specific log by its id.
 
 ```python
-### Add example here
+import starkinfra
+
+log = starkinfra.creditholmes.log.get("5155165527080960")
+
+print(log)
 ```
 
 ## Identity

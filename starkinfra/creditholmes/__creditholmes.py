@@ -20,7 +20,7 @@ class CreditHolmes(Resource):
     Attributes (return-only):
     - id [string]: unique id returned when the CreditHolmes is created. ex: "5656565656565656"
     - result [dictionary, default empty dictionary]: result of the investigation after the case is solved.
-    - status [string]: current status of the CreditHolmes. ex: "canceled", "created", "expired", "failed", "processing", "signed", "success"
+    - status [string]: current status of the CreditHolmes. ex: "created", "failed", "success"
     - created [datetime.datetime]: creation datetime for the CreditHolmes. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the CreditHolmes. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -40,17 +40,17 @@ class CreditHolmes(Resource):
 _resource = {"class": CreditHolmes, "name": "CreditHolmes"}
 
 
-def create(notes, user=None):
+def create(holmes, user=None):
     """# Create CreditHolmes
     Send a list of CreditHolmes objects for creation at the Stark Infra API
     ## Parameters (required):
-    - notes [list of CreditHolmes objects]: list of CreditHolmes objects to be created in the API
+    - holmes [list of CreditHolmes objects]: list of CreditHolmes objects to be created in the API
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - list of CreditHolmes objects with updated attributes
     """
-    return rest.post_multi(resource=_resource, entities=notes, user=user)
+    return rest.post_multi(resource=_resource, entities=holmes, user=user)
 
 
 def get(id, user=None):
@@ -73,7 +73,7 @@ def query(limit=None, status=None, tags=None, ids=None, after=None, before=None,
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["canceled", "created", "expired", "failed", "processing", "signed", "success"]
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: "created", "failed", "success"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
@@ -101,7 +101,7 @@ def page(cursor=None, limit=None, status=None, tags=None, ids=None, after=None, 
     - limit [integer, default 100]: maximum number of objects to be retrieved. It must be an integer between 1 and 100. ex: 50
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["canceled", "created", "expired", "failed", "processing", "signed", "success"]
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: "created", "failed", "success"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.

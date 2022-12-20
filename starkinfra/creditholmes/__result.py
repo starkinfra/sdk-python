@@ -41,5 +41,5 @@ _resource = {"class": Result, "name": "Result"}
 
 def parse_result(result):
     if not result:
-        return {}
+        return result
     return from_api_json(_resource, result)

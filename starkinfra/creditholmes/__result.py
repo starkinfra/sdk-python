@@ -13,9 +13,9 @@ class Result(Resource):
     - blockedPercentage [float]: percentage of installment amount under legal block
     - disputedCount [integer]: number of operations which are under legal dispute
     - disputedPercentage [float]: percentage of installment amount under legal dispute
-    - acquiredShare [float]:
-    - receivedShare [float]:
-    - operations [list of Operation objects]:
+    - acquiredShare [float]: percentage of credit operations which have been acquired from other financial institutions
+    - receivedShare [float]: percentage of credit operations which have been received from other financial institutions
+    - operations [list of Operation objects]: list of credit operations listed within the current competence
     - created [datetime.datetime]: creation date of the user in SCR database. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 

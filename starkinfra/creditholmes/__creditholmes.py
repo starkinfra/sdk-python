@@ -15,7 +15,7 @@ class CreditHolmes(Resource):
     ## Parameters (required):
     - tax_id [string]: customer's tax ID (CPF or CNPJ) for whom the credit operations will be verified. ex: "20.018.183/0001-80"
     Parameters (optional):
-    - competence [datetime.date or string, default 'two months before current date']: competence month of the operation verification. ex: datetime.date(2021, 4, 30)
+    - competence [string, default 'two months before current date']: competence month of the operation verification, format: "YYYY-MM". ex: "2021-04"
     - tags [list of strings, default []]: list of strings for reference when searching for CreditHolmes. ex: tags=["credit", "operation"]
     Attributes (return-only):
     - id [string]: unique id returned when the CreditHolmes is created. ex: "5656565656565656"

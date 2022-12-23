@@ -12,12 +12,21 @@ def _generateCreditHolmes():
     )
 
 
+def _generateCompetence():
+    today = date.today()
+    lastMonthEnd = today - timedelta(days=today.day)
+    previousMonthEnd = lastMonthEnd - timedelta(days=lastMonthEnd.day)
+    competence = randomDateBetween(previousMonthEnd, previousMonthEnd - timedelta(days=365))
+
+    return datetime.strftime(competence, "%Y-%m")
+
+
 def generateExampleCreditHolmesJson(n=1):
     credit_holmes = []
-    today = date.today()
+
     for _ in range(n):
         holmes = deepcopy(_generateCreditHolmes())
         holmes.tax_id = TaxIdGenerator.taxId()
-        holmes.competence = randomDateBetween(today - timedelta(days=today.day), today - timedelta(days=365))
+        holmes.competence = _generateCompetence()
         credit_holmes.append(holmes)
     return credit_holmes

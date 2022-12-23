@@ -2409,15 +2409,15 @@ import starkinfra
 holmes = starkinfra.creditholmes.create([
     starkinfra.CreditHolmes(
         tax_id="123.456.789-00",
-        competence="2022-09-01"
+        competence="2022-09"
     ),
     starkinfra.CreditHolmes(
         tax_id="123.456.789-00",
-        competence="2022-08-01"
+        competence="2022-08"
     ),
     starkinfra.CreditHolmes(
         tax_id="123.456.789-00",
-        competence="2022-07-01"
+        competence="2022-07"
     )
 ])
 

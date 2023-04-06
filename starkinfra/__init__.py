@@ -104,6 +104,9 @@ from .issuingdesign.__issuingdesign import IssuingDesign
 from . import issuingembossingrequest
 from .issuingembossingrequest.__issuingembossingrequest import IssuingEmbossingRequest
 
+from . import issuingembossingkit
+from .issuingembossingkit.__issuingembossingkit import IssuingEmbossingKit
+
 from . import merchantcategory
 from .merchantcategory.__merchantcategory import MerchantCategory
 

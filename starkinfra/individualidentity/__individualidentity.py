@@ -14,11 +14,11 @@ class IndividualIdentity(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
-    - name [string]: individual's full name. ex: "Edward Stark". ex: name="Edward Stark"
+    - name [string]: individual's full name. ex: "Edward Stark".
     - tax_id [string]: individual's tax ID (CPF). ex: "594.739.480-42"
-    Parameters (optional):
-    - tags [list of strings, default []]: list of strings for reference when searching for IndividualIdentities. ex: tags=["employees", "monthly"]
-    Attributes (return-only):
+    ## Parameters (optional):
+    - tags [list of strings, default []]: list of strings for reference when searching for IndividualIdentities. ex: ["employees", "monthly"]
+    ## Attributes (return-only):
     - id [string]: unique id returned when the IndividualIdentity is created. ex: "5656565656565656"
     - status [string]: current status of the IndividualIdentity. ex: "created", "canceled", "processing", "failed", "success"
     - created [datetime.datetime]: creation datetime for the IndividualIdentity. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)

@@ -3,8 +3,8 @@ from random import randint
 from starkinfra import PixDirector
 from unittest import TestCase, main
 from tests.utils.user import exampleProject
-from ..utils.names.names import get_full_name
-from ..utils.taxIdGenerator import TaxIdGenerator
+from tests.utils.names.names import get_full_name
+from tests.utils.taxIdGenerator import TaxIdGenerator
 
 
 starkinfra.user = exampleProject

@@ -1,6 +1,8 @@
 import starkinfra
 from unittest import TestCase, main
 from datetime import date, timedelta
+from starkinfra import issuingholder
+from tests.utils.holder import generateExampleHoldersJson
 from tests.utils.user import exampleProject
 from tests.utils.card import generateExampleCardsJson
 
@@ -49,8 +51,8 @@ class TestIssuingCardGet(TestCase):
 class TestIssuingCardPostAndDelete(TestCase):
 
     def test_success(self):
-        holder = next(starkinfra.issuingholder.query(limit=1))
-        cards = starkinfra.issuingcard.create(cards=generateExampleCardsJson(n=1, holder=holder), expand=["securityCode"])
+        holder = issuingholder.create(generateExampleHoldersJson())[0]
+        cards = starkinfra.issuingcard.create(cards=generateExampleCardsJson(n=1, holder=holder, product_id="52233227"), expand=["securityCode"])
         self.assertNotEqual(str(cards[0].security_code), "***")
         card_id = cards[0].id
         card = starkinfra.issuingcard.update(card_id, display_name="Updated Name")

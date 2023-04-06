@@ -26,6 +26,7 @@ This SDK version is compatible with the Stark Infra API v2.
         - [Holders](#create-issuingholders): Manage card holders
         - [Cards](#create-issuingcards): Create virtual and/or physical cards
         - [Design](#query-issuingdesigns): View your current card or package designs
+        - [EmbossingKit](#query-issuingembossingkits): Create embossing kits
         - [Stock](#query-issuingstocks): View your current stock of a certain IssuingDesign linked to an Embosser on the workspace
         - [Restock](#create-issuingrestocks): Create restock orders of a specific IssuingStock object
         - [EmbossingRequest](#create-issuingembossingrequests): Create embossing requests
@@ -408,7 +409,7 @@ print(holder)
 
 ### Get an IssuingHolder
 
-To get a single Issuing Holder by its id, run:
+To get a specific Issuing Holder by its id, run:
 
 ```python
 import starkinfra
@@ -420,7 +421,7 @@ print(holder)
 
 ### Query IssuingHolder logs
 
-You can query holder logs to better understand holder life cycles.
+You can query IssuingHolder logs to better understand IssuingHolder life cycles.
 
 ```python
 import starkinfra
@@ -562,7 +563,6 @@ You can get a list of available designs given some filters.
 
 ```python
 import starkinfra
-from datetime import date
 
 designs = starkinfra.issuingdesign.query(
     limit=1
@@ -582,6 +582,35 @@ import starkinfra
 design = starkinfra.issuingdesign.get("5747368922185728")
 
 print(design)
+```
+
+### Query IssuingEmbossingKits
+
+You can get a list of created embossing kits given some filters.
+
+```python
+import starkinfra
+from datetime import date
+
+kits = starkinfra.issuingembossingkit.query(
+    after=date(2022, 11, 1),
+    before=date(2022, 12, 1)
+)
+
+for kit in kits:
+    print(kit)
+```
+
+### Get an IssuingEmbossingKit
+
+After its creation, information on an embossing kit may be retrieved by its id.
+
+```python
+import starkinfra
+
+kit = starkinfra.issuingembossingkit.get("5664445921492992")
+
+print(kit)
 ```
 
 ### Query IssuingStocks
@@ -719,8 +748,7 @@ import starkinfra
 
 embossing_requests = starkinfra.issuingembossingrequest.create([
     starkinfra.IssuingEmbossingRequest(
-        card_design_id="5648359658356736", 
-        envelope_design_id="5747368922185728", 
+        kit_id="5648359658356736", 
         card_id="5714424132272128", 
         display_name_1="Antonio Stark", 
         shipping_city="Sao Paulo",
@@ -960,7 +988,7 @@ print(log)
 ### Create IssuingWithdrawals
 
 You can create withdrawals to send cash back from your Issuing balance to your Banking balance
-by using the Withdrawal resource.
+by using the IssuingWithdrawal resource.
 
 ```python
 import starkinfra
@@ -1979,7 +2007,7 @@ for brcode in brcodes:
     print(brcode)
 ```
 
-### Get a StaticBrcodes
+### Get a StaticBrcode
 
 After its creation, information on a StaticBrcode may be retrieved by its UUID.
 
@@ -2050,7 +2078,7 @@ print(brcode)
 
 ### Verify a DynamicBrcode read
 
-When a DynamicBrcode is read by your user, a GET request will be made to the your regitered URL to 
+When a DynamicBrcode is read by your user, a GET request will be made to your registered URL to 
 retrieve additional information needed to complete the transaction.
 Use this method to verify the authenticity of a GET request received at your registered endpoint.
 If the provided digital signature does not check out with the StarkInfra public key, a stark.exception.InvalidSignatureException will be raised.
@@ -2143,6 +2171,7 @@ send_response(  # you should also implement this method to respond the read requ
 ```
 
 ## Create BrcodePreviews
+
 You can create BrcodePreviews to preview BR Codes before paying them.
 
 ```python
@@ -2178,6 +2207,7 @@ with the desired installment plan
 
 
 ### Create CreditNotes
+
 For lending operations, you can create a CreditNote to generate a CCB contract.
 
 Note that you must have recently created an identity check for that same Tax ID before
@@ -2282,7 +2312,7 @@ print(note)
   
 ### Query CreditNote logs
 
-You can query credit note logs to better understand credit note life cycles. 
+You can query credit note logs to better understand CreditNote life cycles. 
 
 ```python
 import starkinfra
@@ -2311,6 +2341,7 @@ print(log)
 ```
 
 ### Create CreditPreviews
+
 You can preview a credit operation before creating them (Currently we only have CreditNote / CCB previews):
 
 ```python
@@ -2397,6 +2428,7 @@ for preview in previews:
 **Note**: Instead of using CreditPreview objects, you can also pass each element in dictionary format
 
 ### Create CreditHolmes
+
 Before you request a credit operation, you may want to check previous credit operations
 the credit receiver has taken.
 
@@ -2443,7 +2475,7 @@ for sherlock in holmes:
     print(sherlock)
 ```
 
-### Get an CreditHolmes
+### Get a CreditHolmes
 
 After its creation, information on a credit holmes may be retrieved by its id.
 
@@ -2475,7 +2507,7 @@ for log in logs:
     print(log)
 ```
 
-### Get an CreditHolmes log
+### Get a CreditHolmes log
 
 You can also get a specific log by its id.
 
@@ -2499,6 +2531,7 @@ Identities are validated according to the following sequence:
 the success or failure of the operation
 
 ### Create IndividualIdentities
+
 You can create an IndividualIdentity to validate a document of a natural person
 
 ```python
@@ -2564,11 +2597,9 @@ print(identity)
 
 **Note**: Before sending your individual identity to validation by patching its status, you must send all the required documents using the create method of the CreditDocument resource. Note that you must reference the individual identity in the create method of the CreditDocument resource by its id.
 
-
 ### Cancel an IndividualIdentity
 
 You can cancel an individual identity before updating its status to processing.
-
 
 ```python
 import starkinfra
@@ -2609,6 +2640,7 @@ print(log)
 ```
 
 ### Create IndividualDocuments
+
 You can create an individual document to attach images of documents to a specific individual Identity.
 You must reference the desired individual identity by its id.
 
@@ -2642,7 +2674,7 @@ for document in documents:
 
 **Note**: Instead of using IndividualDocument objects, you can also pass each element in dictionary format
 
-### Query IndividualDocument
+### Query IndividualDocuments
 
 You can query multiple individual documents according to filters.
 
@@ -2725,9 +2757,9 @@ webhook = starkinfra.webhook.create(
 print(webhook)
 ```
 
-### Query webhooks
+### Query webhook subscriptions
 
-To search for registered webhooks, run:
+To search for registered webhook subscriptions, run:
 
 ```python
 import starkinfra
@@ -2738,9 +2770,9 @@ for webhook in webhooks:
     print(webhook)
 ```
 
-### Get a webhook
+### Get a webhook subscription
 
-You can get a specific webhook by its id.
+You can get a specific webhook subscription by its id.
 
 ```python
 import starkinfra
@@ -2750,9 +2782,9 @@ webhook = starkinfra.webhook.get("1082736198236817")
 print(webhook)
 ```
 
-### Delete a webhook
+### Delete a webhook subscription
 
-You can also delete a specific webhook by its id.
+You can also delete a specific webhook subscription by its id.
 
 ```python
 import starkinfra

@@ -36,7 +36,7 @@ class Event(Resource):
     An Event is the notification received from the subscription to the Webhook.
     Events cannot be created, but may be retrieved from the Stark Infra API to
     list all generated updates on entities.
-    ## Attributes:
+    ## Attributes (return-only):
     - id [string]: unique id returned when the Event is created. ex: "5656565656565656"
     - log [Log]: a Log object from one of the subscribed services (PixRequestLog, PixReversalLog)
     - created [datetime.datetime]: creation datetime for the notification Event. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)

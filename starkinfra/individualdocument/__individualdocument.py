@@ -9,7 +9,6 @@ class IndividualDocument(Resource):
     Individual documents are images containing either side of a document or a selfie
     to be used in a matching validation. When created, they must be attached to an individual
     identity to be used for its validation.
-
     When you initialize a IndividualDocument, the entity will not be automatically
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
@@ -17,9 +16,9 @@ class IndividualDocument(Resource):
     - type [string]: type of the IndividualDocument. Options: "drivers-license-front", "drivers-license-back", "identity-front", "identity-back" or "selfie"
     - content [string]: Base64 data url of the picture. ex: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...
     - content_type [string]: content MIME type. This parameter is required as input only. ex: "image/png" or "image/jpeg"
-    - identity_id [string]: Unique id of IndividualIdentity. ex: "5656565656565656"
+    - identity_id [string]: unique id of IndividualIdentity. ex: "5656565656565656"
     ## Parameters (optional):
-    - tags [list of strings, default []]: list of strings for reference when searching for IndividualDocuments. ex: tags=["employees", "monthly"]
+    - tags [list of strings, default []]: list of strings for reference when searching for IndividualDocuments. ex: ["employees", "monthly"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the IndividualDocument is created. ex: "5656565656565656"
     - status [string]: current status of the IndividualDocument. Options: "created", "canceled", "processing", "failed", "success"
@@ -51,7 +50,7 @@ def create(documents, user=None):
     """# Create IndividualDocuments
     Send a list of IndividualDocument objects for creation at the Stark Infra API
     ## Parameters (required):
-    - identities [list of IndividualDocument objects]: list of IndividualDocument objects to be created in the API
+    - documents [list of IndividualDocument objects]: list of IndividualDocument objects to be created in the API
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

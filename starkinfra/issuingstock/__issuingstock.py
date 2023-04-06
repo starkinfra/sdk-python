@@ -39,7 +39,7 @@ def query(limit=None, after=None, before=None, design_ids=None, embosser_ids=Non
     - design_ids [list of strings, default None]: IssuingDesign unique ids. ex: ["5656565656565656", "4545454545454545"]
     - embosser_ids [list of strings, default None]: Embosser unique ids. ex: ["5656565656565656", "4545454545454545"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - expand [list of strings, default []]: fields to expand information. ex: ["balance"]
+    - expand [list of strings, default None]: fields to expand information. ex: ["balance"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of IssuingStock objects with updated attributes

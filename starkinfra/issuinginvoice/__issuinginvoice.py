@@ -7,7 +7,7 @@ class IssuingInvoice(Resource):
     """# IssuingInvoice object
     The IssuingInvoice objects created in your Workspace load your Issuing balance when paid.
     ## Parameters (required):
-    - amount [integer]: IssuingInvoice value in cents. ex: 1234 (= R$ 12.34)
+    - amount [integer]: IssuingInvoice value in cents. Minimum = 0 (R$0,00). ex: 1234 (= R$ 12.34)
     ## Parameters (optional):
     - tax_id [string, default sub-issuer tax ID]: payer tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
     - name [string, default sub-issuer name]: payer name. ex: "Iron Bank S.A."
@@ -44,7 +44,7 @@ _resource = {"class": IssuingInvoice, "name": "IssuingInvoice"}
 
 
 def create(invoice, user=None):
-    """# Create IssuingInvoices
+    """# Create an IssuingInvoice
     Send an IssuingInvoice object for creation at the Stark Infra API
     ## Parameters (required):
     - invoice [IssuingInvoice object]: IssuingInvoice object to be created in the API.

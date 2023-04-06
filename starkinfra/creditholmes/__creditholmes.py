@@ -1,6 +1,5 @@
 from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_datetime, check_date
-from .__result import parse_result
 from ..utils import rest
 
 
@@ -16,10 +15,10 @@ class CreditHolmes(Resource):
     - tax_id [string]: customer's tax ID (CPF or CNPJ) for whom the credit operations will be verified. ex: "20.018.183/0001-80"
     Parameters (optional):
     - competence [string, default 'two months before current date']: competence month of the operation verification, format: "YYYY-MM". ex: "2021-04"
-    - tags [list of strings, default []]: list of strings for reference when searching for CreditHolmes. ex: tags=["credit", "operation"]
+    - tags [list of strings, default []]: list of strings for reference when searching for CreditHolmes. ex: [credit", "operation"]
     Attributes (return-only):
     - id [string]: unique id returned when the CreditHolmes is created. ex: "5656565656565656"
-    - result [dictionary, default empty dictionary]: result of the investigation after the case is solved.
+    - result [dictionary]: result of the investigation after the case is solved.
     - status [string]: current status of the CreditHolmes. ex: "created", "failed", "success"
     - created [datetime.datetime]: creation datetime for the CreditHolmes. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the CreditHolmes. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
@@ -32,7 +31,7 @@ class CreditHolmes(Resource):
         self.competence = competence
         self.status = status
         self.tags = tags
-        self.result = parse_result(result)
+        self.result = result
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
 

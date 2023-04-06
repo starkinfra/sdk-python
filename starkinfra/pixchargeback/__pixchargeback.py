@@ -17,7 +17,7 @@ class PixChargeback(Resource):
     - reason [string]: reason why the reversal was requested. Options: "fraud", "flaw", "reversalChargeback"
     ## Parameters (optional):
     - description [string, default None]: description for the PixChargeback.
-    - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
+    - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixChargeback is created. ex: "5656565656565656"
     - analysis [string]: analysis that led to the result.
@@ -115,7 +115,8 @@ def query(limit=None, after=None, before=None, status=None, ids=None, flow=None,
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, flow=None, tags=None, user=None):
     """# Retrieve PixChargebacks
-    Receive a generator of PixChargeback objects previously created in the Stark Infra API
+    Receive a list of up to 100 PixChargeback objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call.
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
@@ -155,6 +156,7 @@ def update(id, result, rejection_reason=None, reversal_reference_id=None, analys
     - reversal_reference_id [string, default None]: return_id of the reversal transaction. ex: "D20018183202201201450u34sDGd19lz"
     ## Parameters (optional):
     - analysis [string, default None]: description of the analysis that led to the result.
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixChargeback with updated attributes
     """

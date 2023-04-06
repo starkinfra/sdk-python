@@ -19,7 +19,7 @@ class PixKey(Resource):
     - tax_id [string]: holder's taxId (CPF/CNPJ) of the linked account. ex: "012.345.678-90"
     ## Parameters (optional):
     - id [string, default None]: id of the registered PixKey. Allowed types are: CPF, CNPJ, phone number or email. If this parameter is not passed, an EVP will be created. ex: "+5511989898989"
-    - tags [list of strings, default []]: list of strings for reference when searching for PixKeys. ex: ["employees", "monthly"]
+    - tags [list of strings, default []]]: list of strings for reference when searching for PixKeys. ex: ["employees", "monthly"]
     ## Attributes (return-only):
     - owned [datetime.datetime]: datetime when the key was owned by the holder. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - owner_type [string]: type of the owner of the PixKey. Options: "business" or "individual"
@@ -97,7 +97,6 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     ## Return:
     - generator of PixKey objects with updated attributes
     """
-
     return rest.get_stream(
         resource=_resource,
         limit=limit,
@@ -113,7 +112,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, tags=None, ids=None, type=None,
          user=None):
-    """# Retrieve PixKeys
+    """# Retrieve paged PixKeys
     Receive a generator of PixKey objects previously created in the Stark Infra API
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call.
@@ -156,6 +155,7 @@ def update(id, reason, account_created=None, account_number=None, account_type=N
     - account_type [string, default None]: type of the account to be linked. Options: "checking", "savings", "salary" or "payment"
     - branch_code [string, default None]: branch code of the account to be linked. ex: 1234"
     - name [string, default None]: holder's name of the account to be linked. ex: "Jamie Lannister"
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixKey with updated attributes
     """
@@ -171,8 +171,8 @@ def update(id, reason, account_created=None, account_number=None, account_type=N
 
 
 def cancel(id, user=None):
-    """# Cancel a pixKey entity
-    Cancel a pixKey entity previously created in the Stark Infra API
+    """# Cancel a PixKey entity
+    Cancel a PixKey entity previously created in the Stark Infra API
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):

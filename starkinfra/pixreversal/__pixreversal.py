@@ -93,7 +93,6 @@ def query(limit=None, after=None, before=None, status=None, ids=None, return_ids
     ## Return:
     - generator of PixReversal objects with updated attributes
     """
-
     return rest.get_stream(
         resource=_resource,
         limit=limit,
@@ -176,7 +175,7 @@ def response(status, reason=None):
     ## Parameters (required):
     - status [string]: response to the authorization. ex: "approved" or "denied"
     ## Parameters (conditionally required):
-    - reason [string, default None]: denial reason. Options: "invalidAccountNumber", "blockedAccount", "accountClosed", "invalidAccountType", "invalidTransactionType", "taxIdMismatch", "invalidTaxId", "orderRejected", "reversalTimeExpired", "settlementFailed"
+    - reason [string, default None]: denial reason. Required if the status is "denied". Options: "invalidAccountNumber", "blockedAccount", "accountClosed", "invalidAccountType", "invalidTransactionType", "taxIdMismatch", "invalidTaxId", "orderRejected", "reversalTimeExpired", "settlementFailed"
     ## Return:
     - Dumped JSON string that must be returned to us
     """

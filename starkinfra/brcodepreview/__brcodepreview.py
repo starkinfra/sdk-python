@@ -6,6 +6,9 @@ from starkcore.utils.checks import check_datetime_or_date
 class BrcodePreview(Resource):
     """# BrcodePreview object
     The BrcodePreview object is used to preview information from a BR Code before paying it.
+    When you initialize a BrcodePreview, the entity will not be automatically
+    created in the Stark Infra API. The 'create' function sends the objects
+    to the Stark Infra API and returns the created object.
     ## Parameters (required):
     - id [string]: BR Code from a Pix payment. This is also de information directly encoded in a QR Code. ex: "00020126580014br.gov.bcb.pix0136a629532e-7693-4846-852d-1bbff817b5a8520400005303986540510.005802BR5908T'Challa6009Sao Paulo62090505123456304B14A"
     ## Attributes (return-only):

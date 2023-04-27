@@ -212,11 +212,13 @@ def parse(content, signature, user=None):
 
 
 def response(status, reason=None):
-    """# Helps you respond to a PixRequest authorization
+    """# Helps you respond to a PixRequest authorization.
+    Authorization requests will be posted at your registered
+    endpoint whenever inbound PixRequests are received.
     ## Parameters (required):
     - status [string]: response to the authorization. ex: "approved" or "denied"
     ## Parameters (conditionally required):
-    - reason [string, default None]: denial reason. Options: "invalidAccountNumber", "blockedAccount", "accountClosed", "invalidAccountType", "invalidTransactionType", "taxIdMismatch", "invalidTaxId", "orderRejected", "reversalTimeExpired", "settlementFailed"
+    - reason [string, default None]: denial reason. Required if the status is "denied". Options: "invalidAccountNumber", "blockedAccount", "accountClosed", "invalidAccountType", "invalidTransactionType", "taxIdMismatch", "invalidTaxId", "orderRejected", "reversalTimeExpired", "settlementFailed"
     ## Return:
     - Dumped JSON string that must be returned to us
     """

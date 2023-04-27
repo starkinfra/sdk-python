@@ -15,6 +15,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ## [Unreleased]
 ### Added
 - CreditHolmes resource
+- IssuingEmbossingKit resource
+- cashier_bank_code attribute to StaticBrcode resource
 
 ## [0.6.0] - 2022-12-02
 ### Added

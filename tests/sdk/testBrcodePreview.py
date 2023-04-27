@@ -7,6 +7,7 @@ starkinfra.user = exampleProject
 
 
 class TestBrcodePreview(TestCase):
+
     def test_success(self):
         static_brcodes = list(starkinfra.staticbrcode.query(limit=2))
 

@@ -5,7 +5,7 @@ from ..utils import rest
 
 class IssuingTransaction(Resource):
     """# IssuingTransaction object
-    The IssuingTransaction objects created in your Workspace to represent each balance shift.
+    The IssuingTransaction object created in your Workspace to represent each balance shift.
     ## Attributes (return-only):
     - id [string]: unique id returned when IssuingTransaction is created. ex: "5656565656565656"
     - amount [integer]: IssuingTransaction value in cents. ex: 1234 (= R$ 12.34)
@@ -45,16 +45,16 @@ def get(id, user=None):
 
 def query(source=None, tags=None, external_ids=None, after=None, before=None,
           ids=None, limit=None, user=None):
-    """# Retrieve IssuingTransaction
+    """# Retrieve IssuingTransactions
     Receive a generator of IssuingTransaction objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - external_ids [list of strings, default []]: external IDs. ex: ["5656565656565656", "4545454545454545"]
+    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
+    - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
+    - external_ids [list of strings, default None]: external IDs. ex: ["5656565656565656", "4545454545454545"]
     - status [string, default None]: filter for status of retrieved objects. ex: "approved", "canceled", "denied", "confirmed" or "voided"
-    - ids [list of strings, default [], default None]: purchase IDs
-    - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
+    - ids [list of strings, default None, default None]: purchase IDs
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of IssuingTransaction objects with updated attributes
@@ -78,11 +78,11 @@ def page(source=None, tags=None, external_ids=None, after=None, before=None,
     Receive a list of IssuingTransaction objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
-    - external_ids [list of strings, default []]: external IDs. ex: ["5656565656565656", "4545454545454545"]
+    - external_ids [list of strings, default None]: external IDs. ex: ["5656565656565656", "4545454545454545"]
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
     - status [string, default None]: filter for status of retrieved objects. ex: "approved", "canceled", "denied", "confirmed" or "voided"
-    - ids [list of strings, default [], default None]: purchase IDs
+    - ids [list of strings,default None]: purchase IDs
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - cursor [string, default None]: cursor returned on the previous page function call
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.

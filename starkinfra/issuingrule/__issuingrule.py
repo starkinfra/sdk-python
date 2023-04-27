@@ -6,20 +6,19 @@ from starkinfra.merchantcategory.__merchantcategory import _resource as _categor
 
 
 class IssuingRule(Resource):
-
     """# IssuingRule object
     The IssuingRule object displays the spending rules of IssuingCards and IssuingHolders created in your Workspace.
     ## Parameters (required):
     - name [string]: rule name. ex: "Travel" or "Food"
     - amount [integer]: maximum amount that can be spent in the informed interval. ex: 200000 (= R$ 2000.00)
     ## Parameters (optional):
-    - id [string, default None]: unique id returned when an IssuingRule is created, used to update a specific IssuingRule. ex: "5656565656565656"
     - interval [string, default "lifetime"]: interval after which the rule amount counter will be reset to 0. ex: "instant", "day", "week", "month", "year" or "lifetime"
     - currency_code [string, default "BRL"]: code of the currency that the rule amount refers to. ex: "BRL" or "USD"
     - categories [list of MerchantCategories, default []]: merchant categories accepted by the rule. ex: [MerchantCategory(code="fastFoodRestaurants")]
     - countries [list of MerchantCountries, default []]: countries accepted by the rule. ex: [MerchantCountry(code="BRA")]
     - methods [list of CardMethods, default []]: card purchase methods accepted by the rule. ex: [CardMethod(code="magstripe")]
     ## Attributes (expanded return-only):
+    - id [string]: unique id returned when an IssuingRule is created, used to update a specific IssuingRule. ex: "5656565656565656"
     - counter_amount [integer]: current rule spent amount. ex: 1000
     - currency_symbol [string]: currency symbol. ex: "R$"
     - currency_name [string]: currency name. ex: "Brazilian Real"

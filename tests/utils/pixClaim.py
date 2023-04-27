@@ -34,7 +34,7 @@ def getPixClaimToPatch():
     while len(pix_claims) < 1:
         claims, cursor = pixclaim.page(status="delivered", limit=5, cursor=cursor)
         for claim in claims:
-            if claim.agent == "claimer":
+            if claim.flow == "in":
                 pix_claims.append(claim)
         if cursor is None:
             break

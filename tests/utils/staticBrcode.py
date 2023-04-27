@@ -5,6 +5,7 @@ from starkinfra import StaticBrcode
 example_static_brcode = StaticBrcode(
     name="Jamie Lannister",
     key_id="+5511988887777",
+    cashier_bank_code="20018183",
     amount=0,
     reconciliation_id="123",
     city="São Paulo"

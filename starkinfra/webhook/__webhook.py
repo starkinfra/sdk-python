@@ -9,7 +9,7 @@ class Webhook(Resource):
     ## Parameters (required):
     - url [string]: Url that will be notified when an event occurs.
     - subscriptions [list of strings]: list of any non-empty combination of the available services. ex: ["contract", "credit-note", "signer", "issuing-card", "issuing-invoice", "issuing-purchase", "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out", "pix-claim", "pix-key", "pix-chargeback", "pix-infraction"]
-    ## Attributes:
+    ## Attributes (return-only):
     - id [string]: unique id returned when the webhook is created. ex: "5656565656565656"
     """
 
@@ -51,8 +51,8 @@ def get(id, user=None):
 
 
 def query(limit=None, user=None):
-    """# Retrieve Webhook subcriptions
-    Receive a generator of Webhook subcription objects previously created in the Stark Infra API
+    """# Retrieve Webhook subscriptions
+    Receive a generator of Webhook subscription objects previously created in the Stark Infra API
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
@@ -63,8 +63,8 @@ def query(limit=None, user=None):
 
 
 def page(cursor=None, limit=None, user=None):
-    """# Retrieve paged Webhooks
-    Receive a list of up to 100 Webhook objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged Webhooks subscriptions
+    Receive a list of up to 100 Webhook subscription objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
@@ -83,8 +83,8 @@ def page(cursor=None, limit=None, user=None):
 
 
 def delete(id, user=None):
-    """# Delete a Webhook subscription entity
-    Delete a Webhook subscription entity previously created in the Stark Infra API
+    """# Delete a Webhook subscriptions entity
+    Delete a Webhook subscriptions entity previously created in the Stark Infra API
     ## Parameters (required):
     - id [string]: Webhook unique id. ex: "5656565656565656"
     ## Parameters (optional):

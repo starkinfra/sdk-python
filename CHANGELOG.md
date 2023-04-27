@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.7.0] - 2023-04-27
 ### Added
 - CreditHolmes resource
 - IssuingEmbossingKit resource

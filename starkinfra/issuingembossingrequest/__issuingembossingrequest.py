@@ -8,8 +8,7 @@ class IssuingEmbossingRequest(Resource):
     The IssuingEmbossingRequest object displays the information of embossing requests in your Workspace.
     ## Parameters (required):
     - card_id [string]: id of the IssuingCard to be embossed. ex "5656565656565656"
-    - card_design_id [string]: card IssuingDesign id. ex "5656565656565656"
-    - envelope_design_id [string]: envelope IssuingDesign id. ex "5656565656565656"
+    - kit_id [string]: card embossing kit id. ex "5656565656565656"
     - display_name_1 [string]: card displayed name. ex: "ANTHONY STARK"
     - shipping_city [string]: shipping city. ex: "NEW YORK"
     - shipping_country_code [string]: shipping country code. ex: "US"
@@ -27,14 +26,14 @@ class IssuingEmbossingRequest(Resource):
     - shipping_phone [string]: shipping phone. ex: "+5511999999999"
     - tags [list of strings, default None]: list of strings for tagging. ex: ["card", "corporate"]
     ## Attributes (return-only):
-    - id [string, default None]: unique id returned when IssuingEmbossingRequest is created. ex: "5656565656565656"
+    - id [string]: unique id returned when IssuingEmbossingRequest is created. ex: "5656565656565656"
     - fee [integer]: fee charged when IssuingEmbossingRequest is created. ex: 1000
     - status [string]: status of the IssuingEmbossingRequest. ex: "created", "processing", "success", "failed"
     - updated [datetime.datetime]: latest update datetime for the IssuingEmbossingRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingEmbossingRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, card_id, card_design_id, envelope_design_id, display_name_1, shipping_city, 
+    def __init__(self, card_id, kit_id, display_name_1, shipping_city,
                  shipping_country_code, shipping_district, shipping_state_code, shipping_street_line_1, 
                  shipping_street_line_2, shipping_service, shipping_tracking_number, shipping_zip_code, 
                  embosser_id=None, display_name_2=None, display_name_3=None, shipping_phone=None, 
@@ -42,8 +41,7 @@ class IssuingEmbossingRequest(Resource):
         Resource.__init__(self, id=id)
 
         self.card_id = card_id
-        self.card_design_id = card_design_id
-        self.envelope_design_id = envelope_design_id
+        self.kit_id = kit_id
         self.display_name_1 = display_name_1
         self.shipping_city = shipping_city
         self.shipping_country_code = shipping_country_code

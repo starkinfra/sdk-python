@@ -1,12 +1,16 @@
 # coding=utf-8
+import os
+
+script_dir = os.path.dirname(__file__)
 
 RgImages = {
-    "front": "../utils/identity/identity-front-face.png",
-    "back": "../utils/identity/identity-back-face.png",
-    "selfie": "../utils/identity/walter-white.png"
+    "front": "identity/identity-front-face.png",
+    "back": "identity/identity-back-face.png",
+    "selfie": "identity/walter-white.png"
 }
 
 
 def readImage(path):
-    with open(path, 'rb') as file:
+    file_path = os.path.join(script_dir, path)
+    with open(file_path, 'rb') as file:
         return file.read()

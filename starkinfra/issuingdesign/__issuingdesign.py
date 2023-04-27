@@ -1,3 +1,4 @@
+from starkcore.utils.api import from_api_json
 from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_datetime
 from ..utils import rest
@@ -26,6 +27,18 @@ class IssuingDesign(Resource):
 
 
 _resource = {"class": IssuingDesign, "name": "IssuingDesign"}
+
+
+def parse_designs(designs):
+    parsed_designs = []
+    if designs is None:
+        return designs
+    for design in designs:
+        if isinstance(design, IssuingDesign):
+            parsed_designs.append(design)
+            continue
+        parsed_designs.append(from_api_json(_resource, design))
+    return parsed_designs
 
 
 def query(limit=None, ids=None, user=None):
@@ -76,7 +89,7 @@ def get(id, user=None):
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - IssuingDesigns object with updated attributes
+    - IssuingDesign object with updated attributes
     """
     return rest.get_id(resource=_resource, id=id, user=user)
 

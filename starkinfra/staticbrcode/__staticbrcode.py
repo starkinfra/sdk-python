@@ -12,9 +12,10 @@ class StaticBrcode(Resource):
     ## Parameters (required):
     - name [string]: receiver's name. ex: "Tony Stark"
     - key_id [string]: receiver's Pixkey id. ex: "+5541999999999"
-    - city [string, default São Paulo]: receiver's city name. ex: "Rio de Janeiro"
+    - city [string]: receiver's city name. ex: "Rio de Janeiro"
     ## Parameters (optional):
     - amount [integer, default 0]: positive integer that represents the amount in cents of the resulting Pix transaction. ex: 1234 (= R$ 12.34)
+    - cashier_bank_code [string, default ""] Cashier's bank code. ex: "20018183".
     - reconciliation_id [string, default None]: id to be used for conciliation of the resulting Pix transaction. This id must have up to 25 alphanumeric characters ex: "ah27s53agj6493hjds6836v49"
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
@@ -25,14 +26,15 @@ class StaticBrcode(Resource):
     - created [datetime.datetime]: creation datetime for the StaticBrcode. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, name, key_id, city, amount=None, reconciliation_id=None, tags=None, id=None, uuid=None, url=None,
-                    updated=None, created=None):
+    def __init__(self, name, key_id, city, amount=None, cashier_bank_code=None, reconciliation_id=None, tags=None,
+                 id=None, uuid=None, url=None, updated=None, created=None):
         Resource.__init__(self, id=id)
 
         self.name = name
         self.key_id = key_id
         self.city = city
         self.amount = amount
+        self.cashier_bank_code = cashier_bank_code
         self.reconciliation_id = reconciliation_id
         self.tags = tags
         self.uuid = uuid
@@ -95,8 +97,9 @@ def query(limit=None, after=None, before=None, uuids=None, tags=None, user=None)
 
 
 def page(cursor=None, limit=None, after=None, before=None, uuids=None, tags=None, user=None):
-    """# Retrieve StaticBrcodes
-    Receive a list of StaticBrcode objects previously created in the Stark Infra API and the cursor to the next page.
+    """# Retrieve paged StaticBrcodes
+    Receive a list of up to 100 StaticBrcode objects previously created in the Stark Infra API and the cursor to the next page.
+    Use this function instead of query if you want to manually page your requests.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35

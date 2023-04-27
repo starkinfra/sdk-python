@@ -6,7 +6,7 @@ from starkcore.utils.checks import check_datetime, check_date
 class PixStatement(Resource):
     """# PixStatement object
     The PixStatement object stores information about all the transactions that
-    happened on a specific day at your settlment account according to the Central Bank.
+    happened on a specific day at your settlement account according to the Central Bank.
     It must be created by the user before it can be accessed.
     This feature is only available for direct participants.
     When you initialize a PixStatement, the entity will not be automatically
@@ -18,7 +18,7 @@ class PixStatement(Resource):
     - type [string]: types of entities to include in statement. Options: ["interchange", "interchangeTotal", "transaction"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixStatement is created. ex: "5656565656565656"
-    - status [string]: current PixStatement status. ex: ["success", "failed"]
+    - status [string]: current PixStatement status. ex: "success" or "failed"
     - transaction_count [integer]: number of transactions that happened during the day that the PixStatement was requested. ex: 11
     - created [datetime.datetime]: creation datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
@@ -75,7 +75,6 @@ def query(limit=None, ids=None, user=None):
     ## Return:
     - generator of PixStatement objects with updated attributes
     """
-
     return rest.get_stream(
         resource=_resource,
         limit=limit,
@@ -87,6 +86,7 @@ def query(limit=None, ids=None, user=None):
 def page(cursor=None, limit=None, ids=None, user=None):
     """# Retrieve paged PixStatements
     Receive a list of up to 100 PixStatement objects previously created in the Stark Infra API
+    Use this function instead of query if you want to manually page your statements.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
@@ -107,7 +107,7 @@ def page(cursor=None, limit=None, ids=None, user=None):
 
 def csv(id, user=None):
     """# Retrieve a .csv PixStatement
-    Retrieve a specific PixStatement by its ID in a .csv file.
+    Retrieve a specific PixStatement by its id in a .csv file.
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):

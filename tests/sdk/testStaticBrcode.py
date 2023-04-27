@@ -52,6 +52,8 @@ class TestStaticBrcodePost(TestCase):
             brcodes=[example_static_brcode]
         )
         for brcode in static_brcode:
+            self.assertIsNotNone(brcode.id)
+            self.assertIsNotNone(brcode.cashier_bank_code)
             print(brcode)
 
 

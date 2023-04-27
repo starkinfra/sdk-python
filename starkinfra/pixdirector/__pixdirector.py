@@ -17,7 +17,6 @@ class PixDirector(Resource):
     - team_email [string]: team email. ex: "pix.team@company.com"
     - team_phones [list of strings]: list of phones of the team. ex: ["+5511988889999", "+5511988889998"]
     ## Attributes (return-only):
-    - id [string]: unique id returned when the PixDirector is created. ex: "5656565656565656"
     - status [string]: current PixDirector status. ex: "success"
     """
 

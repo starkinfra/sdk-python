@@ -140,7 +140,7 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
     When a Due DynamicBrcode is read by your user, a GET request containing the Brcode's 
     UUID will be made to your registered URL to retrieve additional information needed 
     to complete the transaction.
-    The get request must be answered in the following format, within 5 seconds, and with 
+    The GET request must be answered in the following format, within 5 seconds, and with
     an HTTP status code 200.
     ## Parameters (required):
     - version [integer]: integer that represents how many times the BR code was updated.
@@ -197,7 +197,7 @@ def response_instant(version, created, key_id, status, reconciliation_id, amount
     """# Helps you respond to an instant DynamicBrcode Read
     When an instant DynamicBrcode is read by your user, a GET request containing the BR code's UUID will be made
     to your registered URL to retrieve additional information needed to complete the transaction.
-    The get request must be answered in the following format within 5 seconds and with an HTTP status code 200.
+    The GET request must be answered in the following format within 5 seconds and with an HTTP status code 200.
     ## Parameters (required):
     - version [integer]: integer that represents how many times the BR code was updated.
     - created [datetime.datetime or string]: creation datetime of the DynamicBrcode. ex: "2022-05-17"

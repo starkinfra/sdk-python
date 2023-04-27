@@ -21,7 +21,7 @@ def generateExampleHoldersJson(n=1):
     for _ in range(n):
         example_holder.name = get_full_name()
         example_holder.external_id = str(randint(1, 999999))
-        example_holder.tax_id = TaxIdGenerator.taxId()
+        example_holder.tax_id = TaxIdGenerator.cpf()
         example_holder.rules = generateExampleRuleJson()
         holders.append(deepcopy(example_holder))
     return holders

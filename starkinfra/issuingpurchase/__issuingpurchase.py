@@ -34,10 +34,10 @@ class IssuingPurchase(Resource):
     - method_code [string]: method code. Options: "chip", "token", "server", "manual", "magstripe" or "contactless"
     - score [float]: internal score calculated for the authenticity of the purchase. None in case of insufficient data. ex: 7.6
     - end_to_end_id [string]: Unique id used to identify the transaction through all of its life cycle, even before the purchase is denied or approved and gets its usual id. ex: "679cd385-642b-49d0-96b7-89491e1249a5"
-    - tags [string]: list of strings for tagging returned by the sub-issuer during the authorization. ex: ["travel", "food"]
+    - tags [list of strings]: list of strings for tagging returned by the sub-issuer during the authorization. ex: ["travel", "food"]
     - zip_code [string]: zip code of the merchant location. ex: "02101234"
     ## Attributes (IssuingPurchase only):
-    - issuing_transaction_ids [string]: ledger transaction ids linked to this Purchase
+    - issuing_transaction_ids [list of strings]: ledger transaction ids linked to this Purchase
     - status [string]: current IssuingCard status. Options: "approved", "canceled", "denied", "confirmed", "voided"
     - updated [datetime.datetime]: latest update datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
@@ -111,14 +111,14 @@ def query(ids=None, limit=None, after=None, before=None, end_to_end_ids=None, ho
     """# Retrieve IssuingPurchase
     Receive a generator of IssuingPurchase objects previously created in the Stark Infra API
     ## Parameters (optional):
-    - ids [list of strings, default [], default None]: purchase IDs
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - end_to_end_ids [list of strings, default []]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
-    - holder_ids [list of strings, default []]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
-    - card_ids [list of strings, default []]: card  IDs. ex: ["5656565656565656", "4545454545454545"]
+    - end_to_end_ids [list of strings, default None]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
+    - holder_ids [list of strings, default None]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
+    - card_ids [list of strings, default None]: card  IDs. ex: ["5656565656565656", "4545454545454545"]
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["approved", "canceled", "denied", "confirmed", "voided"]
+    - ids [list of strings, default None, default None]: purchase IDs
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of IssuingPurchase objects with updated attributes
@@ -139,18 +139,18 @@ def query(ids=None, limit=None, after=None, before=None, end_to_end_ids=None, ho
 
 def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after=None, before=None, ids=None,
         cursor=None, limit=None, user=None):
-    """# Retrieve paged IssuingPurchase
+    """# Retrieve paged IssuingPurchases
     Receive a list of IssuingPurchase objects previously created in the Stark Infra API and the cursor to the next page.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
-    - ids [list of strings, default [], default None]: purchase IDs
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - end_to_end_ids [list of strings, default []]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
-    - holder_ids [list of strings, default []]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
-    - card_ids [list of strings, default []]: card  IDs. ex: ["5656565656565656", "4545454545454545"]
+    - end_to_end_ids [list of strings, default None]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
+    - holder_ids [list of strings, default None]: card holder IDs. ex: ["5656565656565656", "4545454545454545"]
+    - card_ids [list of strings, default None]: card  IDs. ex: ["5656565656565656", "4545454545454545"]
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["approved", "canceled", "denied", "confirmed", "voided"]
+    - ids [list of strings, default None]: purchase IDs
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of IssuingPurchase objects with updated attributes
@@ -203,7 +203,7 @@ def response(status, amount=None, reason=None, tags=None):
     - reason [string]: denial reason. Options: "other", "blocked", "lostCard", "stolenCard", "invalidPin", "invalidCard", "cardExpired", "issuerError", "concurrency", "standInDenial", "subIssuerError", "invalidPurpose", "invalidZipCode", "invalidWalletId", "inconsistentCard", "settlementFailed", "cardRuleMismatch", "invalidExpiration", "prepaidInstallment", "holderRuleMismatch", "insufficientBalance", "tooManyTransactions", "invalidSecurityCode", "invalidPaymentMethod", "confirmationDeadline", "withdrawalAmountLimit", "insufficientCardLimit", "insufficientHolderLimit"
     ## Parameters (optional):
     - amount [integer, default None]: amount in cents that was authorized. ex: 1234 (= R$ 12.34)
-    - tags [list of strings, default []]: tags to filter retrieved object. ex: ["tony", "stark"]
+    - tags [list of strings, default None]: tags to filter retrieved object. ex: ["tony", "stark"]
     ## Return:
     - Dumped JSON string that must be returned to us on the IssuingPurchase request
     """

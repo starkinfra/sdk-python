@@ -1,8 +1,8 @@
 import starkinfra
-from ..utils.user import bank_code
+
 from unittest import TestCase, main
 from datetime import timedelta, date
-from tests.utils.user import exampleProject
+from tests.utils.user import exampleProject, bank_code
 from tests.utils.pixChargeback import generateExamplePixChargebackJson, getPixChargebackToPatch
 
 

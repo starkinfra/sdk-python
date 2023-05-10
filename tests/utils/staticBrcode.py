@@ -8,7 +8,8 @@ example_static_brcode = StaticBrcode(
     cashier_bank_code="20018183",
     amount=0,
     reconciliation_id="123",
-    city="São Paulo"
+    city="São Paulo",
+    description="A Static Brcode"
 )
 
 

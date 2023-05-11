@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.8.0] - 2023-05-11
 ### Added
 - payer_id and end_to_end_id parameter to BrcodePreview resource
 - description parameter to StaticBrcode resource

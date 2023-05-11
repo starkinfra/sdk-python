@@ -17,16 +17,20 @@ class TestBrcodePreview(TestCase):
 
         previews = starkinfra.brcodepreview.create([
             starkinfra.BrcodePreview(
-                id=brcodes[0].id
+                id=brcodes[0].id,
+                payer_id="012.345.678-90"
             ),
             starkinfra.BrcodePreview(
-                id=brcodes[1].id
+                id=brcodes[1].id,
+                payer_id="012.345.678-90"
             ),
             starkinfra.BrcodePreview(
-                id=brcodes[2].id
+                id=brcodes[2].id,
+                payer_id="012.345.678-90"
             ),
             starkinfra.BrcodePreview(
-                id=brcodes[3].id
+                id=brcodes[3].id,
+                payer_id="012.345.678-90"
             )
         ])
 

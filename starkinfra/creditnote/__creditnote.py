@@ -20,7 +20,6 @@ class CreditNote(Resource):
     - template_id [string]: ID of the contract template on which the CreditNote will be based. ex: "0123456789101112"
     - name [string]: credit receiver's full name. ex: "Edward Stark"
     - tax_id [string]: credit receiver's tax ID (CPF or CNPJ). ex: "20.018.183/0001-80"
-    - nominal_amount [integer]: amount in cents transferred to the credit receiver, before deductions. ex: 11234 (= R$ 112.34)
     - scheduled [datetime.date, datetime.datetime or string]: date of transfer execution. ex: datetime(2020, 3, 10)
     - invoices [list of Invoice objects]: list of Invoice objects to be created and sent to the credit receiver. ex: [Invoice(), Invoice()]
     - payment [creditnote.Transfer]: payment entity to be created and sent to the credit receiver. ex: creditnote.Transfer()
@@ -34,13 +33,14 @@ class CreditNote(Resource):
     - zip_code [string]: credit receiver address zip code. ex: "01311-200"
     ## Parameters (conditionally required):
     - payment_type [string]: payment type, inferred from the payment parameter if it is not a dictionary. ex: "transfer"
+    - nominal_amount [integer]: CreditNote value in cents. The nominal_amount parameter is required when amount is not sent. ex: 1234 (= R$ 12.34)
+    - amount [integer]: amount in cents transferred to the credit receiver, before deductions. The amount parameter is required when nominal_amount is not sent. ex: 1234 (= R$ 12.34)
     ## Parameters (optional):
     - rebate_amount [integer, default 0]: credit analysis fee deducted from lent amount. ex: 11234 (= R$ 112.34)
     - tags [list of strings, default []]: list of strings for reference when searching for CreditNotes. ex: ["employees", "monthly"]
     - expiration [integer or datetime.timedelta, default 604800 (7 days)]: time interval in seconds between scheduled date and expiration date. ex 123456789
     ## Attributes (return-only):
     - id [string]: unique id returned when the CreditNote is created. ex: "5656565656565656"
-    - amount [integer]: CreditNote value in cents. ex: 1234 (= R$ 12.34)
     - document_id [string]: ID of the signed document to execute this CreditNote. ex: "4545454545454545"
     - status [string]: current status of the CreditNote. ex: "canceled", "created", "expired", "failed", "processing", "signed", "success"
     - transaction_ids [list of strings]: ledger transaction ids linked to this CreditNote. ex: ["19827356981273"]
@@ -52,16 +52,16 @@ class CreditNote(Resource):
     - updated [datetime.datetime]: latest update datetime for the CreditNote. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, template_id, name, tax_id, nominal_amount, scheduled, invoices, payment, signers, external_id,
+    def __init__(self, template_id, name, tax_id, scheduled, invoices, payment, signers, external_id,
                  street_line_1, street_line_2, district, city, state_code, zip_code, payment_type=None,
-                 rebate_amount=None, tags=None, expiration=None, id=None, amount=None, document_id=None, status=None,
-                 transaction_ids=None, workspace_id=None, tax_amount=None, nominal_interest=None, interest=None, created=None, updated=None):
+                 nominal_amount=None, amount=None, rebate_amount=None, tags=None, expiration=None, id=None,
+                 document_id=None, status=None, transaction_ids=None, workspace_id=None, tax_amount=None,
+                 nominal_interest=None, interest=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.template_id = template_id
         self.name = name
         self.tax_id = tax_id
-        self.nominal_amount = nominal_amount
         self.scheduled = scheduled
         self.invoices = _parse_invoices(invoices)
         self.signers = _parse_signers(signers)
@@ -72,10 +72,11 @@ class CreditNote(Resource):
         self.city = city
         self.state_code = state_code
         self.zip_code = zip_code
+        self.nominal_amount = nominal_amount
+        self.amount = amount
         self.rebate_amount = rebate_amount
         self.tags = tags
         self.expiration = expiration
-        self.amount = amount
         self.document_id = document_id
         self.status = status
         self.transaction_ids = transaction_ids

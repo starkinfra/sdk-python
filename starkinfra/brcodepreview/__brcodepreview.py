@@ -11,6 +11,9 @@ class BrcodePreview(Resource):
     to the Stark Infra API and returns the created object.
     ## Parameters (required):
     - id [string]: BR Code from a Pix payment. This is also de information directly encoded in a QR Code. ex: "00020126580014br.gov.bcb.pix0136a629532e-7693-4846-852d-1bbff817b5a8520400005303986540510.005802BR5908T'Challa6009Sao Paulo62090505123456304B14A"
+    - payer_id [string]: tax id (CPF/CNPJ) of the individual or business requesting the PixKey information. This id is used by the Central Bank to limit request rates. ex: "20.018.183/0001-80"
+    ## Parameters (optional):
+    - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     ## Attributes (return-only):
     - account_number [string]: Payment receiver account number. ex: "1234567"
     - account_type [string]: Payment receiver account type. ex: "checking"
@@ -34,12 +37,14 @@ class BrcodePreview(Resource):
     - tax_id [string]: Payment receiver tax ID. ex: "012.345.678-90"
     """
 
-    def __init__(self, id, account_number=None, account_type=None, amount=None, amount_type=None, bank_code=None,
+    def __init__(self, id, payer_id, account_number=None, account_type=None, amount=None, amount_type=None, bank_code=None,
                  branch_code=None, cash_amount=None, cashier_bank_code=None, cashier_type=None, discount_amount=None,
-                 fine_amount=None, interest_amount=None, key_id=None, name=None, nominal_amount=None,
+                 fine_amount=None, interest_amount=None, key_id=None, name=None, nominal_amount=None, end_to_end_id=None,
                  reconciliation_id=None, reduction_amount=None, scheduled=None, status=None, tax_id=None):
         Resource.__init__(self, id=id)
         
+        self.payer_id = payer_id
+        self.end_to_end_id = end_to_end_id
         self.account_number = account_number
         self.account_type = account_type
         self.amount = amount

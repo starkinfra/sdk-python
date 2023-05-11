@@ -15,8 +15,9 @@ class StaticBrcode(Resource):
     - city [string]: receiver's city name. ex: "Rio de Janeiro"
     ## Parameters (optional):
     - amount [integer, default 0]: positive integer that represents the amount in cents of the resulting Pix transaction. ex: 1234 (= R$ 12.34)
-    - cashier_bank_code [string, default ""] Cashier's bank code. ex: "20018183".
+    - cashier_bank_code [string, default None]: Cashier's bank code. ex: "20018183".
     - reconciliation_id [string, default None]: id to be used for conciliation of the resulting Pix transaction. This id must have up to 25 alphanumeric characters ex: "ah27s53agj6493hjds6836v49"
+    - description [string, default None]: optional description to override default description to be shown in the bank statement. ex: "Payment for service #1234"
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: id returned on creation, this is the BR code. ex: "00020126360014br.gov.bcb.pix0114+552840092118152040000530398654040.095802BR5915Jamie Lannister6009Sao Paulo620705038566304FC6C"
@@ -27,7 +28,7 @@ class StaticBrcode(Resource):
     """
 
     def __init__(self, name, key_id, city, amount=None, cashier_bank_code=None, reconciliation_id=None, tags=None,
-                 id=None, uuid=None, url=None, updated=None, created=None):
+                 id=None, description=None, uuid=None, url=None, updated=None, created=None):
         Resource.__init__(self, id=id)
 
         self.name = name
@@ -36,6 +37,7 @@ class StaticBrcode(Resource):
         self.amount = amount
         self.cashier_bank_code = cashier_bank_code
         self.reconciliation_id = reconciliation_id
+        self.description = description
         self.tags = tags
         self.uuid = uuid
         self.url = url

@@ -29,6 +29,7 @@ class IssuingPurchase(Resource):
     - acquirer_id [string]: acquirer ID. ex: "5656565656565656"
     - merchant_id [string]: merchant ID. ex: "5656565656565656"
     - merchant_name [string]: merchant name. ex: "Google Cloud Platform"
+    - metadata [json]: metadata. an json object with a "authorization" and the authorization value as value
     - merchant_fee [integer]: fee charged by the merchant to cover specific costs, such as ATM withdrawal logistics, etc. ex: 200 (= R$ 2.00)
     - wallet_id [string]: virtual wallet ID. ex: "5656565656565656"
     - method_code [string]: method code. Options: "chip", "token", "server", "manual", "magstripe" or "contactless"
@@ -51,7 +52,7 @@ class IssuingPurchase(Resource):
                 amount=None, tax=None, issuer_amount=None, issuer_currency_code=None, issuer_currency_symbol=None,
                 merchant_amount=None, merchant_currency_code=None, merchant_currency_symbol=None,
                 merchant_category_code=None, merchant_country_code=None, acquirer_id=None, merchant_id=None,
-                merchant_name=None, merchant_fee=None, wallet_id=None, method_code=None, score=None, end_to_end_id=None,
+                merchant_name=None, metadata=None, merchant_fee=None, wallet_id=None, method_code=None, score=None, end_to_end_id=None,
                 tags=None, zip_code=None, issuing_transaction_ids=None, status=None, updated=None, created=None,
                 is_partial_allowed=None, card_tags=None, holder_tags=None):
         Resource.__init__(self, id=id)
@@ -74,6 +75,7 @@ class IssuingPurchase(Resource):
         self.acquirer_id = acquirer_id
         self.merchant_id = merchant_id
         self.merchant_name = merchant_name
+        self.metadata
         self.merchant_fee = merchant_fee
         self.wallet_id = wallet_id
         self.method_code = method_code

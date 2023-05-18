@@ -75,7 +75,7 @@ class IssuingPurchase(Resource):
         self.acquirer_id = acquirer_id
         self.merchant_id = merchant_id
         self.merchant_name = merchant_name
-        self.metadata
+        self.metadata = metadata
         self.merchant_fee = merchant_fee
         self.wallet_id = wallet_id
         self.method_code = method_code

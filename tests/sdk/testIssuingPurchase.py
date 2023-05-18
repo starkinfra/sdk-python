@@ -18,6 +18,8 @@ class TestIssuingPurchaseQuery(TestCase):
         )
         for purchase in purchases:
             self.assertEqual(purchase.id, str(purchase.id))
+            self.assertEqual(type(purchase.id), dict)
+            self.assertEqual(type(purchase.metadata), dict)
 
 
 class TestIssuingPurchaseGet(TestCase):
@@ -26,6 +28,7 @@ class TestIssuingPurchaseGet(TestCase):
         purchases = starkinfra.issuingpurchase.query(limit=1)
         purchase = starkinfra.issuingpurchase.get(id=next(purchases).id)
         self.assertEqual(purchase.id, str(purchase.id))
+        self.assertEqual(type(purchase.metadata), dict)
 
 
 class TestIssuingPurchaseParseRight(TestCase):

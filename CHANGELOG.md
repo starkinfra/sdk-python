@@ -14,6 +14,9 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 
+### Added
+- metadata parameter to IssuingPurchase resource
+
 ## [0.8.0] - 2023-05-11
 ### Added
 - payer_id and end_to_end_id parameter to BrcodePreview resource

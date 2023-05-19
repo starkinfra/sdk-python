@@ -29,7 +29,7 @@ class IssuingPurchase(Resource):
     - acquirer_id [string]: acquirer ID. ex: "5656565656565656"
     - merchant_id [string]: merchant ID. ex: "5656565656565656"
     - merchant_name [string]: merchant name. ex: "Google Cloud Platform"
-    - metadata [json]: metadata. an json object with a "authorization" and the authorization value as value
+    - metadata [dictionary]: dictionary object used to store additional information about the IssuingPurchase object. ex: { authorizationId: 'OjZAqj' }.
     - merchant_fee [integer]: fee charged by the merchant to cover specific costs, such as ATM withdrawal logistics, etc. ex: 200 (= R$ 2.00)
     - wallet_id [string]: virtual wallet ID. ex: "5656565656565656"
     - method_code [string]: method code. Options: "chip", "token", "server", "manual", "magstripe" or "contactless"

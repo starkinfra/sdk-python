@@ -18,7 +18,6 @@ class TestIssuingPurchaseQuery(TestCase):
         )
         for purchase in purchases:
             self.assertEqual(purchase.id, str(purchase.id))
-            self.assertEqual(type(purchase.id), dict)
             self.assertEqual(type(purchase.metadata), dict)
 
 

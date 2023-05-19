@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- metadata parameter to IssuingPurchase resource
 
 ## [0.8.0] - 2023-05-11
 ### Added

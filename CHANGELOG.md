@@ -13,10 +13,12 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.9.0] - 2023-06-21
 ### Added
 - metadata parameter to IssuingPurchase resource
 ### Changed
-- starkcore version import
+- starkcore to v0.1.1
 
 ## [0.8.0] - 2023-05-11
 ### Added

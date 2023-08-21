@@ -10,7 +10,6 @@ class IssuingPurchase(Resource):
     """# IssuingPurchase object
     Displays the IssuingPurchase objects created in your Workspace.
     ## Attributes (return-only):
-    - id [string]: unique id returned when IssuingPurchase is created. ex: "5656565656565656"
     - holder_name [string]: card holder name. ex: "Tony Stark"
     - product_id [string]: unique card product number (BIN) registered within the card network. ex: "53810200"
     - card_id [string]: unique id returned when IssuingCard is created. ex: "5656565656565656"
@@ -25,36 +24,40 @@ class IssuingPurchase(Resource):
     - merchant_currency_code [string]: merchant currency code. ex: "USD"
     - merchant_currency_symbol [string]: merchant currency symbol. ex: "$"
     - merchant_category_code [string]: merchant category code. ex: "fastFoodRestaurants"
+    - merchant_category_type [string]: merchant category type. ex "food"
     - merchant_country_code [string]: merchant country code. ex: "USA"
     - acquirer_id [string]: acquirer ID. ex: "5656565656565656"
     - merchant_id [string]: merchant ID. ex: "5656565656565656"
     - merchant_name [string]: merchant name. ex: "Google Cloud Platform"
-    - metadata [dictionary]: dictionary object used to store additional information about the IssuingPurchase object. ex: { authorizationId: 'OjZAqj' }.
     - merchant_fee [integer]: fee charged by the merchant to cover specific costs, such as ATM withdrawal logistics, etc. ex: 200 (= R$ 2.00)
     - wallet_id [string]: virtual wallet ID. ex: "5656565656565656"
     - method_code [string]: method code. Options: "chip", "token", "server", "manual", "magstripe" or "contactless"
     - score [float]: internal score calculated for the authenticity of the purchase. None in case of insufficient data. ex: 7.6
     - end_to_end_id [string]: Unique id used to identify the transaction through all of its life cycle, even before the purchase is denied or approved and gets its usual id. ex: "679cd385-642b-49d0-96b7-89491e1249a5"
     - tags [list of strings]: list of strings for tagging returned by the sub-issuer during the authorization. ex: ["travel", "food"]
-    - zip_code [string]: zip code of the merchant location. ex: "02101234"
     ## Attributes (IssuingPurchase only):
+    - id [string]: unique id returned when IssuingPurchase is created. ex: "5656565656565656"
     - issuing_transaction_ids [list of strings]: ledger transaction ids linked to this Purchase
     - status [string]: current IssuingCard status. Options: "approved", "canceled", "denied", "confirmed", "voided"
+    - description [string]: IssuingPurchase description. ex: "Office Supplies"
+    - metadata [dictionary]: dictionary object used to store additional information about the IssuingPurchase object. ex: { authorizationId: "OjZAqj" }.
+    - zip_code [string]: zip code of the merchant location. ex: "02101234"
     - updated [datetime.datetime]: latest update datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingPurchase. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     ## Attributes (authorization request only):
     - is_partial_allowed [bool]: true if the merchant allows partial purchases. ex: False
     - card_tags [list of strings]: tags of the IssuingCard responsible for this purchase. ex: ["travel", "food"]
+    - holder_id [string]: card holder ID. ex: "5656565656565656"
     - holder_tags [list of strings]: tags of the IssuingHolder responsible for this purchase. ex: ["technology", "john snow"]
     """
 
-    def __init__(self, id=None, holder_name=None, product_id=None, card_id=None, card_ending=None, purpose=None,
+    def __init__(self, holder_name=None, product_id=None, card_id=None, card_ending=None, purpose=None,
                 amount=None, tax=None, issuer_amount=None, issuer_currency_code=None, issuer_currency_symbol=None,
                 merchant_amount=None, merchant_currency_code=None, merchant_currency_symbol=None,
-                merchant_category_code=None, merchant_country_code=None, acquirer_id=None, merchant_id=None,
-                merchant_name=None, metadata=None, merchant_fee=None, wallet_id=None, method_code=None, score=None, end_to_end_id=None,
-                tags=None, zip_code=None, issuing_transaction_ids=None, status=None, updated=None, created=None,
-                is_partial_allowed=None, card_tags=None, holder_tags=None):
+                merchant_category_code=None, merchant_category_type=None, merchant_country_code=None, acquirer_id=None, merchant_id=None,
+                merchant_name=None, merchant_fee=None, wallet_id=None, method_code=None, score=None, end_to_end_id=None,
+                tags=None, id=None, issuing_transaction_ids=None, status=None, description=None, metadata=None, zip_code=None, updated=None, created=None,
+                is_partial_allowed=None, card_tags=None, holder_id=None, holder_tags=None):
         Resource.__init__(self, id=id)
 
         self.holder_name = holder_name
@@ -71,24 +74,27 @@ class IssuingPurchase(Resource):
         self.merchant_currency_code = merchant_currency_code
         self.merchant_currency_symbol = merchant_currency_symbol
         self.merchant_category_code = merchant_category_code
+        self.merchant_category_type = merchant_category_type
         self.merchant_country_code = merchant_country_code
         self.acquirer_id = acquirer_id
         self.merchant_id = merchant_id
         self.merchant_name = merchant_name
-        self.metadata = metadata
         self.merchant_fee = merchant_fee
         self.wallet_id = wallet_id
         self.method_code = method_code
         self.score = score
         self.end_to_end_id = end_to_end_id
         self.tags = tags
-        self.zip_code = zip_code
         self.issuing_transaction_ids = issuing_transaction_ids
         self.status = status
+        self.description = description
+        self.metadata = metadata
+        self.zip_code = zip_code
         self.updated = check_datetime(updated)
         self.created = check_datetime(created)
         self.is_partial_allowed = is_partial_allowed
         self.card_tags = card_tags
+        self.holder_id = holder_id
         self.holder_tags = holder_tags
 
 

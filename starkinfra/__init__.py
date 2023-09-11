@@ -107,6 +107,18 @@ from .issuingembossingrequest.__issuingembossingrequest import IssuingEmbossingR
 from . import issuingembossingkit
 from .issuingembossingkit.__issuingembossingkit import IssuingEmbossingKit
 
+from . import issuingtoken
+from .issuingtoken.__issuingtoken import IssuingToken
+
+from . import issuingtokendesign
+from .issuingtokendesign.__issuingtokendesign import IssuingTokenDesign
+
+from . import issuingtokenrequest
+from .issuingtokenrequest.__issuingtokenrequest import IssuingTokenRequest
+
+from . import issuingtokenactivation
+from .issuingtokenactivation.__issuingtokenactivation import IssuingTokenActivation
+
 from . import merchantcategory
 from .merchantcategory.__merchantcategory import MerchantCategory
 

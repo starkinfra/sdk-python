@@ -30,6 +30,10 @@ This SDK version is compatible with the Stark Infra API v2.
         - [Stock](#query-issuingstocks): View your current stock of a certain IssuingDesign linked to an Embosser on the workspace
         - [Restock](#create-issuingrestocks): Create restock orders of a specific IssuingStock object
         - [EmbossingRequest](#create-issuingembossingrequests): Create embossing requests
+        - [TokenRequest](#create-an-issuingtokenrequest): Generate the payload to create the token
+        - [Token](#process-token-authorizations): Authorize and manage your tokens
+        - [TokenActivation](#process-token-activations): Get notified on how to inform the activation code to the holder 
+        - [TokenDesign](#get-an-issuingtokendesign): View your current token card arts
         - [Purchases](#process-purchase-authorizations): Authorize and view your past purchases
         - [Invoices](#create-issuinginvoices): Add money to your issuing balance
         - [Withdrawals](#create-issuingwithdrawals): Send money back to your Workspace from your issuing balance
@@ -821,6 +825,209 @@ log = starkinfra.issuingembossingrequest.log.get("6724771005857792")
 
 print(log)
 ```
+### Create an IssuingTokenRequest
+
+You can create a request that provides the required data you must send to the wallet app.
+
+```python
+import starkinfra
+
+request = starkinfra.issuingtokenrequest.create(
+    starkinfra.IssuingTokenRequest(
+        card_id="5189831499972623",
+        wallet_id="google",
+        method_code="app"
+    )
+)
+
+print(request)
+```
+
+### Process Token authorizations
+
+It's easy to process token authorizations delivered to your endpoint.
+Remember to pass the signature header so the SDK can make sure it's StarkInfra that sent you the event.
+If you do not approve or decline the authorization within 2 seconds, the authorization will be denied.
+
+```python
+import starkinfra
+
+request = listen()  # this is the method you made to get the events posted to your tokenAuthorizationUrl endpoint
+
+authorization = starkinfra.issuingtoken.parse(
+    content=request.data.decode("utf-8"),
+    signature=request.headers["Digital-Signature"],
+)
+
+sendResponse(
+    starkinfra.issuingtoken.response_authorization( # this optional method just helps you build the response JSON
+        status="approved",
+        activation_methods=[
+            {
+                "type": "app",
+                "value": "com.subissuer.android"
+            },
+            {
+                "type": "text",
+                "value": "** *****-5678"
+            }
+        ],
+        design_id="4584031664472031",
+        tags=["token", "user/1234"],
+    )
+)
+
+# or
+
+sendResponse(
+    starkinfra.issuingtoken.response_authorization( # this optional method just helps you build the response JSON
+        status="denied",
+        reason="other",
+    )
+)
+```
+
+### Process Token activations
+
+It's easy to process token activation notifications delivered to your endpoint.
+Remember to pass the signature header so the SDK can make sure it's Stark Infra that sent you the event.
+
+```python
+import starkinfra
+
+request = listen()  # this is the method you made to get the events posted to your tokenActivationUrl endpoint
+
+authorization = starkinfra.issuingtokenactivation.parse(
+    content=request.data.decode("utf-8"),
+    signature=request.headers["Digital-Signature"],
+)
+```
+
+After that, you may generate the activation code and send it to the cardholder.
+The cardholder enters the received code in the wallet app. We'll receive and send it to
+tokenAuthorizationUrl for your validation. Completing the provisioning process. 
+
+```python
+import starkinfra
+
+request = listen()  # this is the method you made to get the events posted to your tokenAuthorizationUrl endpoint
+
+activation = starkinfra.issuingtoken.parse(
+    content=request.data.decode("utf-8"),
+    signature=request.headers["Digital-Signature"],
+)
+
+sendResponse(
+    starkinfra.issuingtoken.response_activation( # this optional method just helps you build the response JSON
+        status="approved",
+        tags=["token", "user/1234"]
+    )
+)
+
+# or
+
+sendResponse(
+    starkinfra.issuingtoken.response_activation( # this optional method just helps you build the response JSON
+        status="denied",
+        reason="other",
+        tags=["token", "user/1234"]
+    )
+)
+```
+
+### Get an IssuingToken
+
+You can get a single token by its id.
+
+```python
+import starkinfra
+
+token = starkinfra.issuingtoken.get(id="5749080709922816")
+
+print(token)
+```
+
+### Query IssuingTokens
+
+You can get a list of created tokens given some filters.
+
+```python
+import starkinfra
+
+tokens = starkinfra.issuingtoken.query(
+    limit=5,
+    after=date.today() - timedelta(days=100),
+    before=date.today(),
+    status="active",
+    card_ids=["5656565656565656", "4545454545454545"],
+    external_ids=["DSHRMC00002626944b0e3b539d4d459281bdba90c2588791", "DSHRMC00002626941c531164a0b14c66ad9602ee716f1e85"]
+)
+
+for token in tokens:
+    print(token)
+```
+ 
+### Update an IssuingToken
+
+You can update a specific token by its id.
+
+```python
+import starkinfra
+
+token = starkinfra.issuingtoken.update(id="5155165527080960", status="blocked")
+
+print(token)
+```
+
+### Cancel an IssuingToken
+
+You can also cancel a token by its id.
+
+```python
+import starkinfra
+
+token = starkinfra.issuingtoken.cancel(id="5155165527080960")
+
+print(token)
+```
+
+### Get an IssuingTokenDesign
+
+You can get a single design by its id.
+
+```python
+import starkinfra
+
+design = starkinfra.issuingtokendesign.get(id="5749080709922816")
+
+print(design)
+```
+### Query IssuingTokenDesigns 
+
+You can get a list of available designs given some filters.
+
+```python
+import starkinfra
+
+designs = starkinfra.issuingtokendesign.query(limit=5)
+
+for design in designs:
+    print(design)
+```
+
+## Get an IssuingTokenDesign PDF
+
+A design PDF can be retrieved by its id. 
+
+```python
+import starkinfra
+
+pdf = starkinfra.issuingtokendesign.pdf(id="5155165527080960")
+
+with open("design.pdf", "wb") as file:
+    file.write(pdf)
+```
+
 
 ### Process Purchase authorizations
 
@@ -831,7 +1038,7 @@ If you do not approve or decline the authorization within 2 seconds, the authori
 ```python
 import starkinfra
 
-request = listen()  # this is the method you made to get the events posted to your webhook endpoint
+request = listen()  # this is the method you made to get the events posted to your tokenActivationUrl endpoint
 
 authorization = starkinfra.issuingpurchase.parse(
     content=request.data.decode("utf-8"),

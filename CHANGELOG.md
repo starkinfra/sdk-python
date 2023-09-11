@@ -15,6 +15,11 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ## [Unreleased]
 ### Added
 - merchant_category_type, description and holder_id attributes to IssuingPurchase resource
+- IssuingToken resource
+- IssuingTokenLog resource
+- IssuingTokenDesign resource
+- IssuingTokenRequest sub-resource
+- IssuingTokenActivation sub-resource
 
 ## [0.9.0] - 2023-06-21
 ### Added

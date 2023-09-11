@@ -40,3 +40,4 @@ def query(search=None, user=None):
         search=search,
         user=user,
     )
+    

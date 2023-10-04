@@ -14,6 +14,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- bacen_id attribute to PixClaim, PixChargeback, PixInfraction
 - merchant_category_type, description and holder_id attributes to IssuingPurchase resource
 - IssuingToken resource
 - IssuingTokenLog resource

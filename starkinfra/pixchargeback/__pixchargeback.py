@@ -20,6 +20,7 @@ class PixChargeback(Resource):
     - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixChargeback is created. ex: "5656565656565656"
+    - bacen_id [string]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
     - analysis [string]: analysis that led to the result.
     - sender_bank_code [string]: bank_code of the Pix participant that created the PixChargeback. ex: "20018183"
     - receiver_bank_code [string]: bank_code of the Pix participant that received the PixChargeback. ex: "20018183"
@@ -32,7 +33,7 @@ class PixChargeback(Resource):
     - updated [datetime.datetime]: latest update datetime for the PixChargeback. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self,  amount, reference_id, reason, description=None, tags=None, id=None, analysis=None,
+    def __init__(self,  amount, reference_id, reason, description=None, tags=None, id=None, bacen_id=None, analysis=None,
                  sender_bank_code=None, receiver_bank_code=None, rejection_reason=None, reversal_reference_id=None,
                  result=None, flow=None, status=None, created=None, updated=None):
         Resource.__init__(self, id=id)
@@ -42,6 +43,7 @@ class PixChargeback(Resource):
         self.reason = reason
         self.description = description
         self.tags = tags
+        self.bacen_id = bacen_id
         self.analysis = analysis
         self.sender_bank_code = sender_bank_code
         self.receiver_bank_code = receiver_bank_code
@@ -84,7 +86,7 @@ def get(id, user=None):
     return rest.get_id(id=id, resource=_resource, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, ids=None, flow=None, tags=None, user=None):
+def query(limit=None, after=None, before=None, status=None, ids=None, bacen_id=None, flow=None, tags=None, user=None):
     """# Retrieve PixChargebacks
     Receive a generator of PixChargeback objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -93,6 +95,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, flow=None,
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "closed", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - bacen_id [string]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
     - flow [string, default None]: direction of the Pix Chargeback. Options: "in" for received chargebacks, "out" for chargebacks you requested
     - tags [list of strings, default None]: filter for tags of retrieved objects. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
@@ -107,13 +110,14 @@ def query(limit=None, after=None, before=None, status=None, ids=None, flow=None,
         before=check_date(before),
         status=status,
         ids=ids,
+        bacen_id=bacen_id,
         flow=flow,
         tags=tags,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, flow=None, tags=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, bacen_id=None, flow=None, tags=None, user=None):
     """# Retrieve PixChargebacks
     Receive a list of up to 100 PixChargeback objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
@@ -124,6 +128,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "closed", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - bacen_id [string]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
     - flow [string, default None]: direction of the Pix Chargeback. Options: "in" for received chargebacks, "out" for chargebacks you requested
     - tags [list of strings, default None]: filter for tags of retrieved objects. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
@@ -139,6 +144,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
         before=check_date(before),
         status=status,
         ids=ids,
+        bacen_id=bacen_id,
         flow=flow,
         tags=tags,
         user=user,

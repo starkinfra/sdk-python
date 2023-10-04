@@ -36,6 +36,7 @@ class TestPixClaimQuery(TestCase):
             flow="out",
             key_type="cpf",
             key_id="123.456.789-09",
+            bacen_id="ccf9bd9c-e99d-999e-bab9-b999ca999f99"
         )
         self.assertEqual(len(list(pix_claims)), 0)
 

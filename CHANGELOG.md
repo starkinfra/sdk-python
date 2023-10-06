@@ -20,6 +20,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - IssuingTokenDesign resource
 - IssuingTokenRequest sub-resource
 - IssuingTokenActivation sub-resource
+### Changed
+- sender_tax_id parameter to DynamicBrcode resource
 
 ## [0.9.0] - 2023-06-21
 ### Added

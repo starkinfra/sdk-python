@@ -2332,6 +2332,7 @@ send_response(  # you should also implement this method to respond the read requ
         reconciliation_id=invoice.reconciliation_id,
         amount=invoice.amount,
         sender_name=invoice.sender_name,
+        sender_tax_id=invoice.sender_tax_id,
         receiver_name=invoice.receiver_name,
         receiver_street_line=invoice.receiver_street_line,
         receiver_city=invoice.receiver_city,

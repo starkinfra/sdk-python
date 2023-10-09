@@ -132,10 +132,9 @@ def page(cursor=None, limit=None, after=None, before=None, external_id=None, uui
     )
 
 
-def response_due(version, created, due, key_id, status, reconciliation_id, nominal_amount, sender_name, receiver_name,
-                 receiver_street_line, receiver_city, receiver_state_code, receiver_zip_code, expiration=None,
-                 sender_tax_id=None, receiver_tax_id=None, fine=None, interest=None, discounts=None,
-                 description=None):
+def response_due(version, created, due, key_id, status, reconciliation_id, nominal_amount, sender_name, sender_tax_id,
+                 receiver_name, receiver_street_line, receiver_city, receiver_state_code, receiver_zip_code, expiration=None,
+                 receiver_tax_id=None, fine=None, interest=None, discounts=None, description=None):
     """# Helps you respond to a due DynamicBrcode Read
     When a Due DynamicBrcode is read by your user, a GET request containing the Brcode's 
     UUID will be made to your registered URL to retrieve additional information needed 
@@ -151,6 +150,7 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
     - reconciliation_id [string]: id to be used for conciliation of the resulting Pix transaction. This id must have from to 26 to 35 alphanumeric characters ex: "cd65c78aeb6543eaaa0170f68bd741ee"
     - nominal_amount [integer]: positive integer that represents the amount in cents of the resulting Pix transaction. ex: 1234 (= R$ 12.34)
     - sender_name [string]: sender's full name. ex: "Anthony Edward Stark"
+    - sender_tax_id [string]: sender's CPF (11 digits formatted or unformatted) or CNPJ (14 digits formatted or unformatted). ex: "01.001.001/0001-01"
     - receiver_name [string]: receiver's full name. ex: "Jamie Lannister"
     - receiver_street_line [string]: receiver's main address. ex: "Av. Paulista, 200"
     - receiver_city [string]: receiver's address city name. ex: "Sao Paulo"
@@ -158,7 +158,6 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
     - receiver_zip_code [string]: receiver's address zip code. ex: "01234-567"
     ## Parameters (optional):
     - expiration [datime.timedelta or integer, default 86400 (1 day)]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR code cannot be paid anymore.
-    - sender_tax_id [string, default None]: sender's CPF (11 digits formatted or unformatted) or CNPJ (14 digits formatted or unformatted). ex: "01.001.001/0001-01"
     - receiver_tax_id [string, default None]: receiver's CPF (11 digits formatted or unformatted) or CNPJ (14 digits formatted or unformatted). ex: "012.345.678-90"
     - fine [float, default 2.0]: Percentage charged if the sender pays after the due datetime.
     - interest [float, default 1.0]: Interest percentage charged if the sender pays after the due datetime.
@@ -176,13 +175,13 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
         "reconciliationId": reconciliation_id,
         "nominalAmount": nominal_amount,
         "senderName": sender_name,
+        "senderTaxId": sender_tax_id,
         "receiverName": receiver_name,
         "receiverStreetLine": receiver_street_line,
         "receiverCity": receiver_city,
         "receiverStateCode": receiver_state_code,
         "receiverZipCode": receiver_zip_code,
         "expiration": expiration,
-        "senderTaxId": sender_tax_id,
         "receiverTaxId": receiver_tax_id,
         "fine": fine,
         "interest": interest,

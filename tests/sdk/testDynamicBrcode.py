@@ -96,11 +96,11 @@ class TestDynamicBrcodeResponse(TestCase):
             sender_name="Anthony Edward Stark",
             sender_tax_id="012.345.678-90",
             receiver_name="Jamie Lannister",
+            receiver_tax_id="20.018.183/0001-8",
             receiver_street_line="Av. Paulista, 200",
             receiver_city="Sao Paulo",
             receiver_state_code="SP",
             receiver_zip_code="01234-567",
-            receiver_tax_id="20.018.183/0001-8",
             fine=uniform(0, 100),
             interest=uniform(0, 1),
             discounts=[

@@ -2334,6 +2334,7 @@ send_response(  # you should also implement this method to respond the read requ
         sender_name=invoice.sender_name,
         sender_tax_id=invoice.sender_tax_id,
         receiver_name=invoice.receiver_name,
+        receiver_tax_id=invoice.receiver_tax_id,
         receiver_street_line=invoice.receiver_street_line,
         receiver_city=invoice.receiver_city,
         receiver_state_code=invoice.receiver_state_code,

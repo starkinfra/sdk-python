@@ -32,7 +32,8 @@ class TestPixInfractionQuery(TestCase):
             status="failed",
             ids=["1", "2"],
             type="fraud",
-            flow="in"
+            flow="in",
+            bacen_id="ccf9bd9c-e99d-999e-bab9-b999ca999f99"
         )
         self.assertEqual(len(list(infraction_reports)), 0)
 

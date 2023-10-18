@@ -33,6 +33,7 @@ class TestPixChargebackQuery(TestCase):
             before=date.today(),
             status="failed",
             ids=["1", "2"],
+            bacen_id="ccf9bd9c-e99d-999e-bab9-b999ca999f99"
         )
         self.assertEqual(len(list(reversal_requests)), 0)
 

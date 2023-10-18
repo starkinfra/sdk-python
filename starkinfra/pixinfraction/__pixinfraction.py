@@ -18,6 +18,7 @@ class PixInfraction(Resource):
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixInfraction is created. ex: "5656565656565656"
+    - bacen_id [string, default None]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
     - credited_bank_code [string]: bank_code of the credited Pix participant in the reported transaction. ex: "20018183"
     - debited_bank_code [string]: bank_code of the debited Pix participant in the reported transaction. ex: "20018183"
     - flow [string]: direction of the PixInfraction flow. Options: "out" if you created the PixInfraction, "in" if you received the PixInfraction.
@@ -29,8 +30,8 @@ class PixInfraction(Resource):
     - updated [datetime.datetime]: latest update datetime for the PixInfraction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self,  reference_id, type, description=None, tags=None, id=None, credited_bank_code=None, debited_bank_code=None,
-                 flow=None, analysis=None, reported_by=None, result=None, status=None, created=None,
+    def __init__(self,  reference_id, type, description=None, tags=None, id=None, bacen_id=None, credited_bank_code=None,
+                 debited_bank_code=None, flow=None, analysis=None, reported_by=None, result=None, status=None, created=None,
                  updated=None):
         Resource.__init__(self, id=id)
 
@@ -38,6 +39,7 @@ class PixInfraction(Resource):
         self.type = type
         self.description = description
         self.tags = tags
+        self.bacen_id = bacen_id
         self.credited_bank_code = credited_bank_code
         self.debited_bank_code = debited_bank_code
         self.flow = flow
@@ -78,7 +80,7 @@ def get(id, user=None):
     return rest.get_id(id=id, resource=_resource, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, ids=None, type=None, flow=None, tags=None, user=None):
+def query(limit=None, after=None, before=None, status=None, ids=None, bacen_id=None, type=None, flow=None, tags=None, user=None):
     """# Retrieve PixInfractions
     Receive a generator of PixInfraction objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -87,6 +89,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. Options: ["created", "failed", "delivered", "closed", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - bacen_id [string, default None]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
     - type [list of strings, default None]: filter for the type of retrieved PixInfractions. Options: "fraud", "reversal", "reversalChargeback"
     - flow [string, default None]: direction of the PixInfraction flow. Options: "out" if you created the PixInfraction, "in" if you received the PixInfraction.
     - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
@@ -101,6 +104,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
         before=check_date(before),
         status=status,
         ids=ids,
+        bacen_id=bacen_id,
         type=type,
         flow=flow,
         tags=tags,
@@ -108,7 +112,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, type=None, flow=None, tags=None,
+def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, bacen_id=None, type=None, flow=None, tags=None,
          user=None):
     """# Retrieve paged PixInfractions
     Receive a list of up to 100 PixInfraction objects previously created in the Stark Infra API and the cursor to the next page.
@@ -120,6 +124,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. Options: ["created", "failed", "delivered", "closed", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - bacen_id [string, default None]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
     - type [list of strings, default None]: filter for the type of retrieved PixInfractions. Options: "fraud", "reversal", "reversalChargeback"
     - flow [string, default None]: direction of the PixInfraction flow. Options: "out" if you created the PixInfraction, "in" if you received the PixInfraction.
     - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
@@ -135,6 +140,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
         before=check_date(before),
         status=status,
         ids=ids,
+        bacen_id=bacen_id,
         type=type,
         flow=flow,
         tags=tags,

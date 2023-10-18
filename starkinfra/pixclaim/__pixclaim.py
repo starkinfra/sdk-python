@@ -21,6 +21,7 @@ class PixClaim(Resource):
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixClaim is created. ex: "5656565656565656"
+    - bacen_id [string, default None]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
     - status [string]: current PixClaim status. Options: "created", "failed", "delivered", "confirmed", "success", "canceled"
     - type [string]: type of Pix Claim. Options: "ownership", "portability"
     - key_type [string]: keyType of the claimed PixKey. Options: "CPF", "CNPJ", "phone" or "email"
@@ -32,8 +33,8 @@ class PixClaim(Resource):
     """
 
     def __init__(self, account_created, account_number, account_type, branch_code, name, tax_id, key_id, tags=None, id=None,
-                 status=None, type=None, key_type=None, flow=None, claimer_bank_code=None, claimed_bank_code=None, created=None,
-                 updated=None):
+                 bacen_id=None, status=None, type=None, key_type=None, flow=None, claimer_bank_code=None, claimed_bank_code=None,
+                 created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.account_created = check_datetime(account_created)
@@ -44,6 +45,7 @@ class PixClaim(Resource):
         self.tax_id = tax_id
         self.key_id = key_id
         self.tags = tags
+        self.bacen_id = bacen_id
         self.status = status
         self.type = type
         self.key_type = key_type
@@ -84,7 +86,7 @@ def get(id, user=None):
     return rest.get_id(id=id, resource=_resource, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, ids=None, type=None, key_type=None, key_id=None, flow=None, tags=None, user=None):
+def query(limit=None, after=None, before=None, status=None, ids=None, bacen_id=None, type=None, key_type=None, key_id=None, flow=None, tags=None, user=None):
     """# Retrieve PixClaims
     Receive a generator of PixClaim objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -93,6 +95,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "confirmed", "success", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - bacen_id [string, default None]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
     - type [string, default None]: filter for the type of retrieved PixClaims. Options: "ownership" or "portability"
     - key_type [string, default None]: filter for the PixKey type of retrieved PixClaims. Options: "cpf", "cnpj", "phone", "email" and "evp"
     - key_id [string, default None]: filter PixClaims linked to a specific PixKey id. ex: "+5511989898989"
@@ -110,6 +113,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
         before=check_date(before),
         status=status,
         ids=ids,
+        bacen_id=bacen_id,
         type=type,
         key_type=key_type,
         key_id=key_id,
@@ -119,7 +123,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, type=None,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, type=None, key_type=None, key_id=None, flow=None, tags=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, bacen_id=None, type=None, key_type=None, key_id=None, flow=None, tags=None, user=None):
     """# Retrieve paged PixClaims
     Receive a list of up to 100 PixClaim objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
@@ -130,6 +134,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "confirmed", "success", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - bacen_id [string, default None]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
     - type [string, default None]: filter for the type of retrieved PixClaims. Options: "ownership" or "portability"
     - key_type [string, default None]: filter for the PixKey type of retrieved PixClaims. Options: "cpf", "cnpj", "phone", "email" and "evp"
     - key_id [string, default None]: filter PixClaims linked to a specific PixKey id. Example: "+5511989898989"
@@ -147,6 +152,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
         before=check_date(before),
         status=status,
         ids=ids,
+        bacen_id=bacen_id,
         type=type,
         key_type=key_type,
         key_id=key_id,

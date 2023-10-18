@@ -1834,6 +1834,7 @@ claims = starkinfra.pixclaim.query(
     before=date(2022, 1, 12),
     status="registered",
     ids=["5729405850615808"],
+    bacen_id="ccf9bd9c-e99d-999e-bab9-b999ca999f99",
     type="ownership",
     flow="out",
     key_type="phone",
@@ -1964,6 +1965,7 @@ infractions = starkinfra.pixinfraction.query(
     before=date(2022, 1, 12),
     status="delivered",
     ids=["5155165527080960"],
+    bacen_id="ccf9bd9c-e99d-999e-bab9-b999ca999f99"
 )
 
 for infraction in infractions:
@@ -2078,7 +2080,8 @@ chargebacks = starkinfra.pixchargeback.query(
     after=date(2022, 1, 1),
     before=date(2022, 1, 12),
     status="registered",
-    ids=["5155165527080960"]
+    ids=["5155165527080960"],
+    bacen_id="ccf9bd9c-e99d-999e-bab9-b999ca999f99"
 )
 
 for chargeback in chargebacks:

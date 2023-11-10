@@ -12,12 +12,15 @@ class PixInfraction(Resource):
     to the Stark Infra API and returns the created object.
     ## Parameters (required):
     - reference_id [string]: end_to_end_id or return_id of the transaction being reported. ex: "E20018183202201201450u34sDGd19lz"
-    - type [string]: type of infraction report. Options: "fraud", "reversal", "reversalChargeback"
+    - type [string]: type of infraction report. Options: "reversal", "reversalChargeback"
+    - method [string]:  method of Pix Infraction. Options: "scam", "unauthorized", "coercion", "invasion", "other", "unknown"
     ## Parameters (optional):
     - description [string, default None]: description for any details that can help with the infraction investigation.
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
+    - fraud_type [string, default null]: type of Pix Fraud. Options: "identity", "mule", "scam", "unknown", "other"
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixInfraction is created. ex: "5656565656565656"
+    - fraud_id [string]: id of the Pix Fraud. ex: "5741774970552320"
     - bacen_id [string, default None]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
     - credited_bank_code [string]: bank_code of the credited Pix participant in the reported transaction. ex: "20018183"
     - debited_bank_code [string]: bank_code of the debited Pix participant in the reported transaction. ex: "20018183"
@@ -30,15 +33,18 @@ class PixInfraction(Resource):
     - updated [datetime.datetime]: latest update datetime for the PixInfraction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self,  reference_id, type, description=None, tags=None, id=None, bacen_id=None, credited_bank_code=None,
-                 debited_bank_code=None, flow=None, analysis=None, reported_by=None, result=None, status=None, created=None,
-                 updated=None):
+    def __init__(self,  reference_id, type, method, description=None, tags=None, fraud_type=None, id=None, fraud_id=None,
+                 bacen_id=None, credited_bank_code=None, debited_bank_code=None, flow=None, analysis=None, reported_by=None,
+                 result=None, status=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.reference_id = reference_id
         self.type = type
+        self.method = method
         self.description = description
         self.tags = tags
+        self.fraud_type = fraud_type
+        self.fraud_id = fraud_id
         self.bacen_id = bacen_id
         self.credited_bank_code = credited_bank_code
         self.debited_bank_code = debited_bank_code

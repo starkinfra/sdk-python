@@ -49,6 +49,8 @@ This SDK version is compatible with the Stark Infra API v2.
         - [PixClaim](#create-a-pixclaim): Claim a Pix Key
         - [PixDirector](#create-a-pixdirector): Create a Pix Director
         - [PixInfraction](#create-pixinfractions): Create Pix Infraction reports
+        - [PixFraud](#create-a-pixfraud): Create a Pix Fraud 
+        - [PixUser](#get-a-pixuser): Get fraud statistics of a user
         - [PixChargeback](#create-pixchargebacks): Create Pix Chargeback requests
         - [PixDomain](#query-pixdomains): View registered SPI participants certificates
         - [StaticBrcode](#create-staticbrcodes): Create static Pix BR codes
@@ -1942,7 +1944,8 @@ infractions = starkinfra.pixinfraction.create(
     infractions=[
         starkinfra.PixInfraction(
             reference_id="E20018183202201201450u34sDGd19lz",
-            type="fraud",
+            type="reversal",
+            method="scam"
         )
     ]
 )
@@ -2043,6 +2046,83 @@ import starkinfra
 log = starkinfra.pixinfraction.log.get("5155165527080960")
 
 print(log)
+```
+
+### Create a PixFraud
+
+Pix Frauds can be created by either participant or automatically when a Pix Infraction is accepted.
+
+```python
+import starkinfra
+
+frauds = starkinfra.pixfraud.create(
+    frauds=[
+        starkinfra.PixFraud(
+            external_id="my_external_id_1234",
+            type="mule",
+            tax_id="01234567890",
+        )
+    ]
+)
+
+for fraud in frauds:
+    print(fraud)
+```
+
+### Query Pix Frauds
+
+You can query multiple Pix frauds according to filters.
+
+```python
+import starkinfra
+from datetime import date
+
+frauds = starkinfra.pixfraud.query(
+    limit=1,
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 12),
+    status="created",
+    ids=["5155165527080960"]
+)
+
+for fraud in frauds:
+    print(fraud)
+```
+
+### Get a PixFraud
+
+After its creation, information on a Pix Fraud may be retrieved by its ID.
+
+```python
+import starkinfra
+
+fraud = starkinfra.pixfraud.get("5155165527080960")
+
+print(fraud)
+```
+
+### Cancel a PixFraud
+
+Cancel a specific Pix Fraud using its id.
+
+```python
+import starkinfra
+
+fraud = starkinfra.pixfraud.cancel("5155165527080960")
+
+print(fraud)
+```
+
+### Get a PixUser
+
+You can get a specific fraud statistics of a user with his taxId.
+
+```python
+import starkinfra
+
+user = starkinfra.pixuser.get("01234567890")
+
+print(user)
 ```
 
 ### Create PixChargebacks

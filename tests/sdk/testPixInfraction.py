@@ -31,7 +31,7 @@ class TestPixInfractionQuery(TestCase):
             before=date.today(),
             status="failed",
             ids=["1", "2"],
-            type="fraud",
+            type="reversal",
             flow="in",
             bacen_id="ccf9bd9c-e99d-999e-bab9-b999ca999f99"
         )

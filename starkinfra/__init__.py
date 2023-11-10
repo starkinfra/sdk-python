@@ -35,11 +35,17 @@ from .pixclaim.__pixclaim import PixClaim
 from . import pixdomain
 from .pixdomain.__pixdomain import PixDomain
 
+from . import pixfraud
+from .pixfraud.__pixfraud import PixFraud
+
 from . import pixinfraction
 from .pixinfraction.__pixinfraction import PixInfraction
 
 from . import pixchargeback
 from .pixchargeback.__pixchargeback import PixChargeback
+
+from . import pixuser
+from .pixuser.__pixuser import PixUser
 
 from . import issuingbalance
 from .issuingbalance.__issuingbalance import IssuingBalance

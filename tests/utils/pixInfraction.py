@@ -7,7 +7,8 @@ from starkinfra import PixInfraction, pixinfraction
 
 example_pix_infraction = PixInfraction(
     reference_id=get_end_to_end_id()[0],
-    type="fraud",
+    type="reversal",
+    method="scam"
 )
 
 

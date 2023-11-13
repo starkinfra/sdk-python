@@ -14,20 +14,19 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- PixUser resource
+- PixFraud resource
 - IssuingToken resource
 - IssuingTokenLog resource
 - IssuingTokenDesign resource
 - IssuingTokenRequest sub-resource
 - IssuingTokenActivation sub-resource
+- method, fraud_type and fraud_id parameters to PixInfraction resource
 - bacen_id attribute to PixClaim, PixChargeback, PixInfraction resources
 - merchant_category_type, description and holder_id attributes to IssuingPurchase resource
 ### Changed
-- sender_tax_id and receiver_tax_id parameters to DynamicBrcode resource
 - type parameter to PixInfraction resource
-### Added 
-- method, fraud_type and fraud_id parameters to PixInfraction resource
-- PixFraud resource
-- PixUser resource
+- sender_tax_id and receiver_tax_id parameters to DynamicBrcode resource
 
 ## [0.9.0] - 2023-06-21
 ### Added

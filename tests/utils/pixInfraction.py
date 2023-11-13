@@ -26,7 +26,7 @@ def getPixInfractionToPatch():
     infraction_reports = []
     cursor = None
     while len(infraction_reports) < 1:
-        reports, cursor = pixinfraction.page(status="created", limit=5, cursor=cursor)
+        reports, cursor = pixinfraction.page(status="delivered", limit=1, cursor=cursor)
         for report in reports:
             if report.flow == "out":
                 infraction_reports.append(report)

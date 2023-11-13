@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.10.1] - 2023-11-13
 ### Fixed
 - fraud_type parameter to PixInfraction resource
 

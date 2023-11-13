@@ -17,7 +17,7 @@ class PixInfraction(Resource):
     ## Parameters (optional):
     - description [string, default None]: description for any details that can help with the infraction investigation.
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
-    - fraud_type [string, default null]: type of Pix Fraud. Options: "identity", "mule", "scam", "unknown", "other"
+    - fraud_type [string, default None]: type of Pix Fraud. Options: "identity", "mule", "scam", "unknown", "other"
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixInfraction is created. ex: "5656565656565656"
     - fraud_id [string]: id of the Pix Fraud. ex: "5741774970552320"
@@ -154,12 +154,14 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     )
 
 
-def update(id, result, analysis=None, user=None):
+def update(id, result, fraud_type=None, analysis=None, user=None):
     """# Update PixInfraction entity
     Update a PixInfraction by passing id.
     ## Parameters (required):
     - id [string]: PixInfraction id. ex: '5656565656565656'
     - result [string]: result after the analysis of the PixInfraction. Options: "agreed", "disagreed"
+    ## Parameters (conditionally required):
+    - fraud_type [string, default None]: type of Pix Fraud. Options: "identity", "mule", "scam", "unknown", "other"
     ## Parameters (optional):
     - analysis [string, default None]: analysis that led to the result.
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
@@ -168,6 +170,7 @@ def update(id, result, analysis=None, user=None):
     """
     payload = {
         "result": result,
+        "fraud_type": fraud_type,
         "analysis": analysis,
     }
     return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)

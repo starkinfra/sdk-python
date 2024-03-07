@@ -1095,6 +1095,18 @@ purchase = starkinfra.issuingpurchase.get("5155165527080960")
 print(purchase)
 ```
 
+### Update an IssuingPurchase
+
+You can update a specific IssuingPurchase by its id.
+
+```python
+import starkinfra
+
+purchase = starkinfra.issuingpurchase.update("5155165527080960", description="teste", tags=["teste 1", "teste 2"])
+
+print(purchase)
+```
+
 ### Query IssuingPurchase logs
 
 Logs are pretty important to understand the life cycle of a purchase.

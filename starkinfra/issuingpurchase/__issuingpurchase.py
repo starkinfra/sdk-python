@@ -178,6 +178,23 @@ def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after
         user=user,
     )
 
+def update(id, description=None, tags=None, user=None):
+    """# Update IssuingPurchase entity
+    Update an IssuingPurchase by passing id.
+    ## Parameters (required):
+    - id [string]: IssuingPurchase id. ex: '5656565656565656'
+    ## Parameters (optional):
+    - tags [list of strings]: list of strings for tagging. ex: ["tony", "stark"]
+    - description [string]: IssuingPurchase description. ex: "Office Supplies"
+    ## Return:
+    - target IssuingPurchase with updated attributes
+    """
+    payload = {
+        "tags": tags,
+        "description": description
+    }
+    return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)
+
 
 def parse(content, signature, user=None):
     """# Create a single verified IssuingPurchase authorization request from a content string

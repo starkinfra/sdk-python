@@ -1,5 +1,9 @@
 from ..utils import rest
 from starkcore.utils.resource import Resource
+from starkcore.utils.api import from_api_json
+from .statistic.__statistic import Statistic
+from .statistic.__statistic import _sub_resource as _statistic_resource
+
 
 
 class PixUser(Resource):
@@ -14,7 +18,19 @@ class PixUser(Resource):
     def __init__(self, id, statistics=None):
         Resource.__init__(self, id=id)
 
-        self.statistics = statistics
+        self.statistics = _parse_statistic(statistics)
+
+
+def _parse_statistic(statistics):
+    if statistics is None:
+        return None
+    parsed_statistics = []
+    for statistic in statistics:
+        if isinstance(statistic, Statistic):
+            parsed_statistics.append(statistic)
+            continue
+        parsed_statistics.append(from_api_json(_statistic_resource, statistic))
+    return parsed_statistics
 
 
 _resource = {"class": PixUser, "name": "PixUser"}

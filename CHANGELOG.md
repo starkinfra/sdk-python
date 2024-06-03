@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- Statistic sub-resource
 
 ## [0.11.0] - 2024-03-19
 ### Added

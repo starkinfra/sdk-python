@@ -67,6 +67,7 @@ This SDK version is compatible with the Stark Infra API v2.
         - [Webhook](#create-a-webhook-subscription): Configure your webhook endpoints and subscriptions
         - [WebhookEvents](#process-webhook-events): Manage Webhook events
         - [WebhookEventAttempts](#query-failed-webhook-event-delivery-attempts-information): Query failed webhook event deliveries
+    - [Request](#request): Send a custom request to Stark Bank. This can be used to access features that haven't been mapped yet.
 - [Handling errors](#handling-errors)
 - [Help and Feedback](#help-and-feedback)
 
@@ -3211,6 +3212,146 @@ import starkinfra
 attempt = starkinfra.event.attempt.get("1616161616161616")
 
 print(attempt)
+```
+
+# request
+
+This resource allows you to send HTTP requests to StarkInfra routes.
+
+## GET
+
+You can perform a GET request to any StarkInfra route.
+
+It's possible to get a single resource using its id in the path.
+
+```python
+import starkinfra
+
+example_id = "5155165527080960"
+request = starkinfra.request.get(
+    path=f'/pix-request/{example_id}'
+)
+
+print(request)
+```
+
+You can also get the specific resource log,
+
+```python
+import starkinfra
+
+example_id = "5699165527090460"
+request = starkinfra.request.get(
+    path=f'/pix-request/log/{example_id}',
+)
+
+print(request)
+```
+
+This same method will be used to list all created items for the requested resource.
+
+```python
+import starkinfra
+
+after = "2024-01-01"
+before = "2024-02-01"
+cursor = None
+
+while True:
+    request = starkinfra.request.get(
+        path=f'/pix-request/',
+        query={
+            "after": after,
+            "before": before,
+            "cursor": cursor
+        }
+    )
+    cursor = request["cursor"]
+    if cursor is None:
+        break
+```
+
+To list logs, you will use the same logic as for getting a single log.
+
+```python
+import starkinfra
+
+after = "2024-01-01"
+before = "2024-02-01"
+cursor = None
+
+while True:
+    request = starkinfra.request.get(
+        path=f'/pix-request/log',
+        query={
+            "after": after,
+            "before": before,
+            "cursor": cursor
+        }
+    )
+    cursor = request["cursor"]
+    if cursor is None:
+        break
+```
+
+## POST
+
+You can perform a POST request to any StarkInfra route.
+
+This will create an object for each item sent in your request
+
+**Note**: It's not possible to create multiple resources simultaneously. You need to send separate requests if you want to create multiple resources, such as invoices and boletos.
+
+```python
+import starkinfra
+
+data = {
+    "holders": [
+        {
+            "name": "Jaime Lannister",
+            "externalId": "my_external_id",
+            "taxId": "012.345.678-90"
+        }
+    ]
+}
+request = starkinfra.request.post(
+    path="/issuing-holder",
+    body=data,
+)
+print(request)
+```
+
+## PATCH
+
+You can perform a PATCH request to any StarkInfra route.
+
+It's possible to update a single item of a StarkInfra resource.
+```python
+import starkinfra
+
+example_id = "5155165527080960"
+request = starkinfra.request.patch(
+    path=f'/issuing-holder/{example_id}',
+    body={
+        "tags": ["Arya", "Stark"]
+    }
+)
+print(request)
+```
+
+## DELETE
+
+You can perform a DELETE request to any StarkInfra route.
+
+It's possible to delete a single item of a StarkInfra resource.
+```python
+import starkinfra
+
+example_id = "5155165527080960"
+request = starkinfra.request.delete(
+    path=f'/issuing-holder/{self.example_id}'
+)
+print(request)        
 ```
 
 # Handling errors

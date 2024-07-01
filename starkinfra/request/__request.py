@@ -1,4 +1,5 @@
 from ..utils import rest
+from starkinfra import request_methods_prefix
 
 
 def get(path, query=None, user=None):
@@ -16,7 +17,9 @@ def get(path, query=None, user=None):
     return rest.get_raw(
         path=path,
         query=query,
-        user=user
+        user=user,
+        prefix=request_methods_prefix,
+        raiseException=False
     )
 
 
@@ -25,7 +28,7 @@ def post(path, body=None, query=None, user=None):
     Send a list of jsons and create any StarkInfra resource objects
     ## Parameters (required):
     - path [string]: StarkInfra resource's route. ex: "/pix-request/"
-    - body [dict]: request parameters. ex: {"pix-requests": [{"amount": 100, "name": "Iron Bank S.A.", "taxId": "20.018.183/0001-80"}]}
+    - body [dict]: request parameters. ex: {"requests": [{"amount": 100, "name": "Iron Bank S.A.", "taxId": "20.018.183/0001-80"}]}
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if StarkInfra.user
         was set before function call
@@ -37,7 +40,9 @@ def post(path, body=None, query=None, user=None):
         path=path,
         payload=body,
         query=query,
-        user=user
+        user=user,
+        prefix=request_methods_prefix,
+        raiseException=False
     )
 
 
@@ -56,7 +61,9 @@ def patch(path, body=None, user=None):
     return rest.patch_raw(
         path=path,
         payload=body,
-        user=user
+        user=user,
+        prefix=request_methods_prefix,
+        raiseException=False
     )
 
 
@@ -76,7 +83,9 @@ def put(path, body=None, user=None):
     return rest.put_raw(
         path=path,
         payload=body,
-        user=user
+        user=user,
+        prefix=request_methods_prefix,
+        raiseException=False
     )
 
 
@@ -96,5 +105,7 @@ def delete(path, body=None, user=None):
     return rest.delete_raw(
         path=path,
         payload=body,
-        user=user
+        user=user,
+        prefix=request_methods_prefix,
+        raiseException=False
     )

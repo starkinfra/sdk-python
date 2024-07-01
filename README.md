@@ -3230,7 +3230,7 @@ import starkinfra
 example_id = "5155165527080960"
 request = starkinfra.request.get(
     path=f'/pix-request/{example_id}'
-)
+).json()
 
 print(request)
 ```
@@ -3243,7 +3243,7 @@ import starkinfra
 example_id = "5699165527090460"
 request = starkinfra.request.get(
     path=f'/pix-request/log/{example_id}',
-)
+).json()
 
 print(request)
 ```
@@ -3265,7 +3265,7 @@ while True:
             "before": before,
             "cursor": cursor
         }
-    )
+    ).json()
     cursor = request["cursor"]
     if cursor is None:
         break
@@ -3288,7 +3288,7 @@ while True:
             "before": before,
             "cursor": cursor
         }
-    )
+    ).json()
     cursor = request["cursor"]
     if cursor is None:
         break
@@ -3317,7 +3317,7 @@ data = {
 request = starkinfra.request.post(
     path="/issuing-holder",
     body=data,
-)
+).json()
 print(request)
 ```
 
@@ -3335,7 +3335,7 @@ request = starkinfra.request.patch(
     body={
         "tags": ["Arya", "Stark"]
     }
-)
+).json()
 print(request)
 ```
 
@@ -3349,8 +3349,8 @@ import starkinfra
 
 example_id = "5155165527080960"
 request = starkinfra.request.delete(
-    path=f'/issuing-holder/{self.example_id}'
-)
+    path=f'/issuing-holder/{example_id}'
+).json()
 print(request)        
 ```
 

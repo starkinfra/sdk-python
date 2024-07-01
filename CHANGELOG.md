@@ -16,7 +16,9 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ### Added
 - request methods
 ### Changed
-- starkcore to v0.3.2
+- starkcore to v0.5.0
+### Fixed
+- request prefix param
 
 ## [0.11.0] - 2024-03-19
 ### Added

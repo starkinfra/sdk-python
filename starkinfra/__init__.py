@@ -2,6 +2,7 @@ version = "0.11.0"
 language = "en-US"
 timeout = 15
 user = None
+request_methods_prefix = "Joker"
 
 from starkcore import Project, Organization, key, error
 

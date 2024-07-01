@@ -15,12 +15,12 @@ class TestJokerGet(TestCase):
         example_id = starkinfra.request.get(
             path=f'/pix-request/',
             query={"limit": 1},
-        )["requests"][0]["id"]
+        ).json()["requests"][0]["id"]
 
         request = starkinfra.request.get(
             path=f'/pix-request/{example_id}',
             user=exampleProject
-        )
+        ).json()
         self.assertEqual(request["request"]["id"], example_id)
 
     def test_get_pagination(self):
@@ -38,7 +38,7 @@ class TestJokerGet(TestCase):
                     "before": before,
                     "cursor": cursor
                 }
-            )
+            ).json()
             cursor = request["cursor"]
             total_items += len(request["requests"])
             for item in request["requests"]:
@@ -66,16 +66,16 @@ class TestJokerPostAndDelete(TestCase):
         request = starkinfra.request.post(
             path="/issuing-holder",
             body=data,
-        )
+        ).json()
         example_id = request["holders"][0]["id"]
         created_example = starkinfra.request.get(
             path=f'/issuing-holder/{example_id}'
-        )["holder"]["externalId"]
+        ).json()["holder"]["externalId"]
         self.assertEqual(created_example, str(ext_id))
 
         request = starkinfra.request.delete(
             path=f'/issuing-holder/{example_id}'
-        )
+        ).json()
         self.assertEqual(request["holder"]["status"], "canceled")
 
 
@@ -85,17 +85,17 @@ class TestJokerPatch(TestCase):
         test_assertion = str(uuid())
         example_id = starkinfra.request.get(
             path=f'/issuing-holder/',
-            query={"limit": 1}
-        )["holders"][0]["id"]
+            query={"limit": 1, "status": "active"}
+        ).json()["holders"][0]["id"]
         starkinfra.request.patch(
             path=f'/issuing-holder/{example_id}',
             body={
                 "tags": [test_assertion]
             }
-        )
+        ).json()
         final_state = starkinfra.request.get(
             path=f'/issuing-holder/{example_id}',
-        )
+        ).json()
         self.assertEqual(final_state["holder"]["tags"],[test_assertion])
 
 

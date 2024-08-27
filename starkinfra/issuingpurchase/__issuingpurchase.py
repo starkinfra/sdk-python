@@ -15,6 +15,7 @@ class IssuingPurchase(Resource):
     - card_id [string]: unique id returned when IssuingCard is created. ex: "5656565656565656"
     - card_ending [string]: last 4 digits of the card number. ex: "1234"
     - purpose [string]: purchase purpose. ex: "purchase"
+    - installment_count [integer]: quantity of installments to be confirmed. Minimum = 1. ex: 12
     - amount [integer]: IssuingPurchase value in cents. Minimum = 0. ex: 1234 (= R$ 12.34)
     - tax [integer]: IOF amount taxed for international purchases. ex: 1234 (= R$ 12.34)
     - issuer_amount [integer]: issuer amount. ex: 1234 (= R$ 12.34)
@@ -52,12 +53,13 @@ class IssuingPurchase(Resource):
     """
 
     def __init__(self, holder_name=None, product_id=None, card_id=None, card_ending=None, purpose=None,
-                amount=None, tax=None, issuer_amount=None, issuer_currency_code=None, issuer_currency_symbol=None,
-                merchant_amount=None, merchant_currency_code=None, merchant_currency_symbol=None,
-                merchant_category_code=None, merchant_category_type=None, merchant_country_code=None, acquirer_id=None, merchant_id=None,
-                merchant_name=None, merchant_fee=None, wallet_id=None, method_code=None, score=None, end_to_end_id=None,
-                tags=None, id=None, issuing_transaction_ids=None, status=None, description=None, metadata=None, zip_code=None, updated=None, created=None,
-                is_partial_allowed=None, card_tags=None, holder_id=None, holder_tags=None):
+                 installment_count=None, amount=None, tax=None, issuer_amount=None, issuer_currency_code=None,
+                 issuer_currency_symbol=None, merchant_amount=None, merchant_currency_code=None,
+                 merchant_currency_symbol=None, merchant_category_code=None, merchant_category_type=None,
+                 merchant_country_code=None, acquirer_id=None, merchant_id=None, merchant_name=None, merchant_fee=None,
+                 wallet_id=None, method_code=None, score=None, end_to_end_id=None, tags=None, id=None,
+                 issuing_transaction_ids=None, status=None, description=None, metadata=None, zip_code=None,
+                 updated=None, created=None, is_partial_allowed=None, card_tags=None, holder_id=None, holder_tags=None):
         Resource.__init__(self, id=id)
 
         self.holder_name = holder_name
@@ -65,6 +67,7 @@ class IssuingPurchase(Resource):
         self.card_id = card_id
         self.card_ending = card_ending
         self.purpose = purpose
+        self.installment_count = installment_count
         self.amount = amount
         self.tax = tax
         self.issuer_amount = issuer_amount
@@ -177,6 +180,7 @@ def page(end_to_end_ids=None, holder_ids=None, card_ids=None, status=None, after
         status=status,
         user=user,
     )
+
 
 def update(id, description=None, tags=None, user=None):
     """# Update IssuingPurchase entity

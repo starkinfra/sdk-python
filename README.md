@@ -1103,7 +1103,7 @@ You can update a specific IssuingPurchase by its id.
 ```python
 import starkinfra
 
-purchase = starkinfra.issuingpurchase.update("5155165527080960", description="teste", tags=["teste 1", "teste 2"])
+purchase = starkinfra.issuingpurchase.update("5155165527080960", description="Dinner", tags=["customer-x", "reimbursement"])
 
 print(purchase)
 ```

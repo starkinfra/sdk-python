@@ -155,19 +155,18 @@ def parse(content, signature, user=None):
     ## Return:
     - Parsed PixReversal object
     """
-    request = parse_and_verify(
+    reversal = parse_and_verify(
         content=content,
         signature=signature,
         user=user,
         resource=_resource
     )
 
-    request.fee = request.fee or 0
-    request.tags = request.tags or []
-    request.external_id = request.external_id or ""
-    request.description = request.description or ""
+    reversal.fee = reversal.fee or 0
+    reversal.tags = reversal.tags or []
+    reversal.external_id = reversal.external_id or ""
     
-    return request
+    return reversal
 
 
 def response(status, reason=None):

@@ -15,6 +15,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ## [Unreleased]
 ### Added
 - installment data to IssuingPurchase resource
+### Fixed
+- PixReversal event parser
 
 ## [0.12.0] - 2024-07-01
 ### Added

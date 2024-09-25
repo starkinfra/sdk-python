@@ -14,6 +14,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- pixReversal description
+### Added
 - installment data to IssuingPurchase resource
 
 ## [0.12.0] - 2024-07-01

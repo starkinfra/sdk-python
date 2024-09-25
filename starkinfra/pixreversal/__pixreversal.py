@@ -31,7 +31,7 @@ class PixReversal(Resource):
     """
 
     def __init__(self, amount, external_id, end_to_end_id, reason, tags=None, id=None, return_id=None,
-                 fee=None, status=None, flow=None, created=None, updated=None):
+                 fee=None, status=None, flow=None, description=None, created=None, updated=None):
         Resource.__init__(self, id=id)
         
         self.amount = amount
@@ -43,6 +43,7 @@ class PixReversal(Resource):
         self.fee = fee
         self.status = status
         self.flow = flow
+        self.description = description
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
 

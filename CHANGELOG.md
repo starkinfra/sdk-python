@@ -13,6 +13,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+## [0.14.0] - 2024-12-04
 ### Added
 - description to BR Code preview
 - data to Dynamic BR Code

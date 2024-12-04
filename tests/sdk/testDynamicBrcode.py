@@ -113,6 +113,12 @@ class TestDynamicBrcodeResponse(TestCase):
                 }
             ],
             description="teste Python",
+            data= [
+                {
+                    "key": "desconto para pagamento antecipado",
+                    "value": "3.80",
+                }
+            ]
         )
         print(response)
 
@@ -124,6 +130,12 @@ class TestDynamicBrcodeResponse(TestCase):
             status="paid",
             reconciliation_id="b77f5236-7ab9-4487-9f95-66ee6eaf1781",
             amount=100,
+            data=[
+                {
+                    "key": "desconto para pagamento antecipado",
+                    "value": "3.80",
+                }
+            ]
         )
         print(response)
         

@@ -134,7 +134,7 @@ def page(cursor=None, limit=None, after=None, before=None, external_id=None, uui
 
 def response_due(version, created, due, key_id, status, reconciliation_id, nominal_amount, sender_name, sender_tax_id,
                  receiver_name, receiver_tax_id, receiver_street_line, receiver_city, receiver_state_code, receiver_zip_code,
-                 expiration=None, fine=None, interest=None, discounts=None, description=None):
+                 expiration=None, fine=None, interest=None, discounts=None, description=None, data=None):
     """# Helps you respond to a due DynamicBrcode Read
     When a Due DynamicBrcode is read by your user, a GET request containing the Brcode's 
     UUID will be made to your registered URL to retrieve additional information needed 
@@ -158,6 +158,7 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
     - receiver_state_code [string]: receiver's address state code. ex: "SP"
     - receiver_zip_code [string]: receiver's address zip code. ex: "01234-567"
     ## Parameters (optional):
+    - data [list of dicts] : aditional info to the br code, example: data: [{key: "Anticipation discount", value: "3.80"}]
     - expiration [datime.timedelta or integer, default 86400 (1 day)]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR code cannot be paid anymore.
     - fine [float, default 2.0]: Percentage charged if the sender pays after the due datetime.
     - interest [float, default 1.0]: Interest percentage charged if the sender pays after the due datetime.
@@ -187,12 +188,13 @@ def response_due(version, created, due, key_id, status, reconciliation_id, nomin
         "interest": interest,
         "discounts": discounts,
         "description": description,
+        "data": data,
     }
     return dumps(api_json(params))
 
 
 def response_instant(version, created, key_id, status, reconciliation_id, amount, expiration=None, sender_name=None, sender_tax_id=None,
-                    description=None, amount_type=None, cash_amount=None, cashier_type=None, cashier_bank_code=None):
+                    description=None, amount_type=None, cash_amount=None, cashier_type=None, cashier_bank_code=None, data=None):
     """# Helps you respond to an instant DynamicBrcode Read
     When an instant DynamicBrcode is read by your user, a GET request containing the BR code's UUID will be made
     to your registered URL to retrieve additional information needed to complete the transaction.
@@ -208,6 +210,7 @@ def response_instant(version, created, key_id, status, reconciliation_id, amount
     - cashier_type [string, default None]: cashier's type. Required if the cashAmount is different from 0. Options: "merchant", "participant" and "other"
     - cashier_bank_code [string, default None]: cashier's bank code. Required if the cashAmount is different from 0. ex: "20018183"
     ## Parameters (optional):
+    - data [list of dicts] : aditional info to the br code, example: data: [{key: "Anticipation discount", value: "3.80"}]
     - cash_amount [integer, default 0]: amount to be withdrawn from the cashier in cents. ex: 1000 (= R$ 10.00)
     - expiration [datetime.timedelta or integer, default 86400 (1 day)]: time in seconds counted from the creation datetime until the DynamicBrcode expires. After expiration, the BR code cannot be paid anymore. Default value: 86400 (1 day)
     - sender_name [string, default None]: sender's full name. ex: "Anthony Edward Stark"
@@ -232,6 +235,7 @@ def response_instant(version, created, key_id, status, reconciliation_id, amount
         "senderTaxId": sender_tax_id,
         "amountType": amount_type,
         "description": description,
+        "data": data,
     }
     return dumps(api_json(params))
 

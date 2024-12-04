@@ -40,7 +40,7 @@ class BrcodePreview(Resource):
     def __init__(self, id, payer_id, account_number=None, account_type=None, amount=None, amount_type=None, bank_code=None,
                  branch_code=None, cash_amount=None, cashier_bank_code=None, cashier_type=None, discount_amount=None,
                  fine_amount=None, interest_amount=None, key_id=None, name=None, nominal_amount=None, end_to_end_id=None,
-                 reconciliation_id=None, reduction_amount=None, scheduled=None, status=None, tax_id=None):
+                 reconciliation_id=None, reduction_amount=None, scheduled=None, status=None, tax_id=None, description=None):
         Resource.__init__(self, id=id)
         
         self.payer_id = payer_id
@@ -65,6 +65,7 @@ class BrcodePreview(Resource):
         self.scheduled = check_datetime_or_date(scheduled)
         self.status = status
         self.tax_id = tax_id
+        self.description = description
 
 
 _resource = {"class": BrcodePreview, "name": "BrcodePreview"}

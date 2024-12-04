@@ -2461,7 +2461,7 @@ uuid = starkinfra.dynamicbrcode.verify(
 invoice = get_my_invoice(uuid) # you should implement this method to get the information of the BR code from its uuid
 
 send_response(  # you should also implement this method to respond the read request
-    starkinfra.issuingpurchase.response_instant(
+    starkinfra.dynamicbrcode.response_instant(
         version=invoice.version,
         created=invoice.created,
         key_id=invoice.key_id,

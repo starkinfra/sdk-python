@@ -13,6 +13,10 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+## [0.15.0] - 2025-02-18
+### Added
+- Add priority to pix request resource
+
 ## [0.14.0] - 2024-12-04
 ### Added
 - description to BR Code preview

@@ -14,6 +14,10 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 
+### Added
+- IssuingBillingTransaction resource
+- IssuingBillingInvoice resource
+
 ## [0.15.0] - 2025-03-19
 ### Added
 - operator_email and operator_phone to PixInfraction resource
@@ -22,7 +26,6 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ### Added
 - description to BR Code preview
 - data to Dynamic BR Code
-
 ### Fixed
 - readme
 

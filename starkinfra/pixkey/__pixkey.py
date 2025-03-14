@@ -147,7 +147,7 @@ def update(id, reason, account_created=None, account_number=None, account_type=N
     """# Update PixKey entity
     Update a PixKey parameters by passing id.
     ## Parameters (required):
-    - id [string]: PixKey id. ex: "5656565656565656"
+    - id [string]: PixKey id. Allowed types are: CPF, CNPJ, phone number or email. ex: "5656565656565656"
     - reason [string]: reason why the PixKey is being patched. Options: "branchTransfer", "reconciliation" or "userRequested"
     ## Parameters (optional):
     - account_created [datetime.date, datetime.datetime or string, default None]: opening Date or DateTime for the account to be linked. ex: "2022-01-01"

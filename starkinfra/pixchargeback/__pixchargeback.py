@@ -15,8 +15,9 @@ class PixChargeback(Resource):
     - amount [integer]: amount in cents to be reversed. ex: 11234 (= R$ 112.34)
     - reference_id [string]: end_to_end_id or return_id of the transaction to be reversed. ex: "E20018183202201201450u34sDGd19lz"
     - reason [string]: reason why the reversal was requested. Options: "fraud", "flaw", "reversalChargeback"
+    ## Parameters (conditionally required):
+    - description [string, default None]: description for the PixChargeback. Required if reason is "flaw".
     ## Parameters (optional):
-    - description [string, default None]: description for the PixChargeback.
     - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixChargeback is created. ex: "5656565656565656"
@@ -24,7 +25,7 @@ class PixChargeback(Resource):
     - analysis [string]: analysis that led to the result.
     - sender_bank_code [string]: bank_code of the Pix participant that created the PixChargeback. ex: "20018183"
     - receiver_bank_code [string]: bank_code of the Pix participant that received the PixChargeback. ex: "20018183"
-    - rejection_reason [string]: reason for the rejection of the Pix chargeback. Options: "noBalance", "accountClosed", "unableToReverse"
+    - rejection_reason [string]: reason for the rejection of the Pix chargeback. Options: "noBalance", "accountClosed", "invalidRequest", "unableToReverse"
     - reversal_reference_id [string]: return_id or end_to_end_id of the reversal transaction. ex: "D20018183202202030109X3OoBHG74wo"
     - result [string]: result after the analysis of the PixChargeback by the receiving party. Options: "rejected", "accepted", "partiallyAccepted"
     - flow [string]: direction of the Pix Chargeback. Options: "in" for received chargebacks, "out" for chargebacks you requested
@@ -158,10 +159,10 @@ def update(id, result, rejection_reason=None, reversal_reference_id=None, analys
     - id [string]: PixChargeback id. ex: '5656565656565656'
     - result [string]: result after the analysis of the PixChargeback. Options: "rejected", "accepted", "partiallyAccepted"
     ## Parameters (conditionally required):
-    - rejection_reason [string, default None]: if the PixChargeback is rejected a reason is required. Options: "noBalance", "accountClosed", "unableToReverse",
+    - rejection_reason [string, default None]: if the PixChargeback is rejected a reason is required. Options: "noBalance", "accountClosed", "invalidRequest", "unableToReverse"
+    - analysis [string, default None]: description of the analysis that led to the result. Required if rejection_reason is "invalidRequest".
     - reversal_reference_id [string, default None]: return_id of the reversal transaction. ex: "D20018183202201201450u34sDGd19lz"
     ## Parameters (optional):
-    - analysis [string, default None]: description of the analysis that led to the result.
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixChargeback with updated attributes

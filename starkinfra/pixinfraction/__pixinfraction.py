@@ -16,6 +16,8 @@ class PixInfraction(Resource):
     - method [string]:  method of Pix Infraction. Options: "scam", "unauthorized", "coercion", "invasion", "other", "unknown"
     ## Parameters (optional):
     - description [string, default None]: description for any details that can help with the infraction investigation.
+    - operator_email [string]: contact email of the operator responsible for the PixInfraction.
+    - operator_phone [string]: contact phone number of the operator responsible for the PixInfraction.
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     - fraud_type [string, default None]: type of Pix Fraud. Options: "identity", "mule", "scam", "unknown", "other"
     ## Attributes (return-only):
@@ -33,9 +35,10 @@ class PixInfraction(Resource):
     - updated [datetime.datetime]: latest update datetime for the PixInfraction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self,  reference_id, type, method, description=None, tags=None, fraud_type=None, id=None, fraud_id=None,
-                 bacen_id=None, credited_bank_code=None, debited_bank_code=None, flow=None, analysis=None, reported_by=None,
-                 result=None, status=None, created=None, updated=None):
+    def __init__(self,  reference_id, type, method, operator_email=None, operator_phone=None, description=None,
+                 tags=None, fraud_type=None, id=None, fraud_id=None, bacen_id=None, credited_bank_code=None,
+                 debited_bank_code=None, flow=None, analysis=None, reported_by=None, result=None, status=None,
+                 created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.reference_id = reference_id
@@ -44,6 +47,8 @@ class PixInfraction(Resource):
         self.description = description
         self.tags = tags
         self.fraud_type = fraud_type
+        self.operator_email = operator_email
+        self.operator_phone = operator_phone
         self.fraud_id = fraud_id
         self.bacen_id = bacen_id
         self.credited_bank_code = credited_bank_code

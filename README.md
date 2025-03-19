@@ -1958,7 +1958,9 @@ infractions = starkinfra.pixinfraction.create(
         starkinfra.PixInfraction(
             reference_id="E20018183202201201450u34sDGd19lz",
             type="reversal",
-            method="scam"
+            method="scam",
+            operator_email="fraud@company.com",
+            operator_phone="+5511989898989"
         )
     ]
 )

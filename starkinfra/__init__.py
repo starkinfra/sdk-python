@@ -51,6 +51,12 @@ from .pixuser.__pixuser import PixUser
 from . import issuingbalance
 from .issuingbalance.__issuingbalance import IssuingBalance
 
+from . import issuingbillinginvoice
+from .issuingbillinginvoice.__issuingbillinginvoice import IssuingBillingInvoice
+
+from . import issuingbillingtransaction
+from .issuingbillingtransaction.__issuingbillingtransaction import IssuingBillingTransaction
+
 from . import creditnote
 from .creditnote.__creditnote import CreditNote
 

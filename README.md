@@ -40,6 +40,8 @@ This SDK version is compatible with the Stark Infra API v2.
         - [Balance](#get-your-issuingbalance): View your issuing balance
         - [Transactions](#query-issuingtransactions): View the transactions that have affected your issuing balance
         - [Enums](#issuing-enums): Query enums related to the issuing purchases, such as merchant categories, countries and card purchase methods
+        - [Billing Invoices](#issuing-billinginvoice): View your current billing invoices
+        - [Billing Transactions](#issuing-billingtransaction): View your current billing transactions
     - [Pix](#pix)
         - [PixRequests](#create-pixrequests): Create Pix transactions
         - [PixReversals](#create-pixreversals): Reverse Pix transactions
@@ -1348,6 +1350,52 @@ methods = starkinfra.cardmethod.query(
 
 for method in methods:
     print(method)
+```
+
+### Query IssuingBillingInvoices
+
+You can query multiples available Billing Invoices using this resource.
+
+```python
+import starkinfra
+from datetime import date
+
+billing_invoices = starkinfra.issuingbillinginvoice.query(
+    after=date(2023, 1, 1),
+    before=date(2024, 3, 1),
+    limit=10
+)
+
+for billing_invoice in billing_invoices:
+    print(billing_invoice)
+```
+
+### Get an IssuingBillingInvoice
+
+```python
+import starkinfra
+
+billing_invoice = starkinfra.issuingbillinginvoice.get("9302937674764487")
+
+print(billing_invoice)
+```
+
+### Query IssuingBillingTransactions
+
+You can query multiples available Billing Transaction invoices using this resource.
+
+```python
+import starkinfra
+from datetime import date
+
+billing_transactions = starkinfra.issuingbillingtransaction.query(
+    after=date(2023, 1, 1),
+    before=date(2024, 3, 1),
+    limit=10
+)
+
+for billing_transaction in billing_transactions:
+    print(billing_transaction)
 ```
 
 ## Pix

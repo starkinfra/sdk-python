@@ -1785,7 +1785,8 @@ for key in keys:
 
 Information on a Pix key may be retrieved by its id and the tax ID of the consulting agent.
 An endToEndId must be informed so you can link any resulting purchases to this query,
-avoiding sweep blocks by the Central Bank.
+avoiding sweep blocks by the Central Bank. It is also possible to add the expand parameter 
+in order to retrieve statistics related to the key and/or its owner.
 
 ```python
 import starkinfra

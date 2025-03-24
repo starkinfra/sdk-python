@@ -15,7 +15,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ## [Unreleased]
 
 ### Added
-- expand optional parameter to PixKey resource
+- expand optional parameter to PixKey and BRCodePreview resources
 
 ### Added
 - IssuingBillingTransaction resource

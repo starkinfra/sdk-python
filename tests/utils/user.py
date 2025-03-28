@@ -5,6 +5,8 @@ import starkinfra
 bank_code = os.environ["SANDBOX_BANK_CODE"]
 template_id = os.environ["SANDBOX_TEMPLATE_ID"]
 
+signed_credit_note_id = os.environ["SANDBOX_SIGNED_CREDIT_NOTE_ID"]
+
 exampleProject = starkinfra.Project(
     environment="sandbox",
     id=os.environ["SANDBOX_INFRA_ID"],

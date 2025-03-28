@@ -1,6 +1,6 @@
 import starkinfra
 from unittest import TestCase, main
-from tests.utils.user import exampleProject
+from tests.utils.user import exampleProject, signed_credit_note_id
 from tests.utils.creditNote import generateExampleCreditNoteJson
 
 
@@ -14,6 +14,15 @@ class TestCreditNotePost(TestCase):
         notes = starkinfra.creditnote.create(notes)
         for note in notes:
             self.assertIsNotNone(note.id)
+
+
+class TestCreditNotePdfReceipt(TestCase):
+
+    def test_success(self):
+        creditNote = starkinfra.creditnote.get(signed_credit_note_id)
+        pdf = starkinfra.creditnote.pdf(creditNote.id)
+
+        self.assertGreater(len(pdf), 1000)
 
 
 class TestCreditNoteQuery(TestCase):

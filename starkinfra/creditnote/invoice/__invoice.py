@@ -1,6 +1,6 @@
 from starkcore.utils.api import from_api_json
 from starkcore.utils.resource import Resource
-from starkcore.utils.checks import check_datetime, check_datetime_or_date, check_timedelta
+from starkcore.utils.checks import check_datetime, check_timedelta, check_datetime_or_date
 from .__discount import Discount
 from .__discount import resource as _discount_resource
 from .__description import Description

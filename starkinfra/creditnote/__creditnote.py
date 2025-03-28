@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from .invoice.__invoice import Invoice
 from .invoice.__invoice import _resource as _invoice_resource
 from ..creditsigner.__creditsigner import CreditSigner
@@ -7,7 +8,7 @@ from .__transfer import _resource as _transfer_resource
 from ..utils import rest
 from starkcore.utils.api import from_api_json
 from starkcore.utils.resource import Resource
-from starkcore.utils.checks import check_datetime, check_date
+from starkcore.utils.checks import check_datetime, check_date, check_datetime_or_date
 
 
 class CreditNote(Resource):
@@ -20,7 +21,7 @@ class CreditNote(Resource):
     - template_id [string]: ID of the contract template on which the CreditNote will be based. ex: "0123456789101112"
     - name [string]: credit receiver's full name. ex: "Edward Stark"
     - tax_id [string]: credit receiver's tax ID (CPF or CNPJ). ex: "20.018.183/0001-80"
-    - scheduled [datetime.date, datetime.datetime or string]: date of transfer execution. ex: datetime(2020, 3, 10)
+    - scheduled [datetime.date, datetime.datetime or str]: date of transfer execution. ex: datetime(2020, 3, 10)
     - invoices [list of Invoice objects]: list of Invoice objects to be created and sent to the credit receiver. ex: [Invoice(), Invoice()]
     - payment [creditnote.Transfer]: payment entity to be created and sent to the credit receiver. ex: creditnote.Transfer()
     - signers [list of CreditSigner objects]: signer's name, contact and delivery method for the signature request. ex: [CreditSigner(), CreditSigner()]
@@ -62,7 +63,7 @@ class CreditNote(Resource):
         self.template_id = template_id
         self.name = name
         self.tax_id = tax_id
-        self.scheduled = scheduled
+        self.scheduled = check_datetime_or_date(scheduled)
         self.invoices = _parse_invoices(invoices)
         self.signers = _parse_signers(signers)
         self.external_id = external_id

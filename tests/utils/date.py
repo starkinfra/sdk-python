@@ -1,6 +1,9 @@
 from random import randint
 from datetime import datetime, timedelta, date
 
+def futureDateTime(days=7):
+    return datetime.now() + timedelta(days=days)
+
 
 def futureDate(days=7):
     return date.today() + timedelta(days=days)

@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from .invoice.__invoice import Invoice
 from .invoice.__invoice import _resource as _invoice_resource
 from ..creditsigner.__creditsigner import CreditSigner
@@ -7,7 +8,7 @@ from .__transfer import _resource as _transfer_resource
 from ..utils import rest
 from starkcore.utils.api import from_api_json
 from starkcore.utils.resource import Resource
-from starkcore.utils.checks import check_datetime, check_date
+from starkcore.utils.checks import check_datetime, check_date, check_datetime_or_date
 
 
 class CreditNote(Resource):
@@ -62,7 +63,7 @@ class CreditNote(Resource):
         self.template_id = template_id
         self.name = name
         self.tax_id = tax_id
-        self.scheduled = scheduled
+        self.scheduled = check_datetime_or_date(scheduled)
         self.invoices = _parse_invoices(invoices)
         self.signers = _parse_signers(signers)
         self.external_id = external_id

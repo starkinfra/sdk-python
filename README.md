@@ -2666,6 +2666,18 @@ note = starkinfra.creditnote.cancel("5155165527080960")
 
 print(note)
 ```
+
+### Retrieve CCB disbursement pdf file
+
+To retrieve CCB disbursement pdf file, use the `starkinfra.creditnote.pdf` method with a valid (signed) Credit Note ID.
+
+```python
+import starkinfra
+
+pdf = starkinfra.creditnote.pdf("5155165527080960")
+with open("credit_note_receipt.pdf", "wb") as file:
+    file.write(pdf)
+```
   
 ### Query CreditNote logs
 

@@ -1,3 +1,4 @@
+import os
 import starkinfra
 from unittest import TestCase, main
 from tests.utils.user import exampleProject
@@ -30,6 +31,13 @@ class TestCreditNotePost(TestCase):
         for note in response:
             self.assertIsNotNone(note.id)
         
+
+class TestCreditNotePdfReceipt(TestCase):
+
+    def test_success(self):
+        pdf = starkinfra.creditnote.pdf(os.environ["SANDBOX_SIGNED_CREDIT_NOTE_ID"])
+        self.assertGreater(len(pdf), 1000)
+
 
 class TestCreditNoteQuery(TestCase):
 

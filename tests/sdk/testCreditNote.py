@@ -1,7 +1,7 @@
 import starkinfra
 from unittest import TestCase, main
 from tests.utils.user import exampleProject
-from tests.utils.creditNote import generateExampleCreditNoteJson
+from tests.utils.creditNote import generateExampleCreditNoteIsoDatetimeJson, generateExampleCreditNoteJson, generateExampleCreditNoteStringDatesJson
 
 
 starkinfra.user = exampleProject
@@ -10,11 +10,26 @@ starkinfra.user = exampleProject
 class TestCreditNotePost(TestCase):
 
     def test_success(self):
-        notes = generateExampleCreditNoteJson(n=1)
-        notes = starkinfra.creditnote.create(notes)
-        for note in notes:
+        request = generateExampleCreditNoteJson(n=1)
+        response = starkinfra.creditnote.create(request)
+        self.assertTrue(len(request) == len(response))
+        for note in response:
             self.assertIsNotNone(note.id)
 
+    def test_success_iso_datetime(self):
+        request = generateExampleCreditNoteIsoDatetimeJson(n=1)
+        response = starkinfra.creditnote.create(request)
+        self.assertTrue(len(request) == len(response))
+        for note in response:
+            self.assertIsNotNone(note.id)
+
+    def test_success_string_datetime(self):
+        request = generateExampleCreditNoteStringDatesJson(n=1)
+        response = starkinfra.creditnote.create(request)
+        self.assertTrue(len(request) == len(response))
+        for note in response:
+            self.assertIsNotNone(note.id)
+        
 
 class TestCreditNoteQuery(TestCase):
 

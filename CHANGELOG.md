@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Fixed
+- CreditNote datetime properties
 
 ## [0.16.0] - 2025-03-31
 ### Added

@@ -230,3 +230,16 @@ def cancel(id, user=None):
     - canceled CreditNote object
     """
     return rest.delete_id(resource=_resource, id=id, user=user)
+
+
+def pdf(noteId, user=None):
+    """# Retrieve CCB disbursement
+    Receive a CCB disbursement pdf file.
+    ## Parameters (required):
+    - noteId [string]: object unique id. ex: "5656565656565656"
+    ## Parameters (optional):
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
+    ## Return:
+    - Transfer pdf file
+    """
+    return rest.get_content(resource=_resource, id=noteId, user=user, sub_resource_name="payment/pdf")

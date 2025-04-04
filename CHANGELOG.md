@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- CCB disbursement pdf file (`starkinfra.creditnote.pdf`)
 ### Fixed
 - CreditNote datetime properties
 

@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.17.0] - 2025-04-04
 ### Added
 - CCB disbursement pdf file (`starkinfra.creditnote.pdf`)
 ### Fixed

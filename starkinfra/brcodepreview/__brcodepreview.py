@@ -13,6 +13,7 @@ class BrcodePreview(Resource):
     - id [string]: BR Code from a Pix payment. This is also de information directly encoded in a QR Code. ex: "00020126580014br.gov.bcb.pix0136a629532e-7693-4846-852d-1bbff817b5a8520400005303986540510.005802BR5908T'Challa6009Sao Paulo62090505123456304B14A"
     - payer_id [string]: tax id (CPF/CNPJ) of the individual or business requesting the PixKey information. This id is used by the Central Bank to limit request rates. ex: "20.018.183/0001-80"
     ## Parameters (optional):
+    - expand [list of strings]: list of strings to retrieve fraud statistics related to the pixKey and its owner. Options: "keyStatistics", "ownerStatistics"
     - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
     ## Attributes (return-only):
     - account_number [string]: Payment receiver account number. ex: "1234567"
@@ -35,12 +36,15 @@ class BrcodePreview(Resource):
     - scheduled [datetime.datetime]: date of payment execution. ex: datetime(2020, 3, 10)
     - status [string]: Payment status. ex: "active", "paid", "canceled" or "unknown"
     - tax_id [string]: Payment receiver tax ID. ex: "012.345.678-90"
+    - keyStatistics [list of PixKey.Statistics, default []]: statistics associated with the key itself. ex: [PixKey.Statistics(after="2023-11-06T18:57:08.325090+00:00", source="pix-key")]
+    - ownerStatistics [list of PixKey.OwnerStatistics, default []]: statistics associated with legal or juridical person that owns the key. ex: [PixKey.OwnerStatistics(after="2023-11-06T18:57:08.325090+00:00", source="pix-key")]
     """
 
     def __init__(self, id, payer_id, account_number=None, account_type=None, amount=None, amount_type=None, bank_code=None,
                  branch_code=None, cash_amount=None, cashier_bank_code=None, cashier_type=None, discount_amount=None,
                  fine_amount=None, interest_amount=None, key_id=None, name=None, nominal_amount=None, end_to_end_id=None,
-                 reconciliation_id=None, reduction_amount=None, scheduled=None, status=None, tax_id=None, description=None):
+                 reconciliation_id=None, reduction_amount=None, scheduled=None, status=None, tax_id=None, description=None,
+                 expand=None, key_statistics=None, owner_statistics=None):
         Resource.__init__(self, id=id)
         
         self.payer_id = payer_id
@@ -66,6 +70,9 @@ class BrcodePreview(Resource):
         self.status = status
         self.tax_id = tax_id
         self.description = description
+        self.expand = expand
+        self.key_statistics = key_statistics
+        self.owner_statistics = owner_statistics
 
 
 _resource = {"class": BrcodePreview, "name": "BrcodePreview"}

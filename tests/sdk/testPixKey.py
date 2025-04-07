@@ -65,6 +65,18 @@ class TestPixKeyInfoGet(TestCase):
         self.assertIsNotNone(pix_key.id)
         self.assertEqual(pix_key.id, pix_key_id)
         print(pix_key)
+
+    def test_success_with_expand(self):
+        pix_keys = starkinfra.pixkey.query()
+        pix_key_id = next(pix_keys).id
+        pix_key = starkinfra.pixkey.get(
+            id=pix_key_id,
+            payer_id=TaxIdGenerator.taxId(),
+            expand=["statistics", "ownerStatistics"],
+        )
+        self.assertIn("statistics", str(pix_key))
+        self.assertIn("owner_statistics", str(pix_key))
+        print(pix_key)
     
     def test_success_ids(self):
         pix_keys = starkinfra.pixkey.query(limit=5)

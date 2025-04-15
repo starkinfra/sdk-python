@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- A way to resend a CCB token (`starkinfra.creditsigner.resend_token_one_signer`)
 
 ## [0.17.0] - 2025-04-04
 ### Added

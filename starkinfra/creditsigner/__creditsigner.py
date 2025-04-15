@@ -14,7 +14,7 @@ class CreditSigner(Resource):
     - id [string]: unique id returned when the CreditSigner is created. ex: "5656565656565656"
     """
 
-    def __init__(self, name, contact, method, id=None, status=None):
+    def __init__(self, name, contact, method, id=None):
         Resource.__init__(self, id=id)
         self.name = name
         self.contact = contact

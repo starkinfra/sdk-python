@@ -2678,7 +2678,19 @@ pdf = starkinfra.creditnote.pdf("5155165527080960")
 with open("credit_note_receipt.pdf", "wb") as file:
     file.write(pdf)
 ```
-  
+
+### CCB Token Resend
+
+You can resend the CCB token to the signers in case they missed the original email or link.
+
+```python
+import starkinfra
+
+note = starkinfra.creditnote.get("5155165527080960")
+for signer in note.signers:
+    starkinfra.creditnote.resend_token_one_signer(signer.id)
+``` 
+
 ### Query CreditNote logs
 
 You can query credit note logs to better understand CreditNote life cycles. 

@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Fixed
+- BrCodePreview status param documentation
 
 ## [0.17.0] - 2025-04-04
 ### Added

@@ -33,7 +33,7 @@ class BrcodePreview(Resource):
     - reconciliation_id [string]: Reconciliation ID linked to this payment. If the brcode is dynamic, the reconciliation_id will have from 26 to 35 alphanumeric characters, ex: "cd65c78aeb6543eaaa0170f68bd741ee". If the brcode is static, the reconciliation_id will have up to 25 alphanumeric characters "ah27s53agj6493hjds6836v49"
     - reduction_amount [integer]: Reduction value to discount from nominal_amount. ex: 1000
     - scheduled [datetime.datetime]: date of payment execution. ex: datetime(2020, 3, 10)
-    - status [string]: Payment status. ex: "active", "paid", "canceled" or "unknown"
+    - status [string]: Payment status. ex: "created", "paid", "canceled" or "expired"
     - tax_id [string]: Payment receiver tax ID. ex: "012.345.678-90"
     """
 

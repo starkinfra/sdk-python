@@ -51,7 +51,7 @@ class PixRequest(Resource):
 
     def __init__(self, amount, external_id, sender_name, sender_tax_id, sender_branch_code,
                  sender_account_number, sender_account_type, receiver_name, receiver_tax_id, receiver_bank_code,
-                 receiver_account_number, receiver_branch_code, receiver_account_type, end_to_end_id,
+                 receiver_account_number, receiver_branch_code, receiver_account_type, end_to_end_id, priority=None,
                  cashier_type=None, cashier_bank_code=None, cash_amount=None, receiver_key_id=None, description=None, 
                  reconciliation_id=None, initiator_tax_id=None, tags=None, method=None, id=None, fee=None,
                  status=None, flow=None, sender_bank_code=None, created=None, updated=None):
@@ -71,6 +71,7 @@ class PixRequest(Resource):
         self.receiver_branch_code = receiver_branch_code
         self.receiver_account_type = receiver_account_type
         self.end_to_end_id = end_to_end_id
+        self.priority = priority
         self.cashier_type = cashier_type
         self.cashier_bank_code = cashier_bank_code
         self.cash_amount = cash_amount

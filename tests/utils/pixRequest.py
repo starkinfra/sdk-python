@@ -1,3 +1,4 @@
+from re import sub
 from uuid import uuid4
 from copy import deepcopy
 from ..utils.user import bank_code
@@ -28,6 +29,10 @@ example_pix_request = PixRequest(
 def generateExamplePixRequestJson(n=1):
     pix_requests = []
     for _ in range(n):
+        is_initiated = choice([True, False])
+        initiator_tax_id = TaxIdGenerator.taxId() if is_initiated else None
+        initiator_bank_code = sub(r"\D", "", initiator_tax_id)[:8] if initiator_tax_id else None
+
         amount = randint(100000, 1000000)
         pix_request = deepcopy(example_pix_request)
         pix_request.amount = amount
@@ -43,9 +48,10 @@ def generateExamplePixRequestJson(n=1):
         pix_request.receiver_account_number = "{}-{}".format(randint(10000, 100000000), randint(0, 9))
         pix_request.receiver_branch_code = str(randint(1, 999))
         pix_request.receiver_account_type = choice(["checking", "savings", "salary", "payment"])
-        pix_request.end_to_end_id = endtoendid.create(bank_code)
+        pix_request.end_to_end_id = endtoendid.create(initiator_bank_code or bank_code)
         pix_request.description = choice([None, "Test description"])
-        pix_request.initiator_tax_id = TaxIdGenerator.taxId()
+        pix_request.priority = choice([None, "low", "high"])
+        pix_request.initiator_tax_id = initiator_tax_id if initiator_tax_id else None
         pix_request.cash_amount = randint(1000, 10000)
         pix_request.cashier_bank_code = choice(["18236120", "60701190", "00000000"])
         pix_request.cashier_type = choice(["merchant", "other", "participant"])

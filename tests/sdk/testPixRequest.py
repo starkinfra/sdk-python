@@ -13,9 +13,9 @@ class TestPixRequestPost(TestCase):
     def test_success(self):
         pix_requests = generateExamplePixRequestJson(n=5)
         pix_requests = starkinfra.pixrequest.create(pix_requests)
-        self.assertEqual(len(pix_requests), 5)
         for pix_request in pix_requests:
-            print(pix_request.id)
+            check_pix_request = starkinfra.pixrequest.get(pix_request.id)
+            self.assertEqual(check_pix_request.id, pix_request.id)
 
 
 class TestPixRequestQuery(TestCase):

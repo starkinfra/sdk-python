@@ -13,8 +13,10 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.18.0] - 2025-04-23
 ### Added
-- Add priority to pix request resource
+- priority to pix request resource
 ### Fixed
 - BrCodePreview status param documentation
 

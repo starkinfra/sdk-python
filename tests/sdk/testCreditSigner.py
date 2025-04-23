@@ -1,5 +1,5 @@
-import starkinfra
 from unittest import TestCase, main
+import starkinfra
 from starkinfra.creditsigner.__creditsigner import CreditSigner
 from tests.utils.creditNote import generateExampleCreditNoteJson
 from tests.utils.user import exampleProject
@@ -25,7 +25,10 @@ class TestCreditSignerResendToken(TestCase):
 
             res = starkinfra.creditsigner.resend_token_one_signer(signer.id)
             self.assertIsInstance(res, CreditSigner)
-
+    
+    def test_signer_not_found(self):
+        with self.assertRaises(starkinfra.error.InputErrors):
+            starkinfra.creditsigner.resend_token_one_signer("000")
 
 if __name__ == '__main__':
     main()

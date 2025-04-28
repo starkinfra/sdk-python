@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- expand as query parameter to pix key resource
 
 ## [0.18.0] - 2025-04-23
 ### Added

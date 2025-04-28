@@ -65,7 +65,7 @@ class TestPixKeyInfoGet(TestCase):
         self.assertIsNotNone(pix_key.id)
         self.assertEqual(pix_key.id, pix_key_id)
         print(pix_key)
-    
+
     def test_success_ids(self):
         pix_keys = starkinfra.pixkey.query(limit=5)
         pix_keys_ids_expected = [t.id for t in pix_keys]
@@ -75,6 +75,14 @@ class TestPixKeyInfoGet(TestCase):
         self.assertTrue(pix_keys_ids_result)
         self.assertEqual(pix_keys_ids_expected, pix_keys_ids_result)
 
+    def test_success_extend(self):
+        pix_keys = starkinfra.pixkey.query()
+        pix_key_id = next(pix_keys).id
+        pix_key = starkinfra.pixkey.get(id=pix_key_id, payer_id=TaxIdGenerator.taxId(), expand=["statistics", "owner_statistics"])
+        self.assertIsNotNone(pix_key.id)
+        self.assertEqual(pix_key.id, pix_key_id)
+        self.assertIsNotNone(pix_key.statistics)
+        self.assertIsNotNone(pix_key.owner_statistics)
 
 class TestPixKeyInfoDelete(TestCase):
 

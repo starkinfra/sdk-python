@@ -70,10 +70,14 @@ class TestPixKeyInfoGet(TestCase):
         pix_keys = starkinfra.pixkey.query(limit=5)
         pix_keys_ids_expected = [t.id for t in pix_keys]
         pix_keys_ids_result = [t.id for t in starkinfra.pixkey.query(ids=pix_keys_ids_expected)]
+        pix_keys_owner_statistics = [t.owner_statistics for t in starkinfra.pixkey.query(ids=pix_keys_ids_expected)]
+        pix_keys_statistics = [t.statistics for t in starkinfra.pixkey.query(ids=pix_keys_ids_expected)]
         pix_keys_ids_expected.sort()
         pix_keys_ids_result.sort()
         self.assertTrue(pix_keys_ids_result)
         self.assertEqual(pix_keys_ids_expected, pix_keys_ids_result)
+        self.assertIsNone(pix_keys_owner_statistics.owner_statistics)
+        self.assertIsNone(pix_keys_statistics.statistics)
 
     def test_success_extend(self):
         pix_keys = starkinfra.pixkey.query()

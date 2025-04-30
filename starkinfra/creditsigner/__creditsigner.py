@@ -1,6 +1,5 @@
-from starkcore.utils.resource import Resource
-
 from starkinfra.utils import rest
+from starkcore.utils.resource import Resource
 
 
 class CreditSigner(Resource):

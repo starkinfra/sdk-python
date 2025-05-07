@@ -1785,7 +1785,8 @@ for key in keys:
 
 Information on a Pix key may be retrieved by its id and the tax ID of the consulting agent.
 An endToEndId must be informed so you can link any resulting purchases to this query,
-avoiding sweep blocks by the Central Bank.
+avoiding sweep blocks by the Central Bank. It is also possible to add the expand parameter 
+in order to retrieve statistics related to the key and/or its owner.
 
 ```python
 import starkinfra
@@ -1794,6 +1795,7 @@ key = starkinfra.pixkey.get(
     "5155165527080960",
     payer_id="012.345.678-90",
     end_to_end_id=starkinfra.endtoendid.create("20018183"),
+    expand=[], #Options are "keyStatistics", "ownerStatistics"
 )
 
 print(key)
@@ -2542,7 +2544,8 @@ previews = starkinfra.brcodepreview.create([
     ),
     starkinfra.BrcodePreview(
         id="00020126430014br.gov.bcb.pix0121aryastark@hotmail.com5204000053039865406100.005802BR5910Arya Stark6014Rio de Janeiro6216051262678188104863042BA4",
-        payer_id="012.345.678-90"
+        payer_id="012.345.678-90",
+        expand=[],
     ),
 ])
 

@@ -32,6 +32,9 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [0.16.0] - 2025-03-31
 ### Added
+- expand optional parameter to PixKey and BRCodePreview resources
+
+### Added
 - IssuingBillingTransaction resource
 - IssuingBillingInvoice resource
 

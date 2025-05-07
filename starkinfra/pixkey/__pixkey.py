@@ -154,7 +154,7 @@ def update(id, reason, account_created=None, account_number=None, account_type=N
     Update a PixKey parameters by passing id.
     ## Parameters (required):
     - id [string]: PixKey id. Allowed types are: CPF, CNPJ, phone number or email. ex: "5656565656565656"
-    - reason [string]: reason why the PixKey is being patched. Options: "branchTransfer", "reconciliation" or "userRequested"
+    - reason [string]: reason why the PixKey is being patched. Options: "branchTransfer", "reconciliation", "userRequested" or "entryInvalid"
     ## Parameters (optional):
     - account_created [datetime.date, datetime.datetime or string, default None]: opening Date or DateTime for the account to be linked. ex: "2022-01-01"
     - account_number [string, default None]: number of the account to be linked. ex: "76543"
@@ -176,14 +176,15 @@ def update(id, reason, account_created=None, account_number=None, account_type=N
     return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)
 
 
-def cancel(id, user=None):
+def cancel(id, reason=None, user=None):
     """# Cancel a PixKey entity
     Cancel a PixKey entity previously created in the Stark Infra API
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
+    - reason [string, default userRequested]: reason why the PixKey is being cancelled. Options: "userRequested", "accountClosure", "fraud", "entryInvalid"
     ## Return:
     - canceled pixKey object
     """
-    return rest.delete_id(resource=_resource, id=id, user=user)
+    return rest.delete_id(resource=_resource, id=id, reason=reason, user=user)

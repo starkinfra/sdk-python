@@ -1817,12 +1817,15 @@ print(key)
 
 ### Cancel a PixKey
 
-Cancel a specific Pix Key using its id.
+Cancel a specific Pix Key using its id. You can inform an optional reason for the requested action.
 
 ```python
 import starkinfra
 
-key = starkinfra.pixkey.cancel("5155165527080960")
+key = starkinfra.pixkey.cancel(
+    id="5155165527080960",
+    reason="fraud",
+)
 
 print(key)
 ```

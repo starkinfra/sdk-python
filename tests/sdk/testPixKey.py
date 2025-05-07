@@ -90,10 +90,22 @@ class TestPixKeyInfoDelete(TestCase):
 
     def test_success(self):
         pix_key = next(starkinfra.pixkey.query(status="registered"))
-        deleted_pix_key = starkinfra.pixkey.cancel(pix_key.id)
+        deleted_pix_key = starkinfra.pixkey.cancel(
+            id=pix_key.id,
+            reason="userRequested",
+        )
         self.assertIsNotNone(deleted_pix_key.id)
         self.assertEqual(deleted_pix_key.id, pix_key.id)
 
+    def test_fail(self):
+        try:
+            pix_key = next(starkinfra.pixkey.query(status="registered"))
+            starkinfra.pixkey.cancel(
+                id=pix_key.id,
+                reason="invalid_reason",
+            )
+        except Exception as e:
+            self.assertEquals(e.message, '[{u\'message\': u\'Parameter "reason" must be contained in [userRequested, accountClosure, reconciliation, fraud, entryInvalid]\', u\'code\': u\'invalidReason\'}]')
 
 class TestPixKeyInfoPatch(TestCase):
 

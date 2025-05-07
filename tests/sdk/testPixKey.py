@@ -48,7 +48,6 @@ class TestPixKeyPage(TestCase):
         for _ in range(2):
             pix_keys, cursor = starkinfra.pixkey.page(limit=2, cursor=cursor)
             for pix_key in pix_keys:
-                print(pix_key)
                 self.assertFalse(pix_key.id in ids)
                 ids.append(pix_key.id)
             if cursor is None:
@@ -64,17 +63,28 @@ class TestPixKeyInfoGet(TestCase):
         pix_key = starkinfra.pixkey.get(id=pix_key_id, payer_id=TaxIdGenerator.taxId())
         self.assertIsNotNone(pix_key.id)
         self.assertEqual(pix_key.id, pix_key_id)
-        print(pix_key)
-    
+
     def test_success_ids(self):
         pix_keys = starkinfra.pixkey.query(limit=5)
         pix_keys_ids_expected = [t.id for t in pix_keys]
         pix_keys_ids_result = [t.id for t in starkinfra.pixkey.query(ids=pix_keys_ids_expected)]
+        pix_keys_owner_statistics = [t.owner_statistics for t in starkinfra.pixkey.query(ids=pix_keys_ids_expected) if t.owner_statistics != []]
+        pix_keys_statistics = [t.statistics for t in starkinfra.pixkey.query(ids=pix_keys_ids_expected) if t.statistics != []]
         pix_keys_ids_expected.sort()
         pix_keys_ids_result.sort()
         self.assertTrue(pix_keys_ids_result)
         self.assertEqual(pix_keys_ids_expected, pix_keys_ids_result)
+        self.assertListEqual(pix_keys_owner_statistics, [])
+        self.assertListEqual(pix_keys_statistics, [])
 
+    def test_success_extend(self):
+        pix_keys = starkinfra.pixkey.query()
+        pix_key_id = next(pix_keys).id
+        pix_key = starkinfra.pixkey.get(id=pix_key_id, payer_id=TaxIdGenerator.taxId(), expand=["statistics", "owner_statistics"])
+        self.assertIsNotNone(pix_key.id)
+        self.assertEqual(pix_key.id, pix_key_id)
+        self.assertIsNotNone(pix_key.statistics)
+        self.assertIsNotNone(pix_key.owner_statistics)
 
 class TestPixKeyInfoDelete(TestCase):
 
@@ -90,7 +100,6 @@ class TestPixKeyInfoPatch(TestCase):
     def test_success_cancel(self):
         pix_keys = starkinfra.pixkey.query(status="registered", type="phone", limit=1)
         for pix_key in pix_keys:
-            print(pix_key)
             self.assertIsNotNone(pix_key.id)
             self.assertEqual(pix_key.status, "registered")
             name = get_full_name()

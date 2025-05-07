@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.19.0] - 2025-05-07
 ### Added
 - reason parameter on pix key cancellation resource
 

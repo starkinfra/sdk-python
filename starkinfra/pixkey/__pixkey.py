@@ -28,10 +28,13 @@ class PixKey(Resource):
     - bank_name [string]: name of the bank that holds the account linked to the PixKey. ex: "StarkBank"
     - type [string]: type of the PixKey. Options: "cpf", "cnpj", "phone", "email" and "evp"
     - created [datetime.datetime]: creation datetime for the PixKey. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - statistics [list of Statistic objects]: list of objects with data regarding the Pix key statistics.
+    - owner_statistics [list of Statistic objects]: list of objects with data regarding the Pix user statistics.
     """
 
     def __init__(self, account_created, account_number, account_type, branch_code, name, tax_id, id=None, tags=None,
-                 owned=None, owner_type=None, status=None, bank_code=None, bank_name=None, type=None, created=None):
+                 owned=None, owner_type=None, status=None, bank_code=None, bank_name=None, type=None, created=None, statistics=None, owner_statistics=None):
+        
         Resource.__init__(self, id=id)
 
         self.account_created = check_datetime(account_created)
@@ -48,6 +51,8 @@ class PixKey(Resource):
         self.bank_name = bank_name
         self.type = type
         self.created = check_datetime(created)
+        self.statistics = statistics
+        self.owner_statistics = owner_statistics
 
 
 _resource = {"class": PixKey, "name": "PixKey"}
@@ -66,7 +71,7 @@ def create(key, user=None):
     return rest.post_single(resource=_resource, entity=key, user=user)
 
 
-def get(id, payer_id, end_to_end_id=None, user=None):
+def get(id, payer_id, end_to_end_id=None, user=None, expand=None):
     """# Retrieve a PixKey object
     Retrieve the PixKey object linked to your Workspace in the Stark Infra API by its id.
     ## Parameters (required):
@@ -75,11 +80,12 @@ def get(id, payer_id, end_to_end_id=None, user=None):
     ## Parameters (optional):
     - end_to_end_id [string, default None]: central bank's unique transaction id. If the request results in the creation of a PixRequest, the same endToEndId should be used. If this parameter is not passed, one endToEndId will be automatically created. Example: "E00002649202201172211u34srod19le"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
+    - expand [list of strings, default None]: fields to expand information. ex: ["statistics", "owner_statistics"]
     ## Return:
     - PixKey object that corresponds to the given id.
     """
 
-    return rest.get_id(id=id, payer_id=payer_id, end_to_end_id=end_to_end_id, resource=_resource, user=user)
+    return rest.get_id(id=id, payer_id=payer_id, end_to_end_id=end_to_end_id, resource=_resource, user=user, expand=expand)
 
 
 def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, type=None, user=None):

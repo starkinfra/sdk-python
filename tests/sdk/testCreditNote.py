@@ -39,6 +39,13 @@ class TestCreditNotePdfReceipt(TestCase):
         self.assertGreater(len(pdf), 1000)
 
 
+class TestCreditNoteSignPdf(TestCase):
+
+    def test_success(self):
+        pdf = starkinfra.creditnote.document_pdf(os.environ["SANDBOX_SIGNED_CREDIT_NOTE_ID"])
+        self.assertGreater(len(pdf), 1000)
+
+
 class TestCreditNoteQuery(TestCase):
 
     def test_success_after_before(self):

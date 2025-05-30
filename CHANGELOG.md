@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- Added `starkinfra.creditnote.document_pdf` function to retrieve CCB document PDF.
 
 ## [0.20.0] - 2025-05-13
 ### Added

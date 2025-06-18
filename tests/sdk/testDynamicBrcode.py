@@ -4,7 +4,7 @@ from unittest import TestCase, main
 from datetime import date, timedelta, datetime
 from tests.utils.user import exampleProject
 from starkcore.error import InvalidSignatureError
-from tests.utils.dynamicBrcode import generateExampleDynamicBrcodeJson
+from tests.utils.dynamicBrcode import create_dynamic_brcode_by_type
 
 starkinfra.user = exampleProject
 
@@ -52,13 +52,40 @@ class TestDynamicBrcodeGet(TestCase):
 
 class TestDynamicBrcodePost(TestCase):
 
-    def test_success(self):
-        example_dynamic_brcode = generateExampleDynamicBrcodeJson()
-        dynamic_brcode = starkinfra.dynamicbrcode.create(
-            brcodes=[example_dynamic_brcode]
-        )
-        for brcode in dynamic_brcode:
-            print(brcode)
+    def test_create_instant_brcode(self):
+        type = "instant"
+        created_brcode = create_dynamic_brcode_by_type(type)
+        
+        self.assertEqual(created_brcode.type, type)
+        self.assertNotEqual(created_brcode.uuid, "")
+
+    def test_create_due_brcode(self):
+        type = "due"
+        created_brcode = create_dynamic_brcode_by_type(type)
+        
+        self.assertEqual(created_brcode.type, type)
+        self.assertNotEqual(created_brcode.uuid, "")
+
+    def test_create_subscription_brcode(self):
+        type = "subscription"
+        created_brcode = create_dynamic_brcode_by_type(type)
+        
+        self.assertEqual(created_brcode.type, type)
+        self.assertNotEqual(created_brcode.uuid, "")
+    
+    def test_create_subscription_and_instant_brcode(self):
+        type = "subscriptionAndInstant"
+        created_brcode = create_dynamic_brcode_by_type(type)
+        
+        self.assertEqual(created_brcode.type, type)
+        self.assertNotEqual(created_brcode.uuid, "")
+
+    def test_create_due_and_or_subscription_brcode(self):
+        type = "dueAndOrSubscription"
+        created_brcode = create_dynamic_brcode_by_type(type)
+        
+        self.assertEqual(created_brcode.type, type)
+        self.assertNotEqual(created_brcode.uuid, "")
 
 
 class TestDynamicBrcodeParseRight(TestCase):

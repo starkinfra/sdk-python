@@ -80,7 +80,7 @@ class BrcodePreview(Resource):
 _resource = {"class": BrcodePreview, "name": "BrcodePreview"}
 
 def _parse_subscription(subscription):
-    if subscription is None:
+    if not subscription or subscription is None:
         return None
     if isinstance(subscription, Subscription):
         return subscription

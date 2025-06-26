@@ -1,6 +1,9 @@
 from ..utils import rest
 from starkcore.utils.resource import Resource
+from starkcore.utils.api import from_api_json
+from ..subscription.__subscription import Subscription
 from starkcore.utils.checks import check_datetime_or_date
+from ..subscription.__subscription import _resource as _subscription_resource
 
 
 class BrcodePreview(Resource):
@@ -25,6 +28,7 @@ class BrcodePreview(Resource):
     - cashier_bank_code [string]: Cashier's bank code. ex: "20018183"
     - cashier_type [string]: Cashier's type. Options: "merchant", "participant" and "other"
     - discount_amount [integer]: Discount value calculated over nominal_amount. ex: 3000
+    - due [datetime.datetime]: BR Code due date. ex: datetime(2020, 3, 10)
     - fine_amount [integer]: Fine value calculated over nominal_amount. ex: 20000
     - interest_amount [integer]: Interest value calculated over nominal_amount. ex: 10000
     - key_id [string]: Receiver's PixKey id. ex: "+5511989898989"
@@ -34,13 +38,14 @@ class BrcodePreview(Resource):
     - reduction_amount [integer]: Reduction value to discount from nominal_amount. ex: 1000
     - scheduled [datetime.datetime]: date of payment execution. ex: datetime(2020, 3, 10)
     - status [string]: Payment status. ex: "created", "paid", "canceled" or "expired"
+    - subscription [Subscription]: BR code subscription information
     - tax_id [string]: Payment receiver tax ID. ex: "012.345.678-90"
     """
 
     def __init__(self, id, payer_id, account_number=None, account_type=None, amount=None, amount_type=None, bank_code=None,
-                 branch_code=None, cash_amount=None, cashier_bank_code=None, cashier_type=None, discount_amount=None,
+                 branch_code=None, cash_amount=None, cashier_bank_code=None, cashier_type=None, discount_amount=None, due=None,
                  fine_amount=None, interest_amount=None, key_id=None, name=None, nominal_amount=None, end_to_end_id=None,
-                 reconciliation_id=None, reduction_amount=None, scheduled=None, status=None, tax_id=None, description=None):
+                 reconciliation_id=None, reduction_amount=None, scheduled=None, subscription=None, status=None, tax_id=None, description=None):
         Resource.__init__(self, id=id)
         
         self.payer_id = payer_id
@@ -55,6 +60,9 @@ class BrcodePreview(Resource):
         self.cashier_bank_code = cashier_bank_code
         self.cashier_type = cashier_type
         self.discount_amount = discount_amount
+        if(due == ""):
+            due = None
+        self.due = check_datetime_or_date(due)
         self.fine_amount = fine_amount
         self.interest_amount = interest_amount
         self.key_id = key_id
@@ -64,12 +72,19 @@ class BrcodePreview(Resource):
         self.reduction_amount = reduction_amount
         self.scheduled = check_datetime_or_date(scheduled)
         self.status = status
+        self.subscription = _parse_subscription(subscription)
         self.tax_id = tax_id
         self.description = description
 
 
 _resource = {"class": BrcodePreview, "name": "BrcodePreview"}
 
+def _parse_subscription(subscription):
+    if not subscription or subscription is None:
+        return None
+    if isinstance(subscription, Subscription):
+        return subscription
+    return from_api_json(_subscription_resource, subscription)
 
 def create(previews, user=None):
     """# Retrieve BrcodePreviews

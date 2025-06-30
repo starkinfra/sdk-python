@@ -243,3 +243,16 @@ def pdf(noteId, user=None):
     - Transfer pdf file
     """
     return rest.get_content(resource=_resource, id=noteId, user=user, sub_resource_name="payment/pdf")
+
+
+def document_pdf(noteId, user=None):
+    """# Retrieve CCB document
+    Receive a CCB document pdf file.
+    ## Parameters (required):
+    - noteId [string]: object unique id. ex: "5656565656565656"
+    ## Parameters (optional):
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
+    ## Return:
+    - CCB document pdf file
+    """
+    return rest.get_content(resource=_resource, id=noteId, user=user, sub_resource_name="pdf")

@@ -1,3 +1,4 @@
+from starkinfra.utils import rest
 from starkcore.utils.resource import Resource
 
 
@@ -20,3 +21,22 @@ class CreditSigner(Resource):
 
 
 _resource = {"class": CreditSigner, "name": "CreditSigner"}
+
+
+def resend_token(signerId: str, user=None):
+    """# Resend token to signer 
+    Resend token to a specific signer.
+    ## Parameters (required):
+    - signerId [string]: object unique id. ex: "5656565656565656"
+    ## Parameters (optional):
+    - user [Organization/Project object, default None]: Organization or Project object. 
+    Not necessary if starkinfra.user was set before function call.
+    ## Return:
+    - CreditSigner object with updated attributes
+    """
+    return rest.patch_id(
+        resource=_resource,
+        id=signerId,
+        user=user,
+        payload={"isSent": False},
+    )

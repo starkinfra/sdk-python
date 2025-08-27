@@ -14,6 +14,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- CreditSigner resource
 - CreditNote payment method
 
 ## [0.21.0] - 2025-06-27

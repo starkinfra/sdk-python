@@ -32,11 +32,20 @@ class TestCreditNotePost(TestCase):
             self.assertIsNotNone(note.id)
         
 
-class TestCreditNotePdfReceipt(TestCase):
+class TestCreditNotePdf(TestCase):
 
     def test_success(self):
         pdf = starkinfra.creditnote.pdf(os.environ["SANDBOX_SIGNED_CREDIT_NOTE_ID"])
-        self.assertGreater(len(pdf), 1000)
+        stringified_pdf = pdf[:4].decode('utf-8')
+        self.assertEqual(stringified_pdf, '%PDF')
+
+
+class TestCreditNotePdfReceipt(TestCase):
+
+    def test_success(self):
+        pdf = starkinfra.creditnote.payment(os.environ["SANDBOX_SIGNED_CREDIT_NOTE_ID"])
+        stringified_pdf = pdf[:4].decode('utf-8')
+        self.assertEqual(stringified_pdf, '%PDF')
 
 
 class TestCreditNoteQuery(TestCase):

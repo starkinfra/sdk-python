@@ -9,6 +9,7 @@ from ..pixclaim.log.__log import _resource as _pixclaim_log_resource
 from ..pixrequest.log.__log import _resource as _pixrequest_log_resource
 from ..pixreversal.log.__log import _resource as _pixreversal_log_resource
 from ..pixchargeback.log.__log import _resource as _pixchargeback_log_resource
+from ..pixdispute.log.__log import _resource as _pixdispute_log_resource
 from ..pixinfraction.log.__log import _resource as _pixinfraction_log_resource
 from ..issuingcard.log.__log import _resource as _issuingcard_log_resource
 from ..issuinginvoice.log.__log import _resource as _issuinginvoice_log_resource
@@ -19,6 +20,7 @@ _resource_by_subscription = {
     "pix-key": _pixkey_log_resource,
     "pix-claim": _pixclaim_log_resource,
     "pix-chargeback": _pixchargeback_log_resource,
+    "pix-dispute": _pixdispute_log_resource,
     "pix-infraction": _pixinfraction_log_resource,
     "pix-request.in": _pixrequest_log_resource,
     "pix-request.out": _pixrequest_log_resource,

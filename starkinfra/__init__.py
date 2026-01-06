@@ -132,6 +132,12 @@ from .issuingtokenrequest.__issuingtokenrequest import IssuingTokenRequest
 from . import issuingtokenactivation
 from .issuingtokenactivation.__issuingtokenactivation import IssuingTokenActivation
 
+from . import ledger
+from .ledger.__ledger import Ledger
+
+from . import ledgertransaction
+from .ledgertransaction.__ledgertransaction import LedgerTransaction
+
 from . import merchantcategory
 from .merchantcategory.__merchantcategory import MerchantCategory
 

@@ -14,7 +14,7 @@ class PixChargeback(Resource):
     ## Parameters (required):
     - amount [integer]: amount in cents to be reversed. ex: 11234 (= R$ 112.34)
     - reference_id [string]: end_to_end_id or return_id of the transaction to be reversed. ex: "E20018183202201201450u34sDGd19lz"
-    - reason [string]: reason why the reversal was requested. Options: "fraud", "flaw", "reversalChargeback"
+    - reason [string]: reason why the reversal was requested. Options: "fraud", "flaw", "reversalChargeback" and "pixAutomatico"
     ## Parameters (conditionally required):
     - description [string, default None]: description for the PixChargeback. Required if reason is "flaw".
     ## Parameters (optional):

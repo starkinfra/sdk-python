@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- pixAutomatico as new reason value for PixChargeback resource
 
 ## [0.23.0] - 2026-01-06
 ### Added

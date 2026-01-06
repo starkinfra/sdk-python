@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.23.0] - 2026-01-06
 ### Added
 - Ledger resource
 - LedgerLog resource

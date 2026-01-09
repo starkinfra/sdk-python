@@ -45,6 +45,9 @@ from .pixinfraction.__pixinfraction import PixInfraction
 from . import pixchargeback
 from .pixchargeback.__pixchargeback import PixChargeback
 
+from . import pixdispute
+from .pixdispute.__pixdispute import PixDispute
+
 from . import pixuser
 from .pixuser.__pixuser import PixUser
 

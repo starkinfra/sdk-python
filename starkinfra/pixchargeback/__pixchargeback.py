@@ -29,6 +29,13 @@ class PixChargeback(Resource):
     - reversal_reference_id [string]: return_id or end_to_end_id of the reversal transaction. ex: "D20018183202202030109X3OoBHG74wo"
     - result [string]: result after the analysis of the PixChargeback by the receiving party. Options: "rejected", "accepted", "partiallyAccepted"
     - flow [string]: direction of the Pix Chargeback. Options: "in" for received chargebacks, "out" for chargebacks you requested
+    - dispute_id [string]: id of the dispute associated with the PixChargeback.
+    - is_monitoring_required [bool]: indicates if monitoring is required for this chargeback.
+    - reversal_account_number [string]: account number for the reversal transaction.
+    - reversal_account_type [string]: account type for the reversal transaction.
+    - reversal_bank_code [string]: bank code for the reversal transaction.
+    - reversal_branch_code [string]: branch code for the reversal transaction.
+    - reversal_tax_id [string]: tax ID for the reversal transaction.
     - status [string]: current PixChargeback status. Options: "created", "failed", "delivered", "closed", "canceled"
     - created [datetime.datetime]: creation datetime for the PixChargeback. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the PixChargeback. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
@@ -36,7 +43,9 @@ class PixChargeback(Resource):
 
     def __init__(self,  amount, reference_id, reason, description=None, tags=None, id=None, bacen_id=None, analysis=None,
                  sender_bank_code=None, receiver_bank_code=None, rejection_reason=None, reversal_reference_id=None,
-                 result=None, flow=None, status=None, created=None, updated=None):
+                 result=None, flow=None, dispute_id=None, is_monitoring_required=None, reversal_account_number=None,
+                 reversal_account_type=None, reversal_bank_code=None, reversal_branch_code=None, reversal_tax_id=None,
+                 status=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.amount = amount
@@ -52,6 +61,13 @@ class PixChargeback(Resource):
         self.reversal_reference_id = reversal_reference_id
         self.result = result
         self.flow = flow
+        self.dispute_id = dispute_id
+        self.is_monitoring_required = is_monitoring_required
+        self.reversal_account_number = reversal_account_number
+        self.reversal_account_type = reversal_account_type
+        self.reversal_bank_code = reversal_bank_code
+        self.reversal_branch_code = reversal_branch_code
+        self.reversal_tax_id = reversal_tax_id
         self.status = status
         self.created = created
         self.updated = updated

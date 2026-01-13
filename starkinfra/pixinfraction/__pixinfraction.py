@@ -14,10 +14,10 @@ class PixInfraction(Resource):
     - reference_id [string]: end_to_end_id or return_id of the transaction being reported. ex: "E20018183202201201450u34sDGd19lz"
     - type [string]: type of infraction report. Options: "reversal", "reversalChargeback"
     - method [string]:  method of Pix Infraction. Options: "scam", "unauthorized", "coercion", "invasion", "other", "unknown"
-    ## Parameters (optional):
-    - description [string, default None]: description for any details that can help with the infraction investigation.
     - operator_email [string]: contact email of the operator responsible for the PixInfraction.
     - operator_phone [string]: contact phone number of the operator responsible for the PixInfraction.
+    ## Parameters (optional):
+    - description [string, default None]: description for any details that can help with the infraction investigation.
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     - fraud_type [string, default None]: type of Pix Fraud. Options: "identity", "mule", "scam", "unknown", "other"
     ## Attributes (return-only):
@@ -30,15 +30,17 @@ class PixInfraction(Resource):
     - analysis [string]: analysis that led to the result.
     - reported_by [string]: agent that reported the PixInfraction. Options: "debited", "credited"
     - result [string]: result after the analysis of the PixInfraction by the receiving party. Options: "agreed", "disagreed"
+    - amount [integer]: amount in cents of the reported transaction.
+    - dispute_id [string]: id of the PixDispute associated with the PixInfraction.
     - status [string]: current PixInfraction status. Options: "created", "failed", "delivered", "closed", "canceled"
     - created [datetime.datetime]: creation datetime for the PixInfraction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the PixInfraction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self,  reference_id, type, method, operator_email=None, operator_phone=None, description=None,
+    def __init__(self,  reference_id, type, method, operator_email, operator_phone, description=None,
                  tags=None, fraud_type=None, id=None, fraud_id=None, bacen_id=None, credited_bank_code=None,
-                 debited_bank_code=None, flow=None, analysis=None, reported_by=None, result=None, status=None,
-                 created=None, updated=None):
+                 debited_bank_code=None, flow=None, analysis=None, reported_by=None, result=None, amount=None,
+                 dispute_id=None, status=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.reference_id = reference_id
@@ -57,6 +59,8 @@ class PixInfraction(Resource):
         self.analysis = analysis
         self.reported_by = reported_by
         self.result = result
+        self.amount = amount
+        self.dispute_id = dispute_id
         self.status = status
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)

@@ -58,6 +58,7 @@ This SDK version is compatible with the Stark Infra API v2.
         - [StaticBrcode](#create-staticbrcodes): Create static Pix BR codes
         - [DynamicBrcode](#create-dynamicbrcodes): Create dynamic Pix BR codes
         - [BrcodePreview](#create-brcodepreviews): Read data from BR Codes before paying them
+        - [PixDispute](#create-pixdisputes): Create Pix Disputes
     - [Lending](#lending)
         - [CreditNote](#create-creditnotes): Create credit notes
         - [CreditPreview](#create-creditpreviews): Create credit previews
@@ -2528,7 +2529,7 @@ send_response(  # you should also implement this method to respond the read requ
 )
 ```
 
-## Create BrcodePreviews
+### Create BrcodePreviews
 
 You can create BrcodePreviews to preview BR Codes before paying them.
 
@@ -2548,6 +2549,102 @@ previews = starkinfra.brcodepreview.create([
 
 for preview in previews:
     print(preview)
+```
+
+### Create PixDisputes
+
+Pix disputes can be created when a fraud is detected creating a chain of transactions in order to reverse the funds to the origin.
+
+```python
+import starkinfra
+
+disputes = starkinfra.pixdispute.create([
+    starkinfra.PixDispute(
+        reference_id="E20018183202512191914WcfANNEIYnt",
+        method="scam",
+        operator_phone="+5511999999999",
+        operator_email="operator@example.com"
+    )
+])
+
+for dispute in disputes:
+    print(dispute)
+```
+
+**Note**: Instead of using PixDispute objects, you can also pass each element in dictionary format
+
+### Query PixDisputes
+
+You can query multiple PixDisputes according to filters.
+
+```python
+import starkinfra
+from datetime import date
+
+disputes = starkinfra.pixdispute.query(
+    limit=10,
+    after=date(2020, 1, 1),
+    before=date(2020, 4, 1),
+    status="success",
+    tags=["iron", "suit"],
+)
+
+for dispute in disputes:
+    print(dispute)
+```
+
+### Get a PixDispute
+
+After its creation, information on a PixDispute may be retrieved by its id. Its status indicates whether it has been paid.
+
+```python
+import starkinfra
+
+dispute = starkinfra.pixdispute.get("5155165527080960")
+
+print(dispute)
+```
+
+### Cancel a PixDispute
+
+Cancel a specific PixDispute using its id.
+
+```python
+import starkinfra
+
+dispute = starkinfra.pixdispute.cancel("5155165527080960")
+
+print(dispute)
+```
+
+### Query PixDispute logs
+
+You can query PixDispute logs to better understand PixDispute life cycles. 
+
+```python
+import starkinfra
+from datetime import date
+
+logs = starkinfra.pixdispute.log.query(
+    limit=50, 
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get a PixDispute log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.pixdispute.log.get("5155165527080960")
+
+print(log)
 ```
 
 ## Lending

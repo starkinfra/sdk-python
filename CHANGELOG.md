@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Changed
+- starkcore to v0.6.0
 
 ## [0.24.0] - 2026-01-13
 ### Added

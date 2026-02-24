@@ -2788,7 +2788,7 @@ import starkinfra
 
 note = starkinfra.creditnote.get("5155165527080960")
 for signer in note.signers:
-    starkinfra.creditnote.resend_token(signer.id)
+    starkinfra.creditsigner.resend_token(signer.id)
 ``` 
 
 ### Query CreditNote logs

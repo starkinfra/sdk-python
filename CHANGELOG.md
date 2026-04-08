@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+
+## [0.25.0] - 2026-04-08
 ### Added
 - IndividualAccountRequest and AccountRequestAttachment resources
 

@@ -66,6 +66,8 @@ This SDK version is compatible with the Stark Infra API v2.
     - [Identity](#identity)
         - [IndividualIdentity](#create-individualidentities): Create individual identities
         - [IndividualDocument](#create-individualdocuments): Create individual documents
+        - [IndividualAccountRequest](#create-individualaccountrequests): Create individual account requests
+        - [AccountRequestAttachment](#create-accountrequestattachments): Create account request attachments
     - [Webhook](#webhook):
         - [Webhook](#create-a-webhook-subscription): Configure your webhook endpoints and subscriptions
         - [WebhookEvents](#process-webhook-events): Manage Webhook events
@@ -3213,6 +3215,200 @@ You can also get a specific log by its id.
 import starkinfra
 
 log = starkinfra.individualdocument.log.get("5155165527080960")
+
+print(log)
+```
+
+### Create IndividualAccountRequests
+
+You can create an IndividualAccountRequest to request the opening of an account for a specific individual.
+
+```python
+import starkinfra
+
+requests = starkinfra.individualaccountrequest.create([
+    starkinfra.IndividualAccountRequest(
+        name="Walter White",
+        tax_id="012.345.678-90",
+        address="Rua das Flores, 123",
+        income=1000000,
+        tags=["breaking", "bad"]
+    )
+])
+
+for request in requests:
+    print(request)
+```
+
+**Note**: Instead of using IndividualAccountRequest objects, you can also pass each element in dictionary format
+
+### Query IndividualAccountRequests
+
+You can query multiple individual account requests according to filters.
+
+```python
+import starkinfra
+from datetime import date
+
+requests = starkinfra.individualaccountrequest.query(
+    limit=10,
+    after=date(2020, 1, 1),
+    before=date(2020, 4, 1),
+    status="success",
+    tags=["breaking", "bad"],
+)
+
+for request in requests:
+    print(request)
+```
+
+### Get an IndividualAccountRequest
+
+After its creation, information on an individual account request may be retrieved by its id.
+
+```python
+import starkinfra
+
+request = starkinfra.individualaccountrequest.get("5155165527080960")
+
+print(request)
+```
+
+### Update an IndividualAccountRequest
+
+You can update a specific individual account request by passing its id.
+
+```python
+import starkinfra
+
+request = starkinfra.individualaccountrequest.update("5155165527080960", status="processing")
+
+print(request)
+```
+
+### Query IndividualAccountRequest logs
+
+You can query individual account request logs to better understand individual account request life cycles.
+
+```python
+import starkinfra
+from datetime import date
+
+logs = starkinfra.individualaccountrequest.log.query(
+    limit=50,
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get an IndividualAccountRequest log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.individualaccountrequest.log.get("5155165527080960")
+
+print(log)
+```
+
+### Create AccountRequestAttachments
+
+You can create an AccountRequestAttachment to attach images of documents to a specific Individual Account Request.
+You must reference the desired individual account request by its id.
+
+```python
+import starkinfra
+
+attachments = starkinfra.accountrequestattachment.create([
+    starkinfra.AccountRequestAttachment(
+        type="identity-front",
+        content="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...",
+        account_request_id='5155165527080960',
+        tags=["breaking", "bad"]
+    ),
+    starkinfra.AccountRequestAttachment(
+        type="identity-back",
+        content="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...",
+        account_request_id='5155165527080960',
+        tags=["breaking", "bad"]
+    ),
+    starkinfra.AccountRequestAttachment(
+        type="selfie",
+        content="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...",
+        account_request_id='5155165527080960',
+        tags=["breaking", "bad"]
+    )
+])
+
+for attachment in attachments:
+    print(attachment)
+```
+
+**Note**: Instead of using AccountRequestAttachment objects, you can also pass each element in dictionary format
+
+### Query AccountRequestAttachments
+
+You can query multiple account request attachments according to filters.
+
+```python
+import starkinfra
+from datetime import date
+
+attachments = starkinfra.accountrequestattachment.query(
+    limit=10,
+    after=date(2020, 1, 1),
+    before=date(2020, 4, 1),
+    status="success",
+    tags=["breaking", "bad"],
+)
+
+for attachment in attachments:
+    print(attachment)
+```
+
+### Get an AccountRequestAttachment
+
+After its creation, information on an account request attachment may be retrieved by its id.
+
+```python
+import starkinfra
+
+attachment = starkinfra.accountrequestattachment.get("5155165527080960")
+
+print(attachment)
+```
+
+### Query AccountRequestAttachment logs
+
+You can query account request attachment logs to better understand account request attachment life cycles.
+
+```python
+import starkinfra
+from datetime import date
+
+logs = starkinfra.accountrequestattachment.log.query(
+    limit=50,
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get an AccountRequestAttachment log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.accountrequestattachment.log.get("5155165527080960")
 
 print(log)
 ```

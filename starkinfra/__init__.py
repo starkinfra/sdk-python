@@ -1,4 +1,4 @@
-version = "0.24.1"
+version = "0.25.0"
 language = "en-US"
 timeout = 15
 user = None

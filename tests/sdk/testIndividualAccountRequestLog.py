@@ -1,0 +1,25 @@
+import starkinfra
+from unittest import TestCase, main
+from tests.utils.user import exampleProject
+
+starkinfra.user = exampleProject
+
+
+class TestIndividualAccountRequestLogQuery(TestCase):
+
+    def test_success(self):
+        logs = starkinfra.individualaccountrequest.log.query(limit=10)
+        for log in logs:
+            self.assertEqual(log.id, str(log.id))
+
+
+class TestIndividualAccountRequestLogGet(TestCase):
+
+    def test_success(self):
+        logs = starkinfra.individualaccountrequest.log.query(limit=1)
+        log = starkinfra.individualaccountrequest.log.get(id=next(logs).id)
+        self.assertEqual(log.id, str(log.id))
+
+
+if __name__ == '__main__':
+    main()

@@ -78,6 +78,12 @@ from .individualidentity.__individualidentity import IndividualIdentity
 from . import individualdocument
 from .individualdocument.__individualdocument import IndividualDocument
 
+from . import individualaccountrequest
+from .individualaccountrequest.__individualaccountrequest import IndividualAccountRequest
+
+from . import accountrequestattachment
+from .accountrequestattachment.__accountrequestattachment import AccountRequestAttachment
+
 from . import dynamicbrcode
 from .dynamicbrcode.__dynamicbrcode import DynamicBrcode
 

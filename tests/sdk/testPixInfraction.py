@@ -11,11 +11,10 @@ starkinfra.user = exampleProject
 class TestPixInfractionPostAndDelete(TestCase):
     def test_success(self):
         infraction_reports = generateExamplePixInfractionsJson(n=2)
-        infraction_reports = starkinfra.pixinfraction.create(infraction_reports)
-        self.assertEqual(len(infraction_reports), 2)
-        for infraction_report in infraction_reports:
-            deleted_infraction_report = starkinfra.pixinfraction.cancel(infraction_report.id)
-            self.assertEqual(deleted_infraction_report.status, "canceled")
+        with self.assertRaises(starkinfra.error.StarkError) as context:
+            starkinfra.pixinfraction.create(infraction_reports)
+        self.assertEqual(context.exception.args[0][0]["code"], "deprecated")
+        self.assertEqual(context.exception.args[0][0]["message"], "Function deprecated since v0.28.0")
 
 
 class TestPixInfractionQuery(TestCase):
@@ -77,11 +76,10 @@ class TestPixInfractionInfoGet(TestCase):
 class TestPixInfractionInfoDelete(TestCase):
 
     def test_success(self):
-        infraction_report = starkinfra.pixinfraction.create(generateExamplePixInfractionsJson())[0]
-        deleted_infraction_report = starkinfra.pixinfraction.cancel(infraction_report.id)
-        self.assertIsNotNone(deleted_infraction_report.id)
-        self.assertEqual(deleted_infraction_report.id, infraction_report.id)
-        self.assertEqual(deleted_infraction_report.status, "canceled")
+        with self.assertRaises(starkinfra.error.StarkError) as context:
+            starkinfra.pixinfraction.create(generateExamplePixInfractionsJson())
+        self.assertEqual(context.exception.args[0][0]["code"], "deprecated")
+        self.assertEqual(context.exception.args[0][0]["message"], "Function deprecated since v0.28.0")
 
 
 class TestPixInfractionInfoPatch(TestCase):

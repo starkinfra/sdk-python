@@ -51,6 +51,12 @@ from .pixdispute.__pixdispute import PixDispute
 from . import pixuser
 from .pixuser.__pixuser import PixUser
 
+from . import pixpullsubscription
+from .pixpullsubscription.__pixpullsubscription import PixPullSubscription
+
+from . import pixpullrequest
+from .pixpullrequest.__pixpullrequest import PixPullRequest
+
 from . import issuingbalance
 from .issuingbalance.__issuingbalance import IssuingBalance
 

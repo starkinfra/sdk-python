@@ -11,6 +11,8 @@ from ..pixreversal.log.__log import _resource as _pixreversal_log_resource
 from ..pixchargeback.log.__log import _resource as _pixchargeback_log_resource
 from ..pixdispute.log.__log import _resource as _pixdispute_log_resource
 from ..pixinfraction.log.__log import _resource as _pixinfraction_log_resource
+from ..pixpullsubscription.log.__log import _resource as _pixpullsubscription_log_resource
+from ..pixpullrequest.log.__log import _resource as _pixpullrequest_log_resource
 from ..issuingcard.log.__log import _resource as _issuingcard_log_resource
 from ..issuinginvoice.log.__log import _resource as _issuinginvoice_log_resource
 from ..issuingpurchase.log.__log import _resource as _issuingpurchase_log_resource
@@ -26,6 +28,8 @@ _resource_by_subscription = {
     "pix-request.out": _pixrequest_log_resource,
     "pix-reversal.in": _pixreversal_log_resource,
     "pix-reversal.out": _pixreversal_log_resource,
+    "pix-pull-subscription": _pixpullsubscription_log_resource,
+    "pix-pull-request": _pixpullrequest_log_resource,
     "issuing-card": _issuingcard_log_resource,
     "issuing-invoice": _issuinginvoice_log_resource,
     "issuing-purchase": _issuingpurchase_log_resource,
@@ -43,7 +47,7 @@ class Event(Resource):
     - log [Log]: a Log object from one of the subscribed services (PixRequestLog, PixReversalLog)
     - created [datetime.datetime]: creation datetime for the notification Event. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - is_delivered [bool]: true if the Event has been successfully delivered to the user url. ex: False
-    - subscription [string]: service that triggered this Event. Options: "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out", "pix-key", "pix-claim", "pix-infraction", "pix-chargeback", "issuing-card", "issuing-invoice", "issuing-purchase", "credit-note"
+    - subscription [string]: service that triggered this Event. Options: "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out", "pix-key", "pix-claim", "pix-infraction", "pix-chargeback", "pix-dispute", "pix-pull-subscription", "pix-pull-request", "issuing-card", "issuing-invoice", "issuing-purchase", "credit-note"
     - workspace_id [string]: ID of the Workspace that generated this Event. Mostly used when multiple Workspaces have Webhooks registered to the same endpoint. ex: "4545454545454545"
     """
 

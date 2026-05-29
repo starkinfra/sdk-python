@@ -13,6 +13,10 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- IndividualAccountAttachment resource
+### Changed
+- IndividualAccountRequest address field to a structured object
 
 ## [0.25.0] - 2026-04-08
 ### Added

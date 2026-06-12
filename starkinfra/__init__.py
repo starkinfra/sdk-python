@@ -132,6 +132,9 @@ from .issuingstock.__issuingstock import IssuingStock
 from . import issuingrestock
 from .issuingrestock.__issuingrestock import IssuingRestock
 
+from . import issuingstockrule
+from .issuingstockrule.__issuingstockrule import IssuingStockRule
+
 from . import issuingdesign
 from .issuingdesign.__issuingdesign import IssuingDesign
 

@@ -23,7 +23,7 @@ class DynamicBrcode(Resource):
     - city [string]: receiver's city name. ex: "Rio de Janeiro"
     - external_id [string]: string that must be unique among all your DynamicBrcodes. Duplicated external ids will cause failures. ex: "my-internal-id-123456"
     ## Parameters (optional):
-    - type [string, default "instant"]: type of the DynamicBrcode. Options: "instant", "due"
+    - type [string, default "instant"]: type of the DynamicBrcode. Options: "instant", "due", "subscription", "subscriptionAndInstant", "dueAndOrSubscription"
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
     - id [string]: id returned on creation, this is the BR code. ex: "00020126360014br.gov.bcb.pix0114+552840092118152040000530398654040.095802BR5915Jamie Lannister6009Sao Paulo620705038566304FC6C"

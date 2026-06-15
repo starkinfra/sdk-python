@@ -20,11 +20,12 @@ class PixStatement(Resource):
     - id [string]: unique id returned when the PixStatement is created. ex: "5656565656565656"
     - status [string]: current PixStatement status. ex: "success" or "failed"
     - transaction_count [integer]: number of transactions that happened during the day that the PixStatement was requested. ex: 11
+    - chunk_count [integer]: number of chunks the statement file is split into. ex: 2
     - created [datetime.datetime]: creation datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the PixStatement. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, after, before, type, id=None, status=None, transaction_count=None, created=None, updated=None):
+    def __init__(self, after, before, type, id=None, status=None, transaction_count=None, chunk_count=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.after = check_date(after)
@@ -32,6 +33,7 @@ class PixStatement(Resource):
         self.type = type
         self.status = status
         self.transaction_count = transaction_count
+        self.chunk_count = chunk_count
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
 

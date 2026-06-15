@@ -88,7 +88,7 @@ def get(id, payer_id, end_to_end_id=None, user=None, expand=None):
     return rest.get_id(id=id, payer_id=payer_id, end_to_end_id=end_to_end_id, resource=_resource, user=user, expand=expand)
 
 
-def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, type=None, user=None):
+def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, type=None, tax_id=None, user=None):
     """# Retrieve PixKeys
     Receive a generator of PixKey objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -99,6 +99,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - type [string, default None]: filter for the type of retrieved PixKeys. Options: "cpf", "cnpj", "phone", "email" and "evp"
+    - tax_id [string, default None]: filter for the tax id (CPF/CNPJ) of the holder linked to the retrieved PixKeys. ex: "012.345.678-90"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - generator of PixKey objects with updated attributes
@@ -112,12 +113,13 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
         tags=tags,
         ids=ids,
         type=type,
+        tax_id=tax_id,
         user=user,
     )
 
 
 def page(cursor=None, limit=None, after=None, before=None, status=None, tags=None, ids=None, type=None,
-         user=None):
+         tax_id=None, user=None):
     """# Retrieve paged PixKeys
     Receive a generator of PixKey objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -129,6 +131,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - type [string, default None]: filter for the type of retrieved PixKeys. Options: "cpf", "cnpj", "phone", "email" and "evp"
+    - tax_id [string, default None]: filter for the tax id (CPF/CNPJ) of the holder linked to the retrieved PixKeys. ex: "012.345.678-90"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - cursor to retrieve the next page of PixKey objects
@@ -144,6 +147,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
         tags=tags,
         ids=ids,
         type=type,
+        tax_id=tax_id,
         user=user,
     )
 

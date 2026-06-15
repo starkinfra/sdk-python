@@ -19,6 +19,7 @@ class StaticBrcode(Resource):
     - reconciliation_id [string, default None]: id to be used for conciliation of the resulting Pix transaction. This id must have up to 25 alphanumeric characters ex: "ah27s53agj6493hjds6836v49"
     - description [string, default None]: optional description to override default description to be shown in the bank statement. ex: "Payment for service #1234"
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
+    - type [string, default "instant"]: type of the StaticBrcode. Options: "instant", "instantAndOrSubscription"
     ## Attributes (return-only):
     - id [string]: id returned on creation, this is the BR code. ex: "00020126360014br.gov.bcb.pix0114+552840092118152040000530398654040.095802BR5915Jamie Lannister6009Sao Paulo620705038566304FC6C"
     - uuid [string]: unique uuid returned when a StaticBrcode is created. ex: "97756273400d42ce9086404fe10ea0d6"
@@ -28,7 +29,7 @@ class StaticBrcode(Resource):
     """
 
     def __init__(self, name, key_id, city, amount=None, cashier_bank_code=None, reconciliation_id=None, tags=None,
-                 id=None, description=None, uuid=None, url=None, updated=None, created=None):
+                 id=None, description=None, type=None, uuid=None, url=None, updated=None, created=None):
         Resource.__init__(self, id=id)
 
         self.name = name
@@ -39,6 +40,7 @@ class StaticBrcode(Resource):
         self.reconciliation_id = reconciliation_id
         self.description = description
         self.tags = tags
+        self.type = type
         self.uuid = uuid
         self.url = url
         self.updated = check_datetime(updated)

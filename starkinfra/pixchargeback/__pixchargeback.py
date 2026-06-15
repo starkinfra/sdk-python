@@ -103,7 +103,7 @@ def get(id, user=None):
     return rest.get_id(id=id, resource=_resource, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, ids=None, bacen_id=None, flow=None, tags=None, user=None):
+def query(limit=None, after=None, before=None, status=None, ids=None, bacen_id=None, reference_ids=None, flow=None, tags=None, user=None):
     """# Retrieve PixChargebacks
     Receive a generator of PixChargeback objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -113,6 +113,7 @@ def query(limit=None, after=None, before=None, status=None, ids=None, bacen_id=N
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "closed", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - bacen_id [string, default None]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
+    - reference_ids [list of strings, default None]: list of end_to_end_ids or return_ids of the reversed transactions to filter retrieved objects. Max = 30. ex: ["E20018183202201201450u34sDjD7334"]
     - flow [string, default None]: direction of the Pix Chargeback. Options: "in" for received chargebacks, "out" for chargebacks you requested
     - tags [list of strings, default None]: filter for tags of retrieved objects. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
@@ -128,13 +129,14 @@ def query(limit=None, after=None, before=None, status=None, ids=None, bacen_id=N
         status=status,
         ids=ids,
         bacen_id=bacen_id,
+        reference_ids=reference_ids,
         flow=flow,
         tags=tags,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, bacen_id=None, flow=None, tags=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, bacen_id=None, reference_ids=None, flow=None, tags=None, user=None):
     """# Retrieve PixChargebacks
     Receive a list of up to 100 PixChargeback objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
@@ -146,6 +148,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "failed", "delivered", "closed", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - bacen_id [string, default None]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
+    - reference_ids [list of strings, default None]: list of end_to_end_ids or return_ids of the reversed transactions to filter retrieved objects. Max = 30. ex: ["E20018183202201201450u34sDjD7334"]
     - flow [string, default None]: direction of the Pix Chargeback. Options: "in" for received chargebacks, "out" for chargebacks you requested
     - tags [list of strings, default None]: filter for tags of retrieved objects. ex: ["travel", "food"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
@@ -162,6 +165,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
         status=status,
         ids=ids,
         bacen_id=bacen_id,
+        reference_ids=reference_ids,
         flow=flow,
         tags=tags,
         user=user,

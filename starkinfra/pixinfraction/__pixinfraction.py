@@ -13,7 +13,7 @@ class PixInfraction(Resource):
     to the Stark Infra API and returns the created object.
     ## Parameters (required):
     - reference_id [string]: end_to_end_id or return_id of the transaction being reported. ex: "E20018183202201201450u34sDGd19lz"
-    - type [string]: type of infraction report. Options: "reversal", "reversalChargeback"
+    - type [string]: type of infraction report. Options: "fraud", "reversal", "reversalChargeback"
     - method [string]:  method of Pix Infraction. Options: "scam", "unauthorized", "coercion", "invasion", "other", "unknown"
     - operator_email [string]: contact email of the operator responsible for the PixInfraction.
     - operator_phone [string]: contact phone number of the operator responsible for the PixInfraction.

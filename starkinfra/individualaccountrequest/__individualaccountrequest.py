@@ -1,4 +1,3 @@
-from copy import deepcopy
 from ..utils import rest
 from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_datetime, check_date
@@ -67,19 +66,7 @@ def create(requests, user=None):
     ## Return:
     - list of IndividualAccountRequest objects with updated attributes
     """
-    # Output-only fields are populated by the API on response. They are accepted by
-    # the constructor (so a response round-trips) but the API rejects them on POST
-    # with "Unknown parameters in JSON: ...", so they are nulled here before the
-    # payload is built (the core serializer drops None-valued keys). A deep copy
-    # keeps the caller's objects intact.
-    output_only_fields = ["id", "account_type", "flags", "status", "created", "updated"]
-    stripped = []
-    for request in requests:
-        request = deepcopy(request)
-        for field in output_only_fields:
-            setattr(request, field, None)
-        stripped.append(request)
-    return rest.post_multi(resource=_resource, entities=stripped, user=user)
+    return rest.post_multi(resource=_resource, entities=requests, user=user)
 
 
 def get(id, user=None):

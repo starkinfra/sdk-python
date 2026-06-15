@@ -19,15 +19,6 @@ class TestIndividualAccountRequestPost(TestCase):
             self.assertIsNotNone(request.status)
             self.assertEqual(request.account_type, "individual")
 
-    def test_success_output_only_ignored(self):
-        requests = generateExampleIndividualAccountRequestJson(n=1)
-        requests[0].status = "created"
-        requests[0].account_type = "individual"
-        requests[0].flags = []
-        requests = starkinfra.individualaccountrequest.create(requests)
-        for request in requests:
-            self.assertIsNotNone(request.id)
-
 
 class TestIndividualAccountRequestAddress(TestCase):
 

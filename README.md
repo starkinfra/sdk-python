@@ -67,7 +67,7 @@ This SDK version is compatible with the Stark Infra API v2.
         - [IndividualIdentity](#create-individualidentities): Create individual identities
         - [IndividualDocument](#create-individualdocuments): Create individual documents
         - [IndividualAccountRequest](#create-individualaccountrequests): Create individual account requests
-        - [AccountRequestAttachment](#create-accountrequestattachments): Create account request attachments
+        - [IndividualAccountAttachment](#create-individualaccountattachments): Create individual account attachments
     - [Webhook](#webhook):
         - [Webhook](#create-a-webhook-subscription): Configure your webhook endpoints and subscriptions
         - [WebhookEvents](#process-webhook-events): Manage Webhook events
@@ -3230,7 +3230,14 @@ requests = starkinfra.individualaccountrequest.create([
     starkinfra.IndividualAccountRequest(
         name="Walter White",
         tax_id="012.345.678-90",
-        address="Rua das Flores, 123",
+        address=starkinfra.individualaccountrequest.Address(
+            street="Rua do Estilo Barroco",
+            number="648",
+            neighborhood="Santo Amaro",
+            city="Sao Paulo",
+            state="SP",
+            zip_code="05724005",
+        ),
         income=1000000,
         tags=["breaking", "bad"]
     )
@@ -3316,31 +3323,35 @@ log = starkinfra.individualaccountrequest.log.get("5155165527080960")
 print(log)
 ```
 
-### Create AccountRequestAttachments
+### Create IndividualAccountAttachments
 
-You can create an AccountRequestAttachment to attach images of documents to a specific Individual Account Request.
-You must reference the desired individual account request by its id.
+You can create an IndividualAccountAttachment to attach images of documents to a specific IndividualAccountRequest.
+You must reference the desired IndividualAccountRequest by its id. Pass the raw image bytes and a MIME content type;
+the SDK encodes them as a data url before sending.
 
 ```python
 import starkinfra
 
-attachments = starkinfra.accountrequestattachment.create([
-    starkinfra.AccountRequestAttachment(
+attachments = starkinfra.individualaccountattachment.create([
+    starkinfra.IndividualAccountAttachment(
         type="identity-front",
-        content="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...",
-        account_request_id='5155165527080960',
+        content=open("identity-front.png", "rb").read(),
+        content_type="image/png",
+        account_request_id="5155165527080960",
         tags=["breaking", "bad"]
     ),
-    starkinfra.AccountRequestAttachment(
+    starkinfra.IndividualAccountAttachment(
         type="identity-back",
-        content="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...",
-        account_request_id='5155165527080960',
+        content=open("identity-back.png", "rb").read(),
+        content_type="image/png",
+        account_request_id="5155165527080960",
         tags=["breaking", "bad"]
     ),
-    starkinfra.AccountRequestAttachment(
+    starkinfra.IndividualAccountAttachment(
         type="selfie",
-        content="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD...",
-        account_request_id='5155165527080960',
+        content=open("selfie.png", "rb").read(),
+        content_type="image/png",
+        account_request_id="5155165527080960",
         tags=["breaking", "bad"]
     )
 ])
@@ -3349,17 +3360,17 @@ for attachment in attachments:
     print(attachment)
 ```
 
-**Note**: Instead of using AccountRequestAttachment objects, you can also pass each element in dictionary format
+**Note**: Instead of using IndividualAccountAttachment objects, you can also pass each element in dictionary format
 
-### Query AccountRequestAttachments
+### Query IndividualAccountAttachments
 
-You can query multiple account request attachments according to filters.
+You can query multiple individual account attachments according to filters.
 
 ```python
 import starkinfra
 from datetime import date
 
-attachments = starkinfra.accountrequestattachment.query(
+attachments = starkinfra.individualaccountattachment.query(
     limit=10,
     after=date(2020, 1, 1),
     before=date(2020, 4, 1),
@@ -3371,27 +3382,39 @@ for attachment in attachments:
     print(attachment)
 ```
 
-### Get an AccountRequestAttachment
+### Get an IndividualAccountAttachment
 
-After its creation, information on an account request attachment may be retrieved by its id.
+After its creation, information on an individual account attachment may be retrieved by its id.
 
 ```python
 import starkinfra
 
-attachment = starkinfra.accountrequestattachment.get("5155165527080960")
+attachment = starkinfra.individualaccountattachment.get("5155165527080960")
 
 print(attachment)
 ```
 
-### Query AccountRequestAttachment logs
+### Cancel an IndividualAccountAttachment
 
-You can query account request attachment logs to better understand account request attachment life cycles.
+You can delete an individual account attachment by passing its id. The returned object has status "deleted".
+
+```python
+import starkinfra
+
+attachment = starkinfra.individualaccountattachment.cancel("5155165527080960")
+
+print(attachment)
+```
+
+### Query IndividualAccountAttachment logs
+
+You can query individual account attachment logs to better understand individual account attachment life cycles.
 
 ```python
 import starkinfra
 from datetime import date
 
-logs = starkinfra.accountrequestattachment.log.query(
+logs = starkinfra.individualaccountattachment.log.query(
     limit=50,
     after=date(2022, 1, 1),
     before=date(2022, 1, 20),
@@ -3401,14 +3424,14 @@ for log in logs:
     print(log)
 ```
 
-### Get an AccountRequestAttachment log
+### Get an IndividualAccountAttachment log
 
 You can also get a specific log by its id.
 
 ```python
 import starkinfra
 
-log = starkinfra.accountrequestattachment.log.get("5155165527080960")
+log = starkinfra.individualaccountattachment.log.get("5155165527080960")
 
 print(log)
 ```

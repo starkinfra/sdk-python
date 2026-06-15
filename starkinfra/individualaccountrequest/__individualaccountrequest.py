@@ -1,6 +1,9 @@
 from ..utils import rest
 from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_datetime, check_date
+from starkcore.utils.api import from_api_json
+from .__address import Address
+from .__address import resource as _address_resource
 
 
 class IndividualAccountRequest(Resource):
@@ -12,16 +15,16 @@ class IndividualAccountRequest(Resource):
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
     - name [string]: individual's full name. ex: "Edward Stark".
-    - tax_id [string]: individual's tax ID (CPF). ex: "594.739.480-42"
-    - address [string]: individual's address. ex: "Rua das Flores, 123"
+    - tax_id [string]: individual's tax ID (CPF). ex: "012.345.678-90"
+    - address [individualaccountrequest.Address object]: individual's structured residential address. ex: Address(street="Rua do Estilo Barroco", number="648", neighborhood="Santo Amaro", city="Sao Paulo", state="SP", zip_code="05724005")
     - income [integer]: individual's income in cents. ex: 1000000 (= R$ 10,000.00)
     ## Parameters (optional):
     - tags [list of strings, default []]: list of strings for reference when searching for IndividualAccountRequests. ex: ["employees", "monthly"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the IndividualAccountRequest is created. ex: "5656565656565656"
-    - account_type [string]: type of account requested. ex: "checking"
+    - account_type [string]: type of account requested. ex: "individual"
     - flags [list of strings]: list of flags associated with the IndividualAccountRequest.
-    - status [string]: current status of the IndividualAccountRequest. ex: "created", "canceled", "processing", "failed", "success"
+    - status [string]: current status of the IndividualAccountRequest. ex: "approved", "created", "denied", "processing", "updated"
     - created [datetime.datetime]: creation datetime for the IndividualAccountRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the IndividualAccountRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -32,7 +35,7 @@ class IndividualAccountRequest(Resource):
 
         self.name = name
         self.tax_id = tax_id
-        self.address = address
+        self.address = _parse_address(address)
         self.income = income
         self.tags = tags
         self.account_type = account_type
@@ -43,6 +46,14 @@ class IndividualAccountRequest(Resource):
 
 
 _resource = {"class": IndividualAccountRequest, "name": "IndividualAccountRequest"}
+
+
+def _parse_address(address):
+    if address is None:
+        return None
+    if isinstance(address, Address):
+        return address
+    return from_api_json(_address_resource, address)
 
 
 def create(requests, user=None):
@@ -135,8 +146,8 @@ def update(id, status=None, name=None, tax_id=None, address=None, income=None, t
     ## Parameters (optional):
     - status [string]: You may send IndividualAccountRequests to validation by passing 'processing' in the status
     - name [string]: individual's full name. ex: "Edward Stark"
-    - tax_id [string]: individual's tax ID (CPF). ex: "594.739.480-42"
-    - address [string]: individual's address. ex: "Rua das Flores, 123"
+    - tax_id [string]: individual's tax ID (CPF). ex: "012.345.678-90"
+    - address [individualaccountrequest.Address object]: individual's structured residential address. Replaces the address object as a whole. ex: Address(street="Avenida Paulista", number="1000", neighborhood="Bela Vista", city="Sao Paulo", state="SP", zip_code="01310100")
     - income [integer]: individual's income in cents. ex: 1000000 (= R$ 10,000.00)
     - tags [list of strings]: list of strings for reference when searching for IndividualAccountRequests. ex: ["employees", "monthly"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.

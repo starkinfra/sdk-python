@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- url attribute to IssuingToken resource
 
 ## [0.27.0] - 2026-06-18
 ### Added

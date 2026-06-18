@@ -26,6 +26,7 @@ class IssuingPurchase(Resource):
     - merchant_currency_symbol [string]: merchant currency symbol. ex: "$"
     - merchant_category_code [string]: merchant category code. ex: "fastFoodRestaurants"
     - merchant_category_type [string]: merchant category type. ex "food"
+    - merchant_category_number [integer]: merchant category number. ex: 5814
     - merchant_country_code [string]: merchant country code. ex: "USA"
     - acquirer_id [string]: acquirer ID. ex: "5656565656565656"
     - merchant_id [string]: merchant ID. ex: "5656565656565656"
@@ -34,6 +35,7 @@ class IssuingPurchase(Resource):
     - wallet_id [string]: virtual wallet ID. ex: "5656565656565656"
     - method_code [string]: method code. Options: "chip", "token", "server", "manual", "magstripe" or "contactless"
     - score [float]: internal score calculated for the authenticity of the purchase. None in case of insufficient data. ex: 7.6
+    - confirmed [bool]: whether the purchase has been confirmed. ex: True
     - end_to_end_id [string]: Unique id used to identify the transaction through all of its life cycle, even before the purchase is denied or approved and gets its usual id. ex: "679cd385-642b-49d0-96b7-89491e1249a5"
     - tags [list of strings]: list of strings for tagging returned by the sub-issuer during the authorization. ex: ["travel", "food"]
     ## Attributes (IssuingPurchase only):
@@ -56,8 +58,9 @@ class IssuingPurchase(Resource):
                  installment_count=None, amount=None, tax=None, issuer_amount=None, issuer_currency_code=None,
                  issuer_currency_symbol=None, merchant_amount=None, merchant_currency_code=None,
                  merchant_currency_symbol=None, merchant_category_code=None, merchant_category_type=None,
-                 merchant_country_code=None, acquirer_id=None, merchant_id=None, merchant_name=None, merchant_fee=None,
-                 wallet_id=None, method_code=None, score=None, end_to_end_id=None, tags=None, id=None,
+                 merchant_category_number=None, merchant_country_code=None, acquirer_id=None, merchant_id=None,
+                 merchant_name=None, merchant_fee=None, wallet_id=None, method_code=None, score=None, confirmed=None,
+                 end_to_end_id=None, tags=None, id=None,
                  issuing_transaction_ids=None, status=None, description=None, metadata=None, zip_code=None,
                  updated=None, created=None, is_partial_allowed=None, card_tags=None, holder_id=None, holder_tags=None):
         Resource.__init__(self, id=id)
@@ -78,6 +81,7 @@ class IssuingPurchase(Resource):
         self.merchant_currency_symbol = merchant_currency_symbol
         self.merchant_category_code = merchant_category_code
         self.merchant_category_type = merchant_category_type
+        self.merchant_category_number = merchant_category_number
         self.merchant_country_code = merchant_country_code
         self.acquirer_id = acquirer_id
         self.merchant_id = merchant_id
@@ -86,6 +90,7 @@ class IssuingPurchase(Resource):
         self.wallet_id = wallet_id
         self.method_code = method_code
         self.score = score
+        self.confirmed = confirmed
         self.end_to_end_id = end_to_end_id
         self.tags = tags
         self.issuing_transaction_ids = issuing_transaction_ids

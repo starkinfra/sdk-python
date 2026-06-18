@@ -1,5 +1,5 @@
 from json import dumps
-from starkinfra.utils import rest
+from ..utils import rest
 from starkcore.utils.api import api_json
 from ..utils.parse import parse_and_verify
 from starkcore.utils.resource import Resource
@@ -14,6 +14,8 @@ class IssuingToken(Resource):
     - wallet_id [string]: wallet provider which the token is bounded to. ex: "google"
     - wallet_name [string]: wallet name. ex: "GOOGLE"
     - merchant_id [string]: merchant unique id. ex: "5656565656565656"
+    - wallet_device_score [float]: wallet device risk score. ex: 7.6
+    - wallet_account_score [float]: wallet account risk score. ex: 7.6
     ## Attributes (IssuingToken only):
     - id [string]: unique id returned when IssuingToken is created. ex: "5656565656565656"
     - external_id [string]: a unique string among all your IssuingTokens, used to avoid resource duplication. ex: "DSHRMC00002626944b0e3b539d4d459281bdba90c2588791"
@@ -31,23 +33,27 @@ class IssuingToken(Resource):
     - device_os_version [string]: device operational system version used for tokenization. ex: "4.4.4"
     - device_imei [string]: device imei used for tokenization. ex: "352099001761481"
     - wallet_instance_id [string]: unique id refered to the wallet app in the current device. ex: "71583be4777eb89aaf0345eebeb82594f096615ed17862d0"
+    - url [string]: token URL. ex: "https://token.starkinfra.com/5656565656565656"
     """
 
-    def __init__(self, card_id=None, wallet_id=None, wallet_name=None, merchant_id=None, id=None,
+    def __init__(self, card_id=None, wallet_id=None, wallet_name=None, merchant_id=None, wallet_device_score=None,
+                wallet_account_score=None, id=None,
                 external_id=None, tags=None, status=None, updated=None, created=None, activation_code=None,
                 method_code=None, device_type=None, device_name=None, device_serial_number=None, device_os_name=None,
-                device_os_version=None, device_imei=None, wallet_instance_id=None):
+                device_os_version=None, device_imei=None, wallet_instance_id=None, url=None):
         Resource.__init__(self, id=id)
 
         self.card_id = card_id
         self.wallet_id = wallet_id
         self.wallet_name = wallet_name
         self.merchant_id = merchant_id
+        self.wallet_device_score = wallet_device_score
+        self.wallet_account_score = wallet_account_score
         self.external_id = external_id
         self.tags = tags
         self.status = status
-        self.updated = updated
-        self.created = created
+        self.updated = check_datetime(updated)
+        self.created = check_datetime(created)
         self.activation_code = activation_code
         self.method_code = method_code
         self.device_type = device_type
@@ -57,6 +63,7 @@ class IssuingToken(Resource):
         self.device_os_version = device_os_version
         self.device_imei = device_imei
         self.wallet_instance_id = wallet_instance_id
+        self.url = url
 
 
 _resource = {"class": IssuingToken, "name": "IssuingToken"}
@@ -75,7 +82,7 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, card_ids=None, tags=None, ids=None, user=None, external_ids=None):
+def query(limit=None, after=None, before=None, status=None, card_ids=None, tags=None, ids=None, external_ids=None, user=None):
     """# Retrieve IssuingTokens
     Receive a generator of IssuingToken objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -86,8 +93,8 @@ def query(limit=None, after=None, before=None, status=None, card_ids=None, tags=
     - card_ids [list of strings, default None]: list of card_ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     - external_ids [list of strings, default None]: external IDs. ex: ["DSHRMC00002626944b0e3b539d4d459281bdba90c2588791", "DSHRMC00002626941c531164a0b14c66ad9602ee716f1e85"]
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - generator of IssuingToken objects with updated attributes
     """
@@ -100,12 +107,12 @@ def query(limit=None, after=None, before=None, status=None, card_ids=None, tags=
         card_ids=card_ids,
         tags=tags,
         ids=ids,
-        user=user,
         external_ids=external_ids,
+        user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, status=None, card_ids=None, tags=None, ids=None, user=None, external_ids=None):
+def page(cursor=None, limit=None, after=None, before=None, status=None, card_ids=None, tags=None, ids=None, external_ids=None, user=None):
     """# Retrieve paged IssuingTokens
     Receive a list of IssuingToken objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
@@ -118,8 +125,8 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, card_ids
     - card_ids [list of strings, default None]: list of card_ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - tags [list of strings, default None]: list of strings for tagging. ex: ["travel", "food"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
-    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     - external_ids [list of strings, default None]: external IDs. ex: ["5656565656565656", "4545454545454545"]
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:
     - list of IssuingToken objects with updated attributes
     - cursor to retrieve the next page of IssuingToken objects
@@ -134,8 +141,8 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, card_ids
         card_ids=card_ids,
         tags=tags,
         ids=ids,
-        user=user,
         external_ids=external_ids,
+        user=user,
     )
 
 

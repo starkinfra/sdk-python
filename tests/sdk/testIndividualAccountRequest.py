@@ -20,6 +20,17 @@ class TestIndividualAccountRequestPost(TestCase):
             self.assertEqual(request.account_type, "individual")
 
 
+class TestIndividualAccountRequestBirthDateAsDate(TestCase):
+
+    def test_success(self):
+        requests = generateExampleIndividualAccountRequestJson(n=1)
+        requests[0].birth_date = date(1990, 5, 15)
+        requests = starkinfra.individualaccountrequest.create(requests)
+        for request in requests:
+            self.assertIsNotNone(request.id)
+            self.assertEqual(request.birth_date, date(1990, 5, 15))
+
+
 class TestIndividualAccountRequestAddress(TestCase):
 
     def test_success_address_is_object(self):

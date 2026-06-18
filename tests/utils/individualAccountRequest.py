@@ -24,6 +24,7 @@ def _generateIndividualAccountRequest():
         tax_id="012.345.678-90",
         address=_generateExampleAddress(),
         income=1000000,
+        birth_date="2012-03-06",
         tags=["test", "testing"],
     )
 

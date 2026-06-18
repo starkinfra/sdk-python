@@ -19,6 +19,7 @@ class IndividualAccountRequest(Resource):
     - address [individualaccountrequest.Address object]: individual's structured residential address. ex: Address(street="Rua do Estilo Barroco", number="648", neighborhood="Santo Amaro", city="Sao Paulo", state="SP", zip_code="05724005")
     - income [integer]: individual's income in cents. ex: 1000000 (= R$ 10,000.00)
     ## Parameters (optional):
+    - birth_date [datetime.date or string, default None]: individual's birth date. ex: datetime.date(2012, 3, 6) or "2012-03-06"
     - tags [list of strings, default []]: list of strings for reference when searching for IndividualAccountRequests. ex: ["employees", "monthly"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the IndividualAccountRequest is created. ex: "5656565656565656"
@@ -29,14 +30,15 @@ class IndividualAccountRequest(Resource):
     - updated [datetime.datetime]: latest update datetime for the IndividualAccountRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, name, tax_id, address, income, tags=None, id=None, account_type=None, flags=None, status=None,
-                 created=None, updated=None):
+    def __init__(self, name, tax_id, address, income, birth_date=None, tags=None, id=None, account_type=None,
+                 flags=None, status=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.name = name
         self.tax_id = tax_id
         self.address = _parse_address(address)
         self.income = income
+        self.birth_date = check_date(birth_date or None)
         self.tags = tags
         self.account_type = account_type
         self.flags = flags
@@ -138,7 +140,7 @@ def page(cursor=None, limit=None, status=None, tags=None, ids=None, after=None, 
     )
 
 
-def update(id, status=None, name=None, tax_id=None, address=None, income=None, tags=None, user=None):
+def update(id, status=None, name=None, tax_id=None, address=None, income=None, birth_date=None, tags=None, user=None):
     """# Update IndividualAccountRequest entity
     Update an IndividualAccountRequest by passing id.
     ## Parameters (required):
@@ -149,6 +151,7 @@ def update(id, status=None, name=None, tax_id=None, address=None, income=None, t
     - tax_id [string]: individual's tax ID (CPF). ex: "012.345.678-90"
     - address [individualaccountrequest.Address object]: individual's structured residential address. Replaces the address object as a whole. ex: Address(street="Avenida Paulista", number="1000", neighborhood="Bela Vista", city="Sao Paulo", state="SP", zip_code="01310100")
     - income [integer]: individual's income in cents. ex: 1000000 (= R$ 10,000.00)
+    - birth_date [datetime.date or string]: individual's birth date. ex: datetime.date(2012, 3, 6) or "2012-03-06"
     - tags [list of strings]: list of strings for reference when searching for IndividualAccountRequests. ex: ["employees", "monthly"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -160,6 +163,7 @@ def update(id, status=None, name=None, tax_id=None, address=None, income=None, t
         "tax_id": tax_id,
         "address": address,
         "income": income,
+        "birth_date": check_date(birth_date),
         "tags": tags,
     }
     return rest.patch_id(resource=_resource, id=id, user=user, payload=payload)

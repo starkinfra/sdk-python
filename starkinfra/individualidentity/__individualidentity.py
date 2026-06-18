@@ -17,6 +17,7 @@ class IndividualIdentity(Resource):
     - name [string]: individual's full name. ex: "Edward Stark".
     - tax_id [string]: individual's tax ID (CPF). ex: "594.739.480-42"
     ## Parameters (optional):
+    - birth_date [datetime.date or string, default None]: individual's birth date. ex: datetime.date(2012, 3, 6) or "2012-03-06"
     - tags [list of strings, default []]: list of strings for reference when searching for IndividualIdentities. ex: ["employees", "monthly"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the IndividualIdentity is created. ex: "5656565656565656"
@@ -24,11 +25,12 @@ class IndividualIdentity(Resource):
     - created [datetime.datetime]: creation datetime for the IndividualIdentity. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, name, tax_id, tags=None, id=None, status=None, created=None):
+    def __init__(self, name, tax_id, birth_date=None, tags=None, id=None, status=None, created=None):
         Resource.__init__(self, id=id)
 
         self.name = name
         self.tax_id = tax_id
+        self.birth_date = check_date(birth_date or None)
         self.tags = tags
         self.status = status
         self.created = check_datetime(created)

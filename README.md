@@ -3024,6 +3024,7 @@ identities = starkinfra.individualidentity.create([
     starkinfra.IndividualIdentity(
         name="Walter White",
         tax_id="012.345.678-90",
+        birth_date="1965-09-07",
         tags=["breaking", "bad"]
     )
 ])
@@ -3239,6 +3240,7 @@ requests = starkinfra.individualaccountrequest.create([
             zip_code="05724005",
         ),
         income=1000000,
+        birth_date="1965-09-07",
         tags=["breaking", "bad"]
     )
 ])

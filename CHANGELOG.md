@@ -13,6 +13,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- birth_date attribute to IndividualAccountRequest and IndividualIdentity resources
 
 ## [0.26.0] - 2026-06-15
 ### Added

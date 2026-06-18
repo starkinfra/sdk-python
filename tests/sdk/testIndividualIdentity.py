@@ -1,4 +1,5 @@
 import starkinfra
+from datetime import date
 from unittest import TestCase, main
 from tests.utils.user import exampleProject
 from tests.utils.individualIdentity import generateExampleIndividualIdentityJson
@@ -59,6 +60,17 @@ class TestIndividualIdentityPostAndCancel(TestCase):
         individual_id = identities[0].id
         individual = starkinfra.individualidentity.cancel(id=individual_id)
         print(individual.id)
+
+
+class TestIndividualIdentityBirthDateAsDate(TestCase):
+
+    def test_success(self):
+        identities = generateExampleIndividualIdentityJson(n=1)
+        identities[0].birth_date = date(1990, 5, 15)
+        identities = starkinfra.individualidentity.create(identities)
+        for individual in identities:
+            self.assertIsNotNone(individual.id)
+            self.assertEqual(individual.birth_date, date(1990, 5, 15))
 
 
 if __name__ == '__main__':

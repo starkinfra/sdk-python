@@ -9,6 +9,7 @@ def _generateIndividualIdentity():
     return IndividualIdentity(
         name="Jamie Lannister",
         tax_id="012.345.678-90",
+        birth_date="2012-03-06",
         tags=["test", "testing"],
     )
 

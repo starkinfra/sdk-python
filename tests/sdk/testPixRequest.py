@@ -46,7 +46,6 @@ class TestPixRequestPage(TestCase):
         for _ in range(2):
             pix_requests, cursor = starkinfra.pixrequest.page(limit=2, cursor=cursor)
             for pix_request in pix_requests:
-                print(pix_request)
                 self.assertFalse(pix_request.id in ids)
                 ids.append(pix_request.id)
             if cursor is None:
@@ -84,7 +83,6 @@ class TesteEventProcess(TestCase):
             content=self.content,
             signature=self.valid_signature
         )
-        print(request)
 
     def test_invalid_signature(self):
         with self.assertRaises(InvalidSignatureError):

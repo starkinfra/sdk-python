@@ -1510,6 +1510,7 @@ requests = starkinfra.pixrequest.create([
         receiver_tax_id="45.987.245/0001-92",
         end_to_end_id=starkinfra.endtoendid.create("20018183"),  # Pass your bank code to create an end to end ID
         description="For saving my life",
+        reason="subscriptionFlaw",
     ),
     starkinfra.PixRequest(
         amount=200,  # (R$ 2.00)
@@ -1527,6 +1528,7 @@ requests = starkinfra.pixrequest.create([
         receiver_tax_id="012.345.678-90",
         end_to_end_id=starkinfra.endtoendid.create("20018183"),  # Pass your bank code to create an end to end ID
         tags=["Needle", "sword"],
+        reason="subscriptionFlaw",
     )
 ])
 

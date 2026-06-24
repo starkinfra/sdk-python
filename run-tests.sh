@@ -41,6 +41,10 @@ commands=(
         "{ python -m unittest tests.sdk.testPixReversal; }"
         "{ python -m unittest tests.sdk.testPixReversalLog; }"
         "{ python -m unittest tests.sdk.testPixStatement; }"
+        "{ python -m unittest tests.sdk.testPixKeyHolmes; }"
+        "{ python -m unittest tests.sdk.testPixInternalTransactionReport; }"
+        "{ python -m unittest tests.sdk.testPixInternalTransactionReportLog; }"
+        "{ python -m unittest tests.sdk.testPixFraudLog; }"
     )
 
 clen=`expr "${#commands[@]}" - 1` # get length of commands - 1

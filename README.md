@@ -49,6 +49,7 @@ This SDK version is compatible with the Stark Infra API v2.
         - [PixBalance](#get-your-pixbalance): View your account balance
         - [PixStatement](#create-a-pixstatement): Request your account statement
         - [PixKey](#create-a-pixkey): Create a Pix Key
+        - [PixKeyHolmes](#create-pixkeyholmes): Investigate the registration of a Pix Key in the DICT
         - [PixClaim](#create-a-pixclaim): Claim a Pix Key
         - [PixDirector](#create-a-pixdirector): Create a Pix Director
         - [PixInfraction](#create-pixinfractions): Create Pix Infraction reports
@@ -62,6 +63,7 @@ This SDK version is compatible with the Stark Infra API v2.
         - [PixDispute](#create-pixdisputes): Create Pix Disputes
         - [PixPullSubscription](#create-pixpullsubscriptions): Set up recurring Pix debit authorizations
         - [PixPullRequest](#create-pixpullrequests): Trigger automatic Pix debits against a subscription
+        - [PixInternalTransactionReport](#create-pixinternaltransactionreports): Report internal transactions to the Central Bank
     - [Lending](#lending)
         - [CreditNote](#create-creditnotes): Create credit notes
         - [CreditPreview](#create-creditpreviews): Create credit previews
@@ -1947,6 +1949,46 @@ log = starkinfra.pixkey.log.get("5155165527080960")
 print(log)
 ```
 
+### Create PixKeyHolmes
+
+To investigate whether a Pix Key is registered in the Central Bank's DICT,
+open up a PixKeyHolmes for it:
+
+```python
+import starkinfra
+
+holmes = starkinfra.pixkeyholmes.create([
+    starkinfra.PixKeyHolmes(
+        key_id="+5511989898989"
+    ),
+    starkinfra.PixKeyHolmes(
+        key_id="valid@sandbox.com",
+        tags=["sherlock"]
+    )
+])
+
+for sherlock in holmes:
+    print(sherlock)
+```
+
+### Query PixKeyHolmes
+
+You can query multiple PixKeyHolmes according to filters.
+
+```python
+import starkinfra
+from datetime import date
+
+holmes = starkinfra.pixkeyholmes.query(
+    after=date(2022, 6, 1),
+    before=date(2022, 10, 30),
+    status="solved"
+)
+
+for sherlock in holmes:
+    print(sherlock)
+```
+
 ### Create a PixClaim
 
 You can create a Pix claim to request the transfer of a Pix key from another bank to one of your accounts:
@@ -2261,6 +2303,36 @@ import starkinfra
 fraud = starkinfra.pixfraud.cancel("5155165527080960")
 
 print(fraud)
+```
+
+### Query PixFraud logs
+
+You can query PixFraud logs to better understand their life cycles.
+
+```python
+import starkinfra
+from datetime import date
+
+logs = starkinfra.pixfraud.log.query(
+    limit=50,
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get a PixFraud log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.pixfraud.log.get("5155165527080960")
+
+print(log)
 ```
 
 ### Get a PixUser
@@ -2978,6 +3050,101 @@ for log in logs:
 import starkinfra
 
 log = starkinfra.pixpullrequest.log.get("5155165527080960")
+print(log)
+```
+
+### Create PixInternalTransactionReports
+
+Transactions that happen internally, outside of the SPI, must be reported to the
+Central Bank so they are reflected in your statements. You can do so by creating
+PixInternalTransactionReports:
+
+```python
+import starkinfra
+from datetime import datetime
+
+reports = starkinfra.pixinternaltransactionreport.create([
+    starkinfra.PixInternalTransactionReport(
+        amount=10000,
+        created=datetime(2024, 1, 1, 12, 0, 0),
+        end_to_end_id="E12345678202401011234567890123456",
+        method="manual",
+        reference_type="request",
+        sender_account_number="12345",
+        sender_branch_code="0001",
+        sender_account_type="checking",
+        sender_bank_code="12345678",
+        sender_tax_id="123.456.789-01",
+        receiver_account_number="67890",
+        receiver_branch_code="0001",
+        receiver_account_type="savings",
+        receiver_bank_code="87654321",
+        receiver_tax_id="987.654.321-00",
+        receiver_key_id="user@example.com"
+    )
+])
+
+for report in reports:
+    print(report)
+```
+
+### Query PixInternalTransactionReports
+
+You can query multiple PixInternalTransactionReports according to filters.
+
+```python
+import starkinfra
+from datetime import date
+
+reports = starkinfra.pixinternaltransactionreport.query(
+    after=date(2024, 1, 1),
+    before=date(2024, 1, 30),
+    status="success"
+)
+
+for report in reports:
+    print(report)
+```
+
+### Get a PixInternalTransactionReport
+
+After its creation, information on a PixInternalTransactionReport may be retrieved by its id.
+
+```python
+import starkinfra
+
+report = starkinfra.pixinternaltransactionreport.get("5656565656565656")
+
+print(report)
+```
+
+### Query PixInternalTransactionReport logs
+
+You can query PixInternalTransactionReport logs to better understand their life cycles.
+
+```python
+import starkinfra
+from datetime import date
+
+logs = starkinfra.pixinternaltransactionreport.log.query(
+    limit=50,
+    after=date(2024, 1, 1),
+    before=date(2024, 1, 20),
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get a PixInternalTransactionReport log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.pixinternaltransactionreport.log.get("5155165527080960")
+
 print(log)
 ```
 

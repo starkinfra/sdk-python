@@ -43,7 +43,6 @@ class TestPixFraudPage(TestCase):
         for _ in range(2):
             frauds, cursor = starkinfra.pixfraud.page(limit=2, cursor=cursor)
             for fraud in frauds:
-                print(fraud)
                 self.assertFalse(fraud.id in ids)
                 ids.append(fraud.id)
             if cursor is None:

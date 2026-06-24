@@ -14,6 +14,9 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- PixKeyHolmes resource
+- PixInternalTransactionReport resource
+- log subresource to PixFraud
 - IssuingStockRule resource
 - BusinessIdentity and BusinessAttachment resources
 - PixPullSubscription resource

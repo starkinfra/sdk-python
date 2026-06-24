@@ -57,6 +57,12 @@ from .pixpullsubscription.__pixpullsubscription import PixPullSubscription
 from . import pixpullrequest
 from .pixpullrequest.__pixpullrequest import PixPullRequest
 
+from . import pixkeyholmes
+from .pixkeyholmes.__pixkeyholmes import PixKeyHolmes
+
+from . import pixinternaltransactionreport
+from .pixinternaltransactionreport.__pixinternaltransactionreport import PixInternalTransactionReport
+
 from . import issuingbalance
 from .issuingbalance.__issuingbalance import IssuingBalance
 

@@ -14,6 +14,8 @@ class IssuingToken(Resource):
     - wallet_id [string]: wallet provider which the token is bounded to. ex: "google"
     - wallet_name [string]: wallet name. ex: "GOOGLE"
     - merchant_id [string]: merchant unique id. ex: "5656565656565656"
+    - wallet_device_score [float]: wallet device risk score. ex: 7.6
+    - wallet_account_score [float]: wallet account risk score. ex: 7.6
     ## Attributes (IssuingToken only):
     - id [string]: unique id returned when IssuingToken is created. ex: "5656565656565656"
     - external_id [string]: a unique string among all your IssuingTokens, used to avoid resource duplication. ex: "DSHRMC00002626944b0e3b539d4d459281bdba90c2588791"
@@ -34,7 +36,8 @@ class IssuingToken(Resource):
     - url [string]: token URL. ex: "https://token.starkinfra.com/5656565656565656"
     """
 
-    def __init__(self, card_id=None, wallet_id=None, wallet_name=None, merchant_id=None, id=None,
+    def __init__(self, card_id=None, wallet_id=None, wallet_name=None, merchant_id=None, wallet_device_score=None,
+                wallet_account_score=None, id=None,
                 external_id=None, tags=None, status=None, updated=None, created=None, activation_code=None,
                 method_code=None, device_type=None, device_name=None, device_serial_number=None, device_os_name=None,
                 device_os_version=None, device_imei=None, wallet_instance_id=None, url=None):
@@ -44,6 +47,8 @@ class IssuingToken(Resource):
         self.wallet_id = wallet_id
         self.wallet_name = wallet_name
         self.merchant_id = merchant_id
+        self.wallet_device_score = wallet_device_score
+        self.wallet_account_score = wallet_account_score
         self.external_id = external_id
         self.tags = tags
         self.status = status

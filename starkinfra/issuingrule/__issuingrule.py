@@ -22,10 +22,14 @@ class IssuingRule(Resource):
     - counter_amount [integer]: current rule spent amount. ex: 1000
     - currency_symbol [string]: currency symbol. ex: "R$"
     - currency_name [string]: currency name. ex: "Brazilian Real"
+    - schedule [string]: schedule time for the rule. ex: "every monday, wednesday from 00:00 to 23:59 in America/Sao_Paulo"
+    - purposes [list of strings]: list of purposes accepted by the rule. ex: ["purchase", "withdrawal"]
+    - merchants [list of strings]: list of merchants accepted by the rule. ex: ["5656565656565656"]
     """
 
     def __init__(self, name, amount, id=None, interval=None, currency_code=None, categories=None, countries=None,
-                 methods=None, counter_amount=None, currency_symbol=None, currency_name=None):
+                 methods=None, counter_amount=None, currency_symbol=None, currency_name=None, schedule=None,
+                 purposes=None, merchants=None):
         Resource.__init__(self, id=id)
 
         self.name = name
@@ -38,6 +42,9 @@ class IssuingRule(Resource):
         self.counter_amount = counter_amount
         self.currency_symbol = currency_symbol
         self.currency_name = currency_name
+        self.schedule = schedule
+        self.purposes = purposes
+        self.merchants = merchants
 
 
 _resource = {"class": IssuingRule, "name": "IssuingRule"}

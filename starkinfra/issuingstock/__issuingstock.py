@@ -11,16 +11,18 @@ class IssuingStock(Resource):
     - balance [integer]: [EXPANDABLE] current stock balance. ex: 1000
     - design_id [string]: IssuingDesign unique id. ex: "5656565656565656"
     - embosser_id [string]: Embosser unique id. ex: "5656565656565656"
+    - embosser_name [string]: Embosser name. ex: "Vault123"
     - updated [datetime.datetime]: latest update datetime for the IssuingStock. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingStock. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
-    def __init__(self, balance=None, design_id=None, embosser_id=None, id=None, created=None, updated=None):
+    def __init__(self, balance=None, design_id=None, embosser_id=None, embosser_name=None, id=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.balance = balance
         self.design_id = design_id
         self.embosser_id = embosser_id
+        self.embosser_name = embosser_name
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
 

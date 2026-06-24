@@ -1,6 +1,7 @@
 from ..utils import rest
 from starkcore.utils.resource import Resource
 from starkcore.utils.checks import check_datetime, check_date
+from starkcore.error import StarkError
 
 
 class PixInfraction(Resource):
@@ -70,6 +71,9 @@ _resource = {"class": PixInfraction, "name": "PixInfraction"}
 
 
 def create(infractions, user=None):
+    """
+    Deprecated: Function deprecated since v0.28.0
+    """
     """# Create PixInfraction objects
     Create PixInfractions in the Stark Infra API
     ## Parameters (required):
@@ -79,7 +83,7 @@ def create(infractions, user=None):
     ## Return:
     - list of PixInfraction objects with updated attributes
     """
-    return rest.post_multi(resource=_resource, entities=infractions, user=user)
+    raise StarkError([{"code": "deprecated", "message": "Function deprecated since v0.28.0"}])
 
 
 def get(id, user=None):

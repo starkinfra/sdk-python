@@ -16,6 +16,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ### Added
 - PixPullSubscription resource
 - PixPullRequest resource
+- Deprecated create pix infraction
 
 ## [0.27.0] - 2026-06-18
 ### Added

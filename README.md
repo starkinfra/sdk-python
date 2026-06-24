@@ -3215,6 +3215,14 @@ notes = starkinfra.creditnote.create([
         city="Sao Paulo",
         state_code="SP",
         zip_code="01310-000",
+        rebate_amount=0,
+        tags=["War supply"],
+        rules=[
+            starkinfra.creditnote.Rule(
+                key="invoiceCreationMode",
+                value="scheduled"
+            )
+        ],
     )
 ])
 

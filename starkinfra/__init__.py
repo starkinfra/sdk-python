@@ -90,6 +90,12 @@ from .individualaccountrequest.__individualaccountrequest import IndividualAccou
 from . import individualaccountattachment
 from .individualaccountattachment.__individualaccountattachment import IndividualAccountAttachment
 
+from . import businessidentity
+from .businessidentity.__businessidentity import BusinessIdentity
+
+from . import businessattachment
+from .businessattachment.__businessattachment import BusinessAttachment
+
 from . import dynamicbrcode
 from .dynamicbrcode.__dynamicbrcode import DynamicBrcode
 

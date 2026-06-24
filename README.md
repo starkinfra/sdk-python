@@ -70,6 +70,8 @@ This SDK version is compatible with the Stark Infra API v2.
         - [IndividualDocument](#create-individualdocuments): Create individual documents
         - [IndividualAccountRequest](#create-individualaccountrequests): Create individual account requests
         - [IndividualAccountAttachment](#create-individualaccountattachments): Create individual account attachments
+        - [BusinessIdentity](#create-businessidentities): Create business identities
+        - [BusinessAttachment](#create-businessattachments): Create business attachments
     - [Webhook](#webhook):
         - [Webhook](#create-a-webhook-subscription): Configure your webhook endpoints and subscriptions
         - [WebhookEvents](#process-webhook-events): Manage Webhook events
@@ -3691,6 +3693,209 @@ log = starkinfra.individualaccountattachment.log.get("5155165527080960")
 print(log)
 ```
 
+### Create BusinessIdentities
+
+You can create a BusinessIdentity to verify the identity of a company (PJ) by its tax ID (CNPJ).
+
+```python
+import starkinfra
+
+identities = starkinfra.businessidentity.create([
+    starkinfra.BusinessIdentity(
+        tax_id="20.018.183/0001-80",
+        tags=["onboarding-123"]
+    )
+])
+
+for identity in identities:
+    print(identity)
+```
+
+**Note**: Instead of using BusinessIdentity objects, you can also pass each element in dictionary format
+
+### Query BusinessIdentities
+
+You can query multiple business identities according to filters.
+
+```python
+import starkinfra
+from datetime import date
+
+identities = starkinfra.businessidentity.query(
+    limit=10,
+    after=date(2020, 1, 1),
+    before=date(2020, 4, 1),
+    status="success",
+    tags=["onboarding-123"],
+)
+
+for identity in identities:
+    print(identity)
+```
+
+### Get a BusinessIdentity
+
+After its creation, information on a business identity may be retrieved by its id.
+
+```python
+import starkinfra
+
+identity = starkinfra.businessidentity.get("5155165527080960")
+
+print(identity)
+```
+
+### Update a BusinessIdentity
+
+You can update a specific business identity by passing its id. Send it to processing by passing 'processing' in the status (the identity must have attachments).
+
+```python
+import starkinfra
+
+identity = starkinfra.businessidentity.update("5155165527080960", status="processing")
+
+print(identity)
+```
+
+### Cancel a BusinessIdentity
+
+You can cancel a business identity by passing its id, while it is in the 'created' or 'pending' status.
+
+```python
+import starkinfra
+
+identity = starkinfra.businessidentity.cancel("5155165527080960")
+
+print(identity)
+```
+
+### Query BusinessIdentity logs
+
+You can query business identity logs to better understand business identity life cycles.
+
+```python
+import starkinfra
+from datetime import date
+
+logs = starkinfra.businessidentity.log.query(
+    limit=50,
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get a BusinessIdentity log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.businessidentity.log.get("5155165527080960")
+
+print(log)
+```
+
+### Create BusinessAttachments
+
+You can create a BusinessAttachment to attach a document (e.g. articles of incorporation) to a specific BusinessIdentity.
+You must reference the desired business identity by its id. A BusinessIdentity accepts at most 2 attachments.
+
+```python
+import starkinfra
+
+attachments = starkinfra.businessattachment.create([
+    starkinfra.BusinessAttachment(
+        name="articles-of-incorporation.pdf",
+        content="data:application/pdf;base64,JVBERi0xLjQ...",
+        business_identity_id="5155165527080960",
+        tags=["doc-principal"]
+    )
+])
+
+for attachment in attachments:
+    print(attachment)
+```
+
+**Note**: Instead of using BusinessAttachment objects, you can also pass each element in dictionary format
+
+### Query BusinessAttachments
+
+You can query multiple business attachments according to filters.
+
+```python
+import starkinfra
+from datetime import date
+
+attachments = starkinfra.businessattachment.query(
+    limit=10,
+    after=date(2020, 1, 1),
+    before=date(2020, 4, 1),
+    status="approved",
+    tags=["doc-principal"],
+)
+
+for attachment in attachments:
+    print(attachment)
+```
+
+### Get a BusinessAttachment
+
+After its creation, information on a business attachment may be retrieved by its id. Pass `expand=["content"]` to also retrieve the document content.
+
+```python
+import starkinfra
+
+attachment = starkinfra.businessattachment.get("5155165527080960", expand=["content"])
+
+print(attachment)
+```
+
+### Cancel a BusinessAttachment
+
+You can cancel a business attachment by passing its id, while it is in the 'created' status.
+
+```python
+import starkinfra
+
+attachment = starkinfra.businessattachment.cancel("5155165527080960")
+
+print(attachment)
+```
+
+### Query BusinessAttachment logs
+
+You can query business attachment logs to better understand business attachment life cycles.
+
+```python
+import starkinfra
+from datetime import date
+
+logs = starkinfra.businessattachment.log.query(
+    limit=50,
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get a BusinessAttachment log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.businessattachment.log.get("5155165527080960")
+
+print(log)
+```
+
 ## Webhook
 
 ### Create a webhook subscription
@@ -3704,6 +3909,7 @@ webhook = starkinfra.webhook.create(
     url="https://webhook.site/dd784f26-1d6a-4ca6-81cb-fda0267761ec",
     subscriptions=[
         "credit-note",
+        "business-identity",
         "issuing-card", "issuing-invoice", "issuing-purchase",
         "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out", "pix-claim", "pix-key", "pix-chargeback", "pix-infraction",
     ],
@@ -3781,6 +3987,9 @@ elif "issuing-purchase" in event.subscription:
 
 elif "credit-note" in event.subscription:
     print(event.log.note)
+
+elif "business-identity" in event.subscription:
+    print(event.log.identity)
 ```
 
 ### Query webhook events

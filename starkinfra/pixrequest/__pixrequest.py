@@ -39,7 +39,7 @@ class PixRequest(Resource):
     - initiator_tax_id [string, default None]: Payment initiator's tax id (CPF/CNPJ). ex: "01234567890" or "20.018.183/0001-80"
     - tags [list of strings, default []]: list of strings for reference when searching for PixRequests. ex: ["employees", "monthly"]
     - method [string, default None]: execution method for the creation of the Pix. Options: "manual", "dict", "initiator", "dynamicQrcode", "staticQrcode", "payerQrcode", "subscription", "contactless", "staticContactless"
-    - reason [string, default None]: reason why this Pix request was created. Options: "customerRequest", "subscriptionFlaw", "fraud"
+    - reason [string, default "customerRequest"]: underlying reason for the payment transaction. ex: "customerRequest", "fraud", "subscriptionFlaw"
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixRequest is created. ex: "5656565656565656"
     - fee [integer]: fee charged when PixRequest is paid. ex: 200 (= R$ 2.00)

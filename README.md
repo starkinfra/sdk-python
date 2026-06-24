@@ -29,6 +29,7 @@ This SDK version is compatible with the Stark Infra API v2.
         - [EmbossingKit](#query-issuingembossingkits): View your current embossing kits
         - [Stock](#query-issuingstocks): View your current stock of a certain IssuingDesign linked to an Embosser on the workspace
         - [Restock](#create-issuingrestocks): Create restock orders of a specific IssuingStock object
+        - [StockRule](#create-issuingstockrules): Get notified when a specific IssuingStock reaches a minimum balance
         - [EmbossingRequest](#create-issuingembossingrequests): Create embossing requests
         - [TokenRequest](#create-an-issuingtokenrequest): Generate the payload to create the token
         - [Token](#process-token-authorizations): Authorize and manage your tokens
@@ -753,6 +754,82 @@ import starkinfra
 log = starkinfra.issuingrestock.log.get("6310318875607040")
 
 print(log)
+```
+
+### Create IssuingStockRules
+
+You can create rules to be notified whenever a specific IssuingStock reaches a minimum balance.
+
+```python
+import starkinfra
+
+rules = starkinfra.issuingstockrule.create([
+    starkinfra.IssuingStockRule(
+        minimum_balance=10000,
+        stock_id="5136459887542272",
+        emails=["john.doe@enterprise.com"],
+        phones=["+55 (11) 91234 5678"]
+    )
+])
+
+for rule in rules:
+    print(rule)
+```
+
+### Query IssuingStockRules
+
+You can get a list of created stock rules given some filters.
+
+```python
+import starkinfra
+from datetime import date
+
+rules = starkinfra.issuingstockrule.query(
+    after=date(2022, 11, 1),
+    before=date(2022, 12, 1)
+)
+
+for rule in rules:
+    print(rule)
+```
+
+### Get an IssuingStockRule
+
+After its creation, information on a stock rule may be retrieved by its id.
+
+```python
+import starkinfra
+
+rule = starkinfra.issuingstockrule.get("5664445921492992")
+
+print(rule)
+```
+
+### Update an IssuingStockRule
+
+You can update a specific IssuingStockRule by its id.
+
+```python
+import starkinfra
+
+rule = starkinfra.issuingstockrule.update(
+    id="5664445921492992",
+    minimum_balance=20000
+)
+
+print(rule)
+```
+
+### Cancel an IssuingStockRule
+
+You can also cancel a specific IssuingStockRule by its id.
+
+```python
+import starkinfra
+
+rule = starkinfra.issuingstockrule.cancel("5664445921492992")
+
+print(rule)
 ```
 
 ### Create IssuingEmbossingRequests

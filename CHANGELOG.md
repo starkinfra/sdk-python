@@ -14,6 +14,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- IssuingStockRule resource
 - BusinessIdentity and BusinessAttachment resources
 - PixPullSubscription resource
 - PixPullRequest resource

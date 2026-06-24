@@ -59,6 +59,8 @@ This SDK version is compatible with the Stark Infra API v2.
         - [DynamicBrcode](#create-dynamicbrcodes): Create dynamic Pix BR codes
         - [BrcodePreview](#create-brcodepreviews): Read data from BR Codes before paying them
         - [PixDispute](#create-pixdisputes): Create Pix Disputes
+        - [PixPullSubscription](#create-pixpullsubscriptions): Set up recurring Pix debit authorizations
+        - [PixPullRequest](#create-pixpullrequests): Trigger automatic Pix debits against a subscription
     - [Lending](#lending)
         - [CreditNote](#create-creditnotes): Create credit notes
         - [CreditPreview](#create-creditpreviews): Create credit previews
@@ -2646,6 +2648,257 @@ import starkinfra
 
 log = starkinfra.pixdispute.log.get("5155165527080960")
 
+print(log)
+```
+
+### Create PixPullSubscriptions
+
+You can create recurring Pix debit authorizations to allow a receiver to pull a series of Pix payments from a sender.
+
+```python
+import starkinfra
+from datetime import datetime
+
+subscriptions = starkinfra.pixpullsubscription.create([
+    starkinfra.PixPullSubscription(
+        bacen_id="RR2017032900000000000000003",
+        external_id="my-subscription-001",
+        installment_start=datetime(2026, 4, 1, 12, 0, 0),
+        interval="month",
+        receiver_name="Edward Stark",
+        receiver_tax_id="20.018.183/0001-80",
+        receiver_bank_code="20018183",
+        reference_code="contract-202604",
+        sender_account_number="876543-2",
+        sender_bank_code="20018183",
+        sender_branch_code="1357-9",
+        sender_city_code="3550308",
+        sender_tax_id="01234567890",
+        type="push",
+        amount=11234,
+        description="Monthly subscription",
+        tags=["employees", "monthly"],
+    )
+])
+
+for subscription in subscriptions:
+    print(subscription)
+```
+
+### Query PixPullSubscriptions
+
+You can query multiple PixPullSubscriptions according to filters.
+
+```python
+import starkinfra
+from datetime import date
+
+subscriptions = starkinfra.pixpullsubscription.query(
+    limit=10,
+    after=date(2026, 1, 1),
+    before=date(2026, 4, 30),
+    status=["active"],
+    tags=["monthly"],
+)
+
+for subscription in subscriptions:
+    print(subscription)
+```
+
+### Get a PixPullSubscription
+
+After its creation, information on a PixPullSubscription may be retrieved by its id.
+
+```python
+import starkinfra
+
+subscription = starkinfra.pixpullsubscription.get("5656565656565656")
+
+print(subscription)
+```
+
+### Update a PixPullSubscription
+
+You can update a PixPullSubscription by passing its id.
+
+When patching `status` to `"confirmed"`, `sender_city_code` MUST be present in the patch.
+
+```python
+import starkinfra
+
+subscription = starkinfra.pixpullsubscription.update(
+    id="5656565656565656",
+    status="confirmed",
+    sender_city_code="3550308",
+)
+
+print(subscription)
+```
+
+### Cancel a PixPullSubscription
+
+You can cancel a PixPullSubscription by passing its id and a reason. The reason is sent as a query parameter on the DELETE request.
+
+```python
+import starkinfra
+
+subscription = starkinfra.pixpullsubscription.cancel(
+    id="5656565656565656",
+    reason="accountClosed",
+)
+
+print(subscription)
+```
+
+### Query PixPullSubscription logs
+
+You can query PixPullSubscription logs to better understand PixPullSubscription life cycles.
+
+```python
+import starkinfra
+from datetime import date
+
+logs = starkinfra.pixpullsubscription.log.query(
+    limit=50,
+    after=date(2026, 1, 1),
+    before=date(2026, 4, 30),
+    subscription_ids=["5656565656565656"],
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get a PixPullSubscription log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.pixpullsubscription.log.get("5155165527080960")
+
+print(log)
+```
+
+### Process inbound PixPullSubscription events
+
+Inbound PixPullSubscription events will be POSTed at your registered endpoint. You can use the `parse` function to verify the digital signature and reconstruct the PixPullSubscription object.
+
+```python
+import starkinfra
+
+subscription = starkinfra.pixpullsubscription.parse(
+    content='{"bacenId": "RR2017032900000000000000003", ...}',
+    signature="MEUCIQC7FVhXdripx/aXg5yNLxmNoZlehpyvX3QYDXJ8o3PAZQIgVe1omKFh7Vd54ML4U1z7L+kpx+GHl+G2XLeFTLZeBJk=",
+)
+
+print(subscription)
+```
+
+### Create PixPullRequests
+
+You can create PixPullRequests to trigger automatic debits against an active PixPullSubscription.
+
+```python
+import starkinfra
+from datetime import datetime
+
+requests = starkinfra.pixpullrequest.create([
+    starkinfra.PixPullRequest(
+        amount=11234,
+        due=datetime(2026, 4, 15, 12, 0, 0),
+        end_to_end_id="E00002649202201172211u34srod19le",
+        receiver_account_number="876543-2",
+        receiver_account_type="checking",
+        receiver_bank_code="20018183",
+        reconciliation_id="cycle-202604",
+        subscription_id="5656565656565656",
+        tags=["monthly"],
+    )
+])
+
+for request in requests:
+    print(request)
+```
+
+### Query PixPullRequests
+
+```python
+import starkinfra
+from datetime import date
+
+requests = starkinfra.pixpullrequest.query(
+    limit=10,
+    after=date(2026, 1, 1),
+    before=date(2026, 4, 30),
+    status=["created", "success"],
+    subscription_ids=["5656565656565656"],
+)
+
+for request in requests:
+    print(request)
+```
+
+### Get a PixPullRequest
+
+```python
+import starkinfra
+
+request = starkinfra.pixpullrequest.get("5656565656565656")
+print(request)
+```
+
+### Update a PixPullRequest
+
+Change the status to `"scheduled"` or `"denied"`. When denying, `reason` is required.
+
+```python
+import starkinfra
+
+request = starkinfra.pixpullrequest.update(
+    id="5656565656565656",
+    status="denied",
+    reason="senderAccountClosed",
+)
+print(request)
+```
+
+### Cancel a PixPullRequest
+
+```python
+import starkinfra
+
+request = starkinfra.pixpullrequest.cancel(
+    id="5656565656565656",
+    reason="senderUserRequested",
+)
+print(request)
+```
+
+### Query PixPullRequest logs
+
+```python
+import starkinfra
+from datetime import date
+
+logs = starkinfra.pixpullrequest.log.query(
+    limit=50,
+    after=date(2026, 1, 1),
+    before=date(2026, 4, 30),
+    request_ids=["5656565656565656"],
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get a PixPullRequest log
+
+```python
+import starkinfra
+
+log = starkinfra.pixpullrequest.log.get("5155165527080960")
 print(log)
 ```
 

@@ -28,6 +28,7 @@ class IssuingCard(Resource):
     - holder_id [string]: card holder unique id. ex: "5656565656565656"
     - type [string]: card type. ex: "virtual"
     - status [string]: current IssuingCard status. ex: "active", "blocked", "canceled", "expired"
+    - is_pin_defined [bool]: whether the card PIN has been defined. ex: True
     - number [string]: [EXPANDABLE] masked card number. Expand to unmask the value. ex: "123"
     - security_code [string]: [EXPANDABLE] masked card verification value (cvv). Expand to unmask the value. ex: "123"
     - expiration [datetime.datetime]: [EXPANDABLE] masked card expiration datetime. Expand to unmask the value. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
@@ -37,8 +38,8 @@ class IssuingCard(Resource):
 
     def __init__(self, holder_name, holder_tax_id, holder_external_id, display_name=None, rules=None, product_id=None,
                  tags=None, street_line_1=None, street_line_2=None, district=None, city=None, state_code=None,
-                 zip_code=None, id=None, holder_id=None, type=None, status=None, number=None, security_code=None,
-                 expiration=None, created=None, updated=None):
+                 zip_code=None, id=None, holder_id=None, type=None, status=None, is_pin_defined=None, number=None,
+                 security_code=None, expiration=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
         self.holder_name = holder_name
@@ -57,6 +58,7 @@ class IssuingCard(Resource):
         self.holder_id = holder_id
         self.type = type
         self.status = status
+        self.is_pin_defined = is_pin_defined
         self.number = number
         self.security_code = security_code
         self.expiration = check_datetime(expiration)

@@ -38,7 +38,8 @@ class PixRequest(Resource):
     - reconciliation_id [string, default None]: Reconciliation ID linked to this payment. ex: "b77f5236-7ab9-4487-9f95-66ee6eaf1781"
     - initiator_tax_id [string, default None]: Payment initiator's tax id (CPF/CNPJ). ex: "01234567890" or "20.018.183/0001-80"
     - tags [list of strings, default []]: list of strings for reference when searching for PixRequests. ex: ["employees", "monthly"]
-    - method [string, default None]: execution  method for thr creation of the Pix. ex: "manual", "payerQrcode", "dynamicQrcode"
+    - method [string, default None]: execution method for the creation of the Pix. Options: "manual", "dict", "initiator", "dynamicQrcode", "staticQrcode", "payerQrcode", "subscription", "contactless", "staticContactless"
+    - reason [string, default None]: reason why this Pix request was created. Options: "customerRequest", "subscriptionFlaw", "fraud"
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixRequest is created. ex: "5656565656565656"
     - fee [integer]: fee charged when PixRequest is paid. ex: 200 (= R$ 2.00)
@@ -53,7 +54,7 @@ class PixRequest(Resource):
                  sender_account_number, sender_account_type, receiver_name, receiver_tax_id, receiver_bank_code,
                  receiver_account_number, receiver_branch_code, receiver_account_type, end_to_end_id, priority=None,
                  cashier_type=None, cashier_bank_code=None, cash_amount=None, receiver_key_id=None, description=None, 
-                 reconciliation_id=None, initiator_tax_id=None, tags=None, method=None, id=None, fee=None,
+                 reconciliation_id=None, initiator_tax_id=None, tags=None, method=None, reason=None, id=None, fee=None,
                  status=None, flow=None, sender_bank_code=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
@@ -81,6 +82,7 @@ class PixRequest(Resource):
         self.initiator_tax_id = initiator_tax_id
         self.tags = tags
         self.method = method
+        self.reason = reason
         self.fee = fee
         self.status = status
         self.flow = flow

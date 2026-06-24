@@ -88,7 +88,7 @@ def get(id, user=None):
     return rest.get_id(resource=_resource, id=id, user=user)
 
 
-def query(limit=None, after=None, before=None, status=None, ids=None, tags=None, user=None):
+def query(limit=None, after=None, before=None, status=None, ids=None, bacen_id=None, reference_ids=None, tags=None, user=None):
     """# Retrieve PixDisputes
     Receive a generator of PixDispute objects previously created in the Stark Infra API
     ## Parameters (optional):
@@ -97,6 +97,8 @@ def query(limit=None, after=None, before=None, status=None, ids=None, tags=None,
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "processing", "success", "failed"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - bacen_id [string, default None]: Central Bank's unique dispute id to filter retrieved objects. ex: "817fc523-9e9d-40ab-9e53-dacb71454a05"
+    - reference_ids [list of strings, default None]: list of end_to_end_ids of the reported transactions to filter retrieved objects. ex: ["E20018183202201201450u34sDjD7334"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -109,12 +111,14 @@ def query(limit=None, after=None, before=None, status=None, ids=None, tags=None,
         before=check_date(before),
         status=status,
         ids=ids,
+        bacen_id=bacen_id,
+        reference_ids=reference_ids,
         tags=tags,
         user=user,
     )
 
 
-def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, tags=None, user=None):
+def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None, bacen_id=None, reference_ids=None, tags=None, user=None):
     """# Retrieve paged PixDisputes
     Receive a list of up to 100 PixDispute objects previously created in the Stark Infra API and the cursor to the next page.
     Use this function instead of query if you want to manually page your requests.
@@ -125,6 +129,8 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - before [datetime.date or string, default None]: date filter for objects created before a specified date. ex: datetime.date(2020, 3, 10)
     - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "processing", "success", "failed"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
+    - bacen_id [string, default None]: Central Bank's unique dispute id to filter retrieved objects. ex: "817fc523-9e9d-40ab-9e53-dacb71454a05"
+    - reference_ids [list of strings, default None]: list of end_to_end_ids of the reported transactions to filter retrieved objects. ex: ["E20018183202201201450u34sDjD7334"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -139,6 +145,8 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
         before=check_date(before),
         status=status,
         ids=ids,
+        bacen_id=bacen_id,
+        reference_ids=reference_ids,
         tags=tags,
         user=user,
     )

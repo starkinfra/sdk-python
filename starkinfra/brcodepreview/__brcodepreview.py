@@ -2,7 +2,7 @@ from ..utils import rest
 from starkcore.utils.resource import Resource
 from starkcore.utils.api import from_api_json
 from ..subscription.__subscription import Subscription
-from starkcore.utils.checks import check_datetime_or_date
+from starkcore.utils.checks import check_datetime, check_datetime_or_date
 from ..subscription.__subscription import _resource as _subscription_resource
 
 
@@ -27,10 +27,13 @@ class BrcodePreview(Resource):
     - cash_amount [integer]: Amount to be withdrawn from the cashier in cents. ex: 1000 (= R$ 10.00)
     - cashier_bank_code [string]: Cashier's bank code. ex: "20018183"
     - cashier_type [string]: Cashier's type. Options: "merchant", "participant" and "other"
+    - data [list of dictionaries]: additional data of the dynamic QR code, in key/value pairs. ex: [{"key": "additional-info", "value": "order #12345"}]
     - discount_amount [integer]: Discount value calculated over nominal_amount. ex: 3000
     - due [datetime.datetime]: BR Code due date. ex: datetime(2020, 3, 10)
+    - expired [datetime.datetime]: date and time after which the dynamic QR code is considered expired. ex: datetime(2022, 2, 1)
     - fine_amount [integer]: Fine value calculated over nominal_amount. ex: 20000
     - interest_amount [integer]: Interest value calculated over nominal_amount. ex: 10000
+    - jws [string]: JWS of the dynamic QR code. Returned only when "jws" is passed in the expand query parameter. ex: "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9..."
     - key_id [string]: Receiver's PixKey id. ex: "+5511989898989"
     - name [string]: Payment receiver name. ex: "Tony Stark"
     - nominal_amount [integer]: Brcode emission amount, without fines, fees and discounts. ex: 1234 (= R$ 12.34)
@@ -43,8 +46,8 @@ class BrcodePreview(Resource):
     """
 
     def __init__(self, id, payer_id, account_number=None, account_type=None, amount=None, amount_type=None, bank_code=None,
-                 branch_code=None, cash_amount=None, cashier_bank_code=None, cashier_type=None, discount_amount=None, due=None,
-                 fine_amount=None, interest_amount=None, key_id=None, name=None, nominal_amount=None, end_to_end_id=None,
+                 branch_code=None, cash_amount=None, cashier_bank_code=None, cashier_type=None, data=None, discount_amount=None, due=None,
+                 expired=None, fine_amount=None, interest_amount=None, jws=None, key_id=None, name=None, nominal_amount=None, end_to_end_id=None,
                  reconciliation_id=None, reduction_amount=None, scheduled=None, subscription=None, status=None, tax_id=None, description=None):
         Resource.__init__(self, id=id)
         
@@ -59,12 +62,17 @@ class BrcodePreview(Resource):
         self.cash_amount = cash_amount
         self.cashier_bank_code = cashier_bank_code
         self.cashier_type = cashier_type
+        self.data = data
         self.discount_amount = discount_amount
         if(due == ""):
             due = None
         self.due = check_datetime_or_date(due)
+        if(expired == ""):
+            expired = None
+        self.expired = check_datetime(expired)
         self.fine_amount = fine_amount
         self.interest_amount = interest_amount
+        self.jws = jws
         self.key_id = key_id
         self.name = name
         self.nominal_amount = nominal_amount

@@ -1,6 +1,6 @@
 from ..utils import rest
 from starkcore.utils.resource import Resource
-from starkcore.utils.checks import check_datetime
+from starkcore.utils.checks import check_datetime, check_date
 
 
 class PixBalance(Resource):
@@ -27,12 +27,13 @@ class PixBalance(Resource):
 _resource = {"class": PixBalance, "name": "PixBalance"}
 
 
-def get(user=None):
+def get(before=None, user=None):
     """# Retrieve the PixBalance object
     Receive the PixBalance object linked to your Workspace in the Stark Infra API
     ## Parameters (optional):
+    - before [datetime.date or string, default None]: date filter to retrieve the balance as of the end of the informed day. ex: datetime.date(2022, 1, 31)
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixBalance object with updated attributes
     """
-    return next(rest.get_stream(resource=_resource, user=user))
+    return next(rest.get_stream(resource=_resource, before=check_date(before), user=user))

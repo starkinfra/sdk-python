@@ -14,6 +14,17 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- reason parameter and attribute to PixRequest resource
+- before parameter to PixBalance get method
+- chunk_count attribute to PixStatement resource
+- tax_id filter to PixKey query and page methods
+- Statistics sub-resource to PixUser resource
+- reference_ids filter to PixChargeback query and page methods
+- bacen_id and reference_ids filters to PixDispute query and page methods
+- ids filter to PixDispute log query and page methods
+- type parameter and attribute to StaticBrcode resource
+- expired, data and jws attributes to BrcodePreview resource
+- additional method options to PixRequest and type options to DynamicBrcode and PixInfraction
 - PixKeyHolmes resource
 - PixInternalTransactionReport resource
 - log subresource to PixFraud

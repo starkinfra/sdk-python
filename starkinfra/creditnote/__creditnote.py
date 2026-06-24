@@ -5,6 +5,7 @@ from ..creditsigner.__creditsigner import CreditSigner
 from ..creditsigner.__creditsigner import _resource as _creditsigner_resource
 from .__transfer import Transfer
 from .__transfer import _resource as _transfer_resource
+from .__rule import parse_rules
 from ..utils import rest
 from starkcore.utils.api import from_api_json
 from starkcore.utils.resource import Resource
@@ -40,12 +41,14 @@ class CreditNote(Resource):
     - rebate_amount [integer, default 0]: credit analysis fee deducted from lent amount. ex: 11234 (= R$ 112.34)
     - tags [list of strings, default []]: list of strings for reference when searching for CreditNotes. ex: ["employees", "monthly"]
     - expiration [integer or datetime.timedelta, default 604800 (7 days)]: time interval in seconds between scheduled date and expiration date. ex 123456789
+    - rules [list of creditnote.Rule objects, default []]: list of CreditNote behavior rules. ex: [creditnote.Rule(key="invoiceCreationMode", value="scheduled")]
     ## Attributes (return-only):
     - id [string]: unique id returned when the CreditNote is created. ex: "5656565656565656"
     - document_id [string]: ID of the signed document to execute this CreditNote. ex: "4545454545454545"
     - status [string]: current status of the CreditNote. ex: "canceled", "created", "expired", "failed", "processing", "signed", "success"
     - transaction_ids [list of strings]: ledger transaction ids linked to this CreditNote. ex: ["19827356981273"]
     - workspace_id [string]: ID of the Workspace that generated this CreditNote. ex: "4545454545454545"
+    - debtor_workspace_id [string]: ID of the debtor's Workspace, when it differs from the Workspace that generated this CreditNote. ex: "4545454545454545"
     - tax_amount [integer]: tax amount included in the CreditNote. ex: 100
     - nominal_interest [float]: yearly nominal interest rate of the CreditNote, in percentage. ex: 11.5
     - interest [float]: yearly effective interest rate of the CreditNote, in percentage. ex: 12.5
@@ -55,9 +58,10 @@ class CreditNote(Resource):
 
     def __init__(self, template_id, name, tax_id, scheduled, invoices, payment, signers, external_id,
                  street_line_1, street_line_2, district, city, state_code, zip_code, payment_type=None,
-                 nominal_amount=None, amount=None, rebate_amount=None, tags=None, expiration=None, id=None,
-                 document_id=None, status=None, transaction_ids=None, workspace_id=None, tax_amount=None,
-                 nominal_interest=None, interest=None, created=None, updated=None):
+                 nominal_amount=None, amount=None, rebate_amount=None, tags=None, expiration=None, rules=None,
+                 id=None, document_id=None, status=None, transaction_ids=None, workspace_id=None,
+                 debtor_workspace_id=None, tax_amount=None, nominal_interest=None, interest=None, created=None,
+                 updated=None):
         Resource.__init__(self, id=id)
 
         self.template_id = template_id
@@ -78,10 +82,12 @@ class CreditNote(Resource):
         self.rebate_amount = rebate_amount
         self.tags = tags
         self.expiration = expiration
+        self.rules = parse_rules(rules)
         self.document_id = document_id
         self.status = status
         self.transaction_ids = transaction_ids
         self.workspace_id = workspace_id
+        self.debtor_workspace_id = debtor_workspace_id
         self.tax_amount = tax_amount
         self.nominal_interest = nominal_interest
         self.interest = interest

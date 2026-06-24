@@ -14,6 +14,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- rules and debtor_workspace_id parameters to CreditNote resource
 - reason parameter and attribute to PixRequest resource
 - before parameter to PixBalance get method
 - chunk_count attribute to PixStatement resource

@@ -1028,14 +1028,14 @@ sendResponse(
 
 ### Get an IssuingToken
 
-You can get a single token by its id. The returned token exposes a return-only `url` attribute populated by the API response.
+You can get a single token by its id.
 
 ```python
 import starkinfra
 
 token = starkinfra.issuingtoken.get(id="5749080709922816")
 
-print(token.url)
+print(token)
 ```
 
 ### Query IssuingTokens

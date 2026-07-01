@@ -11,7 +11,7 @@ class IssuingStock(Resource):
     - balance [integer]: [EXPANDABLE] current stock balance. ex: 1000
     - design_id [string]: IssuingDesign unique id. ex: "5656565656565656"
     - embosser_id [string]: Embosser unique id. ex: "5656565656565656"
-    - embosser_name [string]: Embosser name. ex: "Vault123"
+    - embosser_name [string]: Name of the embosser that holds this stock
     - updated [datetime.datetime]: latest update datetime for the IssuingStock. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - created [datetime.datetime]: creation datetime for the IssuingStock. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """

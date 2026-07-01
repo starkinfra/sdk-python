@@ -26,7 +26,7 @@ class IssuingPurchase(Resource):
     - merchant_currency_symbol [string]: merchant currency symbol. ex: "$"
     - merchant_category_code [string]: merchant category code. ex: "fastFoodRestaurants"
     - merchant_category_type [string]: merchant category type. ex "food"
-    - merchant_category_number [integer]: merchant category number. ex: 5814
+    - merchant_category_number [integer]: MCC number of the merchant category. ex: 5814
     - merchant_country_code [string]: merchant country code. ex: "USA"
     - acquirer_id [string]: acquirer ID. ex: "5656565656565656"
     - merchant_id [string]: merchant ID. ex: "5656565656565656"
@@ -35,7 +35,7 @@ class IssuingPurchase(Resource):
     - wallet_id [string]: virtual wallet ID. ex: "5656565656565656"
     - method_code [string]: method code. Options: "chip", "token", "server", "manual", "magstripe" or "contactless"
     - score [float]: internal score calculated for the authenticity of the purchase. None in case of insufficient data. ex: 7.6
-    - confirmed [bool]: whether the purchase has been confirmed. ex: True
+    - confirmed [datetime.datetime]: Confirmation datetime. Null until the purchase is confirmed. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - end_to_end_id [string]: Unique id used to identify the transaction through all of its life cycle, even before the purchase is denied or approved and gets its usual id. ex: "679cd385-642b-49d0-96b7-89491e1249a5"
     - tags [list of strings]: list of strings for tagging returned by the sub-issuer during the authorization. ex: ["travel", "food"]
     ## Attributes (IssuingPurchase only):
@@ -90,7 +90,7 @@ class IssuingPurchase(Resource):
         self.wallet_id = wallet_id
         self.method_code = method_code
         self.score = score
-        self.confirmed = confirmed
+        self.confirmed = check_datetime(confirmed)
         self.end_to_end_id = end_to_end_id
         self.tags = tags
         self.issuing_transaction_ids = issuing_transaction_ids

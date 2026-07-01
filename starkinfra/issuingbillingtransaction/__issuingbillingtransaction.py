@@ -6,6 +6,9 @@ from starkcore.utils.checks import check_datetime, check_date
 class IssuingBillingTransaction(Resource):
     """# IssuingBillingTransaction object
     Check out our API Documentation at https://starkinfra.com/docs/api#issuing-billing-transaction
+    ## Attributes (return-only):
+    - rate [float]: Conversion rate applied to international transactions
+    - tax [integer]: IOF amount in cents applied to the transaction
     """
 
     def __init__(self, id=None, amount=None, invoice_id=None, installment=None, installment_count=None,

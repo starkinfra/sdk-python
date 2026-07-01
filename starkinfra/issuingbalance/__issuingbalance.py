@@ -12,8 +12,8 @@ class IssuingBalance(Resource):
     - id [string]: unique id returned when IssuingBalance is created. ex: "5656565656565656"
     - amount [integer]: current balance amount of the Workspace in cents. ex: 200 (= R$ 2.00)
     - currency [string]: currency of the current Workspace. Expect others to be added eventually. ex: "BRL"
-    - limit [integer]: current issuing limit of the Workspace in cents. ex: 200 (= R$ 2.00)
-    - max_limit [integer]: maximum issuing limit of the Workspace in cents. ex: 200 (= R$ 2.00)
+    - limit [integer]: Spending limit of the balance
+    - max_limit [integer]: Maximum spending limit. This field is currently always equal to limit
     - updated [datetime.datetime]: latest update datetime for the IssuingBalance. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 

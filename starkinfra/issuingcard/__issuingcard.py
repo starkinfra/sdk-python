@@ -28,7 +28,7 @@ class IssuingCard(Resource):
     - holder_id [string]: card holder unique id. ex: "5656565656565656"
     - type [string]: card type. ex: "virtual"
     - status [string]: current IssuingCard status. ex: "active", "blocked", "canceled", "expired"
-    - is_pin_defined [bool]: whether the card PIN has been defined. ex: True
+    - is_pin_defined [bool]: Whether the card has a PIN defined. Returned only when "expand=isPinDefined" is informed in the request
     - number [string]: [EXPANDABLE] masked card number. Expand to unmask the value. ex: "123"
     - security_code [string]: [EXPANDABLE] masked card verification value (cvv). Expand to unmask the value. ex: "123"
     - expiration [datetime.datetime]: [EXPANDABLE] masked card expiration datetime. Expand to unmask the value. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)

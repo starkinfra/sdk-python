@@ -22,14 +22,13 @@ class IssuingRule(Resource):
     - counter_amount [integer]: current rule spent amount. ex: 1000
     - currency_symbol [string]: currency symbol. ex: "R$"
     - currency_name [string]: currency name. ex: "Brazilian Real"
-    - schedule [string]: schedule time for the rule. ex: "every monday, wednesday from 00:00 to 23:59 in America/Sao_Paulo"
-    - purposes [list of strings]: list of purposes accepted by the rule. ex: ["purchase", "withdrawal"]
-    - merchants [list of strings]: list of merchants accepted by the rule. ex: ["5656565656565656"]
+    - schedule [string]: Optional schedule dictating when the rule can be used. Some examples: "everyday from 09:00 to 18:00 in America/Sao_Paulo" - every day, 09:00-18:00 Sao Paulo time; "every monday, wednesday, friday from 08:00 to 12:00 in America/Sao_Paulo" - only those weekdays, mornings; "every saturday, sunday" - weekends, all day, in UTC
+    - purposes [list of strings]: Optional list of transaction purposes the rule applies to. Options: "purchase", "withdrawal", "verification". The rule then limits only purchases of those purposes; omit it to allow any purposes. Example: ["purchase", "verification"] if you want us to automatically deny withdrawal.
     """
 
     def __init__(self, name, amount, id=None, interval=None, currency_code=None, categories=None, countries=None,
                  methods=None, counter_amount=None, currency_symbol=None, currency_name=None, schedule=None,
-                 purposes=None, merchants=None):
+                 purposes=None):
         Resource.__init__(self, id=id)
 
         self.name = name
@@ -44,7 +43,6 @@ class IssuingRule(Resource):
         self.currency_name = currency_name
         self.schedule = schedule
         self.purposes = purposes
-        self.merchants = merchants
 
 
 _resource = {"class": IssuingRule, "name": "IssuingRule"}

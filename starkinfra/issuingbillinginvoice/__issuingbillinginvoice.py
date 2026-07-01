@@ -6,6 +6,9 @@ from starkcore.utils.checks import check_datetime, check_date
 class IssuingBillingInvoice(Resource):
     """# IssuingBillingInvoice object
     Check out our API Documentation at https://starkinfra.com/docs/api#issuing-billing-invoice
+    ## Attributes (return-only):
+    - fine [float]: Fine percentage applied when paid after the due date. ex: 2.0
+    - interest [float]: Monthly interest percentage applied when paid after the due date. ex: 1.0
     """
 
     def __init__(self, id=None, name=None, tax_id=None, fine=None, interest=None, status=None, amount=None,

@@ -12,7 +12,7 @@ class IssuingProduct(Resource):
     - funding_type [string]: type of funding used for payment. ex: "credit", "debit"
     - holder_type [string]: holder type. ex: "business", "individual"
     - code [string]: internal code from card flag informing the product. ex: "MRW", "MCO", "MWB", "MCS"
-    - customer_type [string]: card product customer type. ex: "business", "individual"
+    - customer_type [string]: Same as holderType. Kept for backward compatibility
     - created [datetime.datetime]: creation datetime for the IssuingProduct. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 

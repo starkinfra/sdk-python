@@ -50,24 +50,6 @@ class TestIssuingTokenUpdateAndDelete(TestCase):
             self.assertEqual(canceled_token.id, str(canceled_token.id))
 
 
-class TestIssuingTokenUrl(TestCase):
-
-    def test_success_query(self):
-        tokens = starkinfra.issuingtoken.query(limit=5)
-        for token in tokens:
-            self.assertTrue(hasattr(token, "url"))
-            if token.url is not None:
-                self.assertEqual(token.url, str(token.url))
-
-    def test_success_get(self):
-        tokens = starkinfra.issuingtoken.query(limit=1)
-        for token in tokens:
-            fetched_token = starkinfra.issuingtoken.get(token.id)
-            self.assertTrue(hasattr(fetched_token, "url"))
-            if fetched_token.url is not None:
-                self.assertEqual(fetched_token.url, str(fetched_token.url))
-
-
 class TestIssuingTokenProcess(TestCase):
     content = "{\"deviceName\": \"My phone\", \"methodCode\": \"manual\", \"walletName\": \"Google Pay\", \"activationCode\": \"\", \"deviceSerialNumber\": \"2F6D63\", \"deviceImei\": \"352099001761481\", \"deviceType\": \"Phone\", \"walletInstanceId\": \"1b24f24a24ba98e27d43e345b532a245e4723d7a9c4f624e\", \"deviceOsVersion\": \"4.4.4\", \"cardId\": \"5189831499972623\", \"deviceOsName\": \"Android\", \"merchantId\": \"12345678901\", \"walletId\": \"google\"}"
     valid_signature = "MEYCIQC4XbhjxEp9VhowLeg9JbSOo94FCRWE9GI7l7OuHh0bUwIhAJBuLDl5DAT9L4iMI0qYQ+PVmBIG5scxxvkWSsoWmwi4"

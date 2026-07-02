@@ -14,13 +14,15 @@ class MerchantCategory(SubResource):
     ## Attributes (return-only):
     - name [string]: category's name. ex: "Veterinary services", "Fast food restaurants"
     - number [string]: category's number. ex: "742", "5814"
+    - group [string]: category's group. ex: "pets", "food"
     """
 
-    def __init__(self, code=None, type=None, name=None, number=None):
+    def __init__(self, code=None, type=None, name=None, number=None, group=None):
         self.code = code
         self.type = type
         self.name = name
         self.number = number
+        self.group = group
 
 
 _resource = {"class": MerchantCategory, "name": "MerchantCategory"}

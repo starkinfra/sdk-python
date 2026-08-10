@@ -75,6 +75,7 @@ This SDK version is compatible with the Stark Infra API v2.
         - [IndividualAccountAttachment](#create-individualaccountattachments): Create individual account attachments
         - [BusinessIdentity](#create-businessidentities): Create business identities
         - [BusinessAttachment](#create-businessattachments): Create business attachments
+        - [BusinessAccountRequest](#create-businessaccountrequests): Create business account requests
     - [Webhook](#webhook):
         - [Webhook](#create-a-webhook-subscription): Configure your webhook endpoints and subscriptions
         - [WebhookEvents](#process-webhook-events): Manage Webhook events
@@ -4146,6 +4147,117 @@ You can also get a specific log by its id.
 import starkinfra
 
 log = starkinfra.businessattachment.log.get("5155165527080960")
+
+print(log)
+```
+
+### Create BusinessAccountRequests
+
+You can create a BusinessAccountRequest to request an account for a specific company, opening the account with
+identity verification by webview for each of its owners.
+
+```python
+import starkinfra
+
+requests = starkinfra.businessaccountrequest.create([
+    starkinfra.BusinessAccountRequest(
+        name="Stark Bank S.A.",
+        tax_id="20.018.183/0001-80",
+        address=starkinfra.businessaccountrequest.Address(
+            street="Av. Faria Lima",
+            number="2000",
+            neighborhood="Itaim Bibi",
+            city="Sao Paulo",
+            state="SP",
+            zip_code="04538-132",
+            complement="Sala 42",
+        ),
+        revenue=100000000,
+        owners=[
+            starkinfra.businessaccountrequest.Owner(
+                tax_id="012.345.678-90",
+                name="Jamie Lannister",
+                role="partner",
+            ),
+            starkinfra.businessaccountrequest.Owner(
+                tax_id="812.531.960-36",
+                name="Cersei Lannister",
+                role="representative",
+            ),
+        ],
+    )
+])
+
+for request in requests:
+    print(request)
+```
+
+**Note**: Instead of using BusinessAccountRequest, Address and Owner objects, you can also pass each element in dictionary format
+
+### Query BusinessAccountRequests
+
+You can query multiple business account requests according to filters.
+
+```python
+import starkinfra
+from datetime import date
+
+requests = starkinfra.businessaccountrequest.query(
+    limit=10,
+    after=date(2020, 1, 1),
+    before=date(2020, 4, 1),
+    status="approved",
+    tags=["breaking", "bad"],
+)
+
+for request in requests:
+    print(request)
+```
+
+### Get a BusinessAccountRequest
+
+After its creation, information on a business account request may be retrieved by its id. Use it to read the
+per-owner verification status.
+
+```python
+import starkinfra
+
+request = starkinfra.businessaccountrequest.get("5155165527080960")
+
+for owner in request.owners:
+    print(owner.name, owner.status)
+```
+
+Each owner also carries a `validator_link`, the webview where that owner completes biometrics and document
+capture. Treat it as a credential: deliver it to its owner through a secure channel, and never log it or write
+it to disk.
+
+### Query BusinessAccountRequest logs
+
+You can query business account request logs to better understand business account request life cycles.
+
+```python
+import starkinfra
+from datetime import date
+
+logs = starkinfra.businessaccountrequest.log.query(
+    limit=50,
+    after=date(2020, 1, 1),
+    before=date(2020, 1, 20),
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get a BusinessAccountRequest log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.businessaccountrequest.log.get("5155165527080960")
 
 print(log)
 ```

@@ -102,6 +102,9 @@ from .businessidentity.__businessidentity import BusinessIdentity
 from . import businessattachment
 from .businessattachment.__businessattachment import BusinessAttachment
 
+from . import businessaccountrequest
+from .businessaccountrequest.__businessaccountrequest import BusinessAccountRequest
+
 from . import dynamicbrcode
 from .dynamicbrcode.__dynamicbrcode import DynamicBrcode
 

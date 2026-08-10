@@ -15,6 +15,7 @@ def _generateExampleAddress():
         city="Sao Paulo",
         state="SP",
         zip_code="05724005",
+        complement="Apto. 123",
     )
 
 

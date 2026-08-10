@@ -2,18 +2,18 @@ from starkcore.utils.subresource import SubResource
 
 
 class Address(SubResource):
-    """# individualaccountrequest.Address object
-    The Address object is the structured residential address of the individual referenced by an
-    IndividualAccountRequest. It is embedded on the parent's `address` field and has no endpoints of its own.
+    """# businessaccountrequest.Address object
+    The Address object is the structured address of the company referenced by a
+    BusinessAccountRequest. It is embedded on the parent's `address` field and has no endpoints of its own.
     ## Parameters (required):
-    - street [string]: street name. ex: "Rua do Estilo Barroco"
-    - number [string]: street number. ex: "648"
-    - neighborhood [string]: neighborhood / district. ex: "Santo Amaro"
+    - street [string]: street name. ex: "Av. Faria Lima"
+    - number [string]: street number. ex: "2000"
+    - neighborhood [string]: neighborhood / district. ex: "Itaim Bibi"
     - city [string]: city. ex: "Sao Paulo"
     - state [string]: state (BR 2-letter code). ex: "SP"
-    - zip_code [string]: ZIP code (BR CEP), formatted or digit-only. ex: "05724005"
+    - zip_code [string]: ZIP code (BR CEP), formatted or digit-only. ex: "04538-132"
     ## Parameters (optional):
-    - complement [string, default None]: address complement. ex: "Apto. 123"
+    - complement [string, default None]: address complement. ex: "Sala 42"
     """
 
     def __init__(self, street=None, number=None, neighborhood=None, city=None, state=None, zip_code=None,

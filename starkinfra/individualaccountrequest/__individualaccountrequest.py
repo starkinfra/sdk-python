@@ -24,14 +24,15 @@ class IndividualAccountRequest(Resource):
     ## Attributes (return-only):
     - id [string]: unique id returned when the IndividualAccountRequest is created. ex: "5656565656565656"
     - account_type [string]: type of account requested. ex: "individual"
-    - flags [list of strings]: list of flags associated with the IndividualAccountRequest.
-    - status [string]: current status of the IndividualAccountRequest. ex: "approved", "created", "denied", "processing", "updated"
+    - flags [list of dictionaries]: flags that motivated the decision, populated when the request is denied. Each flag has a code and a message.
+    - status [string]: current status of the IndividualAccountRequest. Options: "created", "processing", "approved", "denied"
     - created [datetime.datetime]: creation datetime for the IndividualAccountRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the IndividualAccountRequest. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
+    - validator_link [string]: webview link to be delivered to the taker to complete biometrics and document capture.
     """
 
     def __init__(self, name, tax_id, address, income, birth_date=None, tags=None, id=None, account_type=None,
-                 flags=None, status=None, created=None, updated=None):
+                 flags=None, status=None, created=None, updated=None, validator_link=None):
         Resource.__init__(self, id=id)
 
         self.name = name
@@ -42,6 +43,7 @@ class IndividualAccountRequest(Resource):
         self.tags = tags
         self.account_type = account_type
         self.flags = flags
+        self.validator_link = validator_link
         self.status = status
         self.created = check_datetime(created)
         self.updated = check_datetime(updated)
@@ -91,7 +93,7 @@ def query(limit=None, status=None, tags=None, ids=None, after=None, before=None,
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "canceled", "processing", "failed", "success"]
+    - status [list of strings or string, default None]: filter for status of retrieved objects. A single value is also accepted. ex: ["created", "processing"] or "approved"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
@@ -119,7 +121,7 @@ def page(cursor=None, limit=None, status=None, tags=None, ids=None, after=None, 
     - limit [integer, default 100]: maximum number of objects to be retrieved. It must be an integer between 1 and 100. ex: 50
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "canceled", "processing", "failed", "success"]
+    - status [list of strings or string, default None]: filter for status of retrieved objects. A single value is also accepted. ex: ["created", "processing"] or "approved"
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.

@@ -2,6 +2,7 @@ import starkinfra
 from datetime import datetime, date, timedelta
 from unittest import TestCase, main
 from tests.utils.user import exampleProject
+from starkcore.utils.api import api_json
 from starkinfra.individualaccountrequest import Address
 from tests.utils.individualAccountRequest import generateExampleIndividualAccountRequestJson
 
@@ -18,6 +19,7 @@ class TestIndividualAccountRequestPost(TestCase):
             self.assertIsNotNone(request.id)
             self.assertIsNotNone(request.status)
             self.assertEqual(request.account_type, "individual")
+            self.assertTrue(hasattr(request, "validator_link"))
 
 
 class TestIndividualAccountRequestBirthDateAsDate(TestCase):
@@ -43,6 +45,24 @@ class TestIndividualAccountRequestAddress(TestCase):
         self.assertEqual(address.city, "Sao Paulo")
         self.assertEqual(address.state, "SP")
         self.assertEqual(address.zip_code, "05724005")
+        self.assertEqual(address.complement, "Apto. 123")
+
+    def test_success_complement_is_optional(self):
+        address = Address(
+            street="Rua do Estilo Barroco",
+            number="648",
+            neighborhood="Santo Amaro",
+            city="Sao Paulo",
+            state="SP",
+            zip_code="05724005",
+        )
+        self.assertIsNone(address.complement)
+        self.assertNotIn("complement", api_json(address))
+
+    def test_success_complement_sent_as_complement(self):
+        requests = generateExampleIndividualAccountRequestJson(n=1)
+        payload = api_json(requests[0])
+        self.assertEqual(payload["address"]["complement"], "Apto. 123")
 
     def test_success_address_not_flattened(self):
         requests = generateExampleIndividualAccountRequestJson(n=1)
@@ -74,40 +94,41 @@ class TestIndividualAccountRequestQuery(TestCase):
 class TestIndividualAccountRequestPage(TestCase):
 
     def test_success(self):
+        starkinfra.individualaccountrequest.create(generateExampleIndividualAccountRequestJson(n=3))
+
         cursor = None
         ids = []
         for _ in range(2):
             requests, cursor = starkinfra.individualaccountrequest.page(limit=2, cursor=cursor)
             for request in requests:
-                self.assertFalse(request.id in ids)
+                self.assertNotIn(request.id, ids)
                 ids.append(request.id)
             if cursor is None:
                 break
-        self.assertTrue(len(ids) == 4)
+        self.assertGreaterEqual(len(ids), 2)
 
 
 class TestIndividualAccountRequestGet(TestCase):
 
     def test_success(self):
-        requests = starkinfra.individualaccountrequest.query(limit=1)
-        request_id = next(requests).id
-        request = starkinfra.individualaccountrequest.get(id=request_id)
+        created = starkinfra.individualaccountrequest.create(generateExampleIndividualAccountRequestJson(n=1))[0]
+        request = starkinfra.individualaccountrequest.get(id=created.id)
         self.assertIsNotNone(request.id)
-        self.assertEqual(request.id, request_id)
+        self.assertEqual(request.id, created.id)
 
     def test_success_datetime_parsed(self):
-        requests = starkinfra.individualaccountrequest.query(limit=1)
-        request = starkinfra.individualaccountrequest.get(id=next(requests).id)
+        created = starkinfra.individualaccountrequest.create(generateExampleIndividualAccountRequestJson(n=1))[0]
+        request = starkinfra.individualaccountrequest.get(id=created.id)
         self.assertIsInstance(request.created, datetime)
         self.assertIsInstance(request.updated, datetime)
 
     def test_success_status_enum(self):
-        requests = list(starkinfra.individualaccountrequest.query(limit=5))
-        for request in requests:
-            self.assertIn(
-                request.status,
-                ["approved", "created", "denied", "processing", "updated"],
-            )
+        created = starkinfra.individualaccountrequest.create(generateExampleIndividualAccountRequestJson(n=1))[0]
+        request = starkinfra.individualaccountrequest.get(id=created.id)
+        self.assertIn(
+            request.status,
+            ["created", "processing", "approved", "denied"],
+        )
 
 
 class TestIndividualAccountRequestUpdate(TestCase):

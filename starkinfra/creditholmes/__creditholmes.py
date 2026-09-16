@@ -43,7 +43,7 @@ def create(holmes, user=None):
     """# Create CreditHolmes
     Send a list of CreditHolmes objects for creation at the Stark Infra API
     ## Parameters (required):
-    - holmes [list of CreditHolmes objects]: list of CreditHolmes objects to be created in the API
+    - holmes [list of CreditHolmes objects]: list of CreditHolmes objects to be created in the API. You can send up to 100 CreditHolmes objects in a single request.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

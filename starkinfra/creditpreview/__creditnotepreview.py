@@ -11,11 +11,13 @@ class CreditNotePreview(SubResource):
     to the Stark Infra API and returns the list of preview data.
     ## Parameters (required):
     - type [string]: table type that defines the amortization system. Options: "sac", "price", "american", "bullet", "custom"
-    - nominal_amount [integer]: amount in cents transferred to the credit receiver, before deductions. ex: 11234 (= R$ 112.34)
     - scheduled [datetime.date, datetime.datetime or string]: date of transfer execution. ex: datetime(2020, 3, 10)
     - tax_id [string]: credit receiver's tax ID (CPF or CNPJ). ex: "20.018.183/0001-80"
     ## Parameters (conditionally required):
+    Each `type` value requires its own subset of these fields: "sac", "price", "american" and "bullet" require nominal_interest and initial_due; "sac" and "price" require exactly one of count or initial_amount (count is also required for "american") plus interval; only "custom" requires invoices, leaving the others unused. For every type, including "custom", exactly one of nominal_amount or amount must also be provided.
     - invoices [list of Invoice objects]: list of Invoice objects to be created and sent to the credit receiver. ex: [Invoice(), Invoice()]
+    - nominal_amount [integer]: amount in cents transferred to the credit receiver, before deductions, for every type including "custom". Provide exactly one of nominal_amount or amount; the other value, along with tax_amount and the interest rates, is computed from the invoice schedule. ex: 11234 (= R$ 112.34)
+    - amount [integer]: net amount in cents to be disbursed to the credit receiver, for every type including "custom". Provide exactly one of nominal_amount or amount; the other value, along with tax_amount and the interest rates, is computed from the invoice schedule.
     - nominal_interest [float]: yearly nominal interest rate of the credit note, in percentage. ex: 12.5
     - initial_due [datetime.date, datetime.datetime or string]: date of the first invoice. ex: datetime(2020, 3, 10)
     - count [integer]: quantity of invoices for payment. ex: 12
@@ -24,7 +26,6 @@ class CreditNotePreview(SubResource):
     ## Parameters (optional):
     - rebate_amount [integer, default None]: credit analysis fee deducted from lent amount. ex: 11234 (= R$ 112.34)
     ## Attributes (return-only):
-    - amount [integer]: CreditNote value in cents. ex: 1234 (= R$ 12.34)
     - interest [float]: yearly effective interest rate of the credit note, in percentage. ex: 12.5
     - tax_amount [integer]: tax amount included in the CreditNote. ex: 100
     """

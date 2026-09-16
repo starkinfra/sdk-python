@@ -17,6 +17,7 @@ class BrcodePreview(Resource):
     - payer_id [string]: tax id (CPF/CNPJ) of the individual or business requesting the PixKey information. This id is used by the Central Bank to limit request rates. ex: "20.018.183/0001-80"
     ## Parameters (optional):
     - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
+    - scheduled [datetime.datetime, default None]: date the payment is scheduled to be processed; affects the preview values for due dynamic QR codes. ex: datetime(2020, 3, 10)
     ## Attributes (return-only):
     - account_number [string]: Payment receiver account number. ex: "1234567"
     - account_type [string]: Payment receiver account type. ex: "checking"
@@ -39,8 +40,7 @@ class BrcodePreview(Resource):
     - nominal_amount [integer]: Brcode emission amount, without fines, fees and discounts. ex: 1234 (= R$ 12.34)
     - reconciliation_id [string]: Reconciliation ID linked to this payment. If the brcode is dynamic, the reconciliation_id will have from 26 to 35 alphanumeric characters, ex: "cd65c78aeb6543eaaa0170f68bd741ee". If the brcode is static, the reconciliation_id will have up to 25 alphanumeric characters "ah27s53agj6493hjds6836v49"
     - reduction_amount [integer]: Reduction value to discount from nominal_amount. ex: 1000
-    - scheduled [datetime.datetime]: date of payment execution. ex: datetime(2020, 3, 10)
-    - status [string]: Payment status. ex: "created", "paid", "canceled" or "expired"
+    - status [string]: Payment status. ex: "created", "overdue", "paid", "voided", "canceled" or "expired"
     - subscription [Subscription]: BR code subscription information
     - tax_id [string]: Payment receiver tax ID. ex: "012.345.678-90"
     """
@@ -98,7 +98,7 @@ def create(previews, user=None):
     """# Retrieve BrcodePreviews
     Process BR Codes before paying them.
     ## Parameters (required):
-    - previews [list of BrcodePreview objects]: List of BrcodePreview objects to preview. ex: [starkinfra.BrcodePreview("00020126580014br.gov.bcb.pix0136a629532e-7693-4846-852d-1bbff817b5a8520400005303986540510.005802BR5908T'Challa6009Sao Paulo62090505123456304B14A")]
+    - previews [list of BrcodePreview objects]: List of BrcodePreview objects to preview. You can send up to 100 BrcodePreview objects in a single request. ex: [starkinfra.BrcodePreview("00020126580014br.gov.bcb.pix0136a629532e-7693-4846-852d-1bbff817b5a8520400005303986540510.005802BR5908T'Challa6009Sao Paulo62090505123456304B14A")]
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

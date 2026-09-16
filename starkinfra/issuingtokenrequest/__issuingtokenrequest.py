@@ -7,12 +7,13 @@ class IssuingTokenRequest(SubResource):
     The IssuingTokenRequest object displays the necessary information to proceed with the card tokenization.
     ## Parameters (required):
     - card_id [string]: card id to be tokenized. ex: "5734340247945216"
-    - wallet_id [string]: desired wallet to be integrated. ex: "google"
+    - wallet_id [string]: desired wallet to be integrated. Options: "apple", "google", "merchant"
     - method_code [string]: method code. ex: "app" or "manual"
+    ## Parameters (optional):
+    - metadata [dictionary object, default None]: additional information you want to send along with the tokenization request. ex: {"authorizationId": "OjZAqj"}
     ## Attributes (return-only):
     - content [string]: token request content. ex: "eyJwdWJsaWNLZXlGaW5nZXJwcmludCI6ICJlNTNiZThjZTRhYWQxNWU2OWNmMjExOTA5Mjk4YzJkOTE0O..."
     - signature [string]: token request signature. ex: "eyJwdWJsaWNLZXlGaW5nZXJwcmludCI6ICJlNTNiZThjZTRhYWQxNWU2OWNmMjExOTA5Mjk4YzJkOTE0O..."
-    - metadata [dictionary]: dictionary object used to store additional information about the IssuingTokenRequest object.
     """
 
     def __init__(self, card_id, wallet_id, method_code, content=None, signature=None, metadata=None):

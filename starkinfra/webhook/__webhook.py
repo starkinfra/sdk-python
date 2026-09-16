@@ -8,7 +8,7 @@ class Webhook(Resource):
     Currently, available services for subscription are credit-note, issuing-card, issuing-invoice, issuing-purchase, pix-request.in, pix-request.out, pix-reversal.in, pix-reversal.out, pix-claim, pix-key, pix-chargeback, pix-infraction,
     ## Parameters (required):
     - url [string]: Url that will be notified when an event occurs.
-    - subscriptions [list of strings]: list of any non-empty combination of the available services. ex: ["contract", "credit-note", "signer", "issuing-card", "issuing-invoice", "issuing-purchase", "pix-request.in", "pix-request.out", "pix-reversal.in", "pix-reversal.out", "pix-claim", "pix-key", "pix-chargeback", "pix-infraction"]
+    - subscriptions [list of strings]: list of any non-empty combination of the available services. Options: "pix-request", "pix-reversal", "pix-pull-subscription", "pix-pull-request", "pix-internal-transaction-report", "pix-key", "pix-key-holmes", "pix-claim", "pix-infraction", "pix-chargeback", "pix-dispute", "issuing-card", "issuing-holder", "issuing-purchase", "issuing-invoice", "credit-note", "credit-holmes" (not "contract"/"signer", which are not Stark Infra services, nor the .in/.out split, which docs do not use for webhook subscriptions).
     ## Attributes (return-only):
     - id [string]: unique id returned when the webhook is created. ex: "5656565656565656"
     """

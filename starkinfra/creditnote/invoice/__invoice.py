@@ -17,14 +17,14 @@ class Invoice(Resource):
     - expiration [integer or datetime.timedelta, default 5097600 (59 days)]: time interval in seconds between due date and expiration date. ex 123456789
     - tags [list of strings, default []]: list of strings for tagging
     - descriptions [list of creditnote.invoice.Description objects or dictionaries, default []]: list Description objects
+    - fine [float, default 2.0]: Invoice fine for overdue payment in %, shared by every invoice in the CreditNote. ex: 2.5
+    - interest [float, default 1.0]: Invoice monthly interest for overdue payment in %, shared by every invoice in the CreditNote. ex: 1.5
     ## Attributes (return-only):
     - id [string]: unique id returned when Invoice is created. ex: "5656565656565656"
     - name [string]: payer name. ex: "Iron Bank S.A."
     - tax_id [string]: payer tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
     - pdf [string]: public Invoice PDF URL. ex: "https://invoice.starkbank.com/pdf/d454fa4e524441c1b0c1a729457ed9d8"
     - link [string]: public Invoice webpage URL. ex: "https://my-workspace.sandbox.starkbank.com/invoicelink/d454fa4e524441c1b0c1a729457ed9d8"
-    - fine [float]: Invoice fine for overdue payment in %. ex: 2.5
-    - interest [float]: Invoice monthly interest for overdue payment in %. ex: 5.2
     - nominal_amount [integer]: Invoice emission value in cents (will change if invoice is updated, but not if it's paid). ex: 400000
     - fine_amount [integer]: Invoice fine value calculated over nominal_amount. ex: 20000
     - interest_amount [integer]: Invoice interest value calculated over nominal_amount. ex: 10000

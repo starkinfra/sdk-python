@@ -189,7 +189,7 @@ def update(id, description=None, tags=None, user=None):
     - id [string]: IssuingPurchase id. ex: '5656565656565656'
     ## Parameters (optional):
     - tags [list of strings]: list of strings for tagging. ex: ["tony", "stark"]
-    - description [string]: IssuingPurchase description. ex: "Office Supplies"
+    - description [string]: new IssuingPurchase description. Max of 140 characters. ex: "Office Supplies"
     ## Return:
     - target IssuingPurchase with updated attributes
     """

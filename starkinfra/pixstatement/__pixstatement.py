@@ -44,8 +44,8 @@ _resource = {"class": PixStatement, "name": "PixStatement"}
 def create(statement, user=None):
     """# Create a PixStatement object
     Create a PixStatement linked to your Workspace in the Stark Infra API
-    ## Parameters (optional):
-    - statement [PixStatement object]: PixStatement object to be created in the API.
+    ## Parameters (required):
+    - statement [PixStatement object]: PixStatement object (after, before, type) to be created in the API.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -115,6 +115,6 @@ def csv(id, user=None):
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
-    - .zip file containing a PixStatement in .csv format
+    - .gzip file containing a PixStatement in .csv format
     """
     return rest.get_content(resource=_resource, id=id, user=user, sub_resource_name="csv")

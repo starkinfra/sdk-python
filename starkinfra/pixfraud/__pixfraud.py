@@ -11,7 +11,7 @@ class PixFraud(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the created object.
     ## Parameters (required):
-    - external_id [string]: end_to_end_id or return_id of the transaction being reported. ex: "my_external_id"
+    - external_id [string]: unique string to prevent duplicates among your PixFrauds. ex: "my-internal-id-123456"
     - type [string]: type of PixFraud. Options: "identity", "mule", "scam", "other"
     - tax_id [string]: user tax ID (CPF or CNPJ) with or without formatting. ex: "01234567890" or "20.018.183/0001-80"
     ## Parameters (optional):
@@ -47,7 +47,7 @@ def create(frauds, user=None):
     """# Create PixFrauds objects
     Create PixFrauds in the Stark Infra API
     ## Parameters (required):
-    - frauds [list of PixFrauds]: list of PixFraud objects to be created in the API.
+    - frauds [list of PixFrauds]: list of PixFraud objects to be created in the API. You can send up to 100 PixFraud objects in a single request.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -79,7 +79,8 @@ def query(limit=None, after=None, before=None, status=None, ids=None, bacen_id=N
     - status [list of strings, default None]: filter for status of retrieved objects. Options: ["created", "failed", "registered", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - bacen_id [string, default None]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
-    - type [list of strings, default None]: filter for the type of retrieved PixFrauds. Options: "reversal", "reversalChargeback"
+    - type [list of strings, default None]: filter for the type of retrieved PixFrauds. Options: "identity", "mule", "scam", "other"
+    - flow [string, default None]: direction of the PixFraud to filter retrieved objects. ex: "in" or "out"
     - tags [list of strings, default None]: list of strings for tagging. ex: ["fraudulent"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -113,7 +114,8 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
     - status [list of strings, default None]: filter for status of retrieved objects. Options: ["created", "failed", "registered", "canceled"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - bacen_id [string, default None]: unique transaction id returned from Central Bank. ex: "ccf9bd9c-e99d-999e-bab9-b999ca999f99"
-    - type [list of strings, default None]: filter for the type of retrieved PixFrauds. Options: "reversal", "reversalChargeback"
+    - type [list of strings, default None]: filter for the type of retrieved PixFrauds. Options: "identity", "mule", "scam", "other"
+    - flow [string, default None]: direction of the PixFraud to filter retrieved objects. ex: "in" or "out"
     - tags [list of strings, default None]: list of strings for tagging. ex: ["fraudulent"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

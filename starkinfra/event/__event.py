@@ -147,7 +147,7 @@ def update(id, is_delivered, user=None):
     Update notification Event by passing id.
     If is_delivered is True, the event will no longer be returned on queries with is_delivered=False.
     ## Parameters (required):
-    - id [list of strings]: Event unique ids. ex: "5656565656565656"
+    - id [string]: Event unique id. ex: "5656565656565656"
     - is_delivered [bool]: If True and event hasn't been delivered already, event will be set as delivered. ex: True
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.

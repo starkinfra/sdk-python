@@ -37,7 +37,7 @@ def create(restocks, user=None):
     """# Create IssuingRestocks
     Send a list of IssuingRestock objects for creation at the Stark Infra API
     ## Parameters (required):
-    - restocks [list of IssuingRestock objects]: list of IssuingRestock objects to be created in the API
+    - restocks [list of IssuingRestock objects]: list of IssuingRestock objects to be created in the API. You can send up to 100 objects in a single request.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

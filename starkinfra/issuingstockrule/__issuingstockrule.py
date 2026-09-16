@@ -12,8 +12,8 @@ class IssuingStockRule(Resource):
     - stock_id [string]: IssuingStock unique id to which the rule is linked. ex: "5656565656565656"
     ## Parameters (optional):
     - tags [list of strings, default None]: list of strings for tagging. ex: ["card", "corporate"]
-    - emails [list of strings, default None]: list of emails to be notified when the stock reaches the minimum balance. ex: ["john.doe@enterprise.com"]
-    - phones [list of strings, default None]: list of phones to be notified when the stock reaches the minimum balance. ex: ["+55 (11) 91234 5678"]
+    - emails [list of strings, default None]: list of up to 10 emails to notify when the stock reaches minimum_balance. At least one of emails or phones is required. ex: ["john.doe@enterprise.com"]
+    - phones [list of strings, default None]: list of up to 10 phone numbers to notify when the stock reaches minimum_balance. At least one of emails or phones is required. ex: ["+55 (11) 91234 5678"]
     ## Attributes (return-only):
     - id [string]: unique id returned when IssuingStockRule is created. ex: "5656565656565656"
     - status [string]: current IssuingStockRule status. ex: "active", "canceled"

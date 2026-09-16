@@ -3851,17 +3851,29 @@ attachments = starkinfra.individualaccountattachment.create([
         content_type="image/png",
         account_request_id="5155165527080960",
         tags=["breaking", "bad"]
-    ),
+    )
+])
+
+for attachment in attachments:
+    print(attachment)
+
+attachments = starkinfra.individualaccountattachment.create([
     starkinfra.IndividualAccountAttachment(
         type="identity-back",
         content=open("identity-back.png", "rb").read(),
         content_type="image/png",
         account_request_id="5155165527080960",
         tags=["breaking", "bad"]
-    ),
+    )
+])
+
+for attachment in attachments:
+    print(attachment)
+
+attachments = starkinfra.individualaccountattachment.create([
     starkinfra.IndividualAccountAttachment(
-        type="selfie",
-        content=open("selfie.png", "rb").read(),
+        type="drivers-license-front",
+        content=open("drivers-license-front.png", "rb").read(),
         content_type="image/png",
         account_request_id="5155165527080960",
         tags=["breaking", "bad"]
@@ -3872,7 +3884,7 @@ for attachment in attachments:
     print(attachment)
 ```
 
-**Note**: Instead of using IndividualAccountAttachment objects, you can also pass each element in dictionary format
+**Note**: The API accepts a single attachment per create call. Instead of using an IndividualAccountAttachment object, you can also pass the element in dictionary format
 
 ### Query IndividualAccountAttachments
 

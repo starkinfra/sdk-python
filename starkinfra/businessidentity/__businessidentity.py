@@ -12,7 +12,7 @@ class BusinessIdentity(Resource):
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
     ## Parameters (required):
-    - tax_id [string]: company's tax ID (CNPJ). ex: "20.018.183/0001-80"
+    - tax_id [string]: company's tax ID (CNPJ). Must be a valid CNPJ, active in the official bureau, and returning at least one representative (sócio). ex: "20.018.183/0001-80"
     ## Parameters (optional):
     - tags [list of strings, default []]: list of strings for reference when searching for BusinessIdentities. ex: ["onboarding-123"]
     ## Attributes (return-only):
@@ -145,7 +145,7 @@ def update(id, status=None, tags=None, user=None):
     ## Parameters (required):
     - id [string]: BusinessIdentity id. ex: '5656565656565656'
     ## Parameters (optional):
-    - status [string]: You may send the BusinessIdentity to processing by passing 'processing' in the status. The identity must have attachments.
+    - status [string]: only "processing" is accepted, to trigger the AI Model analysis. The identity must currently be in "created"/"pending" status and must already have at least one BusinessAttachment associated with it.
     - tags [list of strings]: list of strings for reference when searching for BusinessIdentities. ex: ["onboarding-123"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

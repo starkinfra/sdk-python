@@ -70,7 +70,7 @@ def create(requests, user=None):
     """# Create IssuingEmbossingRequests
     Send a list of IssuingEmbossingRequest objects for creation at the Stark Infra API
     ## Parameters (required):
-    - requests [list of IssuingEmbossingRequest objects]: list of IssuingEmbossingRequest objects to be created in the API
+    - requests [list of IssuingEmbossingRequest objects]: list of IssuingEmbossingRequest objects to be created in the API. You can send up to 100 objects in a single request.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

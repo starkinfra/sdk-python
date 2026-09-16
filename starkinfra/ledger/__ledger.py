@@ -38,7 +38,7 @@ def create(ledgers, user=None):
     """# Create Ledgers
     Send a list of Ledger objects for creation at the Stark Infra API
     ## Parameters (required):
-    - ledgers [list of Ledger objects]: list of Ledger objects to be created in the Stark Infra API
+    - ledgers [list of Ledger objects]: list of Ledger objects to be created in the Stark Infra API. You can send up to 100 Ledger objects in a single request.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

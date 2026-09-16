@@ -18,10 +18,10 @@ class LedgerTransaction(Resource):
     - rules [list of Rule objects, default []]: list of Rule objects linked to the LedgerTransaction. Rules are used to overwrite the Ledger's rules for this transaction. ex: [Rule(key="minimumBalance", value=0)]
     - metadata [dictionary, default {}]: dictionary object used to store additional information about the LedgerTransaction object. ex: { "orderId": "123", "orderType": "purchase" }.
     - tags [list of strings, default []]: list of strings for reference when searching for LedgerTransactions. ex: ["transfer/123", "savings"]
+    - created [datetime.datetime or string, default None]: datetime to backdate the transaction, used to import existing transaction history. Cannot be in the future; when creating multiple transactions in one request, their created values must be in chronological order. Defaults to the current datetime when omitted.
     ## Attributes (return-only):
     - id [string]: unique id returned when the LedgerTransaction is created. ex: "5656565656565656"
     - balance [integer]: Ledger's balance after the transaction. ex: 11234
-    - created [datetime.datetime]: creation datetime for the LedgerTransaction. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
     def __init__(self, amount, ledger_id, external_id, source, id=None, balance=None, fee=None, rules=None, metadata=None, tags=None, created=None):
@@ -46,7 +46,7 @@ def create(transactions, user=None):
     """# Create LedgerTransactions
     Send a list of LedgerTransaction objects for creation at the Stark Infra API
     ## Parameters (required):
-    - transactions [list of LedgerTransaction objects]: list of LedgerTransaction objects to be created in the Stark Infra API
+    - transactions [list of LedgerTransaction objects]: list of LedgerTransaction objects to be created in the Stark Infra API. You can send up to 500 objects in a single request, targeting different ledgers if needed; each is applied to its Ledger in the order sent, and the resulting balance is returned for each one.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

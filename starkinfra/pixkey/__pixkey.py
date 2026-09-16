@@ -76,7 +76,7 @@ def get(id, payer_id, end_to_end_id=None, user=None, expand=None):
     Retrieve the PixKey object linked to your Workspace in the Stark Infra API by its id.
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
-    - payer_id [string]: tax id (CPF/CNPJ) of the individual or business requesting the PixKey information. This id is used by the Central Bank to limit request rates. ex: "20.018.183/0001-80"
+    - payer_id [string]: deprecated and ignored by the API — the payer's tax ID is now always derived automatically from the calling Workspace's own registered tax ID for Central Bank rate-limiting purposes; do not rely on this value being sent to or used by the server.
     ## Parameters (optional):
     - end_to_end_id [string, default None]: central bank's unique transaction id. If the request results in the creation of a PixRequest, the same endToEndId should be used. If this parameter is not passed, one endToEndId will be automatically created. Example: "E00002649202201172211u34srod19le"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.

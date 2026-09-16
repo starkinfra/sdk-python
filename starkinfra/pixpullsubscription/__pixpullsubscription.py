@@ -96,7 +96,7 @@ def create(subscriptions, user=None):
     """# Create PixPullSubscriptions
     Send a list of PixPullSubscription objects for creation at the Stark Infra API
     ## Parameters (required):
-    - subscriptions [list of PixPullSubscription objects]: list of PixPullSubscription objects to be created in the API
+    - subscriptions [list of PixPullSubscription objects]: list of 1 to 100 PixPullSubscription objects to be created in the API. Only one automatic debit settles per interval cycle: weekly cycles anchor on the weekday of the first installment; month/quarter/semester/year cycles anchor on its calendar day (rolling to the next available date, but keeping the original day as the reference, when a given month lacks it). If pull_retry_limit allows retries, they may occur starting one day before the expected settlement date, up to 3 times within 7 days of the original date, always for the same amount, and never inside a new cycle window.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -218,7 +218,7 @@ def cancel(id, reason, user=None):
     `reason` is sent as a query parameter on the DELETE request.
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
-    - reason [string]: reason why the PixPullSubscription is being cancelled. Options: "accountClosed", "receiverOrganizationClosed", "subscriptionRequestFailed", "fraud", "receiverUserRequested", "paymentNotFound"
+    - reason [string]: reason why the PixPullSubscription is being cancelled. As receiver: "accountClosed", "receiverOrganizationClosed", "receiverInternalError", "fraud", "receiverUserRequested", "paymentNotFound". As sender: "accountClosed", "senderDeceased", "fraud", "senderUserRequested", "paymentNotFound".
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

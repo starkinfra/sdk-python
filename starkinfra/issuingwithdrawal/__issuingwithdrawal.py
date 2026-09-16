@@ -9,7 +9,7 @@ class IssuingWithdrawal(Resource):
     Banking balance.
     ## Parameters (required):
     - amount [integer]: IssuingWithdrawal value in cents. Minimum = 0 (any value will be accepted). ex: 1234 (= R$ 12.34)
-    - external_id [string] IssuingWithdrawal external ID. ex: "12345"
+    - external_id [string]: unique identifier for this withdrawal, used to prevent duplicate withdrawals on retry. ex: "withdrawal-2024-001"
     - description [string]: IssuingWithdrawal description. ex: "sending money back"
     ## Parameters (optional):
     - tags [list of strings, default None]: list of strings for tagging. ex: ["tony", "stark"]

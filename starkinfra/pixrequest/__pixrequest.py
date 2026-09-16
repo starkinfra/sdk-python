@@ -32,14 +32,15 @@ class PixRequest(Resource):
     - cashier_type [string]: Cashier's type. Required if the cash_amount is different from 0. Options: "merchant", "participant" and "other"
     - cashier_bank_code [string]: Cashier's bank code. Required if the cash_amount is different from 0. ex: "20018183"
     ## Parameters (optional):
-    - cash_amount [integer]: Amount to be withdrawn from the cashier in cents. ex: 1000 (= R$ 10.00)
+    - cash_amount [integer]: Amount to be withdrawn from the cashier in cents. Must be less than or equal to amount. ex: 1000 (= R$ 10.00)
+    - priority [string, default None]: Pix request processing priority. Options: "high", "low"
     - receiver_key_id [string, default None]: receiver's dict key. ex: "20.018.183/0001-80"
     - description [string, default None]: optional description to override default description to be shown in the bank statement. ex: "Payment for service #1234"
     - reconciliation_id [string, default None]: Reconciliation ID linked to this payment. ex: "b77f5236-7ab9-4487-9f95-66ee6eaf1781"
     - initiator_tax_id [string, default None]: Payment initiator's tax id (CPF/CNPJ). ex: "01234567890" or "20.018.183/0001-80"
     - tags [list of strings, default []]: list of strings for reference when searching for PixRequests. ex: ["employees", "monthly"]
     - method [string, default None]: execution method for the creation of the Pix. Options: "manual", "dict", "initiator", "dynamicQrcode", "staticQrcode", "payerQrcode", "subscription", "contactless", "staticContactless"
-    - reason [string, default "customerRequest"]: underlying reason for the payment transaction. ex: "customerRequest", "fraud", "subscriptionFlaw"
+    - reason [string, default "customerRequest"]: underlying reason for the payment transaction. ex: "customerRequest", "fraud", "subscriptionFlaw". When reason is "fraud" (e.g. returning funds from a PixChargeback), sender_tax_id must be your institution's organization tax ID (CNPJ).
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixRequest is created. ex: "5656565656565656"
     - fee [integer]: fee charged when PixRequest is paid. ex: 200 (= R$ 2.00)
@@ -98,7 +99,7 @@ def create(requests, user=None):
     """# Create PixRequests
     Send a list of PixRequest objects for creation at the Stark Infra API
     ## Parameters (required):
-    - requests [list of PixRequest objects]: list of PixRequest objects to be created in the API
+    - requests [list of PixRequest objects]: list of PixRequest objects to be created in the API. You can send up to 100 PixRequest objects in a single request.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -218,6 +219,7 @@ def response(status, reason=None):
     """# Helps you respond to a PixRequest authorization.
     Authorization requests will be posted at your registered
     endpoint whenever inbound PixRequests are received.
+    Note that the receiving endpoint (pixRequestUrl) must answer this synchronous authorization webhook within 1 second. If you do not respond in time, or if no pixRequestUrl is registered, Stark Infra denies the inbound PixRequest by default.
     ## Parameters (required):
     - status [string]: response to the authorization. ex: "approved" or "denied"
     ## Parameters (conditionally required):

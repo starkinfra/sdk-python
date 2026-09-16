@@ -16,7 +16,7 @@ class PixKeyHolmes(Resource):
     - tags [list of strings, default []]: list of strings for reference when searching for PixKeyHolmes. ex: ["employees", "monthly"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixKeyHolmes is created. ex: "5656565656565656"
-    - result [string]: result of the investigation after the case is solved. ex: "registered", "unregistered"
+    - result [string]: result of the investigation. Options: "registered", "unregistered". Empty/None until status is "solved".
     - status [string]: current PixKeyHolmes status. ex: "created", "solving", "solved", "failed"
     - created [datetime.datetime]: creation datetime for the PixKeyHolmes. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the PixKeyHolmes. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
@@ -40,7 +40,7 @@ def create(holmes, user=None):
     """# Create PixKeyHolmes
     Send a list of PixKeyHolmes objects for creation at the Stark Infra API
     ## Parameters (required):
-    - holmes [list of PixKeyHolmes objects]: list of PixKeyHolmes objects to be created in the API
+    - holmes [list of PixKeyHolmes objects]: list of PixKeyHolmes objects to be created in the API. You can send up to 100 PixKeyHolmes objects in a single request.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

@@ -23,7 +23,7 @@ class PixDispute(Resource):
     - tags [list of strings]: list of strings for tagging. ex: ["travel", "food"]
     - min_transaction_amount [integer]: minimum transaction amount to be considered for the graph creation.
     - max_transaction_count [integer]: maximum number of transactions to be considered for the graph creation.
-    - max_hop_interval [integer]: mean time between transactions to be considered for the graph creation.
+    - max_hop_interval [integer]: maximum interval in seconds between hops to be considered for the graph creation.
     - max_hop_count [integer]: depth to be considered for the graph creation.
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixDispute is created. ex: "5656565656565656"

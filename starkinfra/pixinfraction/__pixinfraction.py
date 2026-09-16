@@ -169,12 +169,12 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
 
 def update(id, result, fraud_type=None, analysis=None, user=None):
     """# Update PixInfraction entity
-    Update a PixInfraction by passing id.
+    Update a PixInfraction by passing id. You must analyze and answer an inbound PixInfraction within 7 days of its delivery.
     ## Parameters (required):
     - id [string]: PixInfraction id. ex: '5656565656565656'
     - result [string]: result after the analysis of the PixInfraction. Options: "agreed", "disagreed"
     ## Parameters (conditionally required):
-    - fraud_type [string, default None]: type of Pix Fraud. Options: "identity", "mule", "scam", "unknown", "other"
+    - fraud_type [string, default None]: type of Pix Fraud. Required when result is "agreed"; optional when result is "disagreed". Options: "identity", "mule", "scam", "other", "unknown"
     ## Parameters (optional):
     - analysis [string, default None]: analysis that led to the result.
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.

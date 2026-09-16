@@ -54,7 +54,7 @@ def create(brcodes, user=None):
     """# Create StaticBrcodes
     Send a list of StaticBrcode objects for creation at the Stark Infra API
     ## Parameters (required):
-    - brcodes [list of StaticBrcode objects]: list of StaticBrcode objects to be created in the API.
+    - brcodes [list of StaticBrcode objects]: list of StaticBrcode objects to be created in the API. You can send up to 100 StaticBrcode objects in a single request.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:

@@ -55,7 +55,7 @@ def create(attachments, user=None):
     """# Create BusinessAttachments
     Send a list of BusinessAttachment objects for creation at the Stark Infra API
     ## Parameters (required):
-    - attachments [list of BusinessAttachment objects]: list of BusinessAttachment objects to be created in the API
+    - attachments [list of BusinessAttachment objects]: list of BusinessAttachment objects to be created in the API. Limited to 1 attachment per request. Only PDF, JPG and PNG files up to 8 MB are accepted; name must be unique among the identity's other "created" attachments; and the target BusinessIdentity must be in "created"/"pending" status with fewer than 2 attachments already on it.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

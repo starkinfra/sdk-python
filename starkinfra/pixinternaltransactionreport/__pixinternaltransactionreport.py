@@ -15,7 +15,7 @@ class PixInternalTransactionReport(Resource):
     - amount [integer]: amount of the reported transaction in cents. ex: 1234 (= R$ 12.34)
     - created [datetime.datetime or string]: datetime when the reported transaction occurred. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - end_to_end_id [string]: central bank's unique transaction id. ex: "E20018183202201201213u34sav898j"
-    - method [string]: method used to process the reported transaction. ex: "manual", "key", "staticQrcode", "dynamicQrcode"
+    - method [string]: type of the reported transaction. Options: "manual", "dict", "initiator", "dynamicQrcode", "staticQrcode", "payerQrcode", "subscription", "contactless", "staticContactless" ("key" is not a valid value; it appears to be a leftover from another resource).
     - reference_type [string]: type of the reported transaction. Options: "request", "reversal"
     - sender_account_number [string]: sender's bank account number. ex: "76543"
     - sender_branch_code [string]: sender's bank account branch code. ex: "1234"
@@ -70,7 +70,7 @@ def create(reports, user=None):
     """# Create PixInternalTransactionReports
     Send a list of PixInternalTransactionReport objects for creation at the Stark Infra API
     ## Parameters (required):
-    - reports [list of PixInternalTransactionReport objects]: list of PixInternalTransactionReport objects to be created in the API
+    - reports [list of PixInternalTransactionReport objects]: list of PixInternalTransactionReport objects to be created in the API. You can send up to 100 objects in a single request.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

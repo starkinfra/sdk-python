@@ -80,7 +80,7 @@ def create(requests, user=None):
     """# Create PixPullRequests
     Send a list of PixPullRequest objects for creation at the Stark Infra API
     ## Parameters (required):
-    - requests [list of PixPullRequest objects]: list of PixPullRequest objects to be created in the API
+    - requests [list of PixPullRequest objects]: list of PixPullRequest objects to be created in the API. Min = 1, Max = 100 per call. A request must be sent 2 to 10 days before the intended settlement date, and Stark Infra validates that the parent subscription is approved, the amount is within its authorized limit, the due date matches the subscription's charge cycle, payer/receiver details match the contract, and no other request is already scheduled for the same cycle. As the payer's bank, you must attempt settlement in two windows (00h00-08h00 and 18h00-21h00); attempts are no longer accepted after 21:00.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -172,10 +172,10 @@ def update(id, status=None, reason=None, user=None):
     Update a PixPullRequest to change its status to "scheduled" or "denied".
     ## Parameters (required):
     - id [string]: PixPullRequest unique id. ex: "5656565656565656"
+    - status [string, required]: new status to set. Options: "scheduled", "denied". Only the payer may update a pull request.
     ## Parameters (conditionally required):
     - reason [string, default None]: required when `status` is "denied". Options: "senderAccountClosed", "senderAccountBlocked", "amountNotAllowed".
     ## Parameters (optional):
-    - status [string, default None]: new status. Options: "scheduled", "denied".
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - PixPullRequest with updated attributes
@@ -193,8 +193,8 @@ def cancel(id, reason=None, user=None):
     `reason` is sent as a query parameter on the DELETE request.
     ## Parameters (required):
     - id [string]: object unique id. ex: "5656565656565656"
+    - reason [string, required]: cancellation reason. As sender: "accountClosed", "accountBlocked", "pixRequestFailed", "other", "senderUserRequested". As receiver: "accountClosed", "accountBlocked", "other", "receiverUserRequested".
     ## Parameters (optional):
-    - reason [string, default None]: cancellation reason. Options: "accountClosed", "accountBlocked", "pixRequestFailed", "other", "senderUserRequested", "receiverUserRequested"
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
     - canceled PixPullRequest object

@@ -16,7 +16,7 @@ class PixClaim(Resource):
     - branch_code [string]: branch code of the account claiming the PixKey. ex: "1234"
     - name [string]: holder's name of the account claiming the PixKey. ex: "Jamie Lannister"
     - tax_id [string]: holder's taxId of the account claiming the PixKey (CPF/CNPJ). ex: "012.345.678-90"
-    - key_id [string]: id of the registered Pix Key to be claimed. Allowed keyTypes are CPF, CNPJ, phone number or email. ex: "+5511989898989"
+    - key_id [string]: id of the registered Pix Key to be claimed. ex: "+5511989898989". Whether the resulting claim is an "ownership" or "portability" claim depends on the key's type: only a phone key can be claimed as ownership (transferring the holder); phone, email or tax ID keys can be claimed as portability (moving the linked account without changing the holder).
     # Parameters (optional):
     - tags [list of strings, default []]: list of strings for tagging. ex: ["travel", "food"]
     ## Attributes (return-only):
@@ -164,7 +164,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, ids=None
 
 def update(id, status, reason=None, user=None):
     """# Update PixClaim entity
-    Update a PixClaim parameters by passing id.
+    Update a PixClaim by passing id. You must answer an inbound PixClaim within 7 days of its status changing to "delivered": if you do not respond in time, Stark Infra rejects a portability claim and accepts an ownership claim by default (reason defaultBehavior). Only PixClaims with status "delivered" can be confirmed, and confirming permanently deletes the referenced PixKey from Stark Infra and the Central Bank. Only PixClaims with status "delivered" or "confirmed" can be canceled.
     ## Parameters (required):
     - id [string]: PixClaim id. ex: "5656565656565656"
     - status [string]: patched status for Pix Claim. Options: "confirmed" and "canceled"

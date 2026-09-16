@@ -55,7 +55,7 @@ def create(brcodes, user=None):
     """# Create DynamicBrcodes
     Send a list of DynamicBrcode objects for creation at the Stark Infra API
     ## Parameters (required):
-    - brcodes [list of DynamicBrcode objects]: list of DynamicBrcode objects to be created in the API.
+    - brcodes [list of DynamicBrcode objects]: list of DynamicBrcode objects to be created in the API. You can send up to 100 DynamicBrcode objects in a single request.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call
     ## Return:

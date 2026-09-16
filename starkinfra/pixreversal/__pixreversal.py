@@ -17,13 +17,13 @@ class PixReversal(Resource):
     - amount [integer]: amount in cents to be reversed from the PixRequest. ex: 1234 (= R$ 12.34)
     - external_id [string]: string that must be unique among all your PixReversals. Duplicated external IDs will cause failures. By default, this parameter will block any PixReversal that repeats amount and receiver information on the same date. ex: "my-internal-id-123456"
     - end_to_end_id [string]: central bank's unique transaction ID. ex: "E79457883202101262140HHX553UPqeq"
-    - reason [string]: reason why the PixRequest is being reversed. Options are "bankError", "fraud", "chashierError", "customerRequest"
+    - reason [string]: reason why the PixReversal is being reversed. Options are "bankError", "fraud", "cashierError", "customerRequest"
     ## Parameters (optional):
     - tags [list of strings, default []]: list of strings for reference when searching for PixReversals. ex: ["employees", "monthly"]
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixReversal is created. ex: "5656565656565656"
     - return_id [string]: central bank's unique reversal transaction ID. ex: "D20018183202202030109X3OoBHG74wo"
-    - fee [string]: fee charged by this PixReversal. ex: 200 (= R$ 2.00)
+    - fee [integer]: fee charged by this PixReversal, in cents. ex: 200 (= R$ 2.00)
     - status [string]: current PixReversal status. ex: "created", "processing", "success", "failed"
     - flow [string]: direction of money flow. ex: "in" or "out"
     - created [datetime.datetime]: creation datetime for the PixReversal. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
@@ -55,7 +55,7 @@ def create(reversals, user=None):
     """# Create PixReversals
     Send a list of PixReversal objects for creation at the Stark Infra API
     ## Parameters (required):
-    - reversals [list of PixReversal objects]: list of PixReversal objects to be created in the API
+    - reversals [list of PixReversal objects]: list of PixReversal objects to be created in the API. You can send up to 100 PixReversal objects in a single request. A PixReversal can only be created for an inbound PixRequest whose status is "success"; reference it via end_to_end_id.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -173,6 +173,7 @@ def parse(content, signature, user=None):
 
 def response(status, reason=None):
     """# Helps you respond to a PixReversal authorization
+    You must answer this synchronous authorization webhook within 1 second. Unlike PixRequest, an inbound PixReversal is ACCEPTED by default if you do not respond in time or have no pixReversalUrl registered.
     ## Parameters (required):
     - status [string]: response to the authorization. ex: "approved" or "denied"
     ## Parameters (conditionally required):

@@ -41,7 +41,7 @@ def create(holders, expand=None, user=None):
     """# Create IssuingHolder
     Send a list of IssuingHolder objects for creation at the Stark Infra API
     ## Parameters (required):
-    - holders [list of IssuingHolder objects]: list of IssuingHolder objects to be created in the API
+    - holders [list of IssuingHolder objects]: list of IssuingHolder objects to be created in the API. You can send up to 100 IssuingHolder objects in a single request.
     ## Parameters (optional):
     - expand [list of strings, default None]: fields to expand information. Options: ["rules"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call

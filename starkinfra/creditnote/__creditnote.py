@@ -35,8 +35,8 @@ class CreditNote(Resource):
     - zip_code [string]: credit receiver address zip code. ex: "01311-200"
     ## Parameters (conditionally required):
     - payment_type [string]: payment type, inferred from the payment parameter if it is not a dictionary. ex: "transfer"
-    - nominal_amount [integer]: CreditNote value in cents. The nominal_amount parameter is required when amount is not sent. ex: 1234 (= R$ 12.34)
-    - amount [integer]: amount in cents transferred to the credit receiver, before deductions. The amount parameter is required when nominal_amount is not sent. ex: 1234 (= R$ 12.34)
+    - nominal_amount [integer]: CreditNote value in cents, before taxes. Required when amount is not sent; when provided instead of amount, the disbursed amount, tax_amount (IOF) and interest rates are computed from the invoice schedule. ex: 1234 (= R$ 12.34)
+    - amount [integer]: net amount in cents to be disbursed to the credit receiver. Required when nominal_amount is not sent; when provided instead of nominal_amount, the nominal amount, tax_amount and interest rates are computed from the invoice schedule.
     ## Parameters (optional):
     - rebate_amount [integer, default 0]: credit analysis fee deducted from lent amount. ex: 11234 (= R$ 112.34)
     - tags [list of strings, default []]: list of strings for reference when searching for CreditNotes. ex: ["employees", "monthly"]
@@ -147,7 +147,7 @@ def create(notes, user=None):
     """# Create CreditNotes
     Send a list of CreditNote objects for creation at the Stark Infra API
     ## Parameters (required):
-    - notes [list of CreditNote objects]: list of CreditNote objects to be created in the API
+    - notes [list of CreditNote objects]: list of CreditNote objects to be created in the API. You can send up to 100 CreditNote objects in a single request; each may carry up to 100 Invoice objects and up to 10 CreditSigner objects.
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -227,7 +227,7 @@ def page(cursor=None, limit=None, status=None, tags=None, ids=None, after=None, 
 
 def cancel(id, user=None):
     """# Cancel a CreditNote entity
-    Cancel a CreditNote entity previously created in the Stark Infra API
+    Cancel a CreditNote that has not reached a final status yet. Only CreditNotes with status "created", "signed" or "processing" can be canceled — this also cancels the signing document. CreditNotes with status "success", "failed", "expired" or already "canceled" are returned unchanged.
     ## Parameters (required):
     - id [string]: CreditNote unique id. ex: "6306109539221504"
     ## Parameters (optional):

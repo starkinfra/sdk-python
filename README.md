@@ -64,6 +64,9 @@ This SDK version is compatible with the Stark Infra API v2.
         - [PixPullSubscription](#create-pixpullsubscriptions): Set up recurring Pix debit authorizations
         - [PixPullRequest](#create-pixpullrequests): Trigger automatic Pix debits against a subscription
         - [PixInternalTransactionReport](#create-pixinternaltransactionreports): Report internal transactions to the Central Bank
+    - [Ledger](#ledger)
+        - [Ledger](#create-ledgers): Track the balance of a given amount
+        - [LedgerTransaction](#create-ledgertransactions): Move amounts in and out of a Ledger
     - [Lending](#lending)
         - [CreditNote](#create-creditnotes): Create credit notes
         - [CreditPreview](#create-creditpreviews): Create credit previews
@@ -3149,6 +3152,160 @@ import starkinfra
 log = starkinfra.pixinternaltransactionreport.log.get("5155165527080960")
 
 print(log)
+```
+
+## Ledger
+
+Ledgers are used to track the balance of a given amount by inserting LedgerTransactions to them.
+They can represent a bank account, a digital wallet, an inventory product, etc.
+
+### Create Ledgers
+
+Send a list of Ledger objects for creation in the Stark Infra API.
+
+```python
+import starkinfra
+
+ledgers = starkinfra.ledger.create([
+    starkinfra.Ledger(
+        external_id="my-internal-id-123456",
+        tags=["account/123", "savings"],
+        rules=[
+            starkinfra.ledger.Rule(key="minimumBalance", value=0),
+        ],
+    )
+])
+
+for ledger in ledgers:
+    print(ledger)
+```
+
+**Note**: Instead of using Ledger and Rule objects, you can also pass each element in dictionary format
+
+### Query Ledgers
+
+You can query multiple Ledgers according to filters.
+
+```python
+import starkinfra
+from datetime import date
+
+ledgers = starkinfra.ledger.query(
+    limit=10,
+    after=date(2020, 1, 1),
+    before=date(2020, 3, 1),
+)
+
+for ledger in ledgers:
+    print(ledger)
+```
+
+### Get a Ledger
+
+After its creation, information on a Ledger may be retrieved by its id.
+
+```python
+import starkinfra
+
+ledger = starkinfra.ledger.get("5155165527080960")
+
+print(ledger)
+```
+
+### Update a Ledger
+
+Update a Ledger by passing its id to change its rules, tags or metadata.
+
+```python
+import starkinfra
+
+ledger = starkinfra.ledger.update(
+    "5155165527080960",
+    tags=["account/123", "updated"],
+)
+
+print(ledger)
+```
+
+### Query Ledger logs
+
+You can query Ledger logs to better understand Ledger life cycles.
+
+```python
+import starkinfra
+from datetime import date
+
+logs = starkinfra.ledger.log.query(
+    limit=50,
+    after=date(2020, 1, 1),
+    before=date(2020, 3, 1),
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get a Ledger log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.ledger.log.get("5155165527080960")
+
+print(log)
+```
+
+### Create LedgerTransactions
+
+Send a list of LedgerTransaction objects to move amounts in and out of a Ledger.
+
+```python
+import starkinfra
+
+transactions = starkinfra.ledgertransaction.create([
+    starkinfra.LedgerTransaction(
+        amount=11234,
+        ledger_id="5656565656565656",
+        external_id="my-internal-id-123456",
+        source="bank-transfer/123",
+        tags=["transfer/123", "savings"],
+    )
+])
+
+for transaction in transactions:
+    print(transaction)
+```
+
+### Query LedgerTransactions
+
+You can query multiple LedgerTransactions according to filters. Either `ledger_id` or `ids` must be provided; if both are sent, the query is filtered by both. The other filters are optional.
+
+```python
+import starkinfra
+from datetime import date
+
+transactions = starkinfra.ledgertransaction.query(
+    ledger_id="5656565656565656",
+    after=date(2020, 1, 1),
+    before=date(2020, 3, 1),
+)
+
+for transaction in transactions:
+    print(transaction)
+```
+
+### Get a LedgerTransaction
+
+After its creation, information on a LedgerTransaction may be retrieved by its id.
+
+```python
+import starkinfra
+
+transaction = starkinfra.ledgertransaction.get("5155165527080960")
+
+print(transaction)
 ```
 
 ## Lending

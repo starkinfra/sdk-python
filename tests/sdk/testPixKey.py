@@ -105,7 +105,7 @@ class TestPixKeyInfoDelete(TestCase):
                 reason="invalid_reason",
             )
         except Exception as e:
-            self.assertEquals(e.message, '[{u\'message\': u\'Parameter "reason" must be contained in [userRequested, accountClosure, reconciliation, fraud, entryInvalid]\', u\'code\': u\'invalidReason\'}]')
+            self.assertEqual(e.errors[0].code, "invalidReason")
 
 class TestPixKeyInfoPatch(TestCase):
 

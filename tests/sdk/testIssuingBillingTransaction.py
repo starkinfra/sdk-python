@@ -20,7 +20,7 @@ class TestIssuingBillingTransactionQuery(TestCase):
 class TestIssuingBillingTransactionPage(TestCase):
 
     def test_success(self):
-        billing_transactions = starkinfra.issuingbillingtransaction.page(
+        billing_transactions, cursor = starkinfra.issuingbillingtransaction.page(
             after=date.today() - timedelta(days=100),
             before=date.today(),
             limit = 10,

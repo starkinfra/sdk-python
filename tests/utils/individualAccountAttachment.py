@@ -1,6 +1,6 @@
 # coding=utf-8
 from starkinfra import IndividualAccountAttachment
-from .individualDocument import readImage, RgImages
+from .identityImages import readImage, RgImages
 
 
 def generateExampleIndividualAccountAttachmentJson(account_request_id, n=1):

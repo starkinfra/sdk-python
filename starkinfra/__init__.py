@@ -87,8 +87,6 @@ from .creditholmes.__creditholmes import CreditHolmes
 from . import individualidentity
 from .individualidentity.__individualidentity import IndividualIdentity
 
-from . import individualdocument
-from .individualdocument.__individualdocument import IndividualDocument
 
 from . import individualaccountrequest
 from .individualaccountrequest.__individualaccountrequest import IndividualAccountRequest

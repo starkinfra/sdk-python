@@ -2,7 +2,7 @@ import starkinfra
 from datetime import datetime, date, timedelta
 from unittest import TestCase, main
 from tests.utils.user import exampleProject
-from tests.utils.individualDocument import readImage, RgImages
+from tests.utils.identityImages import readImage, RgImages
 from tests.utils.individualAccountRequest import generateExampleIndividualAccountRequestJson
 from tests.utils.individualAccountAttachment import generateExampleIndividualAccountAttachmentJson
 

@@ -14,6 +14,9 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- BusinessAccountRequest resource
+- validator_link attribute to IndividualAccountRequest resource
+- complement attribute to IndividualAccountRequest address
 - IssuingBalance limit and max_limit attributes
 - IssuingCard is_pin_defined attribute
 - IssuingProduct customer_type attribute
@@ -24,6 +27,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - MerchantCategory group attribute
 ### Changed
 - IssuingToken created and updated attributes are parsed as datetime
+### Fixed
+- business-rule and enum drift in docstrings across Pix, Issuing and Credit resources
 
 ## [0.28.0] - 2026-06-24
 ### Added

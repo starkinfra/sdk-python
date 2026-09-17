@@ -28,7 +28,7 @@ class TestIssuingBillingInvoiceQuery(TestCase):
 class TestIssuingBillingInvoicePage(TestCase):
 
     def test_success(self):
-        billing_invoices = starkinfra.issuingbillinginvoice.page(
+        billing_invoices, cursor = starkinfra.issuingbillinginvoice.page(
             after=date.today() - timedelta(days=100),
             before=date.today(),
             limit = 10,

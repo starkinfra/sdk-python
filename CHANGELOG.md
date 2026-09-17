@@ -29,6 +29,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - IssuingToken created and updated attributes are parsed as datetime
 ### Fixed
 - business-rule and enum drift in docstrings across Pix, Issuing and Credit resources
+### Removed
+- IndividualDocument resource and its Log: no API route serves them
 
 ## [0.28.0] - 2026-06-24
 ### Added
@@ -202,7 +204,6 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ## [0.4.0] - 2022-11-11
 ### Added
 - IndividualIdentity resource
-- IndividualDocument resource
 
 ## [0.3.1] - 2022-10-08
 ### Fixed

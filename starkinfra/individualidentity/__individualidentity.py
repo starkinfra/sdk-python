@@ -5,11 +5,8 @@ from starkcore.utils.checks import check_datetime, check_date
 
 class IndividualIdentity(Resource):
     """# IndividualIdentity object
-    An IndividualDocument represents an individual to be validated. It can have several individual documents attached
-    to it, which are used to validate the identity of the individual. Once an individual identity is created, individual
-    documents must be attached to it using the created method of the individual document resource. When all the required
-    individual documents are attached to an individual identity it can be sent to validation by patching its status to 
-    processing.
+    An IndividualIdentity represents an individual to be validated. Once all the information required to
+    validate the individual has been provided, it can be sent to validation by patching its status to processing.
     When you initialize a IndividualIdentity, the entity will not be automatically
     created in the Stark Infra API. The 'create' function sends the objects
     to the Stark Infra API and returns the list of created objects.
@@ -126,7 +123,7 @@ def update(id, status, user=None):
     Update an IndividualIdentity by passing id.
     ## Parameters (required):
     - id [string]: IndividualIdentity id. ex: '5656565656565656'
-    - status [string]: You may send IndividualDocuments to validation by passing 'processing' in the status
+    - status [string]: You may send the IndividualIdentity to validation by passing 'processing' in the status
     ## Parameters (optional):
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

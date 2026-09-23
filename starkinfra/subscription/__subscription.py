@@ -36,7 +36,11 @@ class Subscription(SubResource):
         self.bacen_id = bacen_id
         self.created = check_datetime_or_date(created)
         self.description = description
+        if(installment_end == ""):
+            installment_end = None
         self.installment_end = check_datetime_or_date(installment_end)
+        if(installment_start == ""):
+            installment_start = None
         self.installment_start = check_datetime_or_date(installment_start)
         self.interval = interval
         self.pull_retry_limit = pull_retry_limit

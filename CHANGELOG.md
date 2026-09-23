@@ -29,6 +29,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 - IssuingToken created and updated attributes are parsed as datetime
 ### Fixed
 - business-rule and enum drift in docstrings across Pix, Issuing and Credit resources
+- Subscription installment_start and installment_end parsing when API returns empty strings
 ### Removed
 - IndividualDocument resource and its Log: no API route serves them
 

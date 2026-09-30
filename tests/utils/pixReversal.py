@@ -21,7 +21,7 @@ def generateExamplePixReversalJson(n=1):
         pix_reversal.amount = amount
         pix_reversal.external_id = str(uuid4())
         pix_reversal.end_to_end_id = choice(get_end_to_end_id_to_reverse())
-        pix_reversal.reason = choice(["bankError", "fraud", "pixWithdrawError", "refund3ByEndCustomer"])
+        pix_reversal.reason = choice(["bankError", "fraud", "cashierError", "customerRequest"])
         pix_reversal.tags = [choice(["little", "girl", "no", "one"]), choice(["little", "girl", "no", "one"])]
         pix_reversals.append(pix_reversal)
     return pix_reversals

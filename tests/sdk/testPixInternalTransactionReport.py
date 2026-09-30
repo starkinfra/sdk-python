@@ -15,6 +15,19 @@ class TestPixInternalTransactionReportPost(TestCase):
             self.assertIsNotNone(report.id)
 
 
+class TestPixInternalTransactionReportPostWithReturnId(TestCase):
+
+    def test_success(self):
+        reports = generateExamplePixInternalTransactionReportJson(n=3, reference_type="reversal")
+        for report in reports:
+            self.assertIsNotNone(report.return_id)
+            self.assertEqual(32, len(report.return_id))
+            self.assertTrue(report.return_id.startswith("D"))
+        reports = starkinfra.pixinternaltransactionreport.create(reports)
+        for report in reports:
+            self.assertIsNotNone(report.id)
+
+
 class TestPixInternalTransactionReportQuery(TestCase):
 
     def test_success(self):

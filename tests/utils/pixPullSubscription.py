@@ -1,24 +1,25 @@
 from uuid import uuid4
 from copy import deepcopy
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from random import randint
-from starkinfra import PixPullSubscription
+from starkinfra import PixPullSubscription, pixsubscriptionbacenid
 from .names.names import get_full_name
 from .taxIdGenerator import TaxIdGenerator
 from ..utils.user import bank_code
 
 
 def _generate_bacen_id():
-    now = datetime.now(timezone.utc)
-    date_part = now.strftime("%Y%m%d%H%M")
-    random_part = str(randint(1000000, 9999999))
-    return "RR" + bank_code + date_part + random_part
+    return pixsubscriptionbacenid.create(bank_code, "RR")
+
+
+def _generate_installment_start():
+    return datetime.now(timezone.utc) + timedelta(days=7)
 
 
 example_pix_pull_subscription = PixPullSubscription(
     bacen_id=_generate_bacen_id(),
     external_id=str(uuid4()),
-    installment_start=datetime.now(timezone.utc),
+    installment_start=_generate_installment_start(),
     interval="month",
     receiver_name="Stark Bank",
     receiver_tax_id="39.908.427/0001-28",
@@ -46,13 +47,13 @@ def generateExamplePixPullSubscriptionJson(n=1):
         subscription = deepcopy(example_pix_pull_subscription)
         subscription.bacen_id = _generate_bacen_id()
         subscription.external_id = str(uuid4())
-        subscription.installment_start = datetime.now(timezone.utc)
+        subscription.installment_start = _generate_installment_start()
         subscription.interval = "month"
         subscription.receiver_name = get_full_name()
         subscription.receiver_tax_id = TaxIdGenerator.taxId()
         subscription.sender_account_number = "{}-{}".format(randint(10000, 100000000), randint(0, 9))
         subscription.sender_branch_code = "{}-{}".format(randint(1, 9999), randint(0, 9))
-        subscription.sender_city_code = "3550308"
+        subscription.sender_city_code = None
         subscription.sender_tax_id = TaxIdGenerator.taxId()
         subscription.type = "push"
         subscription.amount = randint(1000, 1000000)

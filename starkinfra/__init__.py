@@ -181,6 +181,6 @@ from .cardmethod.__cardmethod import CardMethod
 from . import webhook
 from .webhook.__webhook import Webhook
 
-from .utils import endtoendid, returnid
+from .utils import endtoendid, returnid, pixsubscriptionbacenid
 
 from . import request

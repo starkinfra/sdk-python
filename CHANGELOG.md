@@ -17,6 +17,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ## [0.29.0] - 2026-10-15
 ### Added
 - pixsubscriptionbacenid utility to generate Pix subscription bacenIds
+- AiKnowledgeBase, AiVoice, AiSpeech, AiTranscript, AiAgent, AiChat and AiMessage resources
 - BusinessAccountRequest resource
 - validator_link attribute to IndividualAccountRequest resource
 - complement attribute to IndividualAccountRequest address

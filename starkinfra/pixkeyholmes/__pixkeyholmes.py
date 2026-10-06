@@ -49,6 +49,19 @@ def create(holmes, user=None):
     return rest.post_multi(resource=_resource, entities=holmes, user=user)
 
 
+def get(id, user=None):
+    """# Retrieve a specific PixKeyHolmes
+    Receive a single PixKeyHolmes object previously created in the Stark Infra API by its id
+    ## Parameters (required):
+    - id [string]: object unique id. ex: "5656565656565656"
+    ## Parameters (optional):
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
+    ## Return:
+    - PixKeyHolmes object with updated attributes
+    """
+    return rest.get_id(resource=_resource, id=id, user=user)
+
+
 def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, user=None):
     """# Retrieve PixKeyHolmes
     Receive a generator of PixKeyHolmes objects previously created in the Stark Infra API

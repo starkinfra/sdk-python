@@ -1994,6 +1994,51 @@ for sherlock in holmes:
     print(sherlock)
 ```
 
+### Get a PixKeyHolmes
+
+After its creation, information on a PixKeyHolmes may be retrieved by its id.
+
+```python
+import starkinfra
+
+sherlock = starkinfra.pixkeyholmes.get("5656565656565656")
+
+print(sherlock)
+```
+
+### Query PixKeyHolmes logs
+
+You can query PixKeyHolmes logs to better understand PixKeyHolmes life cycles.
+
+```python
+import starkinfra
+from datetime import date
+
+logs = starkinfra.pixkeyholmes.log.query(
+    limit=50,
+    ids=["5729405850615808"],
+    after=date(2022, 1, 1),
+    before=date(2022, 1, 20),
+    types=["solved"],
+    holmes_ids=["5719405850615809"]
+)
+
+for log in logs:
+    print(log)
+```
+
+### Get a PixKeyHolmes log
+
+You can also get a specific log by its id.
+
+```python
+import starkinfra
+
+log = starkinfra.pixkeyholmes.log.get("5155165527080960")
+
+print(log)
+```
+
 ### Create a PixClaim
 
 You can create a Pix claim to request the transfer of a Pix key from another bank to one of your accounts:

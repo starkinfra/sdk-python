@@ -26,7 +26,7 @@ class IssuingPurchase(Resource):
     - merchant_currency_symbol [string]: merchant currency symbol. ex: "$"
     - merchant_category_code [string]: merchant category code. ex: "fastFoodRestaurants"
     - merchant_category_type [string]: merchant category type. ex "food"
-    - merchant_category_number [integer]: MCC number of the merchant category. ex: 5814
+    - merchant_category_number [string]: MCC number of the merchant category. ex: "5814"
     - merchant_country_code [string]: merchant country code. ex: "USA"
     - acquirer_id [string]: acquirer ID. ex: "5656565656565656"
     - merchant_id [string]: merchant ID. ex: "5656565656565656"

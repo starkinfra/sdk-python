@@ -78,6 +78,14 @@ This SDK version is compatible with the Stark Infra API v2.
         - [BusinessIdentity](#create-businessidentities): Create business identities
         - [BusinessAttachment](#create-businessattachments): Create business attachments
         - [BusinessAccountRequest](#create-businessaccountrequests): Create business account requests
+    - [AI](#ai)
+        - [AiKnowledgeBase](#create-an-aiknowledgebase): Turn a website into knowledge your agents can answer from
+        - [AiVoice](#create-an-aivoice): Clone a voice from a recording
+        - [AiSpeech](#create-an-aispeech): Read a text out loud with one of your voices
+        - [AiTranscript](#create-an-aitranscript): Turn an audio file into text
+        - [AiAgent](#create-an-aiagent): Configure an assistant: model, instructions, knowledge and voice
+        - [AiChat](#create-an-aichat): Open a conversation thread with an agent
+        - [AiMessage](#create-an-aimessage): Talk to an agent and read the history
     - [Webhook](#webhook):
         - [Webhook](#create-a-webhook-subscription): Configure your webhook endpoints and subscriptions
         - [WebhookEvents](#process-webhook-events): Manage Webhook events
@@ -4331,6 +4339,461 @@ import starkinfra
 log = starkinfra.businessaccountrequest.log.get("5155165527080960")
 
 print(log)
+```
+
+## AI
+
+### Create an AiKnowledgeBase
+
+An AiKnowledgeBase turns a website into material an agent can read. Stark Infra crawls the root URL, follows its
+links, converts every page to Markdown and indexes it. The call returns at once with the base in "processing" status.
+
+```python
+import starkinfra
+
+knowledge_base = starkinfra.aiknowledgebase.create(
+    starkinfra.AiKnowledgeBase(
+        name="Product Documentation",
+        root_url="https://docs.starkinfra.com",
+        is_recursive=False,
+        tags=["support", "public"],
+    )
+)
+
+print(knowledge_base)
+```
+
+### Get an AiKnowledgeBase
+
+Poll a knowledge base by its id until its status leaves "processing".
+
+```python
+import starkinfra
+
+knowledge_base = starkinfra.aiknowledgebase.get("5155165527080960")
+
+print(knowledge_base)
+```
+
+### Query AiKnowledgeBases
+
+You can list your knowledge bases, optionally filtered by ids, by a substring of the name or by status.
+
+```python
+import starkinfra
+
+knowledge_bases = starkinfra.aiknowledgebase.query(name="documentation", status="success")
+
+for knowledge_base in knowledge_bases:
+    print(knowledge_base)
+```
+
+### Get paged AiKnowledgeBases
+
+A page can come back empty with a cursor when the name filter matches nothing on it: keep following the cursor until it is None.
+
+```python
+import starkinfra
+
+cursor = None
+while True:
+    knowledge_bases, cursor = starkinfra.aiknowledgebase.page(limit=50, name="documentation", cursor=cursor)
+    for knowledge_base in knowledge_bases:
+        print(knowledge_base)
+    if cursor is None:
+        break
+```
+
+### Update an AiKnowledgeBase
+
+Rename a knowledge base, retag it or change whether its crawl is recursive. The root URL cannot be changed.
+
+```python
+import starkinfra
+
+knowledge_base = starkinfra.aiknowledgebase.update("5155165527080960", name="Public Documentation", tags=["support"])
+
+print(knowledge_base)
+```
+
+### List the pages of an AiKnowledgeBase
+
+Get every page the crawler has seen, grouped by host, with the status of each one.
+
+```python
+import starkinfra
+
+hosts = starkinfra.aiknowledgebase.hosts("5155165527080960")
+
+for host, pages in hosts.items():
+    print(host, pages)
+```
+
+### Delete AiKnowledgeBases
+
+Delete up to 100 knowledge bases at once. Agents that still reference a deleted base simply retrieve nothing from it.
+
+```python
+import starkinfra
+
+knowledge_bases = starkinfra.aiknowledgebase.delete(ids=["5155165527080960", "4545454545454545"])
+
+for knowledge_base in knowledge_bases:
+    print(knowledge_base)
+```
+
+### Create an AiVoice
+
+An AiVoice is a voice cloned from a recording. The audio travels as a base64 string and its format is read from the
+file itself. The voice is created in "processing" status and moves to "success" when it is ready to speak.
+
+```python
+import base64
+import starkinfra
+
+with open("helena.wav", "rb") as recording:
+    audio = base64.b64encode(recording.read()).decode()
+
+voice = starkinfra.aivoice.create(
+    starkinfra.AiVoice(
+        audio=audio,
+        name="Helena",
+        description="Calm voice for customer support",
+        language="portuguese",
+        gender="female",
+    )
+)
+
+print(voice)
+```
+
+### Query AiVoices
+
+```python
+import starkinfra
+
+voices = starkinfra.aivoice.query()
+
+for voice in voices:
+    print(voice)
+```
+
+### Get paged AiVoices
+
+```python
+import starkinfra
+
+cursor = None
+while True:
+    voices, cursor = starkinfra.aivoice.page(limit=50, cursor=cursor)
+    for voice in voices:
+        print(voice)
+    if cursor is None:
+        break
+```
+
+### Delete AiVoices
+
+```python
+import starkinfra
+
+voices = starkinfra.aivoice.delete(ids=["5155165527080960", "4545454545454545"])
+
+for voice in voices:
+    print(voice)
+```
+
+### Create an AiSpeech
+
+An AiSpeech is a text read out loud by one of your voices in "success" status. The audio comes back as a base64 MP3.
+
+```python
+import starkinfra
+
+speech = starkinfra.aispeech.create(
+    starkinfra.AiSpeech(
+        voice_id="5155165527080960",
+        text="Hello, how can I help you?",
+    )
+)
+
+print(speech)
+```
+
+### Get an AiSpeech
+
+```python
+import starkinfra
+
+speech = starkinfra.aispeech.get("5155165527080960", expand=["voice_name"])
+
+print(speech)
+```
+
+### Query AiSpeeches
+
+The audio is left out of the results; use get to read it.
+
+```python
+import starkinfra
+
+speeches = starkinfra.aispeech.query(expand=["voice_name"], limit=50)
+
+for speech in speeches:
+    print(speech)
+```
+
+### Get paged AiSpeeches
+
+```python
+import starkinfra
+
+cursor = None
+while True:
+    speeches, cursor = starkinfra.aispeech.page(limit=50, expand=["voice_name"], cursor=cursor)
+    for speech in speeches:
+        print(speech)
+    if cursor is None:
+        break
+```
+
+### Create an AiTranscript
+
+```python
+import base64
+import starkinfra
+
+with open("call.mp3", "rb") as recording:
+    audio = base64.b64encode(recording.read()).decode()
+
+transcript = starkinfra.aitranscript.create(starkinfra.AiTranscript(audio=audio))
+
+print(transcript.text)
+```
+
+### Query AiTranscripts
+
+```python
+import starkinfra
+
+transcripts = starkinfra.aitranscript.query()
+
+for transcript in transcripts:
+    print(transcript)
+```
+
+### Get paged AiTranscripts
+
+```python
+import starkinfra
+
+cursor = None
+while True:
+    transcripts, cursor = starkinfra.aitranscript.page(limit=50, cursor=cursor)
+    for transcript in transcripts:
+        print(transcript)
+    if cursor is None:
+        break
+```
+
+### Create an AiAgent
+
+An AiAgent holds the model, the instructions, the knowledge bases and the voice of an assistant. The keys of
+metadata_schema are yours and are sent exactly as written.
+
+```python
+import starkinfra
+
+agent = starkinfra.aiagent.create(
+    starkinfra.AiAgent(
+        name="Support assistant",
+        model="bender-1.0",
+        system_prompt="Answer in the customer language and never invent policies.",
+        knowledge_base_ids=["5155165527080960"],
+        metadata_schema={"order_id": {"type": "string", "description": "Order the customer mentions"}},
+    )
+)
+
+print(agent)
+```
+
+### Get an AiAgent
+
+```python
+import starkinfra
+
+agent = starkinfra.aiagent.get("5155165527080960", expand=["knowledge_bases"])
+
+print(agent)
+```
+
+### Query AiAgents
+
+```python
+import starkinfra
+
+agents = starkinfra.aiagent.query()
+
+for agent in agents:
+    print(agent)
+```
+
+### Get paged AiAgents
+
+```python
+import starkinfra
+
+cursor = None
+while True:
+    agents, cursor = starkinfra.aiagent.page(limit=50, expand=["knowledge_bases"], cursor=cursor)
+    for agent in agents:
+        print(agent)
+    if cursor is None:
+        break
+```
+
+### Update an AiAgent
+
+The API keeps every parameter you do not pass. To clear one, send an empty value: "" for system_prompt and voice_id, [] for
+knowledge_base_ids and {} for metadata_schema.
+
+```python
+import starkinfra
+
+agent = starkinfra.aiagent.update("5155165527080960", name="Support assistant v2", model="prime-1.0")
+
+print(agent)
+```
+
+### Delete AiAgents
+
+```python
+import starkinfra
+
+agents = starkinfra.aiagent.delete(ids=["5155165527080960", "4545454545454545"])
+
+for agent in agents:
+    print(agent)
+```
+
+### Create an AiChat
+
+The context is what the agent should know about the person it is talking to, and the tags let you find the chat later.
+The keys of context are yours and are sent exactly as written.
+
+```python
+import starkinfra
+
+chat = starkinfra.aichat.create(
+    starkinfra.AiChat(
+        agent_id="5155165527080960",
+        title="Order question",
+        tags=["customer-123", "whatsapp"],
+        context={"name": "Ana", "balance": 1520.33},
+    )
+)
+
+print(chat)
+```
+
+### Get an AiChat
+
+```python
+import starkinfra
+
+chat = starkinfra.aichat.get("5155165527080960", expand=["agent_name"])
+
+print(chat)
+```
+
+### Query AiChats
+
+```python
+import starkinfra
+
+chats = starkinfra.aichat.query(tags=["customer-123"], expand=["agent_name"])
+
+for chat in chats:
+    print(chat)
+```
+
+### Get paged AiChats
+
+```python
+import starkinfra
+
+cursor = None
+while True:
+    chats, cursor = starkinfra.aichat.page(limit=50, tags=["customer-123"], cursor=cursor)
+    for chat in chats:
+        print(chat)
+    if cursor is None:
+        break
+```
+
+### Update an AiChat
+
+The API keeps every parameter you do not pass. To clear one, send an empty value: [] for tags and {} for context.
+
+```python
+import starkinfra
+
+chat = starkinfra.aichat.update("5155165527080960", title="Order question, solved", context={"name": "Ana", "balance": 0})
+
+print(chat)
+```
+
+### Delete AiChats
+
+```python
+import starkinfra
+
+chats = starkinfra.aichat.delete(ids=["5155165527080960", "4545454545454545"])
+
+for chat in chats:
+    print(chat)
+```
+
+### Create an AiMessage
+
+Post what the user said. The same call returns the user's message and the agent's answer.
+
+```python
+import starkinfra
+
+messages = starkinfra.aimessage.create(
+    starkinfra.AiMessage(chat_id="5155165527080960", text="Where is my order 123?"),
+    expand=["chat_name"],
+)
+
+for message in messages:
+    print(message.sender, message.text, message.metadata)
+```
+
+### Query AiMessages
+
+The generator follows the cursor until the history ends. Without chat_id, it returns the messages of every chat in your workspace.
+
+```python
+import starkinfra
+
+messages = starkinfra.aimessage.query(chat_id="5155165527080960", limit=50)
+
+for message in messages:
+    print(message)
+```
+
+### Retrieve a page of AiMessages
+
+```python
+import starkinfra
+
+messages, cursor = starkinfra.aimessage.page(chat_id="5155165527080960", limit=10)
+
+for message in messages:
+    print(message)
+
+more, cursor = starkinfra.aimessage.page(chat_id="5155165527080960", cursor=cursor, limit=10)
 ```
 
 ## Webhook

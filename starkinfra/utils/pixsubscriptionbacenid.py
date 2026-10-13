@@ -10,4 +10,4 @@ def create(bank_code, prefix):
     ## Return:
     - Random bacenId based on your bank code.
     """
-    return prefix + _create_bacen_id(bank_code, "%Y%m%d")
+    return (str(prefix)) + _create_bacen_id(bank_code, "%Y%m%d")

@@ -15,7 +15,7 @@ class AiChat(Resource):
     ## Parameters (optional):
     - title [string, default None]: title of the conversation. Up to 100 characters. When omitted, the first message posted to the chat generates one.
     - tags [list of strings, default None]: tags to find the chat later. Up to 30 tags. ex: ["customer-123", "whatsapp"]
-    - context [dict, default None]: what the agent should know about the person it is talking to, read before every reply as data and never as instructions. Up to 16384 bytes. The keys are yours and are sent exactly as written. ex: {"name": "Ana", "balance": 1520.33}
+    - context [dict, default None]: what the agent should know about the person it is talking to, read before every reply as data and never as instructions. Up to 16384 bytes. The keys are converted to camelCase, as the API stores them. ex: {"name": "Ana", "balance": 1520.33}
     ## Attributes (return-only):
     - id [string]: unique id returned when the AiChat is created. ex: "5656565656565656"
     - agent_name [string]: name of the agent. Only present when requested with expand=["agent_name"].
@@ -38,8 +38,7 @@ _resource = {"class": AiChat, "name": "AiChat"}
 
 def create(chat, user=None):
     """# Create an AiChat
-    Send an AiChat object for creation at the Stark Infra API. Attributes that are None are sent as null.
-    The keys of context are sent exactly as written, so this function does not go through the case conversion of the core.
+    Send an AiChat object for creation at the Stark Infra API. Attributes that are None are not sent.
     ## Parameters (required):
     - chat [AiChat object]: AiChat object to be created in the API.
     ## Parameters (optional):
@@ -47,14 +46,7 @@ def create(chat, user=None):
     ## Return:
     - AiChat object with updated attributes
     """
-    payload = {
-        "agentId": chat.agent_id,
-        "title": chat.title,
-        "tags": chat.tags,
-        "context": chat.context,
-    }
-    response = rest.post_raw(path=endpoint(_resource), payload=payload, user=user)
-    return from_api_json(_resource, response.json()[last_name(_resource)])
+    return rest.post_single(resource=_resource, entity=chat, user=user)
 
 
 def get(id, expand=None, user=None):
@@ -106,7 +98,6 @@ def update(id, title=None, agent_id=None, tags=None, context=None, user=None):
     """# Update AiChat entity
     Update an AiChat's parameters by passing its id. The API keeps every parameter you do not give.
     To clear a parameter, send an empty value: [] for tags, {} for context.
-    The keys of context are sent exactly as written, so this function does not go through the case conversion of the core.
     ## Parameters (required):
     - id [string]: AiChat unique id. ex: "5656565656565656"
     ## Parameters (optional):
@@ -120,12 +111,11 @@ def update(id, title=None, agent_id=None, tags=None, context=None, user=None):
     """
     payload = {
         "title": title,
-        "agentId": agent_id,
+        "agent_id": agent_id,
         "tags": tags,
         "context": context,
     }
-    response = rest.patch_raw(path="{endpoint}/{id}".format(endpoint=endpoint(_resource), id=id), payload=payload, user=user)
-    return from_api_json(_resource, response.json()[last_name(_resource)])
+    return rest.patch_id(resource=_resource, id=id, payload=payload, user=user)
 
 
 def delete(ids, user=None):

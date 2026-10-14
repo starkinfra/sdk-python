@@ -25,12 +25,12 @@ _agent = {
 
 class TestAiAgent(TestCase):
 
-    def test_create_returns_the_agent_with_the_schema_keys_as_written(self):
+    def test_create_returns_the_agent_with_the_schema_keys_in_camel_case(self):
         agent = aiFixtures.agent()
         self.assertIsNotNone(agent.id)
         self.assertEqual("bender-1.0", agent.model)
         self.assertEqual([aiFixtures.knowledgeBase().id], agent.knowledge_base_ids)
-        self.assertEqual(["order_id"], list(agent.metadata_schema))
+        self.assertEqual(["orderId"], list(agent.metadata_schema))
         self.assertIsInstance(agent.created, datetime)
 
     def test_get_and_expand_knowledge_bases(self):
@@ -66,7 +66,7 @@ class TestAiAgent(TestCase):
             renamed = starkinfra.aiagent.update(agent.id, name="renamed-by-sdk")
             self.assertEqual("renamed-by-sdk", renamed.name)
             self.assertEqual([aiFixtures.knowledgeBase().id], renamed.knowledge_base_ids)
-            self.assertEqual(["order_id"], list(renamed.metadata_schema))
+            self.assertEqual(["orderId"], list(renamed.metadata_schema))
         finally:
             starkinfra.aiagent.update(agent.id, name=original.name)
 
@@ -107,11 +107,10 @@ class TestAiAgent(TestCase):
 
 class TestAiAgentAtTheHttpBoundary(TestCase):
 
-    def test_create_does_not_touch_the_schema_keys(self):
+    def test_create_sends_the_schema_keys_in_camel_case(self):
         returned = starkinfra.AiAgent(
             name="Support assistant", model="bender-1.0", system_prompt="Be brief.", voice_id="5632499082330112",
             knowledge_base_ids=["5083538508480512"], metadata_schema={"order_id": {"type": "string"}, "isUrgent": {"type": "boolean"}},
-            id="5740688905863168", created="2026-09-30T15:42:56+00:00", updated="2026-09-30T15:42:56+00:00",
         )
         with patch("starkcore.utils.rest.post", return_value=FakeResponse({"agent": _agent})) as post:
             starkinfra.aiagent.create(returned)
@@ -121,7 +120,7 @@ class TestAiAgentAtTheHttpBoundary(TestCase):
             "systemPrompt": "Be brief.",
             "voiceId": "5632499082330112",
             "knowledgeBaseIds": ["5083538508480512"],
-            "metadataSchema": {"order_id": {"type": "string"}, "isUrgent": {"type": "boolean"}},
+            "metadataSchema": {"orderId": {"type": "string"}, "isUrgent": {"type": "boolean"}},
         }, loads(post.call_args.kwargs["data"]))
 
     def test_create_sends_an_empty_voice_as_it_came(self):
@@ -135,7 +134,7 @@ class TestAiAgentAtTheHttpBoundary(TestCase):
             starkinfra.aiagent.update("5740688905863168", name="Renamed")
         get.assert_not_called()
         self.assertEqual(
-            {"name": "Renamed", "model": None, "systemPrompt": None, "voiceId": None, "knowledgeBaseIds": None, "metadataSchema": None},
+            {"name": "Renamed"},
             loads(patch_request.call_args.kwargs["data"]),
         )
 

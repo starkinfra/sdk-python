@@ -20,7 +20,7 @@ class AiAgent(Resource):
     - system_prompt [string, default None]: instructions that define the agent's persona, tone and domain behavior. Up to 100000 characters. The API falls back to its default assistant prompt when omitted.
     - voice_id [string, default None]: id of the AiVoice the agent speaks with. When set, every reply also carries a speech string ready to be sent to AiSpeech. The API does not check that the voice exists.
     - knowledge_base_ids [list of strings, default None]: ids of up to 100 AiKnowledgeBases the agent retrieves from before answering. The API does not check that they exist.
-    - metadata_schema [dict, default None]: flat dict whose keys are the fields the agent must extract on every reply. Each field takes a "type" (string, integer, number, boolean or array), an optional "description" of up to 2000 characters, an optional "enum" of up to 20 strings for string fields. The keys are yours and are sent exactly as written. ex: {"order_id": {"type": "string", "description": "Order the customer mentions"}}
+    - metadata_schema [dict, default None]: flat dict whose keys are the fields the agent must extract on every reply. Each field takes a "type" (string, integer, number, boolean or array), an optional "description" of up to 2000 characters, an optional "enum" of up to 20 strings for string fields. The keys are converted to camelCase, as the API stores them. ex: {"orderId": {"type": "string", "description": "Order the customer mentions"}}
     ## Attributes (return-only):
     - id [string]: unique id returned when the AiAgent is created. ex: "5656565656565656"
     - knowledge_bases [list of AiKnowledgeBase objects]: the knowledge bases themselves. Only present when requested with expand=["knowledge_bases"].
@@ -58,8 +58,7 @@ _resource = {"class": AiAgent, "name": "AiAgent"}
 
 def create(agent, user=None):
     """# Create an AiAgent
-    Send an AiAgent object for creation at the Stark Infra API. Attributes that are None are sent as null.
-    The keys of metadata_schema are sent exactly as written, so this function does not go through the case conversion of the core.
+    Send an AiAgent object for creation at the Stark Infra API. Attributes that are None are not sent.
     ## Parameters (required):
     - agent [AiAgent object]: AiAgent object to be created in the API.
     ## Parameters (optional):
@@ -67,16 +66,7 @@ def create(agent, user=None):
     ## Return:
     - AiAgent object with updated attributes
     """
-    payload = {
-        "name": agent.name,
-        "model": agent.model,
-        "systemPrompt": agent.system_prompt,
-        "voiceId": agent.voice_id,
-        "knowledgeBaseIds": agent.knowledge_base_ids,
-        "metadataSchema": agent.metadata_schema,
-    }
-    response = rest.post_raw(path=endpoint(_resource), payload=payload, user=user)
-    return from_api_json(_resource, response.json()[last_name(_resource)])
+    return rest.post_single(resource=_resource, entity=agent, user=user)
 
 
 def get(id, expand=None, user=None):
@@ -127,7 +117,6 @@ def update(id, name=None, model=None, system_prompt=None, voice_id=None, knowled
     """# Update AiAgent entity
     Update an AiAgent's parameters by passing its id. The API keeps every parameter you do not give.
     To clear a parameter, send an empty value: "" for system_prompt and voice_id, [] for knowledge_base_ids, {} for metadata_schema.
-    The keys of metadata_schema are sent exactly as written, so this function does not go through the case conversion of the core.
     ## Parameters (required):
     - id [string]: AiAgent unique id. ex: "5656565656565656"
     ## Parameters (optional):
@@ -144,13 +133,12 @@ def update(id, name=None, model=None, system_prompt=None, voice_id=None, knowled
     payload = {
         "name": name,
         "model": model,
-        "systemPrompt": system_prompt,
-        "voiceId": voice_id,
-        "knowledgeBaseIds": knowledge_base_ids,
-        "metadataSchema": metadata_schema,
+        "system_prompt": system_prompt,
+        "voice_id": voice_id,
+        "knowledge_base_ids": knowledge_base_ids,
+        "metadata_schema": metadata_schema,
     }
-    response = rest.patch_raw(path="{endpoint}/{id}".format(endpoint=endpoint(_resource), id=id), payload=payload, user=user)
-    return from_api_json(_resource, response.json()[last_name(_resource)])
+    return rest.patch_id(resource=_resource, id=id, payload=payload, user=user)
 
 
 def delete(ids, user=None):

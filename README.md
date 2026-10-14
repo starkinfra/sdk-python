@@ -4601,7 +4601,7 @@ while True:
 ### Create an AiAgent
 
 An AiAgent holds the model, the instructions, the knowledge bases and the voice of an assistant. The keys of
-metadata_schema are yours and are sent exactly as written.
+metadata_schema are converted to camelCase, as the API stores them.
 
 ```python
 import starkinfra
@@ -4681,7 +4681,7 @@ for agent in agents:
 ### Create an AiChat
 
 The context is what the agent should know about the person it is talking to, and the tags let you find the chat later.
-The keys of context are yours and are sent exactly as written.
+The keys of context are converted to camelCase, as the API stores them.
 
 ```python
 import starkinfra

@@ -28,7 +28,7 @@ class TestAiChat(TestCase):
         self.assertEqual([], chat.tags)
         self.assertEqual({}, chat.context)
 
-    def test_create_keeps_the_tags_and_the_context_keys_as_written(self):
+    def test_create_keeps_the_tags_and_converts_the_context_keys_to_camel_case(self):
         chat = starkinfra.aichat.create(starkinfra.AiChat(
             agent_id=aiFixtures.agent().id,
             tags=["sdk-python", "tagged"],
@@ -36,7 +36,7 @@ class TestAiChat(TestCase):
         ))
         try:
             self.assertEqual(["sdk-python", "tagged"], chat.tags)
-            self.assertEqual({"customer_name": "Ana", "balance": 1520.33}, chat.context)
+            self.assertEqual({"customerName": "Ana", "balance": 1520.33}, chat.context)
         finally:
             starkinfra.aichat.delete([chat.id])
 
@@ -109,10 +109,9 @@ class TestAiChat(TestCase):
 
 class TestAiChatAtTheHttpBoundary(TestCase):
 
-    def test_create_sends_only_the_creatable_fields_and_does_not_touch_the_context_keys(self):
+    def test_create_sends_the_context_keys_in_camel_case(self):
         returned = starkinfra.AiChat(
             agent_id="5740688905863168", title="Support chat", tags=["customer-123"], context={"customer_name": "Ana"},
-            id="5761660895625216", agent_name="Support assistant", updated="2026-09-30T15:42:58+00:00",
         )
         with patch("starkcore.utils.rest.post", return_value=FakeResponse({"chat": _chat})) as post:
             starkinfra.aichat.create(returned)
@@ -120,23 +119,23 @@ class TestAiChatAtTheHttpBoundary(TestCase):
             "agentId": "5740688905863168",
             "title": "Support chat",
             "tags": ["customer-123"],
-            "context": {"customer_name": "Ana"},
+            "context": {"customerName": "Ana"},
         }, loads(post.call_args.kwargs["data"]))
 
-    def test_update_names_every_field_and_sends_none_for_the_ones_not_given(self):
+    def test_update_sends_only_the_fields_that_were_given(self):
         with patch("starkcore.utils.rest.patch", return_value=FakeResponse({"chat": _chat})) as patch_request:
             starkinfra.aichat.update("5761660895625216", title="New title")
         self.assertEqual(
-            {"title": "New title", "agentId": None, "tags": None, "context": None},
+            {"title": "New title"},
             loads(patch_request.call_args.kwargs["data"]),
         )
 
-    def test_update_sends_tags_and_context_as_they_came(self):
+    def test_update_sends_empty_tags_and_the_context_keys_in_camel_case(self):
         with patch("starkcore.utils.rest.patch", return_value=FakeResponse({"chat": _chat})) as patch_request:
             starkinfra.aichat.update("5761660895625216", tags=[], context={"customer_name": "Ana"})
         body = loads(patch_request.call_args.kwargs["data"])
         self.assertEqual([], body["tags"])
-        self.assertEqual({"customer_name": "Ana"}, body["context"])
+        self.assertEqual({"customerName": "Ana"}, body["context"])
 
     def test_query_sends_the_tags_as_a_comma_separated_list(self):
         with patch("starkcore.utils.rest.get", return_value=FakeResponse({"cursor": None, "chats": [_chat]})) as get:

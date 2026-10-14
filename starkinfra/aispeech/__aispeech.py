@@ -71,7 +71,6 @@ def get(id, expand=None, user=None):
 def query(limit=None, expand=None, user=None):
     """# Retrieve AiSpeeches
     Receive a generator of AiSpeech objects previously created in the Stark Infra API, following the cursor until the list ends. The audio is left out of the results.
-    The core derives the response key from the resource name and reads "speechs", but the API answers "speeches", so the list is read here.
     ## Parameters (optional):
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - expand [list of strings, default None]: extra attributes to compute. Options: "voice_name".
@@ -79,23 +78,13 @@ def query(limit=None, expand=None, user=None):
     ## Return:
     - generator of AiSpeech objects with updated attributes
     """
-    cursor = None
-    remaining = limit
-    while True:
-        speeches, cursor = page(cursor=cursor, limit=min(remaining, 100) if remaining else None, expand=expand, user=user)
-        for speech in speeches:
-            yield speech
-        if remaining:
-            remaining -= len(speeches)
-        if not cursor or (limit and remaining <= 0):
-            break
+    return rest.get_stream(resource=_resource, limit=limit, expand=expand, user=user)
 
 
 def page(cursor=None, limit=None, expand=None, user=None):
     """# Retrieve paged AiSpeeches
     Receive a list of up to 100 AiSpeech objects previously created in the Stark Infra API and the cursor to the next page. The audio is left out of the results.
     Use this function instead of query if you want to manually page your requests.
-    The core derives the response key from the resource name and reads "speechs", but the API answers "speeches", so the list is read here.
     ## Parameters (optional):
     - cursor [string, default None]: cursor returned on the previous page function call
     - limit [integer, default 100]: maximum number of objects to be retrieved. Max = 100. ex: 35
@@ -105,6 +94,4 @@ def page(cursor=None, limit=None, expand=None, user=None):
     - list of AiSpeech objects with updated attributes
     - cursor to retrieve the next page of AiSpeech objects
     """
-    response = rest.get_raw(path=endpoint(_resource), query={"expand": expand, "limit": limit, "cursor": cursor}, user=user)
-    content = response.json()
-    return [from_api_json(_resource, entity) for entity in content["speeches"]], content.get("cursor")
+    return rest.get_page(resource=_resource, cursor=cursor, limit=limit, expand=expand, user=user)

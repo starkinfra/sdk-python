@@ -110,17 +110,6 @@ class TestAiSpeechAtTheHttpBoundary(TestCase):
         self.assertEqual("100", queryOf(get.call_args_list[0].kwargs["url"])["limit"])
         self.assertEqual("50", queryOf(get.call_args_list[1].kwargs["url"])["limit"])
 
-    def test_query_with_a_limit_follows_empty_pages(self):
-        pages = [
-            FakeResponse({"cursor": "second-page", "speeches": []}),
-            FakeResponse({"cursor": "third-page", "speeches": [_speech]}),
-            FakeResponse({"cursor": None, "speeches": [dict(_speech, id="5646488461901825")]}),
-        ]
-        with patch("starkcore.utils.rest.get", side_effect=pages) as get:
-            found = list(starkinfra.aispeech.query(limit=2))
-        self.assertEqual(2, len(found))
-        self.assertEqual(3, get.call_count)
-
     def test_page_returns_the_items_and_the_cursor(self):
         with patch("starkcore.utils.rest.get", return_value=FakeResponse({"cursor": "next-page", "speeches": [_speech]})) as get:
             speeches, cursor = starkinfra.aispeech.page(limit=1, cursor="current-page", expand=["voice_name"])

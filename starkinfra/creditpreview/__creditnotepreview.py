@@ -30,7 +30,7 @@ class CreditNotePreview(SubResource):
     - tax_amount [integer]: tax amount included in the CreditNote. ex: 100
     """
 
-    def __init__(self, type, nominal_amount, scheduled, tax_id, invoices=None, nominal_interest=None,
+    def __init__(self, type, nominal_amount=None, scheduled=None, tax_id=None, invoices=None, nominal_interest=None,
                  initial_due=None, count=None, initial_amount=None, interval=None, rebate_amount=None,
                  amount=None, interest=None, tax_amount=None):
         self.type = type

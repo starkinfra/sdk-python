@@ -32,6 +32,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ### Changed
 - IssuingToken created and updated attributes are parsed as datetime
 - nominal_amount and amount parameters to conditionally required to CreditNotePreview sub-resource
+- starkcore to v0.8.0
 ### Fixed
 - business-rule and enum drift in docstrings across Pix, Issuing and Credit resources
 - Subscription installment_start and installment_end parsing when API returns empty strings

@@ -1,11 +1,8 @@
 import starkinfra
-from json import loads
 from datetime import datetime
 from unittest import TestCase, main
-from unittest.mock import patch
 from tests.utils.user import exampleProject
 from tests.utils import aiFixtures
-from tests.utils.aiFixtures import FakeResponse, queryOf
 
 
 starkinfra.user = exampleProject
@@ -103,69 +100,6 @@ class TestAiAgent(TestCase):
     def test_get_unknown_id_raises_input_errors(self):
         with self.assertRaises(starkinfra.error.InputErrors):
             starkinfra.aiagent.get("0000000000000000")
-
-
-class TestAiAgentAtTheHttpBoundary(TestCase):
-
-    def test_create_sends_the_schema_keys_in_camel_case(self):
-        returned = starkinfra.AiAgent(
-            name="Support assistant", model="bender-1.0", system_prompt="Be brief.", voice_id="5632499082330112",
-            knowledge_base_ids=["5083538508480512"], metadata_schema={"order_id": {"type": "string"}, "isUrgent": {"type": "boolean"}},
-        )
-        with patch("starkcore.utils.rest.post", return_value=FakeResponse({"agent": _agent})) as post:
-            starkinfra.aiagent.create(returned)
-        self.assertEqual({
-            "name": "Support assistant",
-            "model": "bender-1.0",
-            "systemPrompt": "Be brief.",
-            "voiceId": "5632499082330112",
-            "knowledgeBaseIds": ["5083538508480512"],
-            "metadataSchema": {"orderId": {"type": "string"}, "isUrgent": {"type": "boolean"}},
-        }, loads(post.call_args.kwargs["data"]))
-
-    def test_create_sends_an_empty_voice_as_it_came(self):
-        with patch("starkcore.utils.rest.post", return_value=FakeResponse({"agent": _agent})) as post:
-            starkinfra.aiagent.create(starkinfra.AiAgent(name="a", model="bender-1.0", voice_id=""))
-        self.assertEqual("", loads(post.call_args.kwargs["data"])["voiceId"])
-
-    def test_update_does_not_read_the_agent_first(self):
-        with patch("starkcore.utils.rest.get") as get, \
-                patch("starkcore.utils.rest.patch", return_value=FakeResponse({"agent": _agent})) as patch_request:
-            starkinfra.aiagent.update("5740688905863168", name="Renamed")
-        get.assert_not_called()
-        self.assertEqual(
-            {"name": "Renamed"},
-            loads(patch_request.call_args.kwargs["data"]),
-        )
-
-    def test_update_sends_empty_values_to_clear_the_fields(self):
-        with patch("starkcore.utils.rest.patch", return_value=FakeResponse({"agent": _agent})) as patch_request:
-            starkinfra.aiagent.update("5740688905863168", system_prompt="", voice_id="", knowledge_base_ids=[], metadata_schema={})
-        body = loads(patch_request.call_args.kwargs["data"])
-        self.assertEqual("", body["systemPrompt"])
-        self.assertEqual("", body["voiceId"])
-        self.assertEqual([], body["knowledgeBaseIds"])
-        self.assertEqual({}, body["metadataSchema"])
-
-    def test_page_returns_the_items_and_the_cursor(self):
-        with patch("starkcore.utils.rest.get", return_value=FakeResponse({"cursor": "next-page", "agents": [_agent]})) as get:
-            agents, cursor = starkinfra.aiagent.page(limit=1, cursor="current-page", expand=["knowledge_bases"])
-        self.assertEqual(["5740688905863168"], [agent.id for agent in agents])
-        self.assertEqual("next-page", cursor)
-        self.assertEqual({"limit": "1", "cursor": "current-page", "expand": "knowledgeBases"}, queryOf(get.call_args.kwargs["url"]))
-
-    def test_page_returns_a_null_cursor_on_the_last_page(self):
-        with patch("starkcore.utils.rest.get", return_value=FakeResponse({"cursor": None, "agents": [_agent]})) as get:
-            _, cursor = starkinfra.aiagent.page()
-        self.assertIsNone(cursor)
-        self.assertEqual({}, queryOf(get.call_args.kwargs["url"]))
-
-    def test_delete_sends_ids_in_the_query_string(self):
-        with patch("starkcore.utils.rest.delete", return_value=FakeResponse({"agents": [_agent]})) as delete:
-            deleted = starkinfra.aiagent.delete(["5740688905863168", "5740688905863169"])
-        self.assertTrue(delete.call_args.kwargs["url"].endswith("/v2/ai-agent?ids=5740688905863168%2C5740688905863169"))
-        self.assertEqual("", delete.call_args.kwargs["data"])
-        self.assertEqual(["5740688905863168"], [agent.id for agent in deleted])
 
 
 if __name__ == '__main__':

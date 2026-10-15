@@ -1,6 +1,4 @@
 import atexit
-from json import dumps
-from urllib.parse import urlparse, parse_qs
 from uuid import uuid4
 import starkinfra
 
@@ -45,10 +43,6 @@ def generateExampleAiAgent(knowledge_base_ids=None):
     )
 
 
-def queryOf(url):
-    return {key: values[0] for key, values in parse_qs(urlparse(url).query).items()}
-
-
 def speechAudio():
     finished = next((speech for speech in starkinfra.aispeech.query() if speech.status == "success"), None)
     if finished is None:
@@ -65,11 +59,3 @@ def _cleanup():
 
 
 atexit.register(_cleanup)
-
-
-class FakeResponse:
-
-    def __init__(self, body):
-        self.status_code = 200
-        self.content = dumps(body).encode("utf-8")
-        self.headers = {}

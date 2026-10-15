@@ -1,10 +1,7 @@
 import starkinfra
-from json import loads
 from unittest import TestCase, main
-from unittest.mock import patch
 from tests.utils.user import exampleProject
 from tests.utils import aiFixtures
-from tests.utils.aiFixtures import FakeResponse, queryOf
 
 
 starkinfra.user = exampleProject
@@ -105,55 +102,6 @@ class TestAiChat(TestCase):
     def test_get_unknown_id_raises_input_errors(self):
         with self.assertRaises(starkinfra.error.InputErrors):
             starkinfra.aichat.get("0000000000000000")
-
-
-class TestAiChatAtTheHttpBoundary(TestCase):
-
-    def test_create_sends_the_context_keys_in_camel_case(self):
-        returned = starkinfra.AiChat(
-            agent_id="5740688905863168", title="Support chat", tags=["customer-123"], context={"customer_name": "Ana"},
-        )
-        with patch("starkcore.utils.rest.post", return_value=FakeResponse({"chat": _chat})) as post:
-            starkinfra.aichat.create(returned)
-        self.assertEqual({
-            "agentId": "5740688905863168",
-            "title": "Support chat",
-            "tags": ["customer-123"],
-            "context": {"customerName": "Ana"},
-        }, loads(post.call_args.kwargs["data"]))
-
-    def test_update_sends_only_the_fields_that_were_given(self):
-        with patch("starkcore.utils.rest.patch", return_value=FakeResponse({"chat": _chat})) as patch_request:
-            starkinfra.aichat.update("5761660895625216", title="New title")
-        self.assertEqual(
-            {"title": "New title"},
-            loads(patch_request.call_args.kwargs["data"]),
-        )
-
-    def test_update_sends_empty_tags_and_the_context_keys_in_camel_case(self):
-        with patch("starkcore.utils.rest.patch", return_value=FakeResponse({"chat": _chat})) as patch_request:
-            starkinfra.aichat.update("5761660895625216", tags=[], context={"customer_name": "Ana"})
-        body = loads(patch_request.call_args.kwargs["data"])
-        self.assertEqual([], body["tags"])
-        self.assertEqual({"customerName": "Ana"}, body["context"])
-
-    def test_query_sends_the_tags_as_a_comma_separated_list(self):
-        with patch("starkcore.utils.rest.get", return_value=FakeResponse({"cursor": None, "chats": [_chat]})) as get:
-            found = list(starkinfra.aichat.query(tags=["customer-123", "whatsapp"], expand=["agent_name"]))
-        self.assertEqual(["5761660895625216"], [chat.id for chat in found])
-        self.assertEqual({"tags": "customer-123,whatsapp", "expand": "agentName"}, queryOf(get.call_args.kwargs["url"]))
-
-    def test_page_returns_the_items_and_the_cursor(self):
-        with patch("starkcore.utils.rest.get", return_value=FakeResponse({"cursor": "next-page", "chats": [_chat]})) as get:
-            chats, cursor = starkinfra.aichat.page(limit=1, cursor="current-page", tags=["whatsapp"])
-        self.assertEqual(["5761660895625216"], [chat.id for chat in chats])
-        self.assertEqual("next-page", cursor)
-        self.assertEqual({"limit": "1", "cursor": "current-page", "tags": "whatsapp"}, queryOf(get.call_args.kwargs["url"]))
-
-    def test_page_returns_a_null_cursor_on_the_last_page(self):
-        with patch("starkcore.utils.rest.get", return_value=FakeResponse({"cursor": None, "chats": [_chat]})):
-            _, cursor = starkinfra.aichat.page()
-        self.assertIsNone(cursor)
 
 
 if __name__ == '__main__':

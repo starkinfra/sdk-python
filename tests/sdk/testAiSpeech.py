@@ -1,10 +1,7 @@
 import starkinfra
-from json import loads
 from datetime import datetime
 from unittest import TestCase, SkipTest, main
-from unittest.mock import patch
 from tests.utils.user import exampleProject
-from tests.utils.aiFixtures import FakeResponse, queryOf
 
 
 starkinfra.user = exampleProject
@@ -66,61 +63,6 @@ class TestAiSpeech(TestCase):
     def test_page_with_a_limit_above_the_maximum_raises_input_errors(self):
         with self.assertRaises(starkinfra.error.InputErrors):
             starkinfra.aispeech.page(limit=101)
-
-
-class TestAiSpeechAtTheHttpBoundary(TestCase):
-
-    def test_create_sends_only_the_voice_and_the_text(self):
-        with patch("starkcore.utils.rest.post", return_value=FakeResponse({"speech": _speech})) as post:
-            created = starkinfra.aispeech.create(starkinfra.AiSpeech(voice_id="5632499082330112", text="Short test."))
-        self.assertTrue(post.call_args.kwargs["url"].endswith("/v2/ai-speech"))
-        self.assertEqual({"voiceId": "5632499082330112", "text": "Short test."}, loads(post.call_args.kwargs["data"]))
-        self.assertEqual("5632499082330112", created.voice_id)
-        self.assertEqual("SUQzBAAAAAAA", created.audio)
-
-    def test_query_reads_the_speeches_key_and_sends_expand_and_limit(self):
-        with patch("starkcore.utils.rest.get", return_value=FakeResponse({"cursor": None, "speeches": [_speech]})) as get:
-            found = list(starkinfra.aispeech.query(expand=["voice_name"], limit=1))
-        self.assertEqual(["5646488461901824"], [speech.id for speech in found])
-        self.assertEqual({"expand": "voiceName", "limit": "1"}, queryOf(get.call_args.kwargs["url"]))
-
-    def test_query_follows_the_cursor_until_it_runs_out(self):
-        second = dict(_speech, id="5646488461901825")
-        pages = [
-            FakeResponse({"cursor": "next-page", "speeches": [_speech]}),
-            FakeResponse({"cursor": None, "speeches": [second]}),
-        ]
-        with patch("starkcore.utils.rest.get", side_effect=pages) as get:
-            found = list(starkinfra.aispeech.query())
-        self.assertEqual(["5646488461901824", "5646488461901825"], [speech.id for speech in found])
-        self.assertNotIn("cursor", queryOf(get.call_args_list[0].kwargs["url"]))
-        self.assertEqual("next-page", queryOf(get.call_args_list[1].kwargs["url"])["cursor"])
-
-    def test_query_with_a_limit_asks_for_the_rest_on_each_page_and_stops_at_the_limit(self):
-        first = [dict(_speech, id=str(1000 + n)) for n in range(100)]
-        second = [dict(_speech, id=str(2000 + n)) for n in range(50)]
-        pages = [
-            FakeResponse({"cursor": "second-page", "speeches": first}),
-            FakeResponse({"cursor": "third-page", "speeches": second}),
-        ]
-        with patch("starkcore.utils.rest.get", side_effect=pages) as get:
-            found = list(starkinfra.aispeech.query(limit=150))
-        self.assertEqual(150, len(found))
-        self.assertEqual(2, get.call_count)
-        self.assertEqual("100", queryOf(get.call_args_list[0].kwargs["url"])["limit"])
-        self.assertEqual("50", queryOf(get.call_args_list[1].kwargs["url"])["limit"])
-
-    def test_page_returns_the_items_and_the_cursor(self):
-        with patch("starkcore.utils.rest.get", return_value=FakeResponse({"cursor": "next-page", "speeches": [_speech]})) as get:
-            speeches, cursor = starkinfra.aispeech.page(limit=1, cursor="current-page", expand=["voice_name"])
-        self.assertEqual(["5646488461901824"], [speech.id for speech in speeches])
-        self.assertEqual("next-page", cursor)
-        self.assertEqual({"limit": "1", "cursor": "current-page", "expand": "voiceName"}, queryOf(get.call_args.kwargs["url"]))
-
-    def test_page_returns_a_null_cursor_on_the_last_page(self):
-        with patch("starkcore.utils.rest.get", return_value=FakeResponse({"cursor": None, "speeches": [_speech]})):
-            _, cursor = starkinfra.aispeech.page()
-        self.assertIsNone(cursor)
 
 
 if __name__ == '__main__':

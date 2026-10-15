@@ -3160,7 +3160,7 @@ They can represent a bank account, a digital wallet, an inventory product, etc.
 
 ### Create Ledgers
 
-Send a list of Ledger objects for creation in the Stark Infra API.
+Send a list of Ledger objects for creation in the Stark Infra API. You can send up to 100 Ledger objects in a single request.
 
 ```python
 import starkinfra
@@ -3258,7 +3258,7 @@ print(log)
 
 ### Create LedgerTransactions
 
-Send a list of LedgerTransaction objects to move amounts in and out of a Ledger.
+Send a list of LedgerTransaction objects to move amounts in and out of a Ledger. You can send up to 500 objects in a single request, targeting different ledgers if needed; each is applied to its Ledger in the order sent.
 
 ```python
 import starkinfra
@@ -3276,6 +3276,8 @@ transactions = starkinfra.ledgertransaction.create([
 for transaction in transactions:
     print(transaction)
 ```
+
+**Note**: Instead of using LedgerTransaction objects, you can also pass each element in dictionary format
 
 ### Query LedgerTransactions
 

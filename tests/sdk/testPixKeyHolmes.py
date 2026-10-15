@@ -38,5 +38,13 @@ class TestPixKeyHolmesPage(TestCase):
         self.assertTrue(len(ids) == 4)
 
 
+class TestPixKeyHolmesGet(TestCase):
+
+    def test_success(self):
+        holmes_id = next(starkinfra.pixkeyholmes.query(limit=1)).id
+        holmes = starkinfra.pixkeyholmes.get(id=holmes_id)
+        self.assertEqual(holmes.id, holmes_id)
+
+
 if __name__ == '__main__':
     main()

@@ -14,6 +14,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- PixKeyHolmes.Log sub-resource
+- PixKeyHolmes get function
 - pixsubscriptionbacenid utility to generate Pix subscription bacenIds
 - BusinessAccountRequest resource
 - validator_link attribute to IndividualAccountRequest resource

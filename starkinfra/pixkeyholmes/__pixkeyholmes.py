@@ -17,7 +17,7 @@ class PixKeyHolmes(Resource):
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixKeyHolmes is created. ex: "5656565656565656"
     - result [string]: result of the investigation. Options: "registered", "unregistered". Empty/None until status is "solved".
-    - status [string]: current PixKeyHolmes status. ex: "created", "solving", "solved", "failed"
+    - status [string]: current PixKeyHolmes status. ex: "solving", "solved"
     - created [datetime.datetime]: creation datetime for the PixKeyHolmes. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     - updated [datetime.datetime]: latest update datetime for the PixKeyHolmes. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
@@ -49,6 +49,19 @@ def create(holmes, user=None):
     return rest.post_multi(resource=_resource, entities=holmes, user=user)
 
 
+def get(id, user=None):
+    """# Retrieve a specific PixKeyHolmes
+    Receive a single PixKeyHolmes object previously created in the Stark Infra API by its id
+    ## Parameters (required):
+    - id [string]: object unique id. ex: "5656565656565656"
+    ## Parameters (optional):
+    - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
+    ## Return:
+    - PixKeyHolmes object with updated attributes
+    """
+    return rest.get_id(resource=_resource, id=id, user=user)
+
+
 def query(limit=None, after=None, before=None, status=None, tags=None, ids=None, user=None):
     """# Retrieve PixKeyHolmes
     Receive a generator of PixKeyHolmes objects previously created in the Stark Infra API
@@ -56,7 +69,7 @@ def query(limit=None, after=None, before=None, status=None, tags=None, ids=None,
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None]: date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "solving", "solved", "failed"]
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["solving", "solved"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
@@ -84,7 +97,7 @@ def page(cursor=None, limit=None, after=None, before=None, status=None, tags=Non
     - limit [integer, default 100]: maximum number of objects to be retrieved. It must be an integer between 1 and 100. ex: 50
     - after [datetime.date or string, default None]: date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None]: date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["created", "solving", "solved", "failed"]
+    - status [list of strings, default None]: filter for status of retrieved objects. ex: ["solving", "solved"]
     - tags [list of strings, default None]: tags to filter retrieved objects. ex: ["tony", "stark"]
     - ids [list of strings, default None]: list of ids to filter retrieved objects. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.

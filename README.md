@@ -3683,7 +3683,7 @@ the success or failure of the operation
 
 ### Create IndividualIdentities
 
-You can create an IndividualIdentity to validate a document of a natural person
+You can create an IndividualIdentity to run an identity verification on a natural person. Each proof must be enabled on your workspace's Identity Profile, and the created identity carries the validator_link the holder opens to submit them.
 
 ```python
 import starkinfra
@@ -3691,8 +3691,10 @@ import starkinfra
 identities = starkinfra.individualidentity.create([
     starkinfra.IndividualIdentity(
         name="Walter White",
+        delivery_method="automatic",
+        email="walter.white@example.com",
+        proofs=["identity", "biometric"],
         tax_id="012.345.678-90",
-        birth_date="1965-09-07",
         tags=["breaking", "bad"]
     )
 ])
@@ -3737,21 +3739,19 @@ print(identity)
 
 ### Update an IndividualIdentity
 
-You can update a specific identity status to "processing" for send it to validation.
+You can set the tax ID of an identity created without one. tax_id is the only field an update accepts.
 
 ```python
 import starkinfra
 
-identity = starkinfra.individualidentity.update("5155165527080960", status="processing")
+identity = starkinfra.individualidentity.update("5155165527080960", tax_id="012.345.678-90")
 
 print(identity)
 ```
 
-**Note**: Before sending your individual identity to validation by patching its status, you must send all the required documents using the create method of the CreditDocument resource. Note that you must reference the individual identity in the create method of the CreditDocument resource by its id.
-
 ### Cancel an IndividualIdentity
 
-You can cancel an individual identity before updating its status to processing.
+You can cancel an individual identity while its status is "created" or "pending".
 
 ```python
 import starkinfra

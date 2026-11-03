@@ -13,6 +13,14 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- delivery_method, proofs, email, phone, validator_link, source_id, source_type, workspace_id and updated attributes to IndividualIdentity resource
+- tax_ids and email filters to IndividualIdentity query and page
+### Changed
+- IndividualIdentity create now requires delivery_method and proofs, and tax_id is optional, as the API requires. The positional parameters are now name, delivery_method, proofs, email, tax_id; pass them by name
+- IndividualIdentity update now patches tax_id, the only field the API accepts, instead of status
+### Removed
+- birth_date attribute from IndividualIdentity resource, which the API refuses
 
 ## [0.29.0] - 2026-10-15
 ### Added

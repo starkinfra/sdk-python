@@ -31,6 +31,7 @@ class PixRequest(Resource):
     ## Parameters (conditionally-required):
     - cashier_type [string]: Cashier's type. Required if the cash_amount is different from 0. Options: "merchant", "participant" and "other"
     - cashier_bank_code [string]: Cashier's bank code. Required if the cash_amount is different from 0. ex: "20018183"
+    - dispute_id [string]: Id of the Pix Dispute being refunded. Required when reason is "fraud" and not allowed with any other reason. The dispute must be one you received and must be awaiting the refund, otherwise the request is refused with invalidDisputeId.
     ## Parameters (optional):
     - cash_amount [integer]: Amount to be withdrawn from the cashier in cents. Must be less than or equal to amount. ex: 1000 (= R$ 10.00)
     - priority [string, default None]: Pix request processing priority. Options: "high", "low"
@@ -40,7 +41,7 @@ class PixRequest(Resource):
     - initiator_tax_id [string, default None]: Payment initiator's tax id (CPF/CNPJ). ex: "01234567890" or "20.018.183/0001-80"
     - tags [list of strings, default []]: list of strings for reference when searching for PixRequests. ex: ["employees", "monthly"]
     - method [string, default None]: execution method for the creation of the Pix. Options: "manual", "dict", "initiator", "dynamicQrcode", "staticQrcode", "payerQrcode", "subscription", "contactless", "staticContactless"
-    - reason [string, default "customerRequest"]: underlying reason for the payment transaction. ex: "customerRequest", "fraud", "subscriptionFlaw". When reason is "fraud" (e.g. returning funds from a PixChargeback), sender_tax_id must be your institution's organization tax ID (CNPJ).
+    - reason [string, default "customerRequest"]: underlying reason for the payment transaction. Options: "customerRequest", "subscriptionFlaw", "fraud". When reason is "fraud" (returning funds from a PixDispute), dispute_id is required and sender_tax_id must be your institution's organization tax ID (CNPJ).
     ## Attributes (return-only):
     - id [string]: unique id returned when the PixRequest is created. ex: "5656565656565656"
     - fee [integer]: fee charged when PixRequest is paid. ex: 200 (= R$ 2.00)
@@ -55,7 +56,7 @@ class PixRequest(Resource):
                  sender_account_number, sender_account_type, receiver_name, receiver_tax_id, receiver_bank_code,
                  receiver_account_number, receiver_branch_code, receiver_account_type, end_to_end_id, priority=None,
                  cashier_type=None, cashier_bank_code=None, cash_amount=None, receiver_key_id=None, description=None, 
-                 reconciliation_id=None, initiator_tax_id=None, tags=None, method=None, reason=None, id=None, fee=None,
+                 reconciliation_id=None, initiator_tax_id=None, tags=None, method=None, reason=None, dispute_id=None, id=None, fee=None,
                  status=None, flow=None, sender_bank_code=None, created=None, updated=None):
         Resource.__init__(self, id=id)
 
@@ -84,6 +85,7 @@ class PixRequest(Resource):
         self.tags = tags
         self.method = method
         self.reason = reason
+        self.dispute_id = dispute_id
         self.fee = fee
         self.status = status
         self.flow = flow

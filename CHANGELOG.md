@@ -15,6 +15,8 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 ## [Unreleased]
 ### Added
 - dispute_id attribute to PixRequest resource
+- PixKeyHolmes.Log sub-resource
+- PixKeyHolmes get function
 
 ## [0.29.0] - 2026-10-15
 ### Added

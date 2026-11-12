@@ -2,6 +2,7 @@ import starkinfra
 from unittest import TestCase, main
 from datetime import timedelta, date
 from tests.utils.user import exampleProject
+from starkcore.utils.api import api_json
 from starkcore.error import InvalidSignatureError
 from tests.utils.pixRequest import generateExamplePixRequestJson
 
@@ -16,6 +17,16 @@ class TestPixRequestPost(TestCase):
         for pix_request in pix_requests:
             check_pix_request = starkinfra.pixrequest.get(pix_request.id)
             self.assertEqual(check_pix_request.id, pix_request.id)
+
+    def test_success_with_dispute_id(self):
+        pix_request = generateExamplePixRequestJson(n=1)[0]
+        pix_request.reason = "fraud"
+        pix_request.dispute_id = "5656565656565656"
+        payload = api_json(pix_request)
+        self.assertIsInstance(pix_request, starkinfra.PixRequest)
+        self.assertEqual(pix_request.dispute_id, "5656565656565656")
+        self.assertEqual(payload["disputeId"], "5656565656565656")
+        self.assertEqual(payload["reason"], "fraud")
 
 
 class TestPixRequestQuery(TestCase):

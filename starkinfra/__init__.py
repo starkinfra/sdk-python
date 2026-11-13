@@ -9,6 +9,27 @@ from starkcore import Project, Organization, key, error
 from . import event
 from .event.__event import Event
 
+from . import aiknowledgebase
+from .aiknowledgebase.__aiknowledgebase import AiKnowledgeBase
+
+from . import aivoice
+from .aivoice.__aivoice import AiVoice
+
+from . import aispeech
+from .aispeech.__aispeech import AiSpeech
+
+from . import aitranscript
+from .aitranscript.__aitranscript import AiTranscript
+
+from . import aiagent
+from .aiagent.__aiagent import AiAgent
+
+from . import aichat
+from .aichat.__aichat import AiChat
+
+from . import aimessage
+from .aimessage.__aimessage import AiMessage
+
 from . import brcodepreview
 from .brcodepreview.__brcodepreview import BrcodePreview
 

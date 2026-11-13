@@ -15,7 +15,7 @@ class Log(Resource):
     - id [string]: unique id returned when the log is created. ex: "5656565656565656"
     - identity [IndividualIdentity]: IndividualIdentity entity to which the log refers to.
     - errors [list of strings]: list of errors linked to this IndividualIdentity event
-    - type [string]: type of the IndividualIdentity event which triggered the log creation. ex: "created", "canceled", "processing", "failed", "success"
+    - type [string]: type of the IndividualIdentity event which triggered the log creation. ex: "created", "processing", "pending", "updated", "success", "failed", "canceled", "expired"
     - created [datetime.datetime]: creation datetime for the log. ex: datetime.datetime(2020, 3, 10, 10, 30, 0, 0)
     """
 
@@ -51,7 +51,7 @@ def query(limit=None, after=None, before=None, types=None, identity_ids=None, us
     - limit [integer, default None]: maximum number of objects to be retrieved. Unlimited if None. ex: 35
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - types [list of strings, default None]: filter for log event types. ex: ["created", "canceled", "processing", "failed", "success"]
+    - types [list of strings, default None]: filter for log event types. ex: ["created", "processing", "pending", "updated", "success", "failed", "canceled", "expired"]
     - identity_ids [list of strings, default None]: list of IndividualIdentity ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:
@@ -77,7 +77,7 @@ def page(cursor=None, limit=None, after=None, before=None, types=None, identity_
     - limit [integer, default 100]: maximum number of objects to be retrieved. It must be an integer between 1 and 100. ex: 50
     - after [datetime.date or string, default None] date filter for objects created only after specified date. ex: datetime.date(2020, 3, 10)
     - before [datetime.date or string, default None] date filter for objects created only before specified date. ex: datetime.date(2020, 3, 10)
-    - types [list of strings, default None]: filter for log event types. ex: ["created", "canceled", "processing", "failed", "success"]
+    - types [list of strings, default None]: filter for log event types. ex: ["created", "processing", "pending", "updated", "success", "failed", "canceled", "expired"]
     - identity_ids [list of strings, default None]: list of IndividualIdentity ids to filter logs. ex: ["5656565656565656", "4545454545454545"]
     - user [Organization/Project object, default None]: Organization or Project object. Not necessary if starkinfra.user was set before function call.
     ## Return:

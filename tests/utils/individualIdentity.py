@@ -8,8 +8,9 @@ from starkinfra import IndividualIdentity
 def _generateIndividualIdentity():
     return IndividualIdentity(
         name="Jamie Lannister",
+        delivery_method="manual",
+        proofs=["identity"],
         tax_id="012.345.678-90",
-        birth_date="2012-03-06",
         tags=["test", "testing"],
     )
 

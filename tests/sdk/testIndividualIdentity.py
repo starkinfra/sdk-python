@@ -1,5 +1,4 @@
 import starkinfra
-from datetime import date
 from unittest import TestCase, main
 from tests.utils.user import exampleProject
 from tests.utils.individualIdentity import generateExampleIndividualIdentityJson
@@ -62,15 +61,16 @@ class TestIndividualIdentityPostAndCancel(TestCase):
         print(individual.id)
 
 
-class TestIndividualIdentityBirthDateAsDate(TestCase):
+class TestIndividualIdentityPostWithoutTaxIdAndUpdate(TestCase):
 
     def test_success(self):
         identities = generateExampleIndividualIdentityJson(n=1)
-        identities[0].birth_date = date(1990, 5, 15)
-        identities = starkinfra.individualidentity.create(identities)
-        for individual in identities:
-            self.assertIsNotNone(individual.id)
-            self.assertEqual(individual.birth_date, date(1990, 5, 15))
+        identities[0].tax_id = None
+        identity = starkinfra.individualidentity.create(identities)[0]
+        self.assertIsNotNone(identity.validator_link)
+        updated = starkinfra.individualidentity.update(identity.id, tax_id="012.345.678-90")
+        self.assertEqual(updated.id, identity.id)
+        self.assertEqual("".join(filter(str.isdigit, updated.tax_id)), "01234567890")
 
 
 if __name__ == '__main__':

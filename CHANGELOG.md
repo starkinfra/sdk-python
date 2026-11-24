@@ -14,6 +14,7 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 ### Added
+- template_replacements parameter to CreditNote, as a creditnote.TemplateReplacements subresource
 - IssuingCard update_multi function
 - holder_name, holder_tax_id and holder_external_id parameters to IssuingCard update function
 ### Changed

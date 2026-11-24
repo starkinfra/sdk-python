@@ -7,4 +7,5 @@ from .invoice.__invoice import Invoice
 from .invoice.__discount import Discount
 from .invoice.__description import Description
 from .__rule import Rule
+from .__templatereplacements import TemplateReplacements
 from .__creditnote import create, get, query, page, cancel, pdf, payment

@@ -501,6 +501,27 @@ for card in cards:
     print(card)
 ```
 
+### Create IssuingCards without a holder
+
+A physical card can be created without a holder and have one assigned later, while it is still "pending".
+Omit holder_name, holder_tax_id and holder_external_id (send all three or none of them). The API rejects
+virtual cards without a holder. The holder fields come back as empty strings.
+
+```python
+import starkinfra
+
+cards = starkinfra.issuingcard.create([
+    starkinfra.IssuingCard(
+        product_id="52091969",
+        type="physical",
+        tags=["department: tech"]
+    )
+])
+
+for card in cards:
+    print(card)
+```
+
 ### Query IssuingCards
 
 You can get a list of created cards given some filters.
@@ -540,6 +561,55 @@ import starkinfra
 card = starkinfra.issuingcard.update("5155165527080960", status="blocked")
 
 print(card)
+```
+
+To assign a holder to a card created without one, send holder_name, holder_tax_id and holder_external_id
+(all three or none) while the card is still "pending". The holder can be assigned and the card
+activated in the same call by also sending status="active" and the pin.
+
+```python
+import starkinfra
+
+card = starkinfra.issuingcard.update(
+    "5155165527080960",
+    holder_name="Developers",
+    holder_tax_id="012.345.678-90",
+    holder_external_id="1234",
+    status="active",
+    pin="1234"
+)
+
+print(card)
+```
+
+### Update several IssuingCards at once
+
+Holders can be assigned to several pending cards in a single request. The API applies the whole list or none
+of it. Each item takes the card "id" and the fields the API accepts in this route: status, rules, tags and the
+three holder fields (pin and display_name are accepted only when updating a single card). Build the items as
+dictionaries, as below, or as new IssuingCard(id=..., ...) objects: every attribute filled in an object is sent, so
+objects returned by get() or query() must not be reused.
+
+```python
+import starkinfra
+
+cards = starkinfra.issuingcard.update_multi([
+    {
+        "id": "5155165527080960",
+        "holder_name": "Developers",
+        "holder_tax_id": "012.345.678-90",
+        "holder_external_id": "1234"
+    },
+    {
+        "id": "5656565656565656",
+        "holder_name": "Developers",
+        "holder_tax_id": "012.345.678-90",
+        "holder_external_id": "1234"
+    }
+])
+
+for card in cards:
+    print(card)
 ```
 
 ### Cancel an IssuingCard

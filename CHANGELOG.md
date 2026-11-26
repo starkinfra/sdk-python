@@ -13,6 +13,11 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 
 ## [Unreleased]
+### Added
+- IssuingCard update_multi function
+- holder_name, holder_tax_id and holder_external_id parameters to IssuingCard update function
+### Changed
+- IssuingCard holder_name, holder_tax_id and holder_external_id are optional, so physical cards can be created without a holder
 
 ## [0.30.0] - 2026-11-12
 ### Added

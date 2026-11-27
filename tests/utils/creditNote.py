@@ -12,7 +12,7 @@ from starkinfra.creditsigner import CreditSigner
 from starkinfra.creditnote import Invoice, Transfer, Description
 
 
-def _generateCreditNote():
+def _generateCreditNote(template_replacements=None):
     scheduled = futureDateTime(days=1)
     nominal_amount = randint(100000, 1000000)
     invoice_nominal_amount = nominal_amount // 2
@@ -43,7 +43,20 @@ def _generateCreditNote():
         city="São Paulo",
         state_code="SP",
         zip_code="01234-567",
+        template_replacements=template_replacements,
     )
+
+
+def generateExampleCreditNoteWithTemplateReplacementsJson(n=1, template_replacements=None):
+    credit_notes = []
+    for _ in range(n):
+        note = _generateCreditNote(template_replacements=template_replacements)
+        note.tags = ["sdk-test"]
+        note.scheduled = randomFutureDate(days=600)
+        note.invoices = generateExampleInvoiceJson(n=randint(3, 4), note_nominal_amount=note.nominal_amount // 2,
+                                                   note_scheduled=note.scheduled)
+        credit_notes.append(note)
+    return credit_notes
 
 
 def generateExampleCreditNoteJson(n=1, nominal_amount=None):

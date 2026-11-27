@@ -3499,6 +3499,11 @@ notes = starkinfra.creditnote.create([
                 value="scheduled"
             )
         ],
+        template_replacements=starkinfra.creditnote.TemplateReplacements(
+            guarantor_name="Jon Snow",
+            guarantor_tax_id="012.345.678-90",
+            guarantor_address="Av. Paulista, 200 - Bela Vista - Sao Paulo, SP"
+        ),
     )
 ])
 
@@ -3507,6 +3512,8 @@ for note in notes:
 ```
 
 **Note**: Instead of using CreditNote objects, you can also pass each element in dictionary format
+
+**Note**: template_replacements is optional and accepts a `creditnote.TemplateReplacements` object or a dictionary, which is converted to the object. Its keys are free and depend on your contract template. Write the names in snake_case, as in the rest of the SDK: they are sent in camelCase (`guarantor_name` becomes `guarantorName`, and the rest of each word is lowercased, so avoid mixing cases inside a name). Names already in camelCase are also accepted. Names starting with an underscore are not allowed and keys with `None` values are not sent. A returned CreditNote carries the keys as the API sent them, in camelCase.
 
 ### Query CreditNotes
 

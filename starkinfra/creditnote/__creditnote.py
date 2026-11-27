@@ -6,6 +6,7 @@ from ..creditsigner.__creditsigner import _resource as _creditsigner_resource
 from .__transfer import Transfer
 from .__transfer import _resource as _transfer_resource
 from .__rule import parse_rules
+from .__templatereplacements import TemplateReplacements
 from ..utils import rest
 from starkcore.utils.api import from_api_json
 from starkcore.utils.resource import Resource
@@ -42,6 +43,7 @@ class CreditNote(Resource):
     - tags [list of strings, default []]: list of strings for reference when searching for CreditNotes. ex: ["employees", "monthly"]
     - expiration [integer or datetime.timedelta, default 604800 (7 days)]: time interval in seconds between scheduled date and expiration date. ex 123456789
     - rules [list of creditnote.Rule objects, default []]: list of CreditNote behavior rules. ex: [creditnote.Rule(key="invoiceCreationMode", value="scheduled")]
+    - template_replacements [creditnote.TemplateReplacements or dictionary, default None]: custom values used to fill the placeholders of the contract template. The keys depend on the template. Write the names in snake_case: they are sent in camelCase (and the rest of each word is lowercased), and keys with None values are not sent. A dictionary is converted to creditnote.TemplateReplacements. A returned CreditNote carries the keys as the API sent them, in camelCase. ex: creditnote.TemplateReplacements(guarantor_name="Jon Snow", guarantor_tax_id="012.345.678-90") or {"guarantor_name": "Jon Snow", "guarantor_tax_id": "012.345.678-90"}
     ## Attributes (return-only):
     - id [string]: unique id returned when the CreditNote is created. ex: "5656565656565656"
     - document_id [string]: ID of the signed document to execute this CreditNote. ex: "4545454545454545"
@@ -61,7 +63,7 @@ class CreditNote(Resource):
                  nominal_amount=None, amount=None, rebate_amount=None, tags=None, expiration=None, rules=None,
                  id=None, document_id=None, status=None, transaction_ids=None, workspace_id=None,
                  debtor_workspace_id=None, tax_amount=None, nominal_interest=None, interest=None, created=None,
-                 updated=None):
+                 updated=None, template_replacements=None):
         Resource.__init__(self, id=id)
 
         self.template_id = template_id
@@ -83,6 +85,7 @@ class CreditNote(Resource):
         self.tags = tags
         self.expiration = expiration
         self.rules = parse_rules(rules)
+        self.template_replacements = _parse_template_replacements(template_replacements)
         self.document_id = document_id
         self.status = status
         self.transaction_ids = transaction_ids
@@ -108,6 +111,18 @@ def _parse_signers(signers):
             continue
         parsed_signers.append(from_api_json(_creditsigner_resource, signer))
     return parsed_signers
+
+
+def _parse_template_replacements(template_replacements):
+    if template_replacements is None:
+        return None
+    if isinstance(template_replacements, TemplateReplacements):
+        return template_replacements
+    if isinstance(template_replacements, dict):
+        return TemplateReplacements(**template_replacements)
+    raise TypeError("template_replacements must be a creditnote.TemplateReplacements, a dict or None, got {type}".format(
+        type=type(template_replacements).__name__
+    ))
 
 
 def _parse_invoices(invoices):
